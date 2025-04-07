@@ -1,12 +1,3 @@
-### Autores
-
-| Nombre                                 | Rol   |
-| -------------------------------------- | ----- |
-| Rodrigo Antonio Benítez De La Portilla | Autor |
-| Arturo Sánchez Rodríguez               | Autor |
-
----
-
 # Descripción
 
 Incluye un resumen del cambio y el problema que se ha solucionado. También proporciona el contexto relevante y la motivación para este cambio. Lista cualquier dependencia requerida para esta modificación.
