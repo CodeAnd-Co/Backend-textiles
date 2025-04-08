@@ -28,6 +28,7 @@ exports.inicioSesion = async (req, res) => {
   try {
     // Busca al usuario en la base de datos por su correo
     const usuario = await repositorio.obtenerUsuario(correo);
+    const roles = await repositorio.obtenerRoles(correo);
 
     if (!usuario) {
       return res.status(401).json({ message: "Credenciales incorrectas" });
@@ -52,7 +53,7 @@ exports.inicioSesion = async (req, res) => {
     });
 
     // Respuesta exitosa con el token
-    res.status(200).json({ message: "Inicio de sesion exitoso", token });
+    res.status(200).json({ message: "Inicio de sesion exitoso", token, roles });
   } catch (error) {
     // Manejo de errores internos del servidor
     return res.status(500).json({ mensaje: "Error al obtener usuario" });

@@ -1,5 +1,5 @@
 const recibirDatosSQL = require("../../../util/services/recibirDatosSQL");
-
+const correrQuery = require("../../../util/services/correrQuery");
 /**
  * Obtiene un usuario desde DynamoDB utilizando su correo electrónico.
  *
@@ -19,5 +19,27 @@ exports.obtenerUsuario = async (correoElectronico) => {
     return usuario; // Retorna el primer usuario encontrado
   } catch {
     return "Error obteniendo usuario";
+  }
+};
+
+exports.obtenerRoles = async (correoElectronico) => {
+  const query = `
+    SELECT 
+      p.nombre AS permiso
+    FROM usuario u
+    JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
+    JOIN rol r ON ur.idRol = r.idRol
+    JOIN rol_permiso rp ON r.idRol = rp.idRol
+    JOIN permiso p ON rp.idPermiso = p.idPermiso
+    WHERE u.correoElectronico = ?;
+
+  `;
+
+  try {
+    const resultados = await correrQuery(query, [correoElectronico]);
+    return resultados;
+  } catch (error) {
+    console.error("Error al obtener roles y permisos:", error);
+    return [];
   }
 };
