@@ -1,8 +1,4 @@
-const queryDynamoDB = require("../../../util/services/queryDynamoDB");
-
-const tabla = "Usuario"; // Nombre de la tabla en DynamoDB
-const indice = "usuario-index"; // Nombre del índice secundario global
-const nombreLlave = "correoElectronico"; // Nombre de la llave de búsqueda
+const recibirDatosSQL = require("../../../util/services/recibirDatosSQL");
 
 /**
  * Obtiene un usuario desde DynamoDB utilizando su correo electrónico.
@@ -17,10 +13,10 @@ const nombreLlave = "correoElectronico"; // Nombre de la llave de búsqueda
  * Utiliza un índice secundario global para consultar la tabla 'Usuario'
  * en DynamoDB, buscando por el campo 'correoElectronico'.
  */
-exports.obtenerUsuario = async (correo) => {
+exports.obtenerUsuario = async (correoElectronico) => {
   try {
-    const usuario = await queryDynamoDB(tabla, nombreLlave, correo, indice);
-    return usuario[0]; // Retorna el primer usuario encontrado
+    const usuario = await recibirDatosSQL("usuario", { correoElectronico });
+    return usuario; // Retorna el primer usuario encontrado
   } catch {
     return "Error obteniendo usuario";
   }

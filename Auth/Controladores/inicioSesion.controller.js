@@ -30,7 +30,7 @@ exports.inicioSesion = async (req, res) => {
     const usuario = await repositorio.obtenerUsuario(correo);
 
     if (!usuario) {
-      return res.status(401).json({ message: "Usuario no encontrado" });
+      return res.status(401).json({ message: "Credenciales incorrectas" });
     }
 
     // Compara la contraseña proporcionada con la almacenada

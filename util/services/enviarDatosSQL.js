@@ -1,5 +1,5 @@
 // insertItem.js
-const conexion = require("./db"); // Import the connection from db.js
+const conexion = require("../Database/db"); // Import the connection from db.js
 
 module.exports = async (nombreTabla, modelo) => {
   // Prepare the query for inserting a record into the MySQL table
