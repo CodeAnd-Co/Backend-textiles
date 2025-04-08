@@ -5,7 +5,7 @@ const controlador = require("../../Controladores/inicioSesion.controller");
 const validarNoSql = require("../../../util/middlewares/validarInjeccionNoSql");
 
 ruteador.post(
-  "auth/login",
+  "/auth/login",
   validarNoSql,
   revisarApiKey("x-api-key"),
   controlador.inicioSesion

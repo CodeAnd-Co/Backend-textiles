@@ -4,6 +4,6 @@ const rutasSesion = require("./Rutas_individuales/autenticacionSesion.routes");
 const rutasLogin = require("./Rutas_individuales/inicioSesion.routes");
 
 ruteador.use("/api", rutasSesion);
-ruteador.use("/api");
+ruteador.use("/api", rutasLogin);
 
 module.exports = ruteador;

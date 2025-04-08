@@ -31,7 +31,7 @@ async function queryDynamoDB(tableName, keyName, keyValue, indexName = null) {
 
   try {
     const response = await db.send(command);
-    return response.Items || [];
+    return response.Items;
   } catch (err) {
     console.error("Error querying DynamoDB:", err);
     throw err;
