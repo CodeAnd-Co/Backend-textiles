@@ -1,14 +1,23 @@
-const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const { DynamoDBDocumentClient, PutCommand } = require("@aws-sdk/lib-dynamodb");
-
-const clienteDynamo = new DynamoDBClient({ region: "us-east-1" });
-const db = DynamoDBDocumentClient.from(clienteDynamo);
+// insertItem.js
+const conexion = require("./db"); // Import the connection from db.js
 
 module.exports = async (nombreTabla, modelo) => {
-  const comando = new PutCommand({
-    TableName: nombreTabla,
-    Item: modelo,
-  });
+  // Prepare the query for inserting a record into the MySQL table
+  const columnas = Object.keys(modelo).join(", ");
+  const valores = Object.values(modelo)
+    .map((valor) => `'${valor}'`)
+    .join(", ");
 
-  return db.send(comando);
+  const query = `INSERT INTO ${nombreTabla} (${columnas}) VALUES (${valores})`;
+
+  // Execute the query
+  return new Promise((resolver, rechazar) => {
+    conexion.query(query, (err, results) => {
+      if (err) {
+        rechazar(err);
+      } else {
+        resolver(results);
+      }
+    });
+  });
 };
