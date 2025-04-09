@@ -25,17 +25,19 @@ exports.obtenerUsuario = async (correoElectronico) => {
 exports.obtenerRoles = async (correoElectronico) => {
   const query = `
     SELECT 
-      r.nombre AS rol
+      p.nombre AS permiso
     FROM usuario u
     JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
     JOIN rol r ON ur.idRol = r.idRol
+    JOIN rol_permiso rp ON r.idRol = rp.idRol
+    JOIN permiso p ON rp.idPermiso = p.idPermiso
     WHERE u.correoElectronico = ?;
 
   `;
 
   try {
     const resultados = await correrQuery(query, [correoElectronico]);
-    return resultados[0];
+    return resultados;
   } catch (error) {
     console.error("Error al obtener roles y permisos:", error);
     return [];

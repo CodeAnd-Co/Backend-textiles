@@ -10,6 +10,9 @@
  * @example
  * const usuario = await getItem('usuarios', { id: 1 });
  */
+
+const conexion = require("../Database/db");
+
 module.exports = async (nombreTabla, llaves) => {
   const condiciones = Object.keys(llaves)
     .map((key) => `${key} = '${llaves[key]}'`)

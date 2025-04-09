@@ -10,6 +10,9 @@
  * @example
  * const resultados = await runQuery('SELECT * FROM usuarios WHERE id = ?', [1]);
  */
+
+const conexion = require("../Database/db");
+
 module.exports = async (query, params = []) => {
   return new Promise((resolver, rechazar) => {
     conexion.query(query, params, (err, results) => {

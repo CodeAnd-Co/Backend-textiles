@@ -32,7 +32,8 @@ exports.inicioSesion = async (req, res) => {
 
   try {
     const usuario = await repositorio.obtenerUsuario(correo);
-    const roles = await repositorio.obtenerRoles(correo);
+    const resultadoPermisos = await repositorio.obtenerRoles(correo);
+    const permisos = resultadoPermisos.map((p) => p.permiso);
 
     if (!usuario) {
       return res.status(401).json({ message: "Credenciales incorrectas" });
@@ -48,7 +49,7 @@ exports.inicioSesion = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { correo: usuario.correo, rol: roles.rol },
+      { correo: usuario.correo, permisos },
       process.env.JWT_SECRET,
       {
         expiresIn: "1h",
