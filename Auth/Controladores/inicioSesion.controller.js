@@ -6,14 +6,20 @@ const jwt = require("jsonwebtoken");
  * Controlador para el inicio de sesión de un usuario.
  *
  * @async
- * @function
+ * @function inicioSesion
  * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.body - Cuerpo de la solicitud HTTP.
+ * @param {string} req.body.correo - Correo electrónico del usuario.
+ * @param {string} req.body.contrasenia - Contraseña proporcionada por el usuario.
  * @param {Object} res - Objeto de respuesta de Express.
- * @returns {void}
  *
- * @description
- * Verifica las credenciales del usuario (correo y contraseña).
- * Si son correctas, genera un token JWT y lo guarda en una cookie segura.
+ * @returns {Response} Respuesta HTTP con estado:
+ * - 200 si el inicio de sesión es exitoso, junto con un JWT.
+ * - 400 si faltan campos requeridos.
+ * - 401 si las credenciales son incorrectas.
+ * - 500 si ocurre un error en el servidor.
+ *
+ * @throws {Error} Si ocurre un error inesperado durante la operación.
  */
 exports.inicioSesion = async (req, res) => {
   const { correo, contrasenia } = req.body;
@@ -55,7 +61,7 @@ exports.inicioSesion = async (req, res) => {
       sameSite: "None",
     });
 
-    res.status(200).json({ message: "Inicio de sesion exitoso", token });
+    res.status(200).json({ message: "Inicio de sesion exitoso" });
   } catch {
     return res.status(500).json({ mensaje: "Error al obtener usuario" });
   }
