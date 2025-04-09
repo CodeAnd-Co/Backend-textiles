@@ -19,10 +19,8 @@ module.exports = async (req, res, next) => {
     // Verificar el token JWT
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified; // Agregar información del usuario verificado a la solicitud
-    console.log("Verificado");
     next();
   } catch (err) {
-    console.log("No Verificado");
     res.status(401).json({ message: "Token inválido", error: err });
   }
 };
