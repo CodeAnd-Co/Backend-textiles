@@ -18,7 +18,6 @@ const jwt = require("jsonwebtoken");
 exports.inicioSesion = async (req, res) => {
   const { correo, contrasenia } = req.body;
 
-  // Verifica que se hayan proporcionado ambos campos
   if (!correo || !contrasenia) {
     return res
       .status(400)
@@ -26,7 +25,6 @@ exports.inicioSesion = async (req, res) => {
   }
 
   try {
-    // Busca al usuario en la base de datos por su correo
     const usuario = await repositorio.obtenerUsuario(correo);
     const roles = await repositorio.obtenerRoles(correo);
 
@@ -34,28 +32,31 @@ exports.inicioSesion = async (req, res) => {
       return res.status(401).json({ message: "Credenciales incorrectas" });
     }
 
-    // Compara la contraseña proporcionada con la almacenada
-    // Esta comparación es directa (no segura); usar bcrypt sería lo ideal
-    if (usuario.contrasenia !== contrasenia) {
+    const contraCorrecta = await bcrypt.compare(
+      contrasenia,
+      usuario.contrasenia
+    );
+
+    if (!contraCorrecta) {
       return res.status(401).json({ mensaje: "Credenciales incorrectas" });
     }
 
-    // Genera un token JWT con una duración de 1 hora
-    const token = jwt.sign({ correo: usuario.correo }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { correo: usuario.correo, rol: roles.rol },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
 
-    // Guarda el token en una cookie segura
     res.cookie("token", token, {
-      httpOnly: true, // Solo accesible desde el servidor
-      secure: true, // Solo se envía por HTTPS
-      sameSite: "None", // Necesario para cookies en sitios cruzados
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
     });
 
-    // Respuesta exitosa con el token
-    res.status(200).json({ message: "Inicio de sesion exitoso", token, roles });
-  } catch (error) {
-    // Manejo de errores internos del servidor
+    res.status(200).json({ message: "Inicio de sesion exitoso", token });
+  } catch {
     return res.status(500).json({ mensaje: "Error al obtener usuario" });
   }
 };
