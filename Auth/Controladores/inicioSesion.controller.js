@@ -36,7 +36,9 @@ exports.inicioSesion = async (req, res) => {
     const permisos = resultadoPermisos.map((p) => p.permiso);
 
     if (!usuario) {
-      return res.status(401).json({ message: "Credenciales incorrectas" });
+      return res
+        .status(401)
+        .json({ mensaje: "Usuario o contraseña incorrectos" });
     }
 
     const contraCorrecta = await bcrypt.compare(
@@ -45,7 +47,9 @@ exports.inicioSesion = async (req, res) => {
     );
 
     if (!contraCorrecta) {
-      return res.status(401).json({ mensaje: "Credenciales incorrectas" });
+      return res
+        .status(401)
+        .json({ mensaje: "Usuario o contraseña incorrectos" });
     }
 
     const token = jwt.sign(
@@ -62,7 +66,7 @@ exports.inicioSesion = async (req, res) => {
       sameSite: "None",
     });
 
-    res.status(200).json({ message: "Inicio de sesion exitoso" });
+    res.status(200).json({ mensaje: "Inicio de sesion exitoso" });
   } catch {
     return res.status(500).json({ mensaje: "Error al obtener usuario" });
   }

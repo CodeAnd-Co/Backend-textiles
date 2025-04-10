@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
   const token = req.cookies.token; // Obtener el token de las cookies
 
   if (!token) {
-    return res.status(403).json({ message: "Acceso denegado" });
+    return res.status(403).json({ mensaje: "Acceso denegado" });
   }
 
   try {
@@ -21,6 +21,6 @@ module.exports = async (req, res, next) => {
     req.user = verified; // Agregar información del usuario verificado a la solicitud
     next();
   } catch (err) {
-    res.status(401).json({ message: "Token inválido", error: err });
+    res.status(401).json({ mensaje: "Token inválido", error: err });
   }
 };

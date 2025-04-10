@@ -4,5 +4,5 @@ exports.logout = async (req, res) => {
     secure: true,
     sameSite: "None",
   });
-  res.json({ message: "Logged out successfully" });
+  res.json({ mensaje: "Logout exitoso" });
 };
