@@ -22,6 +22,18 @@ exports.obtenerUsuario = async (correoElectronico) => {
   }
 };
 
+/**
+ * @function obtenerRoles
+ * @description Obtiene los permisos asociados a un usuario dado su correo electrónico.
+ * @param {string} correoElectronico - El correo electrónico del usuario cuyo rol y permisos se desean obtener.
+ * @returns {Promise<Array>} - Una promesa que se resuelve con una lista de objetos de permisos asociados al usuario.
+ *                             Si ocurre un error, se devuelve un array vacío.
+ *
+ * @example
+ * // Ejemplo de uso
+ * const roles = await obtenerRoles("usuario@dominio.com");
+ * console.log(roles); // [{ permiso: "ADMIN" }, { permiso: "USER" }]
+ */
 exports.obtenerRoles = async (correoElectronico) => {
   const query = `
     SELECT 
@@ -32,7 +44,6 @@ exports.obtenerRoles = async (correoElectronico) => {
     JOIN rol_permiso rp ON r.idRol = rp.idRol
     JOIN permiso p ON rp.idPermiso = p.idPermiso
     WHERE u.correoElectronico = ?;
-
   `;
 
   try {

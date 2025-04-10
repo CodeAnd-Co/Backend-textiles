@@ -1,5 +1,29 @@
-const patronProhibido = /['";`]|(--)/; // caracteres típicos en inyecciones
+/**
+ * @file validarYSanitizar.js
+ * @description Middleware para validar y sanear el cuerpo de las solicitudes POST/PUT, protegiendo contra inyecciones SQL y datos no válidos.
+ */
 
+const patronProhibido = /['";`]|(--)/; // Caracteres típicos utilizados en inyecciones SQL
+
+/**
+ * Middleware que valida y limpia los datos del cuerpo de la solicitud (`req.body`).
+ *
+ * - Acepta solo objetos planos (no arrays, no null).
+ * - Solo permite valores de tipo string, number o boolean.
+ * - Rechaza strings con caracteres potencialmente peligrosos (', ", ;, `, --).
+ * - Limpia los strings válidos eliminando espacios al inicio y final.
+ *
+ * @param {import('express').Request} req - Objeto de solicitud de Express.
+ * @param {import('express').Response} res - Objeto de respuesta de Express.
+ * @param {import('express').NextFunction} next - Función para pasar al siguiente middleware.
+ *
+ * @returns {void} - Envía una respuesta con error 400 si la validación falla, o llama a `next()` si es válida.
+ *
+ * @example
+ * app.post("/productos", validarYSanitizar, (req, res) => {
+ *   // req.body ya está validado y sanitizado
+ * });
+ */
 function validarYSanitizar(req, res, next) {
   const { body } = req;
 
