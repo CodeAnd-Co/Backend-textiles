@@ -1,5 +1,6 @@
 const recibirDatosSQL = require("../../../util/services/recibirDatosSQL");
 const correrQuery = require("../../../util/services/correrQuery");
+const consultas = require("../../../util/Consultas/Clientes/consultasClientes");
 /**
  * Obtiene un usuario desde DynamoDB utilizando su correo electrónico.
  *
@@ -34,17 +35,8 @@ exports.obtenerUsuario = async (correoElectronico) => {
  * const roles = await obtenerRoles("usuario@dominio.com");
  * console.log(roles); // [{ permiso: "ADMIN" }, { permiso: "USER" }]
  */
-exports.obtenerRoles = async (correoElectronico) => {
-  const query = `
-    SELECT 
-      p.nombre AS permiso
-    FROM usuario u
-    JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
-    JOIN rol r ON ur.idRol = r.idRol
-    JOIN rol_permiso rp ON r.idRol = rp.idRol
-    JOIN permiso p ON rp.idPermiso = p.idPermiso
-    WHERE u.correoElectronico = ?;
-  `;
+exports.obtenerPermisos = async (correoElectronico) => {
+  const query = consultas.obtenerPermisos;
 
   try {
     const resultados = await correrQuery(query, [correoElectronico]);

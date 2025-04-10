@@ -32,7 +32,7 @@ exports.inicioSesion = async (req, res) => {
 
   try {
     const usuario = await repositorio.obtenerUsuario(correo);
-    const resultadoPermisos = await repositorio.obtenerRoles(correo);
+    const resultadoPermisos = await repositorio.obtenerPermisos(correo);
     const permisos = resultadoPermisos.map((p) => p.permiso);
 
     if (!usuario) {
