@@ -2,7 +2,7 @@ const express = require("express");
 const revisarApiKey = require("../../../util/middlewares/revisarApiKey");
 const ruteador = express.Router();
 const controlador = require("../../Controladores/inicioSesion.controller");
-const validarNoSql = require("../../../util/middlewares/validarInjeccionNoSql");
+const validarInjeccion = require("../../../util/middlewares/validarInjeccionNoSql");
 
 /**
  * @swagger
@@ -52,7 +52,7 @@ const validarNoSql = require("../../../util/middlewares/validarInjeccionNoSql");
  */
 ruteador.post(
   "/auth/login",
-  validarNoSql,
+  validarInjeccion,
   revisarApiKey("x-api-key"),
   controlador.inicioSesion
 );
