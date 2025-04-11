@@ -5,6 +5,7 @@ const cors = require("cors");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const revisarApiKey = require("./util/middlewares/revisarApiKey");
+const helmet = require("helmet");
 
 // Archivos con las rutas
 const rutasAutenticacion = require("./Auth/Rutas/indexAutenticacion.routes");
@@ -35,16 +36,21 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 // Middlewares
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(
-  cors({
-    origin: [process.env.LOCAL_URL, process.env.DEPLOYED_URL],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: [process.env.LOCAL_URL, process.env.DEPLOYED_URL],
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
 
 // Ruta de bienvenida protegida con API key
 const ambiente = process.env.NODE_ENV;
@@ -67,4 +73,5 @@ const port = process.env.PORT || 5000;
 app.listen(port, () =>
   console.log(
     `Server corriendo en puerto: ${port} en ambiente de ${process.env.NODE_ENV}.`
-  ));
+  )
+);
