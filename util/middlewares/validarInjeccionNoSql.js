@@ -25,14 +25,14 @@ const patronProhibido = /['";`]|(--)/; // Caracteres típicos utilizados en inye
  * });
  */
 function validarYSanitizar(req, res, next) {
-  const { body } = req;
+  const { body: cuerpo } = req;
 
   // Verifica que el cuerpo sea un objeto plano
-  if (typeof body !== "object" || Array.isArray(body)) {
+  if (typeof cuerpo !== "object" || Array.isArray(cuerpo)) {
     return res.status(400).json({ mensaje: "Formato del cuerpo inválido." });
   }
 
-  for (const [llave, valor] of Object.entries(body)) {
+  for (const [llave, valor] of Object.entries(cuerpo)) {
     // Solo aceptamos strings, números o booleanos simples
     if (
       typeof valor !== "string"
@@ -42,6 +42,18 @@ function validarYSanitizar(req, res, next) {
       return res
         .status(400)
         .json({ mensaje: `Valor inválido para el campo "${llave}".` });
+    }
+
+    //Check por injeccion sql o otras injecciones pero enviando contraseña ya que el campo no se llama contraseña por temas de sql
+    if (typeof valor === "string" && cuerpo.contrasenia) {
+      if (patronProhibido.test(valor)) {
+        return res
+          .status(400)
+          .json({ mensaje: `Entrada sospechosa en el campo contraseña.` });
+      }
+
+      // Limpieza básica: quitar espacios al inicio/final
+      req.body[llave] = valor.trim();
     }
 
     if (typeof valor === "string") {
