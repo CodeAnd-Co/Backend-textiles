@@ -33,7 +33,9 @@ exports.inicioSesion = async (req, res) => {
   try {
     const usuario = await repositorio.obtenerUsuario(correo);
     const resultadoPermisos = await repositorio.obtenerPermisos(correo);
-    const permisos = resultadoPermisos.map((p) => p.permiso);
+    const permisos = resultadoPermisos.map(
+      (objetosPermisos) => objetosPermisos.permiso
+    );
 
     if (!usuario) {
       return res
