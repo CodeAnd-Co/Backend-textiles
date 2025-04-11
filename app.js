@@ -44,13 +44,13 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use(
-//   cors({
-//     origin: [process.env.LOCAL_URL, process.env.DEPLOYED_URL],
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: [process.env.LOCAL_URL, process.env.DEPLOYED_URL],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 // Ruta de bienvenida protegida con API key
 const ambiente = process.env.NODE_ENV;
