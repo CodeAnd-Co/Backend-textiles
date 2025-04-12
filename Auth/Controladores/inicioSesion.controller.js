@@ -31,11 +31,10 @@ exports.inicioSesion = async (req, res) => {
   }
 
   try {
-    const usuario = await repositorio.obtenerUsuario(correo);
-    const resultadoPermisos = await repositorio.obtenerPermisos(correo);
-    const permisos = resultadoPermisos.map(
-      (objetosPermisos) => objetosPermisos.permiso
-    );
+    const resultadoQuery = await repositorio.obtenerUsuario(correo);
+
+    const usuario = resultadoQuery.infoUsuario;
+    const permisos = resultadoQuery.permisos;
 
     if (!usuario) {
       return res
@@ -68,8 +67,8 @@ exports.inicioSesion = async (req, res) => {
       sameSite: "None",
     });
 
-    res.status(200).json({ mensaje: "Inicio de sesion exitoso" });
-  } catch {
-    return res.status(500).json({ mensaje: "Error al obtener usuario" });
+    res.status(200).json({ mensaje: "Inicio de sesion exitoso", usuario });
+  } catch (error) {
+    return res.status(500).json({ mensaje: "Error al obtener usuario", error });
   }
 };
