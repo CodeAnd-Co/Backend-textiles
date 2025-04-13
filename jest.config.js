@@ -18,7 +18,6 @@ module.exports = {
   // Módulos que deben ser transformados
   // (Si usas babel o typescript necesitarías configurar esto)
   transform: {},
-  testEnvironment: "node",
   moduleFileExtensions: ["js", "json"],
   moduleNameMapper: {
     "^@altertex/root(.*)$": "<rootDir>$1",

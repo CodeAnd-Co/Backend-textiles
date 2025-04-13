@@ -44,7 +44,7 @@ const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticaci
 process.env.JWT_SECRET = "secret_test_key";
 
 describe("Controlador de Inicio de Sesión", () => {
-  let req, res;
+  let req; let res;
 
   beforeEach(() => {
     // Reset de los mocks
