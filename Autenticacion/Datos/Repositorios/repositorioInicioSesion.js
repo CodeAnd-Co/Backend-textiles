@@ -17,21 +17,25 @@ const CONSULTAS_USUARIOS = require("@altertex/util/const/consultasUsuarios");
 exports.obtenerUsuario = async (correoElectronico) => {
   const queryUsuarios = CONSULTAS_USUARIOS.OBTENER_USUARIO;
   const queryPermisos = CONSULTAS_USUARIOS.OBTENER_PERMISOS;
+  const queryClientesAsociados = CONSULTAS_USUARIOS.OBTENER_CLIENTES_ASOCIADOS;
 
   try {
     const usuario = await correrQuery(queryUsuarios, [correoElectronico]);
     const resultadoPermisos = await correrQuery(queryPermisos, [
       correoElectronico,
     ]);
-
-    if (!usuario || usuario.length === 0) {
-      throw new Error("Usuario no encontrado");
-    }
+    const resultadoClientesAsociados = await correrQuery(
+      queryClientesAsociados,
+      [correoElectronico]
+    );
 
     const resultado = {
       infoUsuario: usuario,
       permisos: resultadoPermisos.map(
         (objetosPermisos) => objetosPermisos.nombre
+      ),
+      clientesAsociados: resultadoClientesAsociados.map(
+        (objetosClientes) => objetosClientes.idCliente
       ),
     };
 

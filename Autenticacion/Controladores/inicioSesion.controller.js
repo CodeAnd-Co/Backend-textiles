@@ -46,6 +46,7 @@ exports.inicioSesion = async (req, res) => {
 
     const usuario = resultadoQuery.infoUsuario[0];
     const permisos = resultadoQuery.permisos;
+    const clientesAsociados = resultadoQuery.clientesAsociados;
 
     if (!usuario) {
       return res
@@ -69,7 +70,7 @@ exports.inicioSesion = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { correo: usuario.correo, permisos },
+      { correo: usuario.correoElectronico, permisos, clientesAsociados },
       process.env.JWT_SECRET,
       {
         expiresIn: "8h",
@@ -84,7 +85,9 @@ exports.inicioSesion = async (req, res) => {
 
     return res
       .status(MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.codigo)
-      .json({ mensaje: MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.mensaje });
+      .json({
+        mensaje: MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.mensaje,
+      });
   } catch (error) {
     console.error("Error en inicio de sesión:", error);
     return res
