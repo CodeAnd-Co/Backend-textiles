@@ -1,6 +1,6 @@
-const repositorio = require("../Data/Repositorios/repositorioConsultarProductos");
+const repositorio = require("../Datos/Repositorios/repositorioConsultarProductos");
 
-exports.consultarProductosController = async (req, res) => {
+exports.consultarProductos = async (req, res) => {
   try {
     const productos = await repositorio.obtenerProductos();
     res.status(200).json({

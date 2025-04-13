@@ -1,7 +1,9 @@
 const express = require("express");
-const revisarApiKey = require("../../../util/middlewares/revisarApiKey");
 const ruteador = express.Router();
-const controlador = require("../../Controladores/consultarProductos.controller");
+const controlador = require("@altertex/pro/ctrl/consultarProductos.controller");
+const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
+
+const RUTAS = require("@altertex/util/const/rutas");
 
 /**
  * @swagger
@@ -39,9 +41,9 @@ const controlador = require("../../Controladores/consultarProductos.controller")
  */
 
 ruteador.get(
-  "/productos/lista",
-  revisarApiKey("x-api-key", "Api key invalida"),
-  controlador.consultarProductosController
+  RUTAS.PRODUCTOS.CONSULTAR_LISTA,
+  revisarApiKey(),
+  controlador.consultarProductos
 );
 
 module.exports = ruteador;

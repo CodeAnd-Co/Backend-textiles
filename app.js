@@ -9,6 +9,7 @@ const swaggerJSDoc = require("swagger-jsdoc");
 const opcionesSwagger = require("@altertex/config/swagger");
 const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
 const rutasAutenticacion = require("@altertex/aut/rutas/indexAutenticacion.routes");
+const rutasProductos = require("@altertex/pro/rutas/indexProductos.routes");
 
 const RUTAS = require("@altertex/util/const/rutas");
 
@@ -36,6 +37,7 @@ app.get(
 );
 
 app.use(RUTAS.API, rutasAutenticacion);
+app.use(RUTAS.API, rutasProductos);
 
 const swaggerSpec = swaggerJSDoc(opcionesSwagger);
 app.use(RUTAS.API_DOCS, swaggerUI.serve, swaggerUI.setup(swaggerSpec));

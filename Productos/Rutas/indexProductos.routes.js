@@ -1,7 +1,9 @@
 const express = require("express");
 const ruteador = express.Router();
-const rutasProductos = require("./Rutas_individuales/consultarProductos.routes");
+const rutasProductos = require("@altertex/pro/rutasInd/consultarProductos.routes");
 
-ruteador.use("/api", rutasProductos);
+const RUTAS = require("@altertex/util/const/rutas");
+
+ruteador.use(RUTAS.PRODUCTOS.BASE, rutasProductos);
 
 module.exports = ruteador;
