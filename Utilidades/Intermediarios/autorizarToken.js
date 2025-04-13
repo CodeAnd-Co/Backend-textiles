@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { MENSAJES_AUTENTICACION } = require("@altertex/util/const/mensajes");
+const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticacion");
 
 /**
  * Middleware que valida el token JWT presente en las cookies del cliente.
