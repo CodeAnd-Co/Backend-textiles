@@ -4,6 +4,8 @@ const CONSULTAS_USUARIOS = require("@altertex/util/const/consultasUsuarios");
 /**
  * Obtiene la información y los permisos de un usuario a partir de su correo electrónico.
  *
+ * RF78 - Iniciar Sesion - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF78
+ *
  * @async
  * @function obtenerUsuario
  * @param {string} correoElectronico - Correo electrónico del usuario a buscar.

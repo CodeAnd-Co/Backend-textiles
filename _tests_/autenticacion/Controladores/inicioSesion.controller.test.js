@@ -1,4 +1,9 @@
-// Primero configuramos los mocks antes de importar el controlador
+/**
+ *
+ * RF78 - Iniciar Sesion - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF78
+ *
+ * Primero configuramos los mocks antes de importar el controlador
+ */
 jest.mock("@altertex/aut/repos/repositorioInicioSesion", () => ({
   obtenerUsuario: jest.fn(),
 }));
@@ -44,7 +49,8 @@ const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticaci
 process.env.JWT_SECRET = "secret_test_key";
 
 describe("Controlador de Inicio de Sesión", () => {
-  let req; let res;
+  let req;
+  let res;
 
   beforeEach(() => {
     // Reset de los mocks
