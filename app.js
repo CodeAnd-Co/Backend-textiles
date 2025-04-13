@@ -9,6 +9,7 @@ const revisarApiKey = require("./util/middlewares/revisarApiKey");
 
 //Archivos con las rutas
 const rutasAutenticacion = require("./Auth/Rutas/indexAutenticacion.routes");
+const rutasProductos = require("./Productos/Rutas/indexProductos.routes");
 
 const app = express();
 
@@ -35,10 +36,12 @@ app.get(
 );
 
 app.use("/", rutasAutenticacion);
+app.use("/", rutasProductos);
 
 const port = process.env.PORT || 5000;
 
 app.listen(port, () =>
   console.log(
     `Server corriendo en puerto: ${port} ${port} en ambiente de ${process.env.NODE_ENV}.`
-  ));
+  )
+);
