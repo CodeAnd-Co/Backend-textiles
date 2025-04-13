@@ -64,4 +64,17 @@ export default [
       "prefer-exponentiation-operator": "error",
     },
   },
+  {
+    files: ["**/*.test.js", "**/*.spec.js", "jest.setup.js"], // O ajusta si tus tests tienen otra convención
+    languageOptions: {
+      ecmaVersion: "latest",
+      globals: {
+        ...globals.node,
+        ...globals.jest, // Habilita las globals de Jest como `describe`, `test`, `expect`
+      },
+      parserOptions: {
+        sourceType: "module",
+      },
+    },
+  },
 ];
