@@ -23,11 +23,10 @@ exports.inicioSesion = async (req, res) => {
   }
 
   try {
-    const usuario = await repositorio.obtenerUsuario(correo);
-    const resultadoPermisos = await repositorio.obtenerPermisos(correo);
-    const permisos = resultadoPermisos.map(
-      (objetosPermisos) => objetosPermisos.nombre
-    );
+    const resultadoQuery = await repositorio.obtenerUsuario(correo);
+
+    const usuario = resultadoQuery.infoUsuario[0];
+    const permisos = resultadoQuery.permisos;
 
     if (!usuario) {
       return res
