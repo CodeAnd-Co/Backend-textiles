@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   /*
    * Estándar de Nomenclatura para Queries SQL
    * -------------------------------------------
@@ -45,7 +45,6 @@ export default {
 
   obtenerProductosQuery: `
     SELECT *
-    FROM Producto
-    LIMIT ? OFFSET ?;
+    FROM Producto;
     `,
 };
