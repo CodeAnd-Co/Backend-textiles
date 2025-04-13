@@ -12,5 +12,9 @@ module.exports = {
     BASE: "/productos",
     CONSULTAR_LISTA: "/consultar-lista",
   },
+  EMPLEADOS: {
+    BASE: "/empleados",
+    CONSULTAR_LISTA: "/consultar-lista",
+  },
   API_DOCS: "/api-docs",
 };
