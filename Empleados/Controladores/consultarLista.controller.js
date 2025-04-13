@@ -2,7 +2,7 @@ const repositorio = require("@altertex/emp/repos/repositorioGrupoDeEmpleados");
 const MENSAJES_EMPLEADOS = require("@altertex/util/const/mensajesEmpleados");
 
 exports.consultarLista = async (req, res) => {
-  const idCliente = parseInt(req.query?.idCliente);
+  const idCliente = parseInt(req.user.clienteSeleccionado);
   const limit = parseInt(req.body.limit);
   const offset = parseInt(req.body.offset);
 
