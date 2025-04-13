@@ -1,4 +1,4 @@
-const MENSAJES_AUTENTICACION = {
+module.exports = {
   // 200 - OK
   INICIO_SESION_EXITOSO: {
     codigo: 200,
@@ -104,8 +104,4 @@ const MENSAJES_AUTENTICACION = {
     codigo: 500,
     mensaje: "Hubo un problema al validar el token.",
   },
-};
-
-module.exports = {
-  MENSAJES_AUTENTICACION,
 };

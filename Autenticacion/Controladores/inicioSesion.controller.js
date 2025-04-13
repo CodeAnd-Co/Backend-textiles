@@ -2,7 +2,7 @@ const repositorio = require("@altertex/aut/repos/repositorioInicioSesion");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const { MENSAJES_AUTENTICACION } = require("@altertex/util/const/mensajes");
+const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticacion");
 
 /**
  * Controlador para el inicio de sesión de un usuario.
