@@ -35,6 +35,10 @@ module.exports = {
     mensaje:
       "La contraseña debe tener al menos 8 caracteres y contener al menos un carácter especial.",
   },
+  TELEFONO_INVALIDO: {
+    codigo: 400,
+    mensaje: "El número de teléfono debe contener exactamente 10 dígitos.",
+  },
   ROL_O_CLIENTE_INVALIDO: {
     codigo: 400,
     mensaje: "El rol o el cliente especificado no es válido.",
@@ -59,7 +63,8 @@ module.exports = {
   // 500 - Server Error
   ERROR_CREAR_USUARIO: {
     codigo: 500,
-    mensaje: "Ocurrió un error al intentar crear el usuario.",
+    mensaje:
+      "Ocurrió un error al intentar crear el usuario. Probablemente ya existe.",
   },
   ERROR_OBTENER_USUARIOS: {
     codigo: 500,

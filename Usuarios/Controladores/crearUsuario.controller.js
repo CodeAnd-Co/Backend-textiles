@@ -1,5 +1,7 @@
+/* eslint-disable operator-linebreak */
 const repositorio = require("@altertex/usu/repos/repositorioCrearUsuario");
 const bcrypt = require("bcryptjs");
+const MENSAJES_USUARIOS = require("@altertex/util/const/mensajesUsuarios");
 
 /**
  * Controlador para crear un nuevo usuario.
@@ -24,11 +26,10 @@ const bcrypt = require("bcryptjs");
  * - 401 si no se pudo crear el usuario.
  * - 500 si ocurre un error en el servidor.
  *
- * @throws {Error} Si ocurre un error inesperado durante la operación.
+ * @throws {Error}
  */
 exports.crearUsuario = async (req, res) => {
   const {
-    // idUsuario,
     nombreCompleto,
     correoElectronico,
     contrasenia,
@@ -43,8 +44,6 @@ exports.crearUsuario = async (req, res) => {
 
   // Validar que todos los campos requeridos estén presentes
   if (
-    // !idUsuario ||
-
     !nombreCompleto ||
     !correoElectronico ||
     !contrasenia ||
@@ -59,29 +58,40 @@ exports.crearUsuario = async (req, res) => {
     return res.status(400).json({ mensaje: "Faltan campos requeridos" });
   }
 
+  // Validar que el correo electrónico tenga un formato válido
   const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!correoValido.test(correoElectronico)) {
-    return res.status(400).json({ mensaje: "Correo electrónico no válido" });
+    return res
+      .status(MENSAJES_USUARIOS.CORREO_INVALIDO.codigo)
+      .json({ mensaje: MENSAJES_USUARIOS.CORREO_INVALIDO.mensaje });
   }
 
-  console.log("contraseña", contrasenia);
+  // Validar que la contraseña tenga al menos 8 caracteres y contenga un carácter especial
   const tieneCaracterEspecial = /[!@#$%^&*(),.?":{}|<>]/;
   if (contrasenia.length < 8) {
-    return res.status(400).json({
-      mensaje: "La contraseña debe tener al menos 8 caracteres",
-    });
+    return res
+      .status(MENSAJES_USUARIOS.CONTRASENA_DEBIL.codigo)
+      .json({ mensaje: MENSAJES_USUARIOS.CONTRASENA_DEBIL.mensaje });
   }
+
   if (!tieneCaracterEspecial.test(contrasenia)) {
-    return res.status(400).json({
-      mensaje: "La contraseña debe contener al menos un carácter especial",
-    });
+    return res
+      .status(MENSAJES_USUARIOS.CONTRASENA_DEBIL.codigo)
+      .json({ mensaje: MENSAJES_USUARIOS.CONTRASENA_DEBIL.mensaje });
+  }
+
+  // Validar que el número de teléfono tenga un formato válido (10 dígitos)
+  const telefonoValido = /^\d{10}$/;
+  if (!telefonoValido.test(numeroTelefono)) {
+    return res
+      .status(MENSAJES_USUARIOS.TELEFONO_INVALIDO.codigo)
+      .json({ mensaje: MENSAJES_USUARIOS.TELEFONO_INVALIDO.mensaje });
   }
 
   try {
     const contraseniaEncriptada = await bcrypt.hash(contrasenia, 10);
 
     const resultado = await repositorio.crearUsuario(
-      // idUsuario,
       nombreCompleto,
       correoElectronico,
       contraseniaEncriptada,
@@ -92,18 +102,23 @@ exports.crearUsuario = async (req, res) => {
       estatus
     );
 
-    if (resultado.affectedRows && resultado.affectedRows > 0) {
-      //Si el usuario se creó correctamente, asignar el rol y el cliente
+    if (resultado.affectedRows && resultado.insertId) {
       const idUsuarioInsertado = resultado.insertId;
       await repositorio.asociarRolAUsuario(idUsuarioInsertado, idRol);
       await repositorio.asociarClienteAUsuario(idUsuarioInsertado, idCliente);
 
-      return res.status(201).json({ mensaje: "Usuario creado correctamente" });
+      return res
+        .status(MENSAJES_USUARIOS.USUARIO_CREADO.codigo)
+        .json({ mensaje: MENSAJES_USUARIOS.USUARIO_CREADO.mensaje });
     } else {
-      return res.status(400).json({ mensaje: "No se pudo crear el usuario" });
+      return res
+        .status(MENSAJES_USUARIOS.DATOS_INCOMPLETOS.codigo)
+        .json({ mensaje: MENSAJES_USUARIOS.DATOS_INCOMPLETOS.mensaje });
     }
   } catch (error) {
     console.error("Error en el controlador:", error);
-    return res.status(500).json({ mensaje: "Error interno del servidor" });
+    return res
+      .status(MENSAJES_USUARIOS.ERROR_CREAR_USUARIO.codigo)
+      .json({ mensaje: MENSAJES_USUARIOS.ERROR_CREAR_USUARIO.mensaje });
   }
 };
