@@ -1,5 +1,22 @@
 const { MENSAJES_AUTENTICACION } = require("@altertex/util/const/mensajes");
 
+/**
+ * Controlador para el cierre de sesión de un usuario.
+ *
+ * @async
+ * @function cerrarSesion
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.cookies - Cookies enviadas con la solicitud.
+ * @param {string} req.cookies.token - Token JWT almacenado en las cookies.
+ * @param {Object} res - Objeto de respuesta de Express.
+ *
+ * @returns {Response} Respuesta HTTP con estado:
+ * - 200 si el cierre de sesión es exitoso.
+ * - 400 si no existe una sesión activa (no hay token).
+ * - 500 si ocurre un error en el servidor al intentar cerrar la sesión.
+ *
+ * @throws {Error} Si ocurre un error inesperado durante la operación.
+ */
 exports.cerrarSesion = async (req, res) => {
   try {
     const token = req.cookies.token;

@@ -1,12 +1,10 @@
-const swaggerJSDoc = require("swagger-jsdoc");
-
 const opcionesSwagger = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "API de Autenticación TEXT&LINES",
+      title: "API de TEXT&LINES",
       version: "1.0.0",
-      description: "Documentación de la API de autenticación para TEXT&LINES",
+      description: "Documentación de la API para TEXT&LINES",
     },
     servers: [
       {
@@ -14,7 +12,7 @@ const opcionesSwagger = {
       },
     ],
   },
-  apis: ["@altertex/aut/rutasIndividuales/inicioSesion.routes"],
+  apis: ["./Autenticacion/Rutas/RutasIndividuales/inicioSesion.routes.js"],
 };
 
-module.exports = swaggerJSDoc(opcionesSwagger);
+module.exports = opcionesSwagger;
