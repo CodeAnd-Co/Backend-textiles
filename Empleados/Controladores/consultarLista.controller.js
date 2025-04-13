@@ -1,5 +1,5 @@
 const repositorio = require("@altertex/emp/repos/repositorioGrupoDeEmpleados");
-const { MENSAJES_EMPLEADOS } = require("@altertex/util/const/mensajes");
+const MENSAJES_EMPLEADOS = require("@altertex/util/const/mensajesEmpleados");
 
 exports.consultarLista = async (req, res) => {
   const idCliente = parseInt(req.body.idCliente);

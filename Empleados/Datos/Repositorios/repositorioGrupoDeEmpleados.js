@@ -1,8 +1,8 @@
 const correrQuery = require("@altertex/util/ser/correrQuery");
-const { GRUPO_EMPLEADOS } = require("@altertex/util/const/consultasSQL");
+const CONSULTAS_GRUPO_EMPLEADOS = require("@altertex/util/const/consultasGrupoEmpleados");
 
 exports.obtenerGrupoDeEmpleados = async (idCliente, limit, offset) => {
-  const query = GRUPO_EMPLEADOS.OBTENER_LISTA;
+  const query = CONSULTAS_GRUPO_EMPLEADOS.OBTENER_LISTA;
 
   try {
     const gruposDeEmpleados = await correrQuery(query, [

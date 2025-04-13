@@ -2,8 +2,27 @@ const repositorio = require("@altertex/aut/repos/repositorioInicioSesion");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const { MENSAJES_AUTENTICACION } = require("@altertex/util/const/mensajes");
+const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticacion");
 
+/**
+ * Controlador para el inicio de sesión de un usuario.
+ *
+ * @async
+ * @function inicioSesion
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.body - Cuerpo de la solicitud HTTP.
+ * @param {string} req.body.correo - Correo electrónico del usuario.
+ * @param {string} req.body.contrasenia - Contraseña proporcionada por el usuario.
+ * @param {Object} res - Objeto de respuesta de Express.
+ *
+ * @returns {Response} Respuesta HTTP con estado:
+ * - 200 si el inicio de sesión es exitoso, junto con un JWT.
+ * - 400 si faltan campos requeridos o el formato del correo es inválido.
+ * - 401 si las credenciales son incorrectas.
+ * - 500 si ocurre un error en el servidor.
+ *
+ * @throws {Error} Si ocurre un error inesperado durante la operación.
+ */
 exports.inicioSesion = async (req, res) => {
   const { correo, contrasenia } = req.body;
 
@@ -23,11 +42,10 @@ exports.inicioSesion = async (req, res) => {
   }
 
   try {
-    const usuario = await repositorio.obtenerUsuario(correo);
-    const resultadoPermisos = await repositorio.obtenerPermisos(correo);
-    const permisos = resultadoPermisos.map(
-      (objetosPermisos) => objetosPermisos.nombre
-    );
+    const resultadoQuery = await repositorio.obtenerUsuario(correo);
+
+    const usuario = resultadoQuery.infoUsuario[0];
+    const permisos = resultadoQuery.permisos;
 
     if (!usuario) {
       return res
