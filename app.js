@@ -1,47 +1,47 @@
-const dotenv = require("dotenv");
-const envFile = `.env.${process.env.NODE_ENV || "staging"}`; // Defaults to 'development' if NODE_ENV is not set
-dotenv.config({ path: envFile });
+require("module-alias/register");
+require("@altertex/config/dotenv");
 
-const cors = require("cors");
 const express = require("express");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const revisarApiKey = require("./util/middlewares/revisarApiKey");
+const swaggerUI = require("swagger-ui-express");
+const swaggerJSDoc = require("swagger-jsdoc");
+const opcionesSwagger = require("@altertex/config/swagger");
+const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
+const rutasAutenticacion = require("@altertex/aut/rutas/indexAutenticacion.routes");
 
-//Archivos con las rutas
-const rutasAutenticacion = require("./Auth/Rutas/indexAutenticacion.routes");
-const rutasProductos = require("./Productos/Rutas/indexProductos.routes");
+const RUTAS = require("@altertex/util/const/rutas");
 
+const puerto = process.env.PORT || 5000;
 const app = express();
 
 app.use(express.json());
-
+app.use(cookieParser());
 app.use(
   cors({
     origin: [process.env.LOCAL_URL, process.env.DEPLOYED_URL],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // ✅ Allow cookies
+    credentials: true,
   })
 );
 
-app.use(cookieParser());
-
-const ambiente = process.env.NODE_ENV;
-
 app.get(
-  "/",
+  RUTAS.RAIZ,
   revisarApiKey("x-api-key", "Api key invalida"),
-  async (req, res) => {
-    res.status(201).json({ message: `Proyecto TEXT&LINES ${ambiente}` });
+  (req, res) => {
+    res.status(201).json({
+      message: `Proyecto TEXT&LINES ${process.env.NODE_ENV}`,
+    });
   }
 );
 
-app.use("/", rutasAutenticacion);
-app.use("/", rutasProductos);
+app.use(RUTAS.API, rutasAutenticacion);
 
-const port = process.env.PORT || 5000;
+const swaggerSpec = swaggerJSDoc(opcionesSwagger);
+app.use(RUTAS.API_DOCS, swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
-app.listen(port, () =>
+app.listen(puerto, () =>
   console.log(
-    `Server corriendo en puerto: ${port} ${port} en ambiente de ${process.env.NODE_ENV}.`
+    `Servidor corriendo en puerto ${puerto} [${process.env.NODE_ENV}]`
   )
 );
