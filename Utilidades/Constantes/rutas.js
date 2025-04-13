@@ -8,6 +8,10 @@ module.exports = {
     CERRAR_SESION: "/cerrar-sesion",
     USUARIO_AUTENTICADO: "/autenticar",
   },
+  CLIENTES: {
+    BASE: "/clientes",
+    CONSULTAR_SISTEMA: "/consultar-sistema",
+  },
   EMPLEADOS: {
     BASE: "/empleados",
     CONSULTAR_LISTA: "/consultar-lista",

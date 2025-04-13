@@ -1,0 +1,51 @@
+module.exports = {
+  // 200 - OK
+  CONSULTA_EXITOSA: {
+    codigo: 200,
+    mensaje: "Información del cliente obtenida exitosamente.",
+  },
+
+  // 204 - No Content
+  CLIENTE_SIN_SISTEMA: {
+    codigo: 204,
+    mensaje: "El cliente no tiene un sistema registrado.",
+  },
+
+  // 400 - Bad Request
+  PARAMETROS_INVALIDOS: {
+    codigo: 400,
+    mensaje:
+      "Los parámetros proporcionados no son válidos o están incompletos.",
+  },
+  FORMATO_ID_CLIENTE_INVALIDO: {
+    codigo: 400,
+    mensaje: "El ID del cliente debe ser un número entero válido.",
+  },
+
+  // 403 - Forbidden
+  ACCESO_NO_AUTORIZADO: {
+    codigo: 403,
+    mensaje: "No tiene permiso para consultar la información de este cliente.",
+  },
+
+  // 404 - Not Found
+  CLIENTE_NO_ENCONTRADO: {
+    codigo: 404,
+    mensaje: "No se encontró un cliente con el ID proporcionado.",
+  },
+  SISTEMA_NO_ENCONTRADO: {
+    codigo: 404,
+    mensaje: "No se encontró el sistema asociado al cliente.",
+  },
+
+  // 500 - Internal Server Error
+  ERROR_CONSULTAR_CLIENTE: {
+    codigo: 500,
+    mensaje: "Ocurrió un error al obtener la información del cliente.",
+  },
+  ERROR_CONSULTAR_SISTEMA: {
+    codigo: 500,
+    mensaje:
+      "Ocurrió un error al obtener la información del sistema del cliente.",
+  },
+};
