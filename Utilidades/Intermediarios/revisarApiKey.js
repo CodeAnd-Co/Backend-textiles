@@ -1,4 +1,4 @@
-const { MENSAJES_AUTENTICACION } = require("@altertex/util/const/mensajes");
+const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticacion");
 
 /**
  * Middleware que valida la API Key enviada en los headers de la solicitud.

@@ -1,4 +1,4 @@
-const { MENSAJES_AUTENTICACION } = require("@altertex/util/const/mensajes");
+const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticacion");
 
 /**
  * Controlador para el cierre de sesión de un usuario.

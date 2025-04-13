@@ -1,4 +1,4 @@
-const { MENSAJES_AUTENTICACION } = require("@altertex/util/const/mensajes");
+const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticacion");
 
 /**
  * Middleware que valida si el usuario autenticado tiene los permisos requeridos.
@@ -38,7 +38,8 @@ module.exports = (...permisosRequeridos) => {
     const permisosUsuario = usuario.permisos;
 
     const tienePermiso = permisosRequeridos.every((permiso) =>
-      permisosUsuario.includes(permiso));
+      permisosUsuario.includes(permiso)
+    );
 
     if (!tienePermiso) {
       return res

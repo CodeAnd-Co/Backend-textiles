@@ -1,5 +1,5 @@
 const correrQuery = require("@altertex/util/ser/correrQuery");
-const { USUARIOS } = require("@altertex/util/const/consultasSQL");
+const CONSULTAS_USUARIOS = require("@altertex/util/const/consultasUsuarios");
 
 /**
  * Obtiene la información y los permisos de un usuario a partir de su correo electrónico.
@@ -15,8 +15,8 @@ const { USUARIOS } = require("@altertex/util/const/consultasSQL");
  * @throws {Error} Si no se encuentra el usuario o ocurre un error en la consulta.
  */
 exports.obtenerUsuario = async (correoElectronico) => {
-  const queryUsuarios = USUARIOS.OBTENER_USUARIO;
-  const queryPermisos = USUARIOS.OBTENER_PERMISOS;
+  const queryUsuarios = CONSULTAS_USUARIOS.OBTENER_USUARIO;
+  const queryPermisos = CONSULTAS_USUARIOS.OBTENER_PERMISOS;
 
   try {
     const usuario = await correrQuery(queryUsuarios, [correoElectronico]);
