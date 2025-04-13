@@ -12,7 +12,7 @@ ruteador.post(
   RUTAS.CLIENTES.CONSULTAR_SISTEMA,
   revisarApiKey(),
   autorizarToken,
-  verificarPermisos(PERMISOS.LEER_CLIENTE),
+  verificarPermisos(PERMISOS.CONSULTAR_CLIENTES, PERMISOS.LEER_CLIENTE),
   controlador.consultarSistema
 );
 
