@@ -13,7 +13,7 @@ module.exports = {
     CONSULTAR_LISTA_USUARIOS: "/consultar-lista-usuarios",
     CREAR: "/crear",
     ELIMINAR: "/eliminar",
-    LEER: "/:idUsuario",
+    LEER: "/consultar-usuario",
   },
   API_DOCS: "/api-docs",
 };
