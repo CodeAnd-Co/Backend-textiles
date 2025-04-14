@@ -3,6 +3,10 @@ const ruteador = express.Router();
 const controlador = require("@altertex/aut/ctrl/inicioSesion.controller");
 const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
 
+/**
+ * RF78 - Iniciar Sesion - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF78
+ */
+
 const RUTAS = require("@altertex/util/const/rutas");
 
 /**

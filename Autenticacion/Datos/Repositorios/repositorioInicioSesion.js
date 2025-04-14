@@ -4,6 +4,8 @@ const CONSULTAS_USUARIOS = require("@altertex/util/const/consultasUsuarios");
 /**
  * Obtiene la información y los permisos de un usuario a partir de su correo electrónico.
  *
+ * RF78 - Iniciar Sesion - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF78
+ *
  * @async
  * @function obtenerUsuario
  * @param {string} correoElectronico - Correo electrónico del usuario a buscar.
@@ -17,21 +19,25 @@ const CONSULTAS_USUARIOS = require("@altertex/util/const/consultasUsuarios");
 exports.obtenerUsuario = async (correoElectronico) => {
   const queryUsuarios = CONSULTAS_USUARIOS.OBTENER_USUARIO;
   const queryPermisos = CONSULTAS_USUARIOS.OBTENER_PERMISOS;
+  const queryClientesAsociados = CONSULTAS_USUARIOS.OBTENER_CLIENTES_ASOCIADOS;
 
   try {
     const usuario = await correrQuery(queryUsuarios, [correoElectronico]);
     const resultadoPermisos = await correrQuery(queryPermisos, [
       correoElectronico,
     ]);
-
-    if (!usuario || usuario.length === 0) {
-      throw new Error("Usuario no encontrado");
-    }
+    const resultadoClientesAsociados = await correrQuery(
+      queryClientesAsociados,
+      [correoElectronico]
+    );
 
     const resultado = {
       infoUsuario: usuario,
       permisos: resultadoPermisos.map(
         (objetosPermisos) => objetosPermisos.nombre
+      ),
+      clientesAsociados: resultadoClientesAsociados.map(
+        (objetosClientes) => objetosClientes.idCliente
       ),
     };
 

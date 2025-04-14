@@ -11,7 +11,7 @@
  * const resultados = await runQuery('SELECT * FROM usuarios WHERE id = ?', [1]);
  */
 
-const conexion = require("@altertex/util/bd/db");
+const conexion = require("../Database/db");
 
 module.exports = async (query, params = []) => {
   return new Promise((resolver, rechazar) => {
