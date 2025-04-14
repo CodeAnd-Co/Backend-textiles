@@ -70,4 +70,8 @@ module.exports = {
     codigo: 500,
     mensaje: "Ocurrió un error al obtener la lista de usuarios.",
   },
+  ERROR_OBTENER_USUARIO: {
+    codigo: 500,
+    mensaje: "Ocurrió un error al obtener los datos del usuario.",
+  }
 };
