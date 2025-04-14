@@ -47,6 +47,10 @@ module.exports = {
     codigo: 400,
     mensaje: "Ya existe un usuario con este correo electrónico.",
   },
+  PARAMETROS_INVALIDOS: {
+    codigo: 400,
+    mensaje: "Los parámetros proporcionados no son válidos.",
+  },
 
   // 401 - sin autorizacion
   CREDENCIALES_INVALIDAS: {
@@ -58,6 +62,12 @@ module.exports = {
   ACCESO_DENEGADO: {
     codigo: 403,
     mensaje: "No tiene permiso para realizar esta acción sobre usuarios.",
+  },
+
+  // 404 - No encontrado
+  USUARIO_NO_ENCONTRADO: {
+    codigo: 404,
+    mensaje: "No se encontró un usuario con el ID proporcionado.",
   },
 
   // 500 - Server Error
