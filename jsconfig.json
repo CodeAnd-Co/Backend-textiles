@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@altertex/*": ["./*"],
+      "@altertex/aut/*": ["Autenticacion/*"],
+      "@altertex/aut/ctrl/*": ["Autenticacion/Controladores/*"],
+      "@altertex/aut/datos/*": ["Autenticacion/Datos/*"],
+      "@altertex/aut/repos/*": ["Autenticacion/Datos/Repositorios/*"],
+      "@altertex/aut/rutas/*": ["Autenticacion/Rutas/*"],
+      "@altertex/aut/rutasInd/*": ["Autenticacion/Rutas/RutasIndividuales/*"],
+      "@altertex/usu/*": ["Usuarios/*"],
+      "@altertex/usu/ctrl/*": ["Usuarios/Controladores/*"],
+      "@altertex/usu/datos/*": ["Usuarios/Datos/*"],
+      "@altertex/usu/repos/*": ["Usuarios/Datos/Repositorios/*"],
+      "@altertex/usu/rutas/*": ["Usuarios/Rutas/*"],
+      "@altertex/usu/rutasInd/*": ["Usuarios/Rutas/RutasIndividuales/*"],
+      "@altertex/config/*": ["Configuracion/*"],
+      "@altertex/util/*": ["Utilidades/*"],
+      "@altertex/util/bd/*": ["Utilidades/BaseDeDatos/*"],
+      "@altertex/util/const/*": ["Utilidades/Constantes/*"],
+      "@altertex/util/inter/*": ["Utilidades/Intermediarios/*"],
+      "@altertex/util/ser/*": ["Utilidades/Servicios/*"]
+    }
+  },
+  "include": ["**/*.js"]
+}
