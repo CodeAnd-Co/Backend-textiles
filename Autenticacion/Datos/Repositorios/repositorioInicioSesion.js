@@ -43,6 +43,6 @@ exports.obtenerUsuario = async (correoElectronico) => {
 
     return resultado;
   } catch (error) {
-    return `Error obteniendo usuario: ${error}`;
+    return `Error obteniendo usuario`;
   }
 };
