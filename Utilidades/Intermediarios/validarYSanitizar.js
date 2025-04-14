@@ -35,9 +35,9 @@ function validarYSanitizar(req, res, next) {
   for (const [llave, valor] of Object.entries(cuerpo)) {
     // Solo aceptamos strings, números o booleanos simples
     if (
-      typeof valor !== "string" &&
-      typeof valor !== "number" &&
-      typeof valor !== "boolean"
+      typeof valor !== "string"
+      && typeof valor !== "number"
+      && typeof valor !== "boolean"
     ) {
       return res
         .status(400)
