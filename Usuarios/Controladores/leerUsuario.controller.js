@@ -2,7 +2,7 @@ const repositorio = require("@altertex/usu/repos/repositorioLeerUsuario");
 const MENSAJES_USUARIOS = require("@altertex/util/const/mensajesUsuarios");
 
 exports.leerUsuario = async (req, res) => {
-  const idUsuario = parseInt(req.params.idUsuario);
+  const idUsuario = parseInt(req.body.idUsuario);
 
   if (isNaN(idUsuario)) {
     return res

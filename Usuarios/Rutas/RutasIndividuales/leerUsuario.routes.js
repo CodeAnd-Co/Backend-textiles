@@ -8,7 +8,7 @@ const verificarPermisos = require("@altertex/util/inter/verificarPermisos");
 const PERMISOS = require("@altertex/util/const/permisos");
 const RUTAS = require("@altertex/util/const/rutas");
 
-ruteador.get(
+ruteador.post(
   RUTAS.USUARIOS.LEER,
   revisarApiKey(),
   autorizarToken,

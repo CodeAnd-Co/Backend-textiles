@@ -12,7 +12,7 @@ module.exports = {
     BASE: "/usuarios",
     CREAR: "/crear",
     ELIMINAR: "/eliminar",
-    LEER: "/:idUsuario",
+    LEER: "/consultar-usuario",
   },
   API_DOCS: "/api-docs",
 };
