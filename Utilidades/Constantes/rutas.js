@@ -8,5 +8,9 @@ module.exports = {
     CERRAR_SESION: "/cerrar-sesion",
     USUARIO_AUTENTICADO: "/autenticar",
   },
+  CUOTAS: {
+    BASE: "/cuotas",
+    AGREGAR: "/crear-cuota",
+  },
   API_DOCS: "/api-docs",
 };
