@@ -32,6 +32,7 @@ exports.crearCuota = async (data) => {
       periodoRenovacion,
       renovacionHabilitada,
       productosYLimite,
+      fechaCreacion,
     } = data;
 
     const idCliente = 102; // TODO: Reemplazar con el ID real del cliente cuando esté disponible
@@ -42,6 +43,7 @@ exports.crearCuota = async (data) => {
       descripcion,
       periodoRenovacion,
       renovacionHabilitada,
+      fechaCreacion,
     ]);
 
     const cuotaSetId = resultado.insertId;

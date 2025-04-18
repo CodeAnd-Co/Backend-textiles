@@ -1,14 +1,14 @@
 const { validarCuotaSet } = require("@altertex/cuota/ctrl/validarCuotaSet");
 const repositorio = require("@altertex/cuota/repos/crearCuotaRepositorio");
-const mesesACron = require("@altertex/util/ser/mesesACron");
 
 exports.crearCuota = async (req, res) => {
   const cuotaSetModelo = req.body;
   try {
     validarCuotaSet(cuotaSetModelo.nombre, cuotaSetModelo.productosYLimite);
 
-    const cron = mesesACron(cuotaSetModelo.periodoRenovacion);
-    cuotaSetModelo.periodoRenovacion = cron;
+    const hoy = new Date();
+    const fechaFormateada = now.toISOString().split("T")[0];
+    cuotaSetModelo.fechaCreacion = fechaFormateada;
 
     const resultado = await repositorio.crearCuota(cuotaSetModelo);
 
