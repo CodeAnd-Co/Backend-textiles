@@ -14,5 +14,9 @@ module.exports = {
     ELIMINAR: "/eliminar",
     LEER: "/consultar-usuario",
   },
+  CATEGORIAS: {
+    BASE: "/categorias",
+    CONSULTAR_LISTA_CATEGORIAS: "/consultar-lista-categorias",
+  },
   API_DOCS: "/api-docs",
 };
