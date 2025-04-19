@@ -1,6 +1,31 @@
+/**
+ *
+ * RF31 - Crear Cuotas - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF31
+ *
+ * @file Función encargada de actualizar los límites y fechas de los cuota sets.
+ *
+ * @module repositorio/obtenerCuota
+ *
+ * @requires @altertex/util/bd/db
+ * @requires @altertex/util/const/consultasCuotas
+ */
+
 const db = require("@altertex/util/bd/db");
 const QUERY = require("@altertex/util/const/consultasCuotas");
 
+/**
+ * Actualiza los límites de productos de los cuota sets y sus fechas de última actualización.
+ *
+ * - Primero intenta resetear los límites (`QUERY.RESETEAR_LIMITES`).
+ * - Si se realiza al menos una modificación, actualiza las fechas (`QUERY.ACTUALIZAR_FECHAS`).
+ * - Si no se modifica ninguna fila, la transacción es revertida.
+ *
+ * @async
+ * @function
+ * @returns {Promise<Object>} Resultado de la operación. Puede ser un mensaje de éxito o de error.
+ *
+ * @throws {Error} Si ocurre un fallo en la transacción de base de datos.
+ */
 exports.obtenerCuota = async () => {
   const conexion = db.promise();
 
@@ -21,11 +46,11 @@ exports.obtenerCuota = async () => {
     );
 
     await conexion.commit();
-    console.log("Transacción exitosa");
+    console.log("Transacción exitosa", resultadoActualizacion);
 
     return { exito: "Actualizacion exitosa" };
   } catch (error) {
-    if (conexion) await conexion.rollback(); // Ensure rollback on error
+    if (conexion) await conexion.rollback();
     console.error("Transacción fallida: ", error);
     throw new Error("Error actualizando cuota sets");
   }
