@@ -9,6 +9,7 @@ const swaggerJSDoc = require("swagger-jsdoc");
 const opcionesSwagger = require("@altertex/config/swagger");
 const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
 const rutasAutenticacion = require("@altertex/aut/rutas/indexAutenticacion.routes");
+const rutasUsuarios = require("@altertex/usu/rutas/indexUsuarios.routes");
 
 const RUTAS = require("@altertex/util/const/rutas");
 
@@ -36,6 +37,7 @@ app.get(
 );
 
 app.use(RUTAS.API, rutasAutenticacion);
+app.use(RUTAS.API, rutasUsuarios);
 
 const swaggerSpec = swaggerJSDoc(opcionesSwagger);
 app.use(RUTAS.API_DOCS, swaggerUI.serve, swaggerUI.setup(swaggerSpec));
@@ -43,4 +45,5 @@ app.use(RUTAS.API_DOCS, swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.listen(puerto, () =>
   console.log(
     `Servidor corriendo en puerto ${puerto} [${process.env.NODE_ENV}]`
-  ));
+  )
+);

@@ -19,4 +19,21 @@ module.exports = {
       JOIN Permiso p ON rp.idPermiso = p.idPermiso
       WHERE u.correoElectronico = ?;
     `,
+  CREAR_USUARIO: `
+  INSERT INTO Usuario ( nombreCompleto, correoElectronico, contrasenia, numeroTelefono, direccion, fechaNacimiento, genero, estatus)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+  `,
+  ASIGNAR_ROL_A_USUARIO: `
+    INSERT INTO Usuario_Rol (idUsuario, idRol)
+    VALUES (?, ?);
+  `,
+  ASOCIAR_USUARIO_A_CLIENTE: `
+    INSERT INTO Usuario_Cliente (idUsuario, idCliente)
+    VALUES (?, ?);
+  `,
+  LEER_USUARIO: `
+    SELECT idUsuario, nombreCompleto, correoElectronico, numeroTelefono, direccion, fechaNacimiento, genero, estatus
+    FROM Usuario
+    WHERE idUsuario = ?;
+  `
 };
