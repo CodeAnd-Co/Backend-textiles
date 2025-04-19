@@ -13,6 +13,8 @@ const rutasCuotas = require("@altertex/cuota/rutas/indexCuotas.routes");
 
 const RUTAS = require("@altertex/util/const/rutas");
 
+const cronCuotas = require("@altertex/CRON/ctrl/actualizarCuotaSet.controller");
+
 const puerto = process.env.PORT || 5000;
 const app = express();
 
@@ -35,6 +37,8 @@ app.get(
     });
   }
 );
+
+cronCuotas.start();
 
 app.use(RUTAS.API, rutasAutenticacion);
 app.use(RUTAS.API, rutasCuotas);

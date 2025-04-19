@@ -27,15 +27,16 @@ exports.crearCuota = async (data) => {
     await conexion.beginTransaction();
 
     const {
+      idCliente,
       nombre,
       descripcion,
       periodoRenovacion,
       renovacionHabilitada,
       productosYLimite,
-      fechaCreacion,
+      ultimaActualizacion,
     } = data;
 
-    const idCliente = 102; // TODO: Reemplazar con el ID real del cliente cuando esté disponible
+    // const idCliente = 102; // TODO: Reemplazar con el ID real del cliente cuando esté disponible
 
     const [resultado] = await conexion.execute(QUERY.INSERTAR_CUOTA, [
       idCliente,
@@ -43,7 +44,7 @@ exports.crearCuota = async (data) => {
       descripcion,
       periodoRenovacion,
       renovacionHabilitada,
-      fechaCreacion,
+      ultimaActualizacion,
     ]);
 
     const cuotaSetId = resultado.insertId;
