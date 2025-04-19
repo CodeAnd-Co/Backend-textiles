@@ -1,25 +1,6 @@
 const db = require("@altertex/util/bd/db"); // Importa la conexión de la base de datos
 const QUERY = require("@altertex/util/const/consultasCuotas");
 
-/**
- * Crea una nueva cuota junto con sus productos asociados en la base de datos.
- * Utiliza una transacción para asegurar la integridad de los datos.
- *
- * @async
- * @function
- * @param {Object} data - Objeto con los datos necesarios para crear la cuota.
- * @param {string} data.nombre - Nombre de la cuota.
- * @param {string} data.descripcion - Descripción de la cuota.
- * @param {string} data.periodoRenovacion - Periodo de renovación (por ejemplo, mensual, anual).
- * @param {boolean} data.renovacionHabilitada - Indica si la renovación está habilitada.
- * @param {Array<Object>} data.productosYLimite - Lista de productos con sus límites asociados.
- * @param {number|string} data.productosYLimite[].idProducto - ID o código del producto.
- * @param {number} data.productosYLimite[].limite - Límite total del producto.
- * @param {number} data.productosYLimite[].limiteActual - Límite actual disponible del producto.
- *
- * @returns {Promise<number>} El ID del conjunto de cuotas creado.
- * @throws {Error} Si ocurre un error durante la transacción.
- */
 exports.crearCuota = async (data) => {
   const conexion = db.promise();
 

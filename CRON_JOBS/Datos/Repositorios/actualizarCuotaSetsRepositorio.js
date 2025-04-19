@@ -12,7 +12,7 @@ exports.obtenerCuota = async () => {
     if (resultadoReseteo.changedRows === 0) {
       await conexion.rollback();
       return {
-        mensaje: "Ninguna columna se actualizo.No se actualizara la fecha.",
+        error: "Ninguna columna se actualizo.No se actualizara la fecha.",
       };
     }
 
@@ -23,7 +23,7 @@ exports.obtenerCuota = async () => {
     await conexion.commit();
     console.log("Transacción exitosa");
 
-    return { mensaje: "Actualizacion exitosa" };
+    return { exito: "Actualizacion exitosa" };
   } catch (error) {
     if (conexion) await conexion.rollback(); // Ensure rollback on error
     console.error("Transacción fallida: ", error);
