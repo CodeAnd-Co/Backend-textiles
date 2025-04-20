@@ -19,4 +19,9 @@ module.exports = {
     SET ultimaActualizacion = CURRENT_DATE()
     WHERE DATE_ADD(ultimaActualizacion, INTERVAL periodoRenovacion MONTH) <= CURRENT_DATE();
   `,
+  OBTENER_OPCIONES: `
+    SELECT idProducto, nombreComun, tipoProducto
+    FROM producto
+    WHERE idCliente = ?;
+  `,
 };

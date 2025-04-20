@@ -11,6 +11,7 @@ module.exports = {
   CUOTAS: {
     BASE: "/cuotas",
     AGREGAR: "/crear-cuota",
+    OPCIONES: "/obtener-opciones",
   },
   API_DOCS: "/api-docs",
 };
