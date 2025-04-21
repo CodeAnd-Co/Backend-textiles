@@ -38,8 +38,7 @@ module.exports = (...permisosRequeridos) => {
     const permisosUsuario = usuario.permisos;
 
     const tienePermiso = permisosRequeridos.every((permiso) =>
-      permisosUsuario.includes(permiso)
-    );
+      permisosUsuario.includes(permiso));
 
     if (!tienePermiso) {
       return res

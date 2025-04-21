@@ -3,6 +3,8 @@ const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticaci
 /**
  * Controlador para el cierre de sesión de un usuario.
  *
+ * RF78 - Iniciar Sesion - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF78
+ *
  * @async
  * @function cerrarSesion
  * @param {Object} req - Objeto de solicitud de Express.

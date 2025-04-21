@@ -1,7 +1,7 @@
 {
-  "name": "prueba-arquitectura-backend-textiles",
+  "name": "backend-textiles",
   "version": "1.0.0",
-  "description": "prueba de arquitectura del backend utilizando AWS para el proyecto de textiles Code&amp;Co",
+  "description": "Backend del proyecto para Altertex del departamento CodeCode",
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js",
