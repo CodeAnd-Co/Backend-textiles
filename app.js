@@ -11,7 +11,7 @@ const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
 const rutasAutenticacion = require("@altertex/aut/rutas/indexAutenticacion.routes");
 const rutasEmpleados = require("@altertex/emp/rutas/indexEmpleados.routes");
 const rutasClientes = require("@altertex/cli/rutas/indexClientes.routes");
-
+const rutasRoles = require('@altertex/rol/rutas/indexRoles.routes');
 const RUTAS = require("@altertex/util/const/rutas");
 
 const puerto = process.env.PORT || 5000;
@@ -40,6 +40,7 @@ app.get(
 app.use(RUTAS.API, rutasAutenticacion);
 app.use(RUTAS.API, rutasEmpleados);
 app.use(RUTAS.API, rutasClientes);
+app.use(RUTAS.API, rutasRoles);
 
 const swaggerSpec = swaggerJSDoc(opcionesSwagger);
 app.use(RUTAS.API_DOCS, swaggerUI.serve, swaggerUI.setup(swaggerSpec));

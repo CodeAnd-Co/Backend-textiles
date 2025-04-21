@@ -16,5 +16,9 @@ module.exports = {
     BASE: "/empleados",
     CONSULTAR_LISTA: "/consultar-lista",
   },
+  ROLES: {
+    BASE: "/roles",
+    CONSULTAR_LISTA: "/consultar-lista",
+  },
   API_DOCS: "/api-docs",
 };
