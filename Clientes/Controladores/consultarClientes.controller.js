@@ -1,0 +1,26 @@
+const repositorio = require("@altertex/cli/repos/repositorioObtenerLista");
+const MENSAJES_CLIENTES = require("@altertex/util/const/mensajesClientes");
+
+exports.consultarLista = async (req, res) => {
+  try {
+    const listaClientes = await repositorio.obtenerLista();
+
+    if (!Array.isArray(listaClientes) || listaClientes.length === 0) {
+      return res
+        .status(MENSAJES_CLIENTES.LISTA_CLIENTES_VACIA.codigo)
+        .json({ mensaje: MENSAJES_CLIENTES.LISTA_CLIENTES_VACIA.mensaje });
+    }
+
+    return res.status(MENSAJES_CLIENTES.CONSULTA_LISTA_EXITOSA.codigo).json({
+      mensaje: MENSAJES_CLIENTES.CONSULTA_LISTA_EXITOSA.mensaje,
+      clientes: listaClientes,
+    });
+  } catch (error) {
+    console.error("Error al consultar lista de clientes:", error);
+    return res
+      .status(MENSAJES_CLIENTES.ERROR_CONSULTAR_LISTA_CLIENTES.codigo)
+      .json({
+        mensaje: MENSAJES_CLIENTES.ERROR_CONSULTAR_LISTA_CLIENTES.mensaje,
+      });
+  }
+};

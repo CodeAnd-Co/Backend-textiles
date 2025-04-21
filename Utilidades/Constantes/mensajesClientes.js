@@ -4,11 +4,19 @@ module.exports = {
     codigo: 200,
     mensaje: "Información del cliente obtenida exitosamente.",
   },
+  CONSULTA_LISTA_EXITOSA: {
+    codigo: 200,
+    mensaje: "Lista de clientes obtenida exitosamente.",
+  },
 
   // 204 - No Content
   CLIENTE_SIN_SISTEMA: {
     codigo: 204,
     mensaje: "El cliente no tiene un sistema registrado.",
+  },
+  LISTA_CLIENTES_VACIA: {
+    codigo: 204,
+    mensaje: "No hay clientes registrados actualmente.",
   },
 
   // 400 - Bad Request
@@ -47,5 +55,9 @@ module.exports = {
     codigo: 500,
     mensaje:
       "Ocurrió un error al obtener la información del sistema del cliente.",
+  },
+  ERROR_CONSULTAR_LISTA_CLIENTES: {
+    codigo: 500,
+    mensaje: "Ocurrió un error al obtener la lista de clientes.",
   },
 };
