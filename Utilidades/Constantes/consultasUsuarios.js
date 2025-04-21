@@ -32,8 +32,19 @@ module.exports = {
     VALUES (?, ?);
   `,
   LEER_USUARIO: `
-    SELECT idUsuario, nombreCompleto, correoElectronico, numeroTelefono, direccion, fechaNacimiento, genero, estatus
-    FROM Usuario
-    WHERE idUsuario = ?;
-  `
+    SELECT 
+      u.idUsuario,
+      u.nombreCompleto,
+      u.correoElectronico,
+      u.numeroTelefono,
+      u.direccion,
+      u.fechaNacimiento,
+      u.genero,
+      u.estatus,
+      r.nombre AS rol
+    FROM Usuario u
+    JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
+    JOIN rol r ON ur.idRol = r.idRol
+    WHERE u.idUsuario = ?;
+  `,
 };
