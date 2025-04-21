@@ -7,6 +7,8 @@ const rutasCerrarSesion = require("@altertex/aut/rutasInd/cerrarSesion.routes");
 const RUTAS = require("@altertex/util/const/rutas");
 
 ruteador.use(RUTAS.AUTENTICACION.BASE, rutasAutenticacionSesion);
+
+//RF78 - Iniciar Sesion - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF78
 ruteador.use(RUTAS.AUTENTICACION.BASE, rutasInicioSesion);
 ruteador.use(RUTAS.AUTENTICACION.BASE, rutasCerrarSesion);
 

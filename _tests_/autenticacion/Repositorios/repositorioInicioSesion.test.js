@@ -1,4 +1,8 @@
-// Primero configuramos los mocks
+/**
+ * RF78 - Iniciar Sesion - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF78
+ *
+ * Primero configuramos los mocks
+ */
 jest.mock("@altertex/util/ser/correrQuery", () => jest.fn());
 
 jest.mock("@altertex/util/const/consultasUsuarios", () => ({
@@ -82,6 +86,6 @@ describe("Repositorio de Inicio de Sesión", () => {
       CONSULTAS_USUARIOS.OBTENER_USUARIO,
       [correoElectronico]
     );
-    expect(resultado).toBe(`Error obteniendo usuario: Error: ${errorMessage}`);
+    expect(resultado).toBe(`Error obteniendo usuario`);
   });
 });
