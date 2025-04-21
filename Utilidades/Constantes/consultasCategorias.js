@@ -1,9 +1,10 @@
 module.exports = {
     OBTENER_CATEGORIAS_CON_PRODUCTOS: `
       SELECT 
+        c.idCategoria,
         c.nombreCategoria, 
         c.descripcion, 
-        COUNT(cp.idProducto)
+        COUNT(cp.idProducto) AS cantidadProductos
       FROM 
         CATEGORIA c
       LEFT JOIN 
