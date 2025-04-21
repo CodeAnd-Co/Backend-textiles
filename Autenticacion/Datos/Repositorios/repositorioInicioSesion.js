@@ -42,7 +42,7 @@ exports.obtenerUsuario = async (correoElectronico) => {
     };
 
     return resultado;
-  } catch (error) {
-    return `Error obteniendo usuario: ${error}`;
+  } catch {
+    return `Error obteniendo usuario`;
   }
 };

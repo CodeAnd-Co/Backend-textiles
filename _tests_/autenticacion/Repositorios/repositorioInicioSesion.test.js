@@ -86,6 +86,6 @@ describe("Repositorio de Inicio de Sesión", () => {
       CONSULTAS_USUARIOS.OBTENER_USUARIO,
       [correoElectronico]
     );
-    expect(resultado).toBe(`Error obteniendo usuario: Error: ${errorMessage}`);
+    expect(resultado).toBe(`Error obteniendo usuario`);
   });
 });

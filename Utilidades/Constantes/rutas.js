@@ -12,6 +12,14 @@ module.exports = {
     BASE: "/usuarios",
     CREAR: "/crear",
     ELIMINAR: "/eliminar",
+    CLIENTES: {
+      BASE: "/clientes",
+      CONSULTAR_SISTEMA: "/consultar-sistema",
+    },
+    EMPLEADOS: {
+      BASE: "/empleados",
+      CONSULTAR_LISTA: "/consultar-lista",
+    },
+    API_DOCS: "/api-docs",
   },
-  API_DOCS: "/api-docs",
 };
