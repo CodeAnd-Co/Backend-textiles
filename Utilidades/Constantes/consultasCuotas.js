@@ -20,7 +20,7 @@ module.exports = {
     WHERE DATE_ADD(ultimaActualizacion, INTERVAL periodoRenovacion MONTH) <= CURRENT_DATE();
   `,
   OBTENER_OPCIONES: `
-    SELECT idProducto, nombreComun, tipoProducto
+    SELECT idProducto as id, nombreComun as nombreProducto, tipoProducto as tipo
     FROM producto
     WHERE idCliente = ?;
   `,
