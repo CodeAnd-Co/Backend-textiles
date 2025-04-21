@@ -14,6 +14,8 @@ const swaggerUI = require("swagger-ui-express");
 
 //Importaciones de rutas
 const rutasAutenticacion = require("@altertex/aut/rutas/indexAutenticacion.routes");
+const rutasEmpleados = require("@altertex/emp/rutas/indexEmpleados.routes");
+const rutasClientes = require("@altertex/cli/rutas/indexClientes.routes");
 const rutasCuotas = require("@altertex/cuota/rutas/indexCuotas.routes");
 const RUTAS = require("@altertex/util/const/rutas");
 
@@ -32,6 +34,8 @@ cronCuotas.start();
 
 //Usar las rutas para que esten disponibles en la aplicacion
 app.use(RUTAS.API, rutasAutenticacion);
+app.use(RUTAS.API, rutasEmpleados);
+app.use(RUTAS.API, rutasClientes);
 app.use(RUTAS.API, rutasCuotas);
 
 //Configuracion de swaggerUI
@@ -41,4 +45,5 @@ app.use(RUTAS.API_DOCS, swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.listen(puerto, () =>
   console.log(
     `Servidor corriendo en puerto ${puerto} [${process.env.NODE_ENV}]`
-  ));
+  )
+);
