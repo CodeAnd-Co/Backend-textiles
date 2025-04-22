@@ -3,7 +3,6 @@ const ruteador = express.Router();
 const controlador = require("@altertex/cuota/ctrl/obtenerOpcionesCuotas.controller");
 
 const RUTAS = require("@altertex/util/const/rutas");
-const validarYSanitizar = require("@altertex/util/inter/validarYSanitizar");
 const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
 
 ruteador.get(

@@ -12,7 +12,8 @@ module.exports = {
     UPDATE cuota_set_producto
     JOIN cuota_set ON cuota_set_producto.idCuotaSet = cuota_set.idCuotaSet
     SET cuota_set_producto.limite_actual = cuota_set_producto.limite
-    WHERE DATE_ADD(cuota_set.ultimaActualizacion, INTERVAL cuota_set.periodoRenovacion MONTH) <= CURRENT_DATE();`,
+    WHERE DATE_ADD(cuota_set.ultimaActualizacion, INTERVAL cuota_set.periodoRenovacion MONTH) <= CURRENT_DATE()
+    AND renovacionHabilitada = true;`,
 
   ACTUALIZAR_FECHAS: `
     UPDATE cuota_set
