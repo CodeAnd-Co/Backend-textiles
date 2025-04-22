@@ -5,7 +5,7 @@ const MENSAJES_USUARIOS = require("@altertex/util/const/mensajesUsuarios");
 
 /**
  * Controlador para crear un nuevo usuario.
- *
+ * RF1 - Crear Usuario - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF1
  * @async
  * @function crearUsuario
  * @param {Object} req - Objeto de solicitud de Express.
