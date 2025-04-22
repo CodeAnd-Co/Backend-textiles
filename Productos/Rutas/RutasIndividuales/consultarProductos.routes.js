@@ -42,7 +42,7 @@ const RUTAS = require("@altertex/util/const/rutas");
  *         description: Error al obtener los productos
  */
 
-ruteador.post(
+ruteador.get(
   RUTAS.PRODUCTOS.CONSULTAR_LISTA,
   revisarApiKey(),
   autorizarToken,
