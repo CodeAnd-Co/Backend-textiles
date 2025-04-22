@@ -8,6 +8,11 @@ module.exports = {
     CERRAR_SESION: "/cerrar-sesion",
     USUARIO_AUTENTICADO: "/autenticar",
   },
+  USUARIOS: {
+    BASE: "/usuarios",
+    CREAR: "/crear",
+    ELIMINAR: "/eliminar",
+  },
   PRODUCTOS: {
     BASE: "/productos",
     CONSULTAR_LISTA: "/consultar-lista",
