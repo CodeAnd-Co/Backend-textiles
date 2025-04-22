@@ -29,6 +29,15 @@ module.exports = {
     codigo: 400,
     mensaje: "El ID del cliente debe ser un número entero válido.",
   },
+  LISTA_CLIENTES_INVALIDA: {
+    codigo: 400,
+    mensaje:
+      "La lista de clientes asociados es inválida o no contiene IDs numéricos válidos.",
+  },
+  CLIENTES_ASOCIADOS_NO_PROPORCIONADOS: {
+    codigo: 400,
+    mensaje: "No se proporcionó la lista de clientes asociados.",
+  },
 
   // 403 - Forbidden
   ACCESO_NO_AUTORIZADO: {

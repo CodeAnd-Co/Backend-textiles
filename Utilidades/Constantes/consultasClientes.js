@@ -9,6 +9,7 @@ module.exports = {
         FROM Cliente c
         JOIN Imagen_Cliente ic ON c.idCliente = ic.idCliente
         JOIN Imagen i ON ic.idImagen = i.idImagen
-        WHERE i.tipoImagen LIKE 'Logo';
+        WHERE i.tipoImagen LIKE 'Logo'
+        AND c.idCliente IN (?);
     `,
 };

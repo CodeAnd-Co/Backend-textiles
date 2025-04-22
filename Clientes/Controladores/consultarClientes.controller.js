@@ -2,8 +2,28 @@ const repositorio = require("@altertex/cli/repos/repositorioObtenerLista");
 const MENSAJES_CLIENTES = require("@altertex/util/const/mensajesClientes");
 
 exports.consultarLista = async (req, res) => {
+  let clientesAsociados = req.user.clientesAsociados;
+
+  if (!Array.isArray(clientesAsociados)) {
+    return res
+      .status(MENSAJES_CLIENTES.CLIENTES_ASOCIADOS_NO_PROPORCIONADOS.codigo)
+      .json({
+        mensaje: MENSAJES_CLIENTES.CLIENTES_ASOCIADOS_NO_PROPORCIONADOS.mensaje,
+      });
+  }
+
+  clientesAsociados = clientesAsociados
+    .map((id) => parseInt(id))
+    .filter((id) => !isNaN(id));
+
+  if (clientesAsociados.length === 0) {
+    return res
+      .status(MENSAJES_CLIENTES.LISTA_CLIENTES_INVALIDA.codigo)
+      .json({ mensaje: MENSAJES_CLIENTES.LISTA_CLIENTES_INVALIDA.mensaje });
+  }
+
   try {
-    const listaClientes = await repositorio.obtenerLista();
+    const listaClientes = await repositorio.obtenerLista(clientesAsociados);
 
     if (!Array.isArray(listaClientes) || listaClientes.length === 0) {
       return res

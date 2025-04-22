@@ -2,17 +2,19 @@ const correrQuery = require("@altertex/util/ser/correrQuery");
 const CONSULTAS_CLIENTES = require("@altertex/util/const/consultasClientes");
 
 /**
- * Obtiene la lista completa de clientes registrados.
+ * Obtiene la lista de clientes asociados según los IDs proporcionados.
  *
  * @async
- * @function obtenerListaClientes
- * @returns {Promise<Object[]|string>} Arreglo con la información de todos los clientes,
+ * @function obtenerLista
+ * @param {number[]} clientesAsociados - Arreglo de IDs de clientes asociados al usuario.
+ * @returns {Promise<Object[]|string>} Arreglo con la información de los clientes,
  * o un string con un mensaje de error si ocurre un fallo durante la operación.
  */
-exports.obtenerLista = async () => {
+exports.obtenerLista = async (clientesAsociados) => {
   try {
     const query = CONSULTAS_CLIENTES.OBTENER_LISTA;
-    const resultado = await correrQuery(query);
+
+    const resultado = await correrQuery(query, [clientesAsociados]);
 
     return resultado;
   } catch (error) {
