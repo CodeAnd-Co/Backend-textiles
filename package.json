@@ -72,7 +72,7 @@
     "@altertex/rol/datos": "Roles/Datos",
     "@altertex/rol/repos": "Roles/Datos/Repositorios",
     "@altertex/rol/rutas": "Roles/Rutas",
-    "@altertex/rol/rutasInd": "Roles/Rutas/RutasIndividuales"
+    "@altertex/rol/rutasInd": "Roles/Rutas/RutasIndividuales",
     "@altertex/pro": "Productos/",
     "@altertex/pro/ctrl": "Productos/Controladores/",
     "@altertex/pro/datos": "Productos/Datos/",
