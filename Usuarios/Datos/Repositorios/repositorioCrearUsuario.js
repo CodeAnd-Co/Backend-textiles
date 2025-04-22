@@ -3,7 +3,7 @@ const CONSULTAS_USUARIOS = require("@altertex/util/const/consultasUsuarios");
 
 /**
  * Inserta un nuevo usuario en la base de datos MySQL.
- *
+ * RF1 - Crear Usuario - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF1
  * @async
  * @function crearUsuario
  * @param {string} nombreCompleto - Nombre completo del usuario.
@@ -25,9 +25,7 @@ const CONSULTAS_USUARIOS = require("@altertex/util/const/consultasUsuarios");
  * definida en `consultasUsuarios.crearUsuarioQuery` y el servicio `correrQuery`.
  */
 
-// Función para insertar un nuevo usuario en la base de datos MySQL
 exports.crearUsuario = async (
-  // idUsuario,
   nombreCompleto,
   correoElectronico,
   contrasenia,
@@ -40,7 +38,6 @@ exports.crearUsuario = async (
   const query = CONSULTAS_USUARIOS.CREAR_USUARIO;
   try {
     const resultado = await correrQuery(query, [
-      // idUsuario,
       nombreCompleto,
       correoElectronico,
       contrasenia,

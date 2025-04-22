@@ -15,5 +15,18 @@ module.exports = {
     ELIMINAR: "/eliminar",
     LEER: "/consultar-usuario",
   },
+  PRODUCTOS: {
+    BASE: "/productos",
+    CONSULTAR_LISTA: "/consultar-lista",
+  },
+  CLIENTES: {
+    BASE: "/clientes",
+    CONSULTAR_SISTEMA: "/consultar-sistema",
+    CONSULTAR_LISTA: "/consultar-lista",
+  },
+  EMPLEADOS: {
+    BASE: "/empleados",
+    CONSULTAR_LISTA: "/consultar-lista",
+  },
   API_DOCS: "/api-docs",
 };
