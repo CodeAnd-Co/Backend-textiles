@@ -4,6 +4,8 @@ const CONSULTAS_CLIENTES = require("@altertex/util/const/consultasClientes");
 /**
  * Obtiene la información de un cliente a partir de su ID.
  *
+ * RF12 - Consulta Lista de Clientes - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF12
+ *
  * @async
  * @function obtenerCliente
  * @param {number} idCliente - ID del cliente a buscar.

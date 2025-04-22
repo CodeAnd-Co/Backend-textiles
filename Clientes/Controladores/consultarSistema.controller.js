@@ -2,6 +2,32 @@ const jwt = require("jsonwebtoken");
 const repositorio = require("@altertex/cli/repos/repositorioObtenerCliente");
 const MENSAJES_CLIENTES = require("@altertex/util/const/mensajesClientes");
 
+/**
+ * Controlador para consultar el sistema de un cliente específico.
+ *
+ *
+ * @async
+ * @function consultarSistema
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.user - Información del usuario autenticado (inyectada por middleware).
+ * @param {string} req.user.correo - Correo electrónico del usuario autenticado.
+ * @param {Array<string>} req.user.permisos - Permisos del usuario.
+ * @param {Array<number>} req.user.clientesAsociados - Lista de IDs de clientes a los que el usuario tiene acceso.
+ * @param {Object} req.body - Cuerpo de la solicitud.
+ * @param {string|number} req.body.idCliente - ID del cliente que se desea consultar.
+ *
+ * @param {Object} res - Objeto de respuesta de Express.
+ *
+ * @returns {Response} Respuesta HTTP con estado:
+ * - 200 si la consulta es exitosa y se emite un nuevo token con el cliente seleccionado.
+ * - 400 si el formato del ID del cliente no es válido (idCliente no es un número).
+ * - 403 si el usuario no está autorizado para consultar ese cliente (no tiene acceso al cliente).
+ * - 404 si el cliente no tiene sistema asociado (no se encuentra en la base de datos).
+ * - 500 si ocurre un error en el servidor al consultar el sistema.
+ *
+ * @throws {Error} Si ocurre un error inesperado durante la operación.
+ */
+
 exports.consultarSistema = async (req, res) => {
   const idCliente = parseInt(req.body.idCliente);
   const { correo, permisos, clientesAsociados } = req.user;

@@ -13,9 +13,14 @@ module.exports = {
     CREAR: "/crear",
     ELIMINAR: "/eliminar",
   },
+  PRODUCTOS: {
+    BASE: "/productos",
+    CONSULTAR_LISTA: "/consultar-lista",
+  },
   CLIENTES: {
     BASE: "/clientes",
     CONSULTAR_SISTEMA: "/consultar-sistema",
+    CONSULTAR_LISTA: "/consultar-lista",
   },
   EMPLEADOS: {
     BASE: "/empleados",

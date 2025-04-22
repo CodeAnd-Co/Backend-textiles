@@ -4,11 +4,11 @@ const controlador = require("@altertex/aut/ctrl/inicioSesion.controller");
 const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
 const validarYSanitizar = require("@altertex/util/inter/validarYSanitizar");
 
+const RUTAS = require("@altertex/util/const/rutas");
+
 /**
  * RF78 - Iniciar Sesion - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF78
  */
-
-const RUTAS = require("@altertex/util/const/rutas");
 
 /**
  * @swagger
