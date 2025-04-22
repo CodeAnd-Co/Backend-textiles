@@ -1,5 +1,7 @@
 const repositorio = require("@altertex/cli/repos/repositorioObtenerLista");
+const obtenerImagenFolder = require("@altertex/util/ser/obtenerImagenFolder");
 const MENSAJES_CLIENTES = require("@altertex/util/const/mensajesClientes");
+const MENSAJES_IMAGENES = require("@altertex/util/const/mensajesImagenes");
 
 exports.consultarLista = async (req, res) => {
   let clientesAsociados = req.user.clientesAsociados;
@@ -31,16 +33,29 @@ exports.consultarLista = async (req, res) => {
         .json({ mensaje: MENSAJES_CLIENTES.LISTA_CLIENTES_VACIA.mensaje });
     }
 
+    req.productos = listaClientes;
+    const folder = "clientes/";
+
+    const listaClientesConImagen = await obtenerImagenFolder(req, folder);
+
     return res.status(MENSAJES_CLIENTES.CONSULTA_LISTA_EXITOSA.codigo).json({
       mensaje: MENSAJES_CLIENTES.CONSULTA_LISTA_EXITOSA.mensaje,
-      clientes: listaClientes,
+      clientes: listaClientesConImagen,
     });
   } catch (error) {
     console.error("Error al consultar lista de clientes:", error);
+
+    if (error.code === "NoSuchKey" || error.code === "NotFound") {
+      return res.status(MENSAJES_IMAGENES.IMAGEN_NO_DISPONIBLE.codigo).json({
+        mensaje: MENSAJES_IMAGENES.IMAGEN_NO_DISPONIBLE.mensaje,
+      });
+    }
+
     return res
       .status(MENSAJES_CLIENTES.ERROR_CONSULTAR_LISTA_CLIENTES.codigo)
       .json({
         mensaje: MENSAJES_CLIENTES.ERROR_CONSULTAR_LISTA_CLIENTES.mensaje,
+        error: error.message,
       });
   }
 };
