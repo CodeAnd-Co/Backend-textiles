@@ -1,4 +1,5 @@
 module.exports = {
+  //RF[27] Consulta Lista de Productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27]
   OBTENER_LISTA: `
     SELECT p.idProducto, p.nombreComun, p.precioVenta, p.estado, i.urlImagen
     FROM Producto p

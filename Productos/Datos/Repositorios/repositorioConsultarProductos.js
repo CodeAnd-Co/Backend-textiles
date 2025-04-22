@@ -1,3 +1,4 @@
+//RF[27] Consulta Lista de Productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27]
 const correrQuery = require("@altertex/util/ser/correrQuery");
 const consultas = require("@altertex/util/const/consultasProductos");
 /**

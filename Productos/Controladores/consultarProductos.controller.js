@@ -1,3 +1,4 @@
+//RF[27] Consulta Lista de Productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27]
 const repositorio = require("@altertex/pro/repos/repositorioConsultarProductos");
 const obtenerImagenFolder = require("@altertex/util/ser/obtenerImagenFolder");
 
