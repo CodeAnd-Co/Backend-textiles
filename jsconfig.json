@@ -26,7 +26,13 @@
       "@altertex/util/bd/*": ["Utilidades/BaseDeDatos/*"],
       "@altertex/util/const/*": ["Utilidades/Constantes/*"],
       "@altertex/util/inter/*": ["Utilidades/Intermediarios/*"],
-      "@altertex/util/ser/*": ["Utilidades/Servicios/*"]
+      "@altertex/util/ser/*": ["Utilidades/Servicios/*"],
+      "@altertex/pro/*": ["Productos/*"],
+      "@altertex/pro/ctrl/*": ["Productos/Controladores/*"],
+      "@altertex/pro/datos/*": ["Productos/Datos/*"],
+      "@altertex/pro/repos/*": ["Productos/Datos/Repositorios/*"],
+      "@altertex/pro/rutas/*": ["Productos/Rutas/*"],
+      "@altertex/pro/rutasInd/*": ["Productos/Rutas/RutasIndividuales/*"]
     }
   },
   "include": ["**/*.js"]
