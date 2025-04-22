@@ -1,4 +1,3 @@
-/* eslint-disable operator-linebreak */
 const repositorio = require("@altertex/usu/repos/repositorioCrearUsuario");
 const bcrypt = require("bcryptjs");
 const MENSAJES_USUARIOS = require("@altertex/util/const/mensajesUsuarios");
@@ -27,7 +26,10 @@ const MENSAJES_USUARIOS = require("@altertex/util/const/mensajesUsuarios");
  * - 500 si ocurre un error en el servidor.
  *
  * @throws {Error}
+ *
  */
+/* eslint-disable operator-linebreak */
+
 exports.crearUsuario = async (req, res) => {
   const {
     nombreCompleto,
@@ -42,7 +44,6 @@ exports.crearUsuario = async (req, res) => {
     idCliente,
   } = req.body;
 
-  // Validar que todos los campos requeridos estén presentes
   if (
     !nombreCompleto ||
     !correoElectronico ||
@@ -58,7 +59,6 @@ exports.crearUsuario = async (req, res) => {
     return res.status(400).json({ mensaje: "Faltan campos requeridos" });
   }
 
-  // Validar que el correo electrónico tenga un formato válido
   const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!correoValido.test(correoElectronico)) {
     return res
@@ -66,7 +66,6 @@ exports.crearUsuario = async (req, res) => {
       .json({ mensaje: MENSAJES_USUARIOS.CORREO_INVALIDO.mensaje });
   }
 
-  // Validar que la contraseña tenga al menos 8 caracteres y contenga un carácter especial
   const tieneCaracterEspecial = /[!@#$%^&*(),.?":{}|<>]/;
   if (contrasenia.length < 8) {
     return res
@@ -80,7 +79,6 @@ exports.crearUsuario = async (req, res) => {
       .json({ mensaje: MENSAJES_USUARIOS.CONTRASENA_DEBIL.mensaje });
   }
 
-  // Validar que el número de teléfono tenga un formato válido (10 dígitos)
   const telefonoValido = /^\d{10}$/;
   if (!telefonoValido.test(numeroTelefono)) {
     return res
