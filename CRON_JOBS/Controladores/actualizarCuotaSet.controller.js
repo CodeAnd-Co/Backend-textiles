@@ -19,7 +19,7 @@ const cron = require("node-cron");
 const repositorio = require("@altertex/CRON/repos/actualizarCuotaSetsRepositorio");
 
 /**
- * Tarea programada que se ejecuta cada 5 minutos.
+ * Tarea programada que se ejecuta a las 00:00.
  * Ejecuta `repositorio.obtenerCuota` para actualizar información relacionada con los cuota sets.
  */
 module.exports = cron.schedule("0 0 * * *", async () => {
