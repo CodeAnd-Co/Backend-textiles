@@ -1,16 +1,15 @@
-const correrQuery = require("../../../util/services/correrQuery");
-const consultas = require("../../../util/Consultas/Productos/consultasProductos");
+const correrQuery = require("@altertex/util/ser/correrQuery");
+const consultas = require("@altertex/util/const/consultasProductos");
 /**
  *
  * @function obtenerProductos}
  * @description Obtiene los productos de la base de datos.
  * @param void
  */
-exports.obtenerProductos = async () => {
-  const query = consultas.obtenerProductosQuery;
-
+exports.obtenerProductos = async (clienteSeleccionado) => {
+  const query = consultas.OBTENER_LISTA;
   try {
-    const resultados = await correrQuery(query);
+    const resultados = await correrQuery(query, [clienteSeleccionado]);
     return resultados;
   } catch (error) {
     console.error("Error al obtener los productos:", error);
