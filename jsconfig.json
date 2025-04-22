@@ -33,6 +33,12 @@
       "@altertex/rol/repos/*": ["Roles/Datos/Repositorios/*"],
       "@altertex/rol/rutas/*": ["Roles/Rutas/*"],
       "@altertex/rol/rutasInd/*": ["Roles/Rutas/RutasIndividuales/*"]
+      "@altertex/pro/*": ["Productos/*"],
+      "@altertex/pro/ctrl/*": ["Productos/Controladores/*"],
+      "@altertex/pro/datos/*": ["Productos/Datos/*"],
+      "@altertex/pro/repos/*": ["Productos/Datos/Repositorios/*"],
+      "@altertex/pro/rutas/*": ["Productos/Rutas/*"],
+      "@altertex/pro/rutasInd/*": ["Productos/Rutas/RutasIndividuales/*"]
     }
   },
   "include": ["**/*.js"]
