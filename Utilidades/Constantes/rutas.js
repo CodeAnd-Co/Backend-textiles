@@ -8,6 +8,11 @@ module.exports = {
     CERRAR_SESION: "/cerrar-sesion",
     USUARIO_AUTENTICADO: "/autenticar",
   },
+  USUARIOS: {
+    BASE: "/usuarios",
+    CREAR: "/crear",
+    ELIMINAR: "/eliminar",
+  },
   PRODUCTOS: {
     BASE: "/productos",
     CONSULTAR_LISTA: "/consultar-lista",
@@ -15,10 +20,17 @@ module.exports = {
   CLIENTES: {
     BASE: "/clientes",
     CONSULTAR_SISTEMA: "/consultar-sistema",
+    CONSULTAR_LISTA: "/consultar-lista",
   },
   EMPLEADOS: {
     BASE: "/empleados",
     CONSULTAR_LISTA: "/consultar-lista",
+    CONSULTAR_GRUPO: "/consultar-grupo",
+  },
+  CUOTAS: {
+    BASE: "/cuotas",
+    AGREGAR: "/crear-cuota",
+    OPCIONES: "/obtener-opciones",
   },
   ROLES: {
     BASE: "/roles",

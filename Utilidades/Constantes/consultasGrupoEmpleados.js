@@ -8,7 +8,6 @@ module.exports = {
       JOIN Set_Producto_Grupo_Empleado spge ON ge.idGrupo = spge.idGrupo
       JOIN Set_Producto sp ON spge.idSetProducto = sp.idSetProducto
       WHERE ge.idCliente = ?
-      GROUP BY ge.idGrupo, sp.idSetProducto
-      LIMIT ? OFFSET ?;
+      GROUP BY ge.idGrupo, sp.idSetProducto;
     `,
 };

@@ -9,6 +9,12 @@
       "@altertex/aut/repos/*": ["Autenticacion/Datos/Repositorios/*"],
       "@altertex/aut/rutas/*": ["Autenticacion/Rutas/*"],
       "@altertex/aut/rutasInd/*": ["Autenticacion/Rutas/RutasIndividuales/*"],
+      "@altertex/usu/*": ["Usuarios/*"],
+      "@altertex/usu/ctrl/*": ["Usuarios/Controladores/*"],
+      "@altertex/usu/datos/*": ["Usuarios/Datos/*"],
+      "@altertex/usu/repos/*": ["Usuarios/Datos/Repositorios/*"],
+      "@altertex/usu/rutas/*": ["Usuarios/Rutas/*"],
+      "@altertex/usu/rutasInd/*": ["Usuarios/Rutas/RutasIndividuales/*"],
       "@altertex/emp/*": ["Empleados/*"],
       "@altertex/emp/ctrl/*": ["Empleados/Controladores/*"],
       "@altertex/emp/datos/*": ["Empleados/Datos/*"],
@@ -38,7 +44,18 @@
       "@altertex/pro/datos/*": ["Productos/Datos/*"],
       "@altertex/pro/repos/*": ["Productos/Datos/Repositorios/*"],
       "@altertex/pro/rutas/*": ["Productos/Rutas/*"],
-      "@altertex/pro/rutasInd/*": ["Productos/Rutas/RutasIndividuales/*"]
+      "@altertex/pro/rutasInd/*": ["Productos/Rutas/RutasIndividuales/*"],
+      "@altertex/cuota/*": ["Cuotas/*"],
+      "@altertex/cuota/ctrl/*": ["Cuotas/Controladores/*"],
+      "@altertex/cuota/datos/*": ["Cuotas/Datos/*"],
+      "@altertex/cuota/repos/*": ["Cuotas/Datos/Repositorios/*"],
+      "@altertex/cuota/rutas/*": ["Cuotas/Rutas/*"],
+      "@altertex/cuota/rutasInd/*": ["Cuotas/Rutas/RutasIndividuales/*"],
+
+      "@altertex/CRON/*": ["CRON_JOBS/*"],
+      "@altertex/CRON/ctrl/*": ["CRON_JOBS/Controladores/*"],
+      "@altertex/CRON/datos/*": ["CRON_JOBS/Datos/*"],
+      "@altertex/CRON/repos/*": ["CRON_JOBS/Datos/Repositorios/*"]
     }
   },
   "include": ["**/*.js"]

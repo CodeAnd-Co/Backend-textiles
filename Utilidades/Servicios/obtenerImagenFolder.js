@@ -1,8 +1,24 @@
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
-// Crear cliente S3
-const s3Client = new S3Client({
+/**
+ * Obtiene URLs firmadas temporalmente para acceder a imágenes almacenadas en S3.
+ *
+ * Esta función toma un objeto `request` y un nombre de carpeta, busca las imágenes
+ * dentro de esa carpeta indicadas por su `urlImagen`, y reemplaza esas rutas por URLs
+ * firmadas válidas por una hora, generadas con AWS S3.
+ *
+ * @async
+ * @function obtenerImagenFolder
+ * @param {Object} request - Objeto que contiene los datos con las rutas de imágenes a firmar.
+ * @param {string} nombreFolder - Nombre del campo dentro del objeto `request` que contiene el arreglo con las rutas de imágenes. El último carácter (`/`) será eliminado.
+ *
+ * @returns {Promise<Array<Object>>} Un array con los mismos objetos del array original, pero con la propiedad `urlImagen` reemplazada por la URL firmada o `null`.
+ *
+ * @throws {Error} - Si los datos del `request` no son válidos o si ocurre un error al obtener la imagen desde S3.
+ */
+
+const clienteS3 = new S3Client({
   region: process.env.AWS_REGION,
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -10,26 +26,25 @@ const s3Client = new S3Client({
   },
 });
 
-async function obtenerImagenFolder(request, folderNombre) {
-  folderNombre = folderNombre.slice(0, -1);
-  const Json = request[folderNombre];
+async function obtenerImagenFolder(request, nombreFolder) {
+  nombreFolder = nombreFolder.slice(0, -1);
+  const Json = request[nombreFolder];
 
   if (!Json || !Array.isArray(Json)) {
     throw new Error("Invalid request data");
   }
 
   try {
-    const updatedJson = await Promise.all(
+    const jsonActualizado = await Promise.all(
       Json.map(async (folder) => {
         if (folder.urlImagen) {
-          const command = new GetObjectCommand({
+          const comando = new GetObjectCommand({
             Bucket: process.env.AWS_BUCKET_NAME,
-            Key: `${folderNombre}/${folder.urlImagen}`,
+            Key: `${nombreFolder}/${folder.urlImagen}`,
           });
 
-          // Obtenemos la URL firmada
-          folder.urlImagen = await getSignedUrl(s3Client, command, {
-            expiresIn: 60 * 60, // 1 hora
+          folder.urlImagen = await getSignedUrl(clienteS3, comando, {
+            expiresIn: 60 * 60,
           });
         } else {
           folder.urlImagen = null;
@@ -39,7 +54,7 @@ async function obtenerImagenFolder(request, folderNombre) {
       })
     );
 
-    return updatedJson;
+    return jsonActualizado;
   } catch (error) {
     console.error("Error obteniendo imagen de S3:", error);
     throw new Error("Error obteniendo imagen de S3");

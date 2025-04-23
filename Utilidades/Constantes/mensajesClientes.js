@@ -4,11 +4,19 @@ module.exports = {
     codigo: 200,
     mensaje: "Información del cliente obtenida exitosamente.",
   },
+  CONSULTA_LISTA_EXITOSA: {
+    codigo: 200,
+    mensaje: "Lista de clientes obtenida exitosamente.",
+  },
 
   // 204 - No Content
   CLIENTE_SIN_SISTEMA: {
     codigo: 204,
     mensaje: "El cliente no tiene un sistema registrado.",
+  },
+  LISTA_CLIENTES_VACIA: {
+    codigo: 204,
+    mensaje: "No hay clientes registrados actualmente.",
   },
 
   // 400 - Bad Request
@@ -20,6 +28,15 @@ module.exports = {
   FORMATO_ID_CLIENTE_INVALIDO: {
     codigo: 400,
     mensaje: "El ID del cliente debe ser un número entero válido.",
+  },
+  LISTA_CLIENTES_INVALIDA: {
+    codigo: 400,
+    mensaje:
+      "La lista de clientes asociados es inválida o no contiene IDs numéricos válidos.",
+  },
+  CLIENTES_ASOCIADOS_NO_PROPORCIONADOS: {
+    codigo: 400,
+    mensaje: "No se proporcionó la lista de clientes asociados.",
   },
 
   // 403 - Forbidden
@@ -47,5 +64,9 @@ module.exports = {
     codigo: 500,
     mensaje:
       "Ocurrió un error al obtener la información del sistema del cliente.",
+  },
+  ERROR_CONSULTAR_LISTA_CLIENTES: {
+    codigo: 500,
+    mensaje: "Ocurrió un error al obtener la lista de clientes.",
   },
 };
