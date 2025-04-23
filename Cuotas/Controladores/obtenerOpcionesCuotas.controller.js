@@ -2,7 +2,7 @@ const repositorio = require("@altertex/cuota/repos/obtenerOpcionesCuotasReposito
 
 exports.obtenerOpcionesCuotas = async (req, res) => {
   try {
-    const idCliente = req.query.idCliente;
+    const idCliente = req.body.clienteSeleccionado;
     if (!idCliente) {
       return res.status(400).json({ mensaje: "No hay idCliente" });
     }
@@ -13,6 +13,7 @@ exports.obtenerOpcionesCuotas = async (req, res) => {
       .status(201)
       .json({ mensaje: "Opciones producto para cuota", resultado });
   } catch (error) {
+    console.log(error);
     return res
       .status(400)
       .json({ mensaje: "error obteniendo opciones", error });
