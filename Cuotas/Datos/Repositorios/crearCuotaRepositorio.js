@@ -39,15 +39,15 @@ exports.crearCuota = async (data) => {
 
   // Validaciones de parámetros obligatorios
   if (
-    !data ||
-    typeof data !== "object" ||
-    typeof data.idCliente !== "number" ||
-    typeof data.nombre !== "string" ||
-    typeof data.descripcion !== "string" ||
-    typeof data.periodoRenovacion !== "number" ||
-    typeof data.renovacionHabilitada !== "boolean" ||
-    !Array.isArray(data.productosYLimite) ||
-    typeof data.ultimaActualizacion !== "string"
+    !data
+    || typeof data !== "object"
+    || typeof data.idCliente !== "number"
+    || typeof data.nombre !== "string"
+    || typeof data.descripcion !== "string"
+    || typeof data.periodoRenovacion !== "number"
+    || typeof data.renovacionHabilitada !== "boolean"
+    || !Array.isArray(data.productosYLimite)
+    || typeof data.ultimaActualizacion !== "string"
   ) {
     throw new Error("Datos inválidos o incompletos para crear la cuota.");
   }
@@ -55,11 +55,11 @@ exports.crearCuota = async (data) => {
   // Validar estructura de cada producto
   for (const item of data.productosYLimite) {
     if (
-      !item ||
-      (typeof item.idProducto !== "string" &&
-        typeof item.idProducto !== "number") ||
-      typeof item.limite !== "number" ||
-      typeof item.limiteActual !== "number"
+      !item
+      || (typeof item.idProducto !== "string"
+        && typeof item.idProducto !== "number")
+      || typeof item.limite !== "number"
+      || typeof item.limiteActual !== "number"
     ) {
       throw new Error(
         "Cada producto debe tener un idProducto (string o number), limite (number) y limiteActual (number)."
