@@ -1,10 +1,10 @@
 const repositorio = require("@altertex/emp/repos/repositorioGrupoDeEmpleados");
-const MENSAJES_EMPLEADOS = require("@altertex/util/const/mensajesEmpleados");
+const MENSAJES_GRUPO_EMPLEADOS = require("@altertex/util/const/mensajesGrupoEmpleados");
 
 /**
  * Controlador para la consulta de la lista de empleados de un cliente.
  *
- * RF17 - Consulta Lista de Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF17
+ * RF22 - Consulta Lista de Grupo Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF22
  *
  * @async
  * @function consultarLista
@@ -26,42 +26,32 @@ const MENSAJES_EMPLEADOS = require("@altertex/util/const/mensajesEmpleados");
 
 exports.consultarLista = async (req, res) => {
   const idCliente = parseInt(req.user.clienteSeleccionado);
-  const limit = parseInt(req.body.limit);
-  const offset = parseInt(req.body.offset);
 
-  if (!idCliente || isNaN(limit) || isNaN(offset)) {
+  if (!idCliente) {
     return res
-      .status(MENSAJES_EMPLEADOS.PARAMETROS_INVALIDOS.codigo)
-      .json({ mensaje: MENSAJES_EMPLEADOS.PARAMETROS_INVALIDOS.mensaje });
-  }
-
-  if (limit <= 0 || offset < 0) {
-    return res
-      .status(MENSAJES_EMPLEADOS.LIMITE_OFFSET_INVALIDOS.codigo)
-      .json({ mensaje: MENSAJES_EMPLEADOS.LIMITE_OFFSET_INVALIDOS.mensaje });
+      .status(MENSAJES_GRUPO_EMPLEADOS.PARAMETROS_INVALIDOS.codigo)
+      .json({ mensaje: MENSAJES_GRUPO_EMPLEADOS.PARAMETROS_INVALIDOS.mensaje });
   }
 
   try {
-    const resultados = await repositorio.obtenerGrupoDeEmpleados(
-      idCliente,
-      limit,
-      offset
-    );
+    const resultados = await repositorio.obtenerGrupoDeEmpleados(idCliente);
 
     if (!resultados || resultados.length === 0) {
       return res
-        .status(MENSAJES_EMPLEADOS.SIN_RESULTADOS.codigo)
-        .json({ mensaje: MENSAJES_EMPLEADOS.SIN_RESULTADOS.mensaje });
+        .status(MENSAJES_GRUPO_EMPLEADOS.SIN_RESULTADOS.codigo)
+        .json({ mensaje: MENSAJES_GRUPO_EMPLEADOS.SIN_RESULTADOS.mensaje });
     }
 
-    return res.status(MENSAJES_EMPLEADOS.CONSULTA_EXITOSA.codigo).json({
-      mensaje: MENSAJES_EMPLEADOS.CONSULTA_EXITOSA.mensaje,
+    return res.status(MENSAJES_GRUPO_EMPLEADOS.CONSULTA_EXITOSA.codigo).json({
+      mensaje: MENSAJES_GRUPO_EMPLEADOS.CONSULTA_EXITOSA.mensaje,
       grupo_empleados: resultados,
     });
   } catch (error) {
-    console.error("Error al consultar empleados:", error);
+    console.error("Error al consultar grupo de empleados:", error);
     return res
-      .status(MENSAJES_EMPLEADOS.ERROR_CONSULTAR_EMPLEADOS.codigo)
-      .json({ mensaje: MENSAJES_EMPLEADOS.ERROR_CONSULTAR_EMPLEADOS.mensaje });
+      .status(MENSAJES_GRUPO_EMPLEADOS.ERROR_CONSULTAR_GRUPOS.codigo)
+      .json({
+        mensaje: MENSAJES_GRUPO_EMPLEADOS.ERROR_CONSULTAR_GRUPOS.mensaje,
+      });
   }
 };
