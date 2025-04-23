@@ -22,6 +22,7 @@ exports.consultarProductos = async (req, res) => {
     let productosActualizados;
     try {
       productosActualizados = await obtenerImagenFolder(req, folder);
+      console.log(productosActualizados);
     } catch (errorImagen) {
       console.warn(
         "Error al obtener imágenes. Se asignarán por defecto:",
@@ -35,9 +36,7 @@ exports.consultarProductos = async (req, res) => {
 
     return res.status(MENSAJES_PRODUCTOS.CONSULTA_EXITOSA.codigo).json({
       mensaje: MENSAJES_PRODUCTOS.CONSULTA_EXITOSA.mensaje,
-      data: {
-        productos: productosActualizados,
-      },
+      listaProductos: productosActualizados,
     });
   } catch (error) {
     console.error("Error al consultar productos:", error);
