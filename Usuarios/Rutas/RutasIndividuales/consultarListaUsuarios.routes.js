@@ -1,3 +1,5 @@
+//RF02 Super Administrador Consulta Lista de Usuarios - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF2
+
 const express = require("express");
 const ruteador = express.Router();
 const controlador = require("@altertex/usu/ctrl/consultarListaUsuarios.controller");

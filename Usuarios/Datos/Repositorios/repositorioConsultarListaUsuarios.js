@@ -1,3 +1,5 @@
+//RF02 Super Administrador Consulta Lista de Usuarios - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF2
+
 const correrQuery = require("@altertex/util/ser/correrQuery");
 const CONSULTAS_USUARIOS = require("@altertex/util/const/consultasUsuarios");
 
