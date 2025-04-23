@@ -26,5 +26,10 @@ module.exports = {
     BASE: "/empleados",
     CONSULTAR_LISTA: "/consultar-lista",
   },
+  CUOTAS: {
+    BASE: "/cuotas",
+    AGREGAR: "/crear-cuota",
+    OPCIONES: "/obtener-opciones",
+  },
   API_DOCS: "/api-docs",
 };
