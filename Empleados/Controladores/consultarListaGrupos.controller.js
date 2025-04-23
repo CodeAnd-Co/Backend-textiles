@@ -44,7 +44,7 @@ exports.consultarLista = async (req, res) => {
 
     return res.status(MENSAJES_GRUPO_EMPLEADOS.CONSULTA_EXITOSA.codigo).json({
       mensaje: MENSAJES_GRUPO_EMPLEADOS.CONSULTA_EXITOSA.mensaje,
-      grupo_empleados: resultados,
+      grupoEmpleados: resultados,
     });
   } catch (error) {
     console.error("Error al consultar grupo de empleados:", error);
