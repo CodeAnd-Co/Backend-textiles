@@ -18,5 +18,13 @@ module.exports = {
     BASE: "/categorias",
     CONSULTAR_LISTA_CATEGORIAS: "/consultar-lista-categorias",
   },
+  EVENTOS: {
+    BASE: "/eventos",
+    CREAR: "/crear",
+    ELIMINAR: "/eliminar",
+    EDITAR: "/editar",
+    CONSULTAR_LISTA_EVENTOS: "/consultar-lista-eventos",
+    CONSULTAR_EVENTO: "/consultar-evento",
+  },
   API_DOCS: "/api-docs",
 };

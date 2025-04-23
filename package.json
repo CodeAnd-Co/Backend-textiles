@@ -65,6 +65,12 @@
     "@altertex/cat/datos": "Categorias/Datos/",
     "@altertex/cat/repos": "Categorias/Datos/Repositorios",
     "@altertex/cat/rutas": "Categorias/Rutas/",
-    "@altertex/cat/rutasInd": "Categorias/Rutas/RutasIndividuales"
+    "@altertex/cat/rutasInd": "Categorias/Rutas/RutasIndividuales",
+    "@altertex/eve": "Eventos/",
+    "@altertex/eve/ctrl": "Eventos/Controladores/",
+    "@altertex/eve/datos": "Eventos/Datos/",
+    "@altertex/eve/repos": "Eventos/Datos/Repositorios",
+    "@altertex/eve/rutas": "Eventos/Rutas/",
+    "@altertex/eve/rutasInd": "Eventos/Rutas/RutasIndividuales"
   }
 }
