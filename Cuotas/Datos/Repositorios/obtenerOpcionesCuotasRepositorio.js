@@ -4,7 +4,6 @@ const correrQuery = require("@altertex/util/ser/correrQuery");
 exports.obtenerCuotaOpcion = async (idCliente) => {
   try {
     const resultado = await correrQuery(QUERY.OBTENER_OPCIONES, [idCliente]);
-    console.log(resultado);
     return resultado;
   } catch (error) {
     console.log("Error obteniendo opciones", error);
