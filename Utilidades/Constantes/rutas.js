@@ -18,5 +18,24 @@ module.exports = {
     BASE: "/categorias",
     CONSULTAR_LISTA_CATEGORIAS: "/consultar-lista-categorias",
   },
+  PRODUCTOS: {
+    BASE: "/productos",
+    CONSULTAR_LISTA: "/consultar-lista",
+  },
+  CLIENTES: {
+    BASE: "/clientes",
+    CONSULTAR_SISTEMA: "/consultar-sistema",
+    CONSULTAR_LISTA: "/consultar-lista",
+  },
+  EMPLEADOS: {
+    BASE: "/empleados",
+    CONSULTAR_LISTA: "/consultar-lista",
+    CONSULTAR_GRUPO: "/consultar-grupo",
+  },
+  CUOTAS: {
+    BASE: "/cuotas",
+    AGREGAR: "/crear-cuota",
+    OPCIONES: "/obtener-opciones",
+  },
   API_DOCS: "/api-docs",
 };

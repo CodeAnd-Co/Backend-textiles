@@ -38,6 +38,7 @@ function validarYSanitizar(req, res, next) {
       typeof valor !== "string"
       && typeof valor !== "number"
       && typeof valor !== "boolean"
+      && typeof valor !== "object"
     ) {
       return res
         .status(400)
