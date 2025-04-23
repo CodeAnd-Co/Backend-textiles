@@ -42,9 +42,9 @@ exports.validarCuotaSet = (nombre, productosYLimite, res) => {
     const { idProducto, limite, limiteActual } = producto;
 
     if (
-      !idProducto ||
-      typeof idProducto !== "string" ||
-      idProducto.trim() === ""
+      !idProducto
+      || typeof idProducto !== "string"
+      || idProducto.trim() === ""
     ) {
       return res.status(400).json({
         error: `El producto en la posición ${iterador} no tiene un idProducto válido.`,
