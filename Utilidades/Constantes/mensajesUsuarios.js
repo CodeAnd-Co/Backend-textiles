@@ -51,10 +51,6 @@ module.exports = {
     codigo: 400,
     mensaje: "Los parámetros proporcionados no son válidos.",
   },
-  LIMITE_OFFSET_INVALIDOS: {
-    codigo: 400,
-    mensaje: "Los valores de límite u offset deben ser números positivos.",
-  },
 
   // 401 - sin autorizacion
   CREDENCIALES_INVALIDAS: {

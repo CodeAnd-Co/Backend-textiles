@@ -37,12 +37,18 @@ module.exports = {
     WHERE idUsuario = ?;
   `,
   OBTENER_LISTA: `
-      SELECT u.idUsuario, u.nombreCompleto AS nombre, r.nombre AS rol, c.nombreComercial AS cliente, u.estatus, u.correoElectronico AS correo, u.numeroTelefono AS telefono
+      SELECT 
+        u.idUsuario, 
+        u.nombreCompleto AS nombre, 
+        r.nombre AS rol, 
+        c.nombreComercial AS cliente, 
+        u.estatus, 
+        u.correoElectronico AS correo, 
+        u.numeroTelefono AS telefono
       FROM Usuario u
-      JOIN Usuario_Rol ur ON u.idUsuario = ur.idUsuario
-      JOIN Rol r ON ur.idRol = r.idRol
-      JOIN Usuario_Cliente uc ON u.idUsuario = uc.idUsuario
-      JOIN Cliente c ON uc.idCliente = c.idCliente
-      LIMIT ? OFFSET ?;
+      LEFT JOIN Usuario_Rol ur ON u.idUsuario = ur.idUsuario
+      LEFT JOIN Rol r ON ur.idRol = r.idRol
+      LEFT JOIN Usuario_Cliente uc ON u.idUsuario = uc.idUsuario
+      LEFT JOIN Cliente c ON uc.idCliente = c.idCliente;
     `,
 };
