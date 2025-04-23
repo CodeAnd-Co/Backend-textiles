@@ -25,6 +25,7 @@ module.exports = {
   EMPLEADOS: {
     BASE: "/empleados",
     CONSULTAR_LISTA: "/consultar-lista",
+    CONSULTAR_GRUPO: "/consultar-grupo",
   },
   CUOTAS: {
     BASE: "/cuotas",
