@@ -51,6 +51,7 @@
       "@altertex/cat/repos/*": ["Categorias/Datos/Repositorios/*"],
       "@altertex/cat/rutas/*": ["Categorias/Rutas/*"],
       "@altertex/cat/rutasInd/*": ["Categorias/Rutas/RutasIndividuales/*"],
+
       "@altertex/CRON/*": ["CRON_JOBS/*"],
       "@altertex/CRON/ctrl/*": ["CRON_JOBS/Controladores/*"],
       "@altertex/CRON/datos/*": ["CRON_JOBS/Datos/*"],

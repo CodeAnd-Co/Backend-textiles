@@ -1,9 +1,13 @@
+//RF[47] Consulta lista de categorías - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF47]
+
 const repositorio = require("@altertex/cat/repos/repositorioConsultarListaCategorias");
 const MENSAJES_CATEGORIAS = require("@altertex/util/const/mensajesCategorias");
 
 exports.consultarListaCategorias = async (req, res) => {
+  const idCliente = parseInt(req.user.clienteSeleccionado);
+
   try {
-    const resultados = await repositorio.consultarListaCategorias();
+    const resultados = await repositorio.consultarListaCategorias(idCliente);
 
     if (!resultados || resultados.length === 0) {
       return res

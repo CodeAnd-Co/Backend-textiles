@@ -1,3 +1,5 @@
+//RF[47] Consulta lista de categorías - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF47]
+
 const express = require("express");
 const ruteador = express.Router();
 const controlador = require("@altertex/cat/ctrl/consultarListaCategorias.controller");
