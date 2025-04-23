@@ -32,8 +32,7 @@
       "@altertex/pro/datos/*": ["Productos/Datos/*"],
       "@altertex/pro/repos/*": ["Productos/Datos/Repositorios/*"],
       "@altertex/pro/rutas/*": ["Productos/Rutas/*"],
-      "@altertex/pro/rutasInd/*": ["Productos/Rutas/RutasIndividuales/*"]
-
+      "@altertex/pro/rutasInd/*": ["Productos/Rutas/RutasIndividuales/*"],
       "@altertex/cuota/*": ["Cuotas/*"],
       "@altertex/cuota/ctrl/*": ["Cuotas/Controladores/*"],
       "@altertex/cuota/datos/*": ["Cuotas/Datos/*"],
