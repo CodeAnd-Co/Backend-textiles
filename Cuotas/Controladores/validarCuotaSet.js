@@ -35,15 +35,21 @@ exports.validarCuotaSet = (nombre, productosYLimite, res) => {
     return res.status(400).json({ error: MENSAJES.PRODUCTOS_REQUERIDOS });
   }
 
-  for (let i = 0; i < productosYLimite.length; i++) {
-    const { idProducto, limite, limiteActual } = productosYLimite[i];
+  for (
+    let iterador = 0;
+    iterador < productosYLimite.length;
+    iterador = iterador + 1
+  ) {
+    const { idProducto, limite, limiteActual } = productosYLimite[iterador];
 
     if (
-      !idProducto ||
-      typeof idProducto !== "string" ||
-      idProducto.trim() === ""
+      !idProducto
+      || typeof idProducto !== "string"
+      || idProducto.trim() === ""
     ) {
-      return res.status(400).json({ error: MENSAJES.ID_PRODUCTO_INVALIDO(i) });
+      return res
+        .status(400)
+        .json({ error: MENSAJES.ID_PRODUCTO_INVALIDO(iterador) });
     }
 
     if (typeof limite !== "number" || isNaN(limite)) {
