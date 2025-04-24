@@ -80,7 +80,6 @@
     "@altertex/util/bd": "Utilidades/BaseDeDatos/",
     "@altertex/util/const": "Utilidades/Constantes/",
     "@altertex/util/inter": "Utilidades/Intermediarios/",
-    "@altertex/util/ser": "Utilidades/Servicios/",
     "@altertex/rol": "Roles",
     "@altertex/rol/ctrl": "Roles/Controladores",
     "@altertex/rol/datos": "Roles/Datos",
