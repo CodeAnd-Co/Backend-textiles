@@ -83,5 +83,5 @@ module.exports = {
   ERROR_OBTENER_USUARIO: {
     codigo: 500,
     mensaje: "Ocurrió un error al obtener los datos del usuario.",
-  }
+  },
 };
