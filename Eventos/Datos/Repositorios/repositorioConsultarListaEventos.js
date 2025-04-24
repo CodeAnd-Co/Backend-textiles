@@ -1,11 +1,11 @@
 const correrQuery = require("@altertex/util/ser/correrQuery");
 const CONSULTAS_EVENTOS = require("@altertex/util/const/consultasEventos");
 
-exports.consultarListaEventos = async () => {
+exports.consultarListaEventos = async (clienteSeleccionado) => {
   const query = CONSULTAS_EVENTOS.OBTENER_LISTA_EVENTOS;
 
   try {
-    const listaEventos = await correrQuery(query);
+    const listaEventos = await correrQuery(query, [clienteSeleccionado]);
     return listaEventos;
   } catch (error) {
     console.error("Error al obtener lista de eventos:", error);

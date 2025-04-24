@@ -7,6 +7,7 @@ module.exports = {
         e.periodoRenovacion,
         e.renovacion
         FROM 
-        EVENTO e;
+        EVENTO e
+        WHERE e.idCliente = ?   
     `,
 };

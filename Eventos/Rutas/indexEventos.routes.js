@@ -4,6 +4,6 @@ const rutasConsultarListaEventos = require("@altertex/eve/rutasInd/consultarList
 
 const RUTAS = require("@altertex/util/const/rutas");
 
-ruteador.use(RUTAS.CATEGORIAS.BASE, rutasConsultarListaEventos);
+ruteador.use(RUTAS.EVENTOS.BASE, rutasConsultarListaEventos);
 
 module.exports = ruteador;

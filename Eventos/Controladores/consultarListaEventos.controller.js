@@ -1,9 +1,17 @@
-const repositorio = require("@altertex/cat/repos/repositorioConsultarListaEventos");
+const repositorio = require("@altertex/eve/repos/repositorioConsultarListaEventos");
 const MENSAJES_EVENTOS = require("@altertex/util/const/mensajesEventos");
 
 exports.consultarListaEventos = async (req, res) => {
   try {
-    const resultados = await repositorio.consultarListaEventos();
+    const idCliente = parseInt(req.user.clienteSeleccionado);
+
+    if (isNaN(idCliente)) {
+      return res.status(MENSAJES_EVENTOS.PARAMETROS_INVALIDOS.codigo).json({
+        mensaje: "ID del cliente no válido o no seleccionado",
+      });
+    }
+
+    const resultados = await repositorio.consultarListaEventos(idCliente);
 
     if (!resultados || resultados.length === 0) {
       return res.status(MENSAJES_EVENTOS.EVENTOS_NO_ENCONTRADOS.codigo).json({
