@@ -84,13 +84,17 @@
     "@altertex/CRON/ctrl": "CRON_JOBS/Controladores/",
     "@altertex/CRON/datos": "CRON_JOBS/Datos/",
     "@altertex/CRON/repos": "CRON_JOBS/Datos/Repositorios/",
-    "@altertex/util/ser": "Utilidades/Servicios/",
     "@altertex/pro": "Productos/",
     "@altertex/pro/ctrl": "Productos/Controladores/",
     "@altertex/pro/datos": "Productos/Datos/",
     "@altertex/pro/repos": "Productos/Datos/Repositorios",
     "@altertex/pro/rutas": "Productos/Rutas/",
-    "@altertex/pro/rutasInd": "Productos/Rutas/RutasIndividuales"
-
+    "@altertex/pro/rutasInd": "Productos/Rutas/RutasIndividuales",
+    "@altertex/cat": "Categorias/",
+    "@altertex/cat/ctrl": "Categorias/Controladores/",
+    "@altertex/cat/datos": "Categorias/Datos/",
+    "@altertex/cat/repos": "Categorias/Datos/Repositorios",
+    "@altertex/cat/rutas": "Categorias/Rutas/",
+    "@altertex/cat/rutasInd": "Categorias/Rutas/RutasIndividuales"
   }
 }

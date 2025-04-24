@@ -12,6 +12,11 @@ module.exports = {
     BASE: "/usuarios",
     CREAR: "/crear",
     ELIMINAR: "/eliminar",
+    LEER: "/consultar-usuario",
+  },
+  CATEGORIAS: {
+    BASE: "/categorias",
+    CONSULTAR_LISTA_CATEGORIAS: "/consultar-lista-categorias",
   },
   PRODUCTOS: {
     BASE: "/productos",

@@ -47,6 +47,10 @@ module.exports = {
     codigo: 400,
     mensaje: "Ya existe un usuario con este correo electrónico.",
   },
+  PARAMETROS_INVALIDOS: {
+    codigo: 400,
+    mensaje: "Los parámetros proporcionados no son válidos.",
+  },
 
   // 401 - sin autorizacion
   CREDENCIALES_INVALIDAS: {
@@ -60,6 +64,12 @@ module.exports = {
     mensaje: "No tiene permiso para realizar esta acción sobre usuarios.",
   },
 
+  // 404 - No encontrado
+  USUARIO_NO_ENCONTRADO: {
+    codigo: 404,
+    mensaje: "No se encontró un usuario con el ID proporcionado.",
+  },
+
   // 500 - Server Error
   ERROR_CREAR_USUARIO: {
     codigo: 500,
@@ -70,4 +80,8 @@ module.exports = {
     codigo: 500,
     mensaje: "Ocurrió un error al obtener la lista de usuarios.",
   },
+  ERROR_OBTENER_USUARIO: {
+    codigo: 500,
+    mensaje: "Ocurrió un error al obtener los datos del usuario.",
+  }
 };

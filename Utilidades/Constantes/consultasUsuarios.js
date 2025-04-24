@@ -31,4 +31,9 @@ module.exports = {
     INSERT INTO Usuario_Cliente (idUsuario, idCliente)
     VALUES (?, ?);
   `,
+  LEER_USUARIO: `
+    SELECT idUsuario, nombreCompleto, correoElectronico, numeroTelefono, direccion, fechaNacimiento, genero, estatus
+    FROM Usuario
+    WHERE idUsuario = ?;
+  `
 };
