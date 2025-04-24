@@ -8,26 +8,21 @@ const CONSULTAS_ROLES = require("@altertex/util/const/consultasRoles");
  *
  * @async
  * @function obtenerRoles
- * @param {number} limit - Cantidad máxima de resultados a obtener.
- * @param {number} offset - Número de registros a omitir desde el inicio.
- * @returns {Promise<Array<Object>>} Lista de roles o arreglo vacío si ocurre un error.
+ * @returns {Promise<Array<Object>>} Lista de roles o arroja un error si ocurre un problema.
  */
-exports.obtenerRoles = async (limit, offset) => {
+exports.obtenerRoles = async () => {
   const query = CONSULTAS_ROLES.OBTENER_LISTA;
 
   try {
-    // Ejecuta la consulta SQL con los parámetros proporcionados
-    const roles = await correrQuery(query, [limit, offset]);
+    const roles = await correrQuery(query);
 
-    // Verifica si la respuesta está vacía
     if (!roles || roles.length === 0) {
       throw new Error("No hay roles registrados");
     }
 
     return roles;
   } catch (error) {
-    // Muestra un mensaje de error en consola si ocurre un fallo
     console.error("Error al obtener roles:", error);
-    return [];
+    throw new Error("Error al consultar roles");
   }
 };

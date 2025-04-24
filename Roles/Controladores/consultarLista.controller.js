@@ -4,25 +4,9 @@ const MENSAJES_ROLES = require("@altertex/util/const/mensajesRoles");
 
 // Controlador para consultar la lista de roles
 exports.consultarLista = async (req, res) => {
-  const limit = parseInt(req.body.limit);
-  const offset = parseInt(req.body.offset);
-
-  // Validación de parámetros
-  if (isNaN(limit) || isNaN(offset)) {
-    return res
-      .status(MENSAJES_ROLES.PARAMETROS_INVALIDOS.codigo)
-      .json({ mensaje: MENSAJES_ROLES.PARAMETROS_INVALIDOS.mensaje });
-  }
-
-  if (limit <= 0 || offset < 0) {
-    return res
-      .status(MENSAJES_ROLES.LIMITE_OFFSET_INVALIDOS.codigo)
-      .json({ mensaje: MENSAJES_ROLES.LIMITE_OFFSET_INVALIDOS.mensaje });
-  }
-
   try {
     // Consulta al repositorio
-    const resultados = await repositorio.obtenerRoles(limit, offset);
+    const resultados = await repositorio.obtenerRoles();
 
     // Validación de resultados vacíos
     if (!resultados || resultados.length === 0) {
@@ -38,9 +22,7 @@ exports.consultarLista = async (req, res) => {
     });
   } catch (error) {
     // Manejo de error en la consulta
-    console.error("Error al consultar roles:", error);
-    return res
-      .status(MENSAJES_ROLES.ERROR_CONSULTAR_ROLES.codigo)
-      .json({ mensaje: MENSAJES_ROLES.ERROR_CONSULTAR_ROLES.mensaje });
+    console.error(" Error inesperado al consultar roles:", error.message || error);
+    return res.status(500).json({ mensaje: "Error al consultar roles" });
   }
 };
