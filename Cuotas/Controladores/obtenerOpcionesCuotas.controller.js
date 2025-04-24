@@ -1,20 +1,22 @@
 const repositorio = require("@altertex/cuota/repos/obtenerOpcionesCuotasRepositorio");
+const MENSAJES = require("@altertex/util/const/mensajesCuotas");
 
 exports.obtenerOpcionesCuotas = async (req, res) => {
   try {
-    const idCliente = req.query.idCliente;
+    const idCliente = req.body.clienteSeleccionado;
     if (!idCliente) {
-      return res.status(400).json({ mensaje: "No hay idCliente" });
+      return res.status(400).json({ mensaje: MENSAJES.FALTA_ID_CLIENTE });
     }
 
     const resultado = await repositorio.obtenerCuotaOpcion(idCliente);
 
     return res
       .status(201)
-      .json({ mensaje: "Opciones producto para cuota", resultado });
+      .json({ mensaje: MENSAJES.OPCIONES_OBTENIDAS, resultado });
   } catch (error) {
+    console.log(error);
     return res
       .status(400)
-      .json({ mensaje: "error obteniendo opciones", error });
+      .json({ mensaje: MENSAJES.ERROR_OBTENIENDO_OPCIONES, error });
   }
 };

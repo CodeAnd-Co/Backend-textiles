@@ -5,7 +5,7 @@ const controlador = require("@altertex/cuota/ctrl/obtenerOpcionesCuotas.controll
 const RUTAS = require("@altertex/util/const/rutas");
 const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
 
-ruteador.get(
+ruteador.post(
   RUTAS.CUOTAS.OPCIONES,
   revisarApiKey(),
   controlador.obtenerOpcionesCuotas
