@@ -38,7 +38,18 @@
       "@altertex/pro/datos/*": ["Productos/Datos/*"],
       "@altertex/pro/repos/*": ["Productos/Datos/Repositorios/*"],
       "@altertex/pro/rutas/*": ["Productos/Rutas/*"],
-      "@altertex/pro/rutasInd/*": ["Productos/Rutas/RutasIndividuales/*"]
+      "@altertex/pro/rutasInd/*": ["Productos/Rutas/RutasIndividuales/*"],
+      "@altertex/cuota/*": ["Cuotas/*"],
+      "@altertex/cuota/ctrl/*": ["Cuotas/Controladores/*"],
+      "@altertex/cuota/datos/*": ["Cuotas/Datos/*"],
+      "@altertex/cuota/repos/*": ["Cuotas/Datos/Repositorios/*"],
+      "@altertex/cuota/rutas/*": ["Cuotas/Rutas/*"],
+      "@altertex/cuota/rutasInd/*": ["Cuotas/Rutas/RutasIndividuales/*"],
+
+      "@altertex/CRON/*": ["CRON_JOBS/*"],
+      "@altertex/CRON/ctrl/*": ["CRON_JOBS/Controladores/*"],
+      "@altertex/CRON/datos/*": ["CRON_JOBS/Datos/*"],
+      "@altertex/CRON/repos/*": ["CRON_JOBS/Datos/Repositorios/*"]
     }
   },
   "include": ["**/*.js"]

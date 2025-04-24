@@ -4,7 +4,7 @@ const CONSULTAS_GRUPO_EMPLEADOS = require("@altertex/util/const/consultasGrupoEm
 /**
  * Función para obtener el grupo de empleados de un cliente específico.
  *
- * RF17 - Obtener Grupo de Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF17
+ * RF22 - Consulta Lista de Grupo Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF22
  *
  * @async
  * @function obtenerGrupoDeEmpleados
@@ -18,15 +18,11 @@ const CONSULTAS_GRUPO_EMPLEADOS = require("@altertex/util/const/consultasGrupoEm
  * @throws {Error} Si ocurre un error al ejecutar la consulta o si no se encuentran resultados.
  */
 
-exports.obtenerGrupoDeEmpleados = async (idCliente, limit, offset) => {
+exports.obtenerGrupoDeEmpleados = async (idCliente) => {
   const query = CONSULTAS_GRUPO_EMPLEADOS.OBTENER_LISTA;
 
   try {
-    const gruposDeEmpleados = await correrQuery(query, [
-      idCliente,
-      limit,
-      offset,
-    ]);
+    const gruposDeEmpleados = await correrQuery(query, [idCliente]);
 
     if (!gruposDeEmpleados || gruposDeEmpleados.length === 0) {
       throw new Error("No hay grupos de empleados");
