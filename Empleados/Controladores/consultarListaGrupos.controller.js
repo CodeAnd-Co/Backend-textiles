@@ -10,8 +10,6 @@ const MENSAJES_GRUPO_EMPLEADOS = require("@altertex/util/const/mensajesGrupoEmpl
  * @function consultarLista
  * @param {Object} req - Objeto de solicitud de Express.
  * @param {Object} req.body - Cuerpo de la solicitud HTTP.
- * @param {number} req.body.limit - Número máximo de resultados a devolver.
- * @param {number} req.body.offset - Número de resultados a omitir para paginación.
  * @param {Object} req.user - Datos del usuario autenticado.
  * @param {number} req.user.clienteSeleccionado - ID del cliente seleccionado para la consulta.
  * @param {Object} res - Objeto de respuesta de Express.
