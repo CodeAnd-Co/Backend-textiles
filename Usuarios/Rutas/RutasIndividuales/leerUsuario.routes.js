@@ -1,3 +1,5 @@
+//RF[03] Leer usuario - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF3]
+
 const express = require("express");
 const ruteador = express.Router();
 const controlador = require("@altertex/usu/ctrl/leerUsuario.controller");

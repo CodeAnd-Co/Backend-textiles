@@ -1,3 +1,5 @@
+//RF[03] Leer usuario - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF3]
+
 const repositorio = require("@altertex/usu/repos/repositorioLeerUsuario");
 const MENSAJES_USUARIOS = require("@altertex/util/const/mensajesUsuarios");
 
