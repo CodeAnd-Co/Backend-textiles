@@ -12,7 +12,4 @@ module.exports = {
         EVENTO e
         WHERE e.idCliente = ?   
     `,
-  ELIMINAR_EVENTO: `
-        DELETE FROM EVENTO WHERE idCliente = ?
-    `,
 };
