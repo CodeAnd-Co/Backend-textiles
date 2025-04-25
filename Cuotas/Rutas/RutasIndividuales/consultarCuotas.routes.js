@@ -9,7 +9,7 @@ const PERMISOS = require("@altertex/util/const/permisos");
 const RUTAS = require("@altertex/util/const/rutas");
 
 /**
- * RF32 - Consulta Lista de Sets de Cuotas
+ * RF32 - Consulta Lista de Sets de Cuotas - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF32
  */
 
 /**
@@ -34,7 +34,7 @@ ruteador.post(
   RUTAS.CUOTAS.CONSULTAR_LISTA,
   revisarApiKey(),
   autorizarToken,
-  verificarPermisos(PERMISOS.CONSULTAR_CUOTAS),
+  verificarPermisos(PERMISOS.CONSULTAR_SETS_CUOTAS),
   controlador.consultarLista
 );
 

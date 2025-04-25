@@ -25,4 +25,6 @@ module.exports = {
   FROM CUOTA_SET
   WHERE idCliente = ?;
 `,
+
+  
 };

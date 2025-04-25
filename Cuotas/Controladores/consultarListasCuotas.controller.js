@@ -4,7 +4,7 @@ const MENSAJES_CUOTAS = require("@altertex/util/const/mensajesCuotas");
 /**
  * Controlador para consultar la lista de sets de cuotas.
  *
- * RF32 - Consulta Lista de Sets de Cuotas
+ * RF32 - Consulta Lista de Sets de Cuotas - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF32
  *
  * @async
  * @function consultarLista
