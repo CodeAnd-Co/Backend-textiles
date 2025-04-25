@@ -10,6 +10,7 @@ module.exports = {
   },
   USUARIOS: {
     BASE: "/usuarios",
+    CONSULTAR_LISTA_USUARIOS: "/consultar-lista-usuarios",
     CREAR: "/crear",
     ELIMINAR: "/eliminar",
     LEER: "/consultar-usuario",
@@ -36,6 +37,10 @@ module.exports = {
     BASE: "/cuotas",
     AGREGAR: "/crear-cuota",
     OPCIONES: "/obtener-opciones",
+  },
+  ROLES: {
+    BASE: "/roles",
+    CONSULTAR_LISTA: "/consultar-lista",
   },
   API_DOCS: "/api-docs",
 };
