@@ -12,7 +12,7 @@ exports.consultarProductos = async (req, res) => {
     req.productos = productos;
 
     if (!productos || productos.length === 0) {
-      return res.status(MENSAJES_PRODUCTOS.SIN_RESULTADOS.codigo).json({
+      return res.status(200).json({
         mensaje: MENSAJES_PRODUCTOS.SIN_RESULTADOS.mensaje,
       });
     }
@@ -29,15 +29,13 @@ exports.consultarProductos = async (req, res) => {
       );
       productosActualizados = productos.map((producto) => ({
         ...producto,
-        urlImagen: "/placeholder",
+        urlImagen: "/placeholder.png",
       }));
     }
 
     return res.status(MENSAJES_PRODUCTOS.CONSULTA_EXITOSA.codigo).json({
       mensaje: MENSAJES_PRODUCTOS.CONSULTA_EXITOSA.mensaje,
-      data: {
-        productos: productosActualizados,
-      },
+      listaProductos: productosActualizados,
     });
   } catch (error) {
     console.error("Error al consultar productos:", error);
