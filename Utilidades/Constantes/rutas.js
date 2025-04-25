@@ -34,5 +34,9 @@ module.exports = {
     AGREGAR: "/crear-cuota",
     OPCIONES: "/obtener-opciones",
   },
+  ROLES: {
+    BASE: "/roles",
+    CONSULTAR_LISTA: "/consultar-lista",
+  },
   API_DOCS: "/api-docs",
 };
