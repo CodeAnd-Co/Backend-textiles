@@ -1,5 +1,5 @@
-const repositorio = require("@altertex/emp/repos/repositorioGrupoDeEmpleados");
-const MENSAJES_GRUPO_EMPLEADOS = require("@altertex/util/const/mensajesGrupoEmpleados");
+const repositorio = require('@altertex/emp/repos/repositorioGrupoDeEmpleados');
+const MENSAJES_GRUPO_EMPLEADOS = require('@altertex/util/const/mensajesGrupoEmpleados');
 
 /**
  * Controlador para la consulta de la lista de empleados de un cliente.
@@ -8,11 +8,11 @@ const MENSAJES_GRUPO_EMPLEADOS = require("@altertex/util/const/mensajesGrupoEmpl
  *
  * @async
  * @function consultarLista
- * @param {Object} req - Objeto de solicitud de Express.
- * @param {Object} req.body - Cuerpo de la solicitud HTTP.
- * @param {Object} req.user - Datos del usuario autenticado.
+ * @param {object} req - Objeto de solicitud de Express.
+ * @param {object} req.body - Cuerpo de la solicitud HTTP.
+ * @param {object} req.user - Datos del usuario autenticado.
  * @param {number} req.user.clienteSeleccionado - ID del cliente seleccionado para la consulta.
- * @param {Object} res - Objeto de respuesta de Express.
+ * @param {object} res - Objeto de respuesta de Express.
  *
  * @returns {Response} Respuesta HTTP con estado:
  * - 200 si la consulta es exitosa, junto con los datos de los empleados.
@@ -21,7 +21,6 @@ const MENSAJES_GRUPO_EMPLEADOS = require("@altertex/util/const/mensajesGrupoEmpl
  *
  * @throws {Error} Si ocurre un error inesperado durante la operación.
  */
-
 exports.consultarLista = async (req, res) => {
   const idCliente = parseInt(req.user.clienteSeleccionado);
 
@@ -45,11 +44,9 @@ exports.consultarLista = async (req, res) => {
       grupoEmpleados: resultados,
     });
   } catch (error) {
-    console.error("Error al consultar grupo de empleados:", error);
-    return res
-      .status(MENSAJES_GRUPO_EMPLEADOS.ERROR_CONSULTAR_GRUPOS.codigo)
-      .json({
-        mensaje: MENSAJES_GRUPO_EMPLEADOS.ERROR_CONSULTAR_GRUPOS.mensaje,
-      });
+    console.error('Error al consultar grupo de empleados:', error);
+    return res.status(MENSAJES_GRUPO_EMPLEADOS.ERROR_CONSULTAR_GRUPOS.codigo).json({
+      mensaje: MENSAJES_GRUPO_EMPLEADOS.ERROR_CONSULTAR_GRUPOS.mensaje,
+    });
   }
 };

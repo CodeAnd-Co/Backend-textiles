@@ -1,6 +1,6 @@
-const repositorio = require("@altertex/cli/repos/repositorioObtenerLista");
-const obtenerImagenFolder = require("@altertex/util/ser/obtenerImagenFolder");
-const MENSAJES_CLIENTES = require("@altertex/util/const/mensajesClientes");
+const repositorio = require('@altertex/cli/repos/repositorioObtenerLista');
+const obtenerImagenFolder = require('@altertex/util/ser/obtenerImagenFolder');
+const MENSAJES_CLIENTES = require('@altertex/util/const/mensajesClientes');
 
 /**
  * Controlador para consultar el sistema de un cliente específico.
@@ -9,14 +9,14 @@ const MENSAJES_CLIENTES = require("@altertex/util/const/mensajesClientes");
  *
  * @async
  * @function consultarSistema
- * @param {Object} req - Objeto de solicitud de Express.
- * @param {Object} req.user - Información del usuario autenticado (inyectada por middleware).
+ * @param {object} req - Objeto de solicitud de Express.
+ * @param {object} req.user - Información del usuario autenticado (inyectada por middleware).
  * @param {string} req.user.correo - Correo electrónico del usuario autenticado.
  * @param {Array<string>} req.user.permisos - Permisos del usuario.
  * @param {Array<number>} req.user.clientesAsociados - Lista de IDs de clientes a los que el usuario tiene acceso.
- * @param {Object} req.body - Cuerpo de la solicitud.
+ * @param {object} req.body - Cuerpo de la solicitud.
  * @param {string|number} req.body.idCliente - ID del cliente que se desea consultar.
- * @param {Object} res - Objeto de respuesta de Express.
+ * @param {object} res - Objeto de respuesta de Express.
  *
  * @returns {Response} Respuesta HTTP con estado:
  * - 200 si la consulta es exitosa y se emite un nuevo token con el cliente seleccionado.
@@ -31,16 +31,12 @@ exports.consultarLista = async (req, res) => {
   let clientesAsociados = req.user.clientesAsociados;
 
   if (!Array.isArray(clientesAsociados)) {
-    return res
-      .status(MENSAJES_CLIENTES.CLIENTES_ASOCIADOS_NO_PROPORCIONADOS.codigo)
-      .json({
-        mensaje: MENSAJES_CLIENTES.CLIENTES_ASOCIADOS_NO_PROPORCIONADOS.mensaje,
-      });
+    return res.status(MENSAJES_CLIENTES.CLIENTES_ASOCIADOS_NO_PROPORCIONADOS.codigo).json({
+      mensaje: MENSAJES_CLIENTES.CLIENTES_ASOCIADOS_NO_PROPORCIONADOS.mensaje,
+    });
   }
 
-  clientesAsociados = clientesAsociados
-    .map((id) => parseInt(id))
-    .filter((id) => !isNaN(id));
+  clientesAsociados = clientesAsociados.map((id) => parseInt(id)).filter((id) => !isNaN(id));
 
   if (clientesAsociados.length === 0) {
     return res
@@ -58,16 +54,16 @@ exports.consultarLista = async (req, res) => {
         .json({ mensaje: MENSAJES_CLIENTES.LISTA_CLIENTES_VACIA.mensaje });
     }
 
-    const folder = "clientes/";
+    const folder = 'clientes/';
 
     let listaClientesConImagen;
     try {
       listaClientesConImagen = await obtenerImagenFolder(req, folder);
     } catch (errImg) {
-      console.warn("Error obteniendo imágenes, se usarán por defecto:", errImg);
+      console.warn('Error obteniendo imágenes, se usarán por defecto:', errImg);
       listaClientesConImagen = listaClientes.map((cliente) => ({
         ...cliente,
-        urlImagen: "/placeholder.png",
+        urlImagen: '/placeholder.png',
       }));
     }
 
@@ -76,12 +72,10 @@ exports.consultarLista = async (req, res) => {
       clientes: listaClientesConImagen,
     });
   } catch (error) {
-    console.error("Error al consultar lista de clientes:", error);
-    return res
-      .status(MENSAJES_CLIENTES.ERROR_CONSULTAR_LISTA_CLIENTES.codigo)
-      .json({
-        mensaje: MENSAJES_CLIENTES.ERROR_CONSULTAR_LISTA_CLIENTES.mensaje,
-        error: error.message,
-      });
+    console.error('Error al consultar lista de clientes:', error);
+    return res.status(MENSAJES_CLIENTES.ERROR_CONSULTAR_LISTA_CLIENTES.codigo).json({
+      mensaje: MENSAJES_CLIENTES.ERROR_CONSULTAR_LISTA_CLIENTES.mensaje,
+      error: error.message,
+    });
   }
 };
