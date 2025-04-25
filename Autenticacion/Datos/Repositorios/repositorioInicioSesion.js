@@ -1,5 +1,5 @@
-const correrQuery = require("@altertex/util/ser/correrQuery");
-const CONSULTAS_USUARIOS = require("@altertex/util/const/consultasUsuarios");
+const correrQuery = require('@altertex/util/ser/correrQuery');
+const CONSULTAS_USUARIOS = require('@altertex/util/const/consultasUsuarios');
 
 /**
  * Obtiene la información y los permisos de un usuario a partir de su correo electrónico.
@@ -10,7 +10,7 @@ const CONSULTAS_USUARIOS = require("@altertex/util/const/consultasUsuarios");
  * @function obtenerUsuario
  * @param {string} correoElectronico - Correo electrónico del usuario a buscar.
  *
- * @returns {Promise<Object|string>} Objeto con la siguiente estructura si se encuentra el usuario:
+ * @returns {Promise<object|string>} Objeto con la siguiente estructura si se encuentra el usuario:
  * - { infoUsuario: Array<Object>, permisos: Array<string> }
  * - Retorna un string con un mensaje de error si ocurre un fallo durante la operación.
  *
@@ -23,19 +23,14 @@ exports.obtenerUsuario = async (correoElectronico) => {
 
   try {
     const usuario = await correrQuery(queryUsuarios, [correoElectronico]);
-    const resultadoPermisos = await correrQuery(queryPermisos, [
+    const resultadoPermisos = await correrQuery(queryPermisos, [correoElectronico]);
+    const resultadoClientesAsociados = await correrQuery(queryClientesAsociados, [
       correoElectronico,
     ]);
-    const resultadoClientesAsociados = await correrQuery(
-      queryClientesAsociados,
-      [correoElectronico]
-    );
 
     const resultado = {
       infoUsuario: usuario,
-      permisos: resultadoPermisos.map(
-        (objetosPermisos) => objetosPermisos.nombre
-      ),
+      permisos: resultadoPermisos.map((objetosPermisos) => objetosPermisos.nombre),
       clientesAsociados: resultadoClientesAsociados.map(
         (objetosClientes) => objetosClientes.idCliente
       ),
