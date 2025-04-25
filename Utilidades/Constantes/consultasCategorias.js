@@ -1,3 +1,5 @@
+const { ELB } = require("aws-sdk");
+
 module.exports = {
   OBTENER_CATEGORIAS_CON_PRODUCTOS: `
     SELECT 
@@ -16,5 +18,12 @@ module.exports = {
       p.idCliente = ?
     GROUP BY 
       c.idCategoria, c.nombreCategoria, c.descripcion, p.idCliente;
-  `
+  `,
+  ELIMINAR_CATEGORIA: `
+    DELETE FROM CATEGORIA_PRODUCTO
+    WHERE idCategoria = ?;
+
+    DELETE FROM CATEGORIA
+    WHERE idCategoria = ?;
+  `,
 };
