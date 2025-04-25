@@ -1,53 +1,55 @@
 require("module-alias/register");
 require("@altertex/config/dotenv");
 
+//Importaciones de librerias
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const swaggerUI = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
+
+//Importaciones de configuracion
+const corsOptions = require("@altertex/config/corsOptions");
 const opcionesSwagger = require("@altertex/config/swagger");
-const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
+const swaggerUI = require("swagger-ui-express");
+
+//Importaciones de rutas
 const rutasAutenticacion = require("@altertex/aut/rutas/indexAutenticacion.routes");
 const rutasUsuarios = require("@altertex/usu/rutas/indexUsuarios.routes");
 const rutasCategorias = require("@altertex/cat/rutas/indexCategorias.routes");
 const rutasEventos = require("@altertex/eve/rutas/indexEventos.routes");
-
+const rutasProductos = require("@altertex/pro/rutas/indexProductos.routes");
+const rutasEmpleados = require("@altertex/emp/rutas/indexEmpleados.routes");
+const rutasClientes = require("@altertex/cli/rutas/indexClientes.routes");
+const rutasCuotas = require("@altertex/cuota/rutas/indexCuotas.routes");
 const RUTAS = require("@altertex/util/const/rutas");
 
-const puerto = process.env.PORT || 5000;
-const app = express();
+//Importaciones de CRON jobs
+const cronCuotas = require("@altertex/CRON/ctrl/actualizarCuotaSet.controller");
 
+const puerto = process.env.PORT || 5000;
+
+//Configuracion de aplicacion express
+const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: [process.env.LOCAL_URL, process.env.DEPLOYED_URL],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
 
-app.get(
-  RUTAS.RAIZ,
-  revisarApiKey("x-api-key", "Api key invalida"),
-  (req, res) => {
-    res.status(201).json({
-      message: `Proyecto TEXT&LINES ${process.env.NODE_ENV}`,
-    });
-  }
-);
+cronCuotas.start();
 
+//Usar las rutas para que esten disponibles en la aplicacion
 app.use(RUTAS.API, rutasAutenticacion);
 app.use(RUTAS.API, rutasUsuarios);
+app.use(RUTAS.API, rutasProductos);
+app.use(RUTAS.API, rutasEmpleados);
+app.use(RUTAS.API, rutasClientes);
+app.use(RUTAS.API, rutasCuotas);
 app.use(RUTAS.API, rutasCategorias);
 app.use(RUTAS.API, rutasEventos);
 
+//Configuracion de swaggerUI
 const swaggerSpec = swaggerJSDoc(opcionesSwagger);
 app.use(RUTAS.API_DOCS, swaggerUI.serve, swaggerUI.setup(swaggerSpec));
-
 app.listen(puerto, () =>
   console.log(
     `Servidor corriendo en puerto ${puerto} [${process.env.NODE_ENV}]`
-  )
-);
+  ));
