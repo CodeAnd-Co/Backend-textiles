@@ -1,14 +1,14 @@
 module.exports = {
   OBTENER_CLIENTE: `
         SELECT * 
-        FROM Cliente
+        FROM cliente
         WHERE idCliente = ?;
     `,
   OBTENER_LISTA: `
         SELECT * 
-        FROM Cliente c
-        JOIN Imagen_Cliente ic ON c.idCliente = ic.idCliente
-        JOIN Imagen i ON ic.idImagen = i.idImagen
+        FROM cliente c
+        JOIN imagen_cliente ic ON c.idCliente = ic.idCliente
+        JOIN imagen i ON ic.idImagen = i.idImagen
         WHERE i.tipoImagen LIKE 'Logo'
         AND c.idCliente IN (?);
     `,
