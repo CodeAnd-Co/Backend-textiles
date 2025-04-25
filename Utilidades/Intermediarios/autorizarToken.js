@@ -1,26 +1,16 @@
-const jwt = require("jsonwebtoken");
-const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticacion");
+const jwt = require('jsonwebtoken');
+const MENSAJES_AUTENTICACION = require('@altertex/util/const/mensajesAutenticacion');
 
 /**
- * Middleware que valida el token JWT presente en las cookies del cliente.
- * Si el token es válido, agrega los datos del usuario autenticado al objeto `req.user`.
+ * Middleware que verifica la validez del token JWT en las cookies del cliente.
  *
- * @async
- * @function
- * @param {Object} req - Objeto de solicitud de Express.
- * @param {Object} req.cookies - Cookies de la solicitud HTTP.
- * @param {string} req.cookies.token - Token JWT almacenado en la cookie.
- * @param {Object} res - Objeto de respuesta de Express.
- * @param {Function} next - Función que llama al siguiente middleware si el token es válido.
+ * Si el token no está presente, ha expirado o no es válido, se envía un error apropiado.
  *
- * @returns {Response|void} - Respuesta HTTP en caso de error:
- * - 401 si no se proporciona el token.
- * - 401 si el token está expirado o es inválido.
- * - 500 si ocurre un error al validar el token.
- *
- * @throws {Error} - Si ocurre un error inesperado durante la validación del token.
+ * @param {Express.Request} req - Objeto de solicitud de Express.
+ * @param {Express.Response} res - Objeto de respuesta de Express.
+ * @param {Express.NextFunction} next - Función para continuar con el siguiente middleware.
+ * @returns {Promise<void>} Middleware de Express para autenticación por token.
  */
-
 module.exports = async (req, res, next) => {
   const token = req.cookies.token;
 
@@ -35,17 +25,18 @@ module.exports = async (req, res, next) => {
     req.user = verificado;
     next();
   } catch (error) {
-    if (error.name === "TokenExpiredError") {
+    if (error.name === 'TokenExpiredError') {
       return res
         .status(MENSAJES_AUTENTICACION.TOKEN_EXPIRADO.codigo)
         .json({ mensaje: MENSAJES_AUTENTICACION.TOKEN_EXPIRADO.mensaje });
     }
 
-    if (error.name === "JsonWebTokenError") {
+    if (error.name === 'JsonWebTokenError') {
       return res
         .status(MENSAJES_AUTENTICACION.TOKEN_INVALIDO.codigo)
         .json({ mensaje: MENSAJES_AUTENTICACION.TOKEN_INVALIDO.mensaje });
     }
+
     return res
       .status(MENSAJES_AUTENTICACION.ERROR_VALIDAR_TOKEN.codigo)
       .json({ mensaje: MENSAJES_AUTENTICACION.ERROR_VALIDAR_TOKEN.mensaje });

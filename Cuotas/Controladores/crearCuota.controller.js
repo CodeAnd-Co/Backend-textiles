@@ -1,6 +1,6 @@
-const { validarCuotaSet } = require("@altertex/cuota/ctrl/validarCuotaSet");
-const repositorio = require("@altertex/cuota/repos/crearCuotaRepositorio");
-const MENSAJES = require("@altertex/util/const/mensajesCuotas");
+const { validarCuotaSet } = require('@altertex/cuota/ctrl/validarCuotaSet');
+const repositorio = require('@altertex/cuota/repos/crearCuotaRepositorio');
+const MENSAJES = require('@altertex/util/const/mensajesCuotas');
 
 /**
  * RF31 - Crear Cuotas - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF31
@@ -13,8 +13,8 @@ const MENSAJES = require("@altertex/util/const/mensajesCuotas");
  * - Llama al repositorio para persistir en la base de datos
  *
  * @function crearCuota
- * @param {import('express').Request} req - Objeto de solicitud HTTP
- * @param {import('express').Response} res - Objeto de respuesta HTTP
+ * @param {Express.Request} req - Objeto de solicitud HTTP
+ * @param {Express.Response} res - Objeto de respuesta HTTP
  *
  * @returns {Response} Respuesta HTTP con estado 201 si fue exitoso o 400 si falló
  */
@@ -22,18 +22,14 @@ exports.crearCuota = async (req, res) => {
   const cuotaSetModelo = req.body;
 
   try {
-    if (!cuotaSetModelo || typeof cuotaSetModelo !== "object") {
+    if (!cuotaSetModelo || typeof cuotaSetModelo !== 'object') {
       return res.status(400).json({ error: MENSAJES.FORMATO_INVALIDO });
     }
 
-    validarCuotaSet(
-      cuotaSetModelo.nombre,
-      cuotaSetModelo.productosYLimite,
-      res
-    );
+    validarCuotaSet(cuotaSetModelo.nombre, cuotaSetModelo.productosYLimite, res);
 
     const hoy = new Date();
-    const fechaFormateada = hoy.toISOString().split("T")[0];
+    const fechaFormateada = hoy.toISOString().split('T')[0];
 
     cuotaSetModelo.ultimaActualizacion = fechaFormateada;
     cuotaSetModelo.idCliente = req.user.clienteSeleccionado;
@@ -42,7 +38,7 @@ exports.crearCuota = async (req, res) => {
 
     return res.status(201).json({ exito: MENSAJES.CREACION_EXITOSA });
   } catch (error) {
-    console.error("Error en crearCuota:", error);
+    console.error('Error en crearCuota:', error);
     return res.status(400).json({ error: MENSAJES.ERROR_CREACION });
   }
 };

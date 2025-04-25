@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
-const repositorio = require("@altertex/cli/repos/repositorioObtenerCliente");
-const MENSAJES_CLIENTES = require("@altertex/util/const/mensajesClientes");
+const jwt = require('jsonwebtoken');
+const repositorio = require('@altertex/cli/repos/repositorioObtenerCliente');
+const MENSAJES_CLIENTES = require('@altertex/util/const/mensajesClientes');
 
 /**
  * Controlador para consultar el sistema de un cliente específico.
@@ -8,15 +8,15 @@ const MENSAJES_CLIENTES = require("@altertex/util/const/mensajesClientes");
  *
  * @async
  * @function consultarSistema
- * @param {Object} req - Objeto de solicitud de Express.
- * @param {Object} req.user - Información del usuario autenticado (inyectada por middleware).
+ * @param {object} req - Objeto de solicitud de Express.
+ * @param {object} req.user - Información del usuario autenticado (inyectada por middleware).
  * @param {string} req.user.correo - Correo electrónico del usuario autenticado.
  * @param {Array<string>} req.user.permisos - Permisos del usuario.
  * @param {Array<number>} req.user.clientesAsociados - Lista de IDs de clientes a los que el usuario tiene acceso.
- * @param {Object} req.body - Cuerpo de la solicitud.
+ * @param {object} req.body - Cuerpo de la solicitud.
  * @param {string|number} req.body.idCliente - ID del cliente que se desea consultar.
  *
- * @param {Object} res - Objeto de respuesta de Express.
+ * @param {object} res - Objeto de respuesta de Express.
  *
  * @returns {Response} Respuesta HTTP con estado:
  * - 200 si la consulta es exitosa y se emite un nuevo token con el cliente seleccionado.
@@ -27,7 +27,6 @@ const MENSAJES_CLIENTES = require("@altertex/util/const/mensajesClientes");
  *
  * @throws {Error} Si ocurre un error inesperado durante la operación.
  */
-
 exports.consultarSistema = async (req, res) => {
   const idCliente = parseInt(req.body.idCliente);
   const { correo, permisos, clientesAsociados } = req.user;
@@ -60,20 +59,20 @@ exports.consultarSistema = async (req, res) => {
         clienteSeleccionado: idCliente,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "8h" }
+      { expiresIn: '8h' }
     );
 
-    res.cookie("token", nuevoToken, {
+    res.cookie('token', nuevoToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+      sameSite: 'None',
     });
 
     return res.status(MENSAJES_CLIENTES.CONSULTA_EXITOSA.codigo).json({
       mensaje: MENSAJES_CLIENTES.CONSULTA_EXITOSA.mensaje,
     });
   } catch (error) {
-    console.error("Error al consultar sistema:", error);
+    console.error('Error al consultar sistema:', error);
     return res
       .status(MENSAJES_CLIENTES.ERROR_CONSULTAR_SISTEMA.codigo)
       .json({ mensaje: MENSAJES_CLIENTES.ERROR_CONSULTAR_SISTEMA.mensaje });

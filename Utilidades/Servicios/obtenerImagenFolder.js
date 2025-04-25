@@ -1,6 +1,14 @@
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
+const clienteS3 = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
+
 /**
  * Obtiene URLs firmadas temporalmente para acceder a imágenes almacenadas en S3.
  *
@@ -10,22 +18,13 @@ const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
  *
  * @async
  * @function obtenerImagenFolder
- * @param {Object} request - Objeto que contiene los datos con las rutas de imágenes a firmar.
+ * @param {object} request - Objeto que contiene los datos con las rutas de imágenes a firmar.
  * @param {string} nombreFolder - Nombre del campo dentro del objeto `request` que contiene el arreglo con las rutas de imágenes. El último carácter (`/`) será eliminado.
  *
- * @returns {Promise<Array<Object>>} Un array con los mismos objetos del array original, pero con la propiedad `urlImagen` reemplazada por la URL firmada o `null`.
+ * @returns {Promise<Array<object>>} Un array con los mismos objetos del array original, pero con la propiedad `urlImagen` reemplazada por la URL firmada o `null`.
  *
  * @throws {Error} - Si los datos del `request` no son válidos o si ocurre un error al obtener la imagen desde S3.
  */
-
-const clienteS3 = new S3Client({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  },
-});
-
 async function obtenerImagenFolder(request, nombreFolder) {
   nombreFolder = nombreFolder.slice(0, -1);
   const Json = request[nombreFolder];
