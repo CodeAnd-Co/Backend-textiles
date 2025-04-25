@@ -1,6 +1,6 @@
-const repositorio = require("@altertex/usu/repos/repositorioCrearUsuario");
-const bcrypt = require("bcryptjs");
-const MENSAJES_USUARIOS = require("@altertex/util/const/mensajesUsuarios");
+const repositorio = require('@altertex/usu/repos/repositorioCrearUsuario');
+const bcrypt = require('bcryptjs');
+const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
 
 /**
  * Controlador para crear un nuevo usuario.
@@ -56,7 +56,7 @@ exports.crearUsuario = async (req, res) => {
     !idRol ||
     !idCliente
   ) {
-    return res.status(400).json({ mensaje: "Faltan campos requeridos" });
+    return res.status(400).json({ mensaje: 'Faltan campos requeridos' });
   }
 
   const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -114,7 +114,7 @@ exports.crearUsuario = async (req, res) => {
         .json({ mensaje: MENSAJES_USUARIOS.DATOS_INCOMPLETOS.mensaje });
     }
   } catch (error) {
-    console.error("Error en el controlador:", error);
+    console.error('Error en el controlador:', error);
     return res
       .status(MENSAJES_USUARIOS.ERROR_CREAR_USUARIO.codigo)
       .json({ mensaje: MENSAJES_USUARIOS.ERROR_CREAR_USUARIO.mensaje });

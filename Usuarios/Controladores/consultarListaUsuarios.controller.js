@@ -1,7 +1,7 @@
 //RF02 Super Administrador Consulta Lista de Usuarios - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF2
 
-const repositorio = require("@altertex/usu/repos/repositorioConsultarListaUsuarios");
-const MENSAJES_USUARIOS = require("@altertex/util/const/mensajesUsuarios");
+const repositorio = require('@altertex/usu/repos/repositorioConsultarListaUsuarios');
+const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
 
 exports.consultarListaUsuarios = async (req, res) => {
   try {
@@ -18,7 +18,7 @@ exports.consultarListaUsuarios = async (req, res) => {
       listaUsuarios: resultados,
     });
   } catch (error) {
-    console.error("Error al consultar usuarios:", error);
+    console.error('Error al consultar usuarios:', error);
     return res
       .status(MENSAJES_USUARIOS.ERROR_OBTENER_USUARIOS.codigo)
       .json({ mensaje: MENSAJES_USUARIOS.ERROR_OBTENER_USUARIOS.mensaje });
