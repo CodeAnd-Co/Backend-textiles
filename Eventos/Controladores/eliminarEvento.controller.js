@@ -1,6 +1,14 @@
+//RF40 Eliminar Evento - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF40]
 const repositorio = require("@altertex/eve/repos/repositorioEliminarEvento");
 const MENSAJES_EVENTOS = require("@altertex/util/const/mensajesEventos");
 
+/**
+ * @function eliminarEvento
+ * @description Elimina un evento específico para un cliente
+ * @param {Object} req - Objeto de solicitud Express
+ * @param {Object} res - Objeto de respuesta Express
+ * @returns {Object} Respuesta JSON con confirmación o mensaje de error
+ */
 exports.eliminarEvento = async (req, res) => {
   try {
     const idEvento = parseInt(req.params.idEvento || req.body.idEvento);

@@ -1,6 +1,15 @@
+//RF37 Consulta Lista de Eventos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF37]
+
 const repositorio = require("@altertex/eve/repos/repositorioConsultarListaEventos");
 const MENSAJES_EVENTOS = require("@altertex/util/const/mensajesEventos");
 
+/**
+ * @function consultarListaEventos
+ * @description Obtiene la lista de eventos asociados al cliente del usuario autenticado
+ * @param {Object} req - Objeto de solicitud Express
+ * @param {Object} res - Objeto de respuesta Express
+ * @returns {Object} Respuesta JSON con la lista de eventos o mensaje de error
+ */
 exports.consultarListaEventos = async (req, res) => {
   try {
     const idCliente = parseInt(req.user.clienteSeleccionado);
