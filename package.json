@@ -97,6 +97,7 @@
     "@altertex/pro/datos": "Productos/Datos/",
     "@altertex/pro/repos": "Productos/Datos/Repositorios",
     "@altertex/pro/rutas": "Productos/Rutas/",
-    "@altertex/pro/rutasInd": "Productos/Rutas/RutasIndividuales"
+    "@altertex/pro/rutasInd": "Productos/Rutas/RutasIndividuales",
+    "@altertex/util/ser": "Utilidades/Servicios/"
   }
 }
