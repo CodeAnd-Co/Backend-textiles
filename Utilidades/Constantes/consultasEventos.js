@@ -9,7 +9,7 @@ module.exports = {
         e.periodoRenovacion,
         e.renovacion
         FROM 
-        EVENTO e
+        evento e
         WHERE e.idCliente = ?   
     `,
   ELIMINAR_EVENTO: `
