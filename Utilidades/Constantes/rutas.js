@@ -31,6 +31,7 @@ module.exports = {
     BASE: "/cuotas",
     AGREGAR: "/crear-cuota",
     OPCIONES: "/obtener-opciones",
+    CONSULTAR_LISTA: "/consultar-lista",
   },
   API_DOCS: "/api-docs",
 };
