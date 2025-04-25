@@ -1,8 +1,21 @@
-//RF02 Super Administrador Consulta Lista de Usuarios - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF2
-
 const repositorio = require('@altertex/usu/repos/repositorioConsultarListaUsuarios');
 const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
 
+/**
+ * Controlador que maneja la consulta de la lista de usuarios.
+ * RF02 - Super Administrador Consulta Lista de Usuarios -
+ * https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF2
+ *
+ * @function consultarListaUsuarios
+ * @async
+ * @param {Object} req - Objeto de solicitud HTTP (Request).
+ * @param {Object} res - Objeto de respuesta HTTP (Response).
+ *
+ * @returns {Response} Retorna una respuesta con:
+ * - Código 200 y lista de usuarios si se encuentran resultados.
+ * - Código 200 y mensaje si no hay usuarios en la base de datos.
+ * - Código 500 y mensaje de error si ocurre una falla en la consulta.
+ */
 exports.consultarListaUsuarios = async (req, res) => {
   try {
     const resultados = await repositorio.consultarListaUsuarios();
