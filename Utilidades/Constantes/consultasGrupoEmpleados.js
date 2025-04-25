@@ -1,6 +1,7 @@
 module.exports = {
   OBTENER_LISTA: `
-      SELECT ge.idGrupo, ge.nombre, sp.idSetProducto, sp.nombre, 
+      SELECT ge.idGrupo, ge.nombre AS geNombre, ge.descripcion,
+      sp.idSetProducto, sp.nombre AS spNombre, 
       COUNT(e.idEmpleado) as totalEmpleados
       FROM Empleado e
       JOIN Empleado_Grupo eg ON e.idEmpleado = eg.idEmpleado

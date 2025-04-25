@@ -10,8 +10,10 @@ module.exports = {
   },
   USUARIOS: {
     BASE: "/usuarios",
+    CONSULTAR_LISTA_USUARIOS: "/consultar-lista-usuarios",
     CREAR: "/crear",
     ELIMINAR: "/eliminar",
+    LEER: "/consultar-usuario",
   },
   PRODUCTOS: {
     BASE: "/productos",

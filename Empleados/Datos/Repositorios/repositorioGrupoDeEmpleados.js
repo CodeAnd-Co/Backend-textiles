@@ -9,8 +9,6 @@ const CONSULTAS_GRUPO_EMPLEADOS = require("@altertex/util/const/consultasGrupoEm
  * @async
  * @function obtenerGrupoDeEmpleados
  * @param {number} idCliente - ID del cliente cuyo grupo de empleados se desea obtener.
- * @param {number} limit - Número máximo de resultados a devolver.
- * @param {number} offset - Número de resultados a omitir para paginación.
  *
  * @returns {Promise<Array>} Lista de grupos de empleados del cliente.
  * - Si no se encuentran grupos, se retorna un array vacío.
