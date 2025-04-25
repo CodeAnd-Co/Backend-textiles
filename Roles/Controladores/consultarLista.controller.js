@@ -7,8 +7,8 @@ const MENSAJES_ROLES = require('@altertex/util/const/mensajesRoles');
  *
  * @function consultarLista
  * @async
- * @param {Object} req - Objeto de solicitud HTTP (Request).
- * @param {Object} res - Objeto de respuesta HTTP (Response).
+ * @param {object} req - Objeto de solicitud HTTP (Request).
+ * @param {object} res - Objeto de respuesta HTTP (Response).
  * @returns {Response} Respuesta HTTP con el resultado de la consulta.
  *
  * @description
@@ -36,10 +36,7 @@ exports.consultarLista = async (req, res) => {
     });
   } catch (error) {
     // Manejo de errores inesperados, con log en consola para facilitar el diagnóstico.
-    console.error(
-      'Error inesperado al consultar roles:',
-      error.message || error,
-    );
+    console.error('Error inesperado al consultar roles:', error.message || error);
 
     // Se responde con un error 500 y un mensaje genérico para el cliente.
     return res.status(500).json({ mensaje: 'Error al consultar roles' });

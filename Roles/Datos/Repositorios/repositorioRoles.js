@@ -6,12 +6,12 @@ const CONSULTAS_ROLES = require('@altertex/util/const/consultasRoles');
 
 /**
  * RF7 - Consultar lista de roles
- * Documentación del requisito funcional: 
+ * Documentación del requisito funcional:
  * https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF7
  *
  * @async
  * @function obtenerRoles
- * @returns {Promise<Array<Object>>} Retorna una lista de objetos que representan los roles obtenidos desde la base de datos.
+ * @returns {Promise<Array<object>>} Retorna una lista de objetos que representan los roles obtenidos desde la base de datos.
  *
  * @throws {Error} Si no se encuentran resultados o si ocurre un error al ejecutar la consulta.
  *
