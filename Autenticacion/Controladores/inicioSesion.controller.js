@@ -1,8 +1,8 @@
-const repositorio = require("@altertex/aut/repos/repositorioInicioSesion");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const repositorio = require('@altertex/aut/repos/repositorioInicioSesion');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticacion");
+const MENSAJES_AUTENTICACION = require('@altertex/util/const/mensajesAutenticacion');
 
 /**
  * Controlador para el inicio de sesión de un usuario.
@@ -11,11 +11,11 @@ const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticaci
  *
  * @async
  * @function inicioSesion
- * @param {Object} req - Objeto de solicitud de Express.
- * @param {Object} req.body - Cuerpo de la solicitud HTTP.
+ * @param {object} req - Objeto de solicitud de Express.
+ * @param {object} req.body - Cuerpo de la solicitud HTTP.
  * @param {string} req.body.correo - Correo electrónico del usuario.
  * @param {string} req.body.contrasenia - Contraseña proporcionada por el usuario.
- * @param {Object} res - Objeto de respuesta de Express.
+ * @param {object} res - Objeto de respuesta de Express.
  *
  * @returns {Response} Respuesta HTTP con estado:
  * - 200 si el inicio de sesión es exitoso, junto con un JWT.
@@ -36,11 +36,9 @@ exports.inicioSesion = async (req, res) => {
 
   const formatoCorreoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
   if (!formatoCorreoValido) {
-    return res
-      .status(MENSAJES_AUTENTICACION.FORMATO_CORREO_INVALIDO.codigo)
-      .json({
-        mensaje: MENSAJES_AUTENTICACION.FORMATO_CORREO_INVALIDO.mensaje,
-      });
+    return res.status(MENSAJES_AUTENTICACION.FORMATO_CORREO_INVALIDO.codigo).json({
+      mensaje: MENSAJES_AUTENTICACION.FORMATO_CORREO_INVALIDO.mensaje,
+    });
   }
 
   try {
@@ -51,47 +49,38 @@ exports.inicioSesion = async (req, res) => {
     const clientesAsociados = resultadoQuery.clientesAsociados;
 
     if (!usuario) {
-      return res
-        .status(MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.codigo)
-        .json({
-          mensaje: MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.mensaje,
-        });
+      return res.status(MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.codigo).json({
+        mensaje: MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.mensaje,
+      });
     }
 
-    const contraCorrecta = await bcrypt.compare(
-      contrasenia,
-      usuario.contrasenia
-    );
+    const contraCorrecta = await bcrypt.compare(contrasenia, usuario.contrasenia);
 
     if (!contraCorrecta) {
-      return res
-        .status(MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.codigo)
-        .json({
-          mensaje: MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.mensaje,
-        });
+      return res.status(MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.codigo).json({
+        mensaje: MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.mensaje,
+      });
     }
 
     const token = jwt.sign(
       { correo: usuario.correoElectronico, permisos, clientesAsociados },
       process.env.JWT_SECRET,
       {
-        expiresIn: "8h",
+        expiresIn: '8h',
       }
     );
 
-    res.cookie("token", token, {
+    res.cookie('token', token, {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+      sameSite: 'None',
     });
 
-    return res
-      .status(MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.codigo)
-      .json({
-        mensaje: MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.mensaje,
-      });
+    return res.status(MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.codigo).json({
+      mensaje: MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.mensaje,
+    });
   } catch (error) {
-    console.error("Error en inicio de sesión:", error);
+    console.error('Error en inicio de sesión:', error);
     return res
       .status(MENSAJES_AUTENTICACION.ERROR_SERVIDOR.codigo)
       .json({ mensaje: MENSAJES_AUTENTICACION.ERROR_SERVIDOR.mensaje });

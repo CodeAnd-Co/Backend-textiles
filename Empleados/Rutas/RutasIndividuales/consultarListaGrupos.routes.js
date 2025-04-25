@@ -48,8 +48,8 @@ const RUTAS = require("@altertex/util/const/rutas");
  *               properties:
  *                 mensaje:
  *                   type: string
- *                   example: "Lista de empleados obtenida exitosamente."
- *                 grupo_empleados:
+ *                   example: "Lista de grupos de empleados obtenida exitosamente."
+ *                 grupoEmpleados:
  *                   type: array
  *                   items:
  *                     type: object
@@ -57,12 +57,18 @@ const RUTAS = require("@altertex/util/const/rutas");
  *                       idGrupo:
  *                         type: integer
  *                         example: 3
- *                       nombre:
+ *                       geNombre:
  *                         type: string
- *                         example: "Set Calidad Toyota"
+ *                         example: "Calidad Toyota"
+ *                       descripcion:
+ *                         type: string
+ *                         example: "Encargados de la calidad y los controles en el proceso de fabricación."
  *                       idSetProducto:
  *                         type: integer
  *                         example: 3
+ *                       spNombre:
+ *                         type: string
+ *                         example: "Set Calidad Toyota"
  *                       totalEmpleados:
  *                         type: integer
  *                         example: 1

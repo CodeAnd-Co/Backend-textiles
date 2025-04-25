@@ -1,25 +1,22 @@
-const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticacion");
+const MENSAJES_AUTENTICACION = require('@altertex/util/const/mensajesAutenticacion');
 
 /**
- * Middleware que valida la API Key enviada en los headers de la solicitud.
- * Compara el valor del header con el valor definido en la variable de entorno `API_KEY`.
+ * Middleware que valida una API key enviada en los headers de la solicitud.
  *
- * @function
- * @param {string} [nombreHeader="x-api-key"] - Nombre del header que contiene la API Key.
+ * Si el header especificado no contiene una clave válida, se responde con un error 401.
  *
- * @returns {Function} Middleware de Express que valida la API Key.
- *
- * @param {Object} req - Objeto de solicitud de Express.
- * @param {Object} res - Objeto de respuesta de Express.
- * @param {Function} next - Función que llama al siguiente middleware si la API Key es válida.
- *
- * @returns {Response|void} - Respuesta HTTP:
- * - 401 si la API Key es inválida o no se proporciona.
- *
- * @throws {Error} - Si ocurre un error inesperado durante la validación (muy raro en este caso).
+ * @param {string} [nombreHeader='x-api-key'] - Nombre del header que se debe verificar.
+ * @returns {function(Express.Request, Express.Response, Express.NextFunction): void} Middleware de Express que valida la API key.
  */
-
-module.exports = (nombreHeader = "x-api-key") => {
+module.exports = (nombreHeader = 'x-api-key') => {
+  /**
+   * Middleware que compara la clave del header con `process.env.API_KEY`.
+   *
+   * @param {Express.Request} req - Objeto de solicitud de Express.
+   * @param {Express.Response} res - Objeto de respuesta de Express.
+   * @param {Express.NextFunction} next - Función para continuar con el siguiente middleware.
+   * @returns {void}
+   */
   return (req, res, next) => {
     const valorHeader = req.get(nombreHeader);
 

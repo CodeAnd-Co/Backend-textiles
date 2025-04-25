@@ -7,10 +7,10 @@ const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticaci
  *
  * @async
  * @function cerrarSesion
- * @param {Object} req - Objeto de solicitud de Express.
- * @param {Object} req.cookies - Cookies enviadas con la solicitud.
+ * @param {object} req - Objeto de solicitud de Express.
+ * @param {object} req.cookies - Cookies enviadas con la solicitud.
  * @param {string} req.cookies.token - Token JWT almacenado en las cookies.
- * @param {Object} res - Objeto de respuesta de Express.
+ * @param {object} res - Objeto de respuesta de Express.
  *
  * @returns {Response} Respuesta HTTP con estado:
  * - 200 si el cierre de sesión es exitoso.

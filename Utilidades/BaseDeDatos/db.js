@@ -1,4 +1,4 @@
-const mysql = require("mysql2");
+const mysql = require('mysql2');
 
 /**
  * Establece una conexión con una base de datos MySQL utilizando las credenciales definidas
@@ -7,8 +7,8 @@ const mysql = require("mysql2");
  * @module conexionMySQL
  * @requires mysql2
  *
- * @const {object} conexion - Objeto de conexión MySQL activo.
- * @property {function} connect - Método para establecer la conexión con la base de datos.
+ * @constant {object} conexion - Objeto de conexión MySQL activo.
+ * @property {Function} connect - Método para establecer la conexión con la base de datos.
  *
  * @example
  * const conexion = require('./conexion');
@@ -19,18 +19,18 @@ const mysql = require("mysql2");
  *
  * @throws {Error} Si ocurre un error al conectar a la base de datos.
  */
-
 const conexion = mysql.createConnection({
   host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  charset: "utf8mb4",
+  charset: 'utf8mb4',
 });
 
 conexion.connect((error) => {
   if (error) {
-    console.error("Error connecting to MySQL:", error.stack);
+    console.error('Error connecting to MySQL:', error.stack);
     return;
   }
   console.log(`Connected to MySQL as id ${conexion.threadId}`);
