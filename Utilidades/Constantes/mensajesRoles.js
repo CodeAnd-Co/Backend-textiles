@@ -1,34 +1,68 @@
 /**
- * Constantes de mensajes utilizadas para las respuestas relacionadas con los roles.
- * Incluye códigos HTTP y mensajes descriptivos para distintos escenarios.
+ * @file mensajesRoles.js
+ * @description
+ * Contiene las constantes de mensajes utilizadas para las respuestas HTTP
+ * relacionadas con la entidad "Rol" en el backend.
+ * Cada constante define un código de estado HTTP y un mensaje descriptivo,
+ * lo cual facilita respuestas consistentes y claras desde los controladores.
+ *
+ * @exports CONSULTA_EXITOSA, SIN_RESULTADOS, PARAMETROS_INVALIDOS, 
+ * LIMITE_OFFSET_INVALIDOS, ERROR_CONSULTAR_ROLES
  */
 
 module.exports = {
-  // Mensaje para una consulta exitosa
+  /**
+   * Mensaje utilizado cuando la consulta de roles se realiza con éxito.
+   *
+   * @constant
+   * @type {{codigo: number, mensaje: string}}
+   */
   CONSULTA_EXITOSA: {
     codigo: 200,
     mensaje: 'Lista de roles obtenida exitosamente.',
   },
 
-  // Mensaje cuando no se encuentran resultados
+  /**
+   * Mensaje utilizado cuando la consulta no devuelve ningún resultado.
+   *
+   * @constant
+   * @type {{codigo: number, mensaje: string}}
+   */
   SIN_RESULTADOS: {
     codigo: 204,
     mensaje: 'No se encontraron roles registrados para el cliente.',
   },
 
-  // Error por parámetros faltantes o inválidos
+  /**
+   * Mensaje utilizado cuando los parámetros de entrada son inválidos o faltan.
+   *
+   * @constant
+   * @type {{codigo: number, mensaje: string}}
+   */
   PARAMETROS_INVALIDOS: {
     codigo: 400,
     mensaje: 'Los parámetros proporcionados no son válidos o están incompletos.',
   },
 
-  // Error específico para paginación incorrecta
+  /**
+   * Mensaje específico para errores relacionados con paginación.
+   * Generalmente usado si el límite o el desplazamiento (offset) son inválidos.
+   *
+   * @constant
+   * @type {{codigo: number, mensaje: string}}
+   */
   LIMITE_OFFSET_INVALIDOS: {
     codigo: 400,
     mensaje: 'Los valores de límite u offset deben ser números positivos.',
   },
 
-  // Error general del servidor al consultar roles
+  /**
+   * Mensaje de error general utilizado cuando ocurre un fallo inesperado
+   * durante la consulta de roles en el backend.
+   *
+   * @constant
+   * @type {{codigo: number, mensaje: string}}
+   */
   ERROR_CONSULTAR_ROLES: {
     codigo: 500,
     mensaje: 'Ocurrió un error al obtener la lista de roles.',
