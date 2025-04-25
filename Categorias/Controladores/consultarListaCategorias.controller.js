@@ -1,24 +1,13 @@
+//RF[47] Consulta lista de categorías - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF47]
+
 const repositorio = require("@altertex/cat/repos/repositorioConsultarListaCategorias");
 const MENSAJES_CATEGORIAS = require("@altertex/util/const/mensajesCategorias");
 
 exports.consultarListaCategorias = async (req, res) => {
-  const limit = parseInt(req.body.limit);
-  const offset = parseInt(req.body.offset);
-
-  if (isNaN(limit) || isNaN(offset)) {
-    return res
-      .status(MENSAJES_CATEGORIAS.PARAMETROS_INVALIDOS.codigo)
-      .json({ mensaje: MENSAJES_CATEGORIAS.PARAMETROS_INVALIDOS.mensaje });
-  }
-
-  if (limit <= 0 || offset < 0) {
-    return res
-      .status(MENSAJES_CATEGORIAS.LIMITE_OFFSET_INVALIDOS.codigo)
-      .json({ mensaje: MENSAJES_CATEGORIAS.LIMITE_OFFSET_INVALIDOS.mensaje });
-  }
+  const idCliente = parseInt(req.user.clienteSeleccionado);
 
   try {
-    const resultados = await repositorio.consultarListaCategorias(limit, offset);
+    const resultados = await repositorio.consultarListaCategorias(idCliente);
 
     if (!resultados || resultados.length === 0) {
       return res
@@ -28,7 +17,7 @@ exports.consultarListaCategorias = async (req, res) => {
 
     return res.status(MENSAJES_CATEGORIAS.LISTA_CATEGORIAS_OBTENIDA.codigo).json({
       mensaje: MENSAJES_CATEGORIAS.LISTA_CATEGORIAS_OBTENIDA.mensaje,
-      lista_categorias: resultados,
+      listaCategoria: resultados,
     });
   } catch (error) {
     console.error("Error al consultar categorías:", error);
