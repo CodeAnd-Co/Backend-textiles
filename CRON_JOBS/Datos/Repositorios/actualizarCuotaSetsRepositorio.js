@@ -10,8 +10,8 @@
  * @requires @altertex/util/const/consultasCuotas
  */
 
-const db = require("@altertex/util/bd/db");
-const QUERY = require("@altertex/util/const/consultasCuotas");
+const db = require('@altertex/util/bd/db');
+const QUERY = require('@altertex/util/const/consultasCuotas');
 
 /**
  * Actualiza los límites de productos de los cuota sets y sus fechas de última actualización.
@@ -22,7 +22,7 @@ const QUERY = require("@altertex/util/const/consultasCuotas");
  *
  * @async
  * @function
- * @returns {Promise<Object>} Resultado de la operación. Puede ser un mensaje de éxito o de error.
+ * @returns {Promise<object>} Resultado de la operación. Puede ser un mensaje de éxito o de error.
  *
  * @throws {Error} Si ocurre un fallo en la transacción de base de datos.
  */
@@ -37,21 +37,19 @@ exports.obtenerCuota = async () => {
     if (resultadoReseteo.changedRows === 0) {
       await conexion.rollback();
       return {
-        error: "Ninguna columna se actualizo.No se actualizara la fecha.",
+        error: 'Ninguna columna se actualizo.No se actualizara la fecha.',
       };
     }
 
-    const [resultadoActualizacion] = await conexion.execute(
-      QUERY.ACTUALIZAR_FECHAS
-    );
+    const [resultadoActualizacion] = await conexion.execute(QUERY.ACTUALIZAR_FECHAS);
 
     await conexion.commit();
-    console.log("Transacción exitosa", resultadoActualizacion);
+    console.log('Transacción exitosa', resultadoActualizacion);
 
-    return { exito: "Actualizacion exitosa" };
+    return { exito: 'Actualizacion exitosa' };
   } catch (error) {
     if (conexion) await conexion.rollback();
-    console.error("Transacción fallida: ", error);
-    throw new Error("Error actualizando cuota sets");
+    console.error('Transacción fallida: ', error);
+    throw new Error('Error actualizando cuota sets');
   }
 };

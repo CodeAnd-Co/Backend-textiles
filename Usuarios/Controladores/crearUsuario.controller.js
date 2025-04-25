@@ -7,8 +7,8 @@ const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
  * RF1 - Crear Usuario - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF1
  * @async
  * @function crearUsuario
- * @param {Object} req - Objeto de solicitud de Express.
- * @param {Object} req.body - Cuerpo de la solicitud HTTP.
+ * @param {object} req - Objeto de solicitud de Express.
+ * @param {object} req.body - Cuerpo de la solicitud HTTP.
  * @param {string} req.body.nombreCompleto - Nombre completo del usuario.
  * @param {string} req.body.correoElectronico - Correo electrónico del usuario.
  * @param {string} req.body.contrasenia - Contraseña proporcionada por el usuario (sin hashear).
@@ -17,7 +17,7 @@ const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
  * @param {string} req.body.fechaNacimiento - Fecha de nacimiento en formato YYYY-MM-DD.
  * @param {string} req.body.genero - Género del usuario.
  * @param {boolean} req.body.estatus - Estatus activo/inactivo del usuario.
- * @param {Object} res - Objeto de respuesta de Express.
+ * @param {object} res - Objeto de respuesta de Express.
  *
  * @returns {Response} Respuesta HTTP con estado:
  * - 201 si el usuario se creó correctamente.
@@ -28,8 +28,6 @@ const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
  * @throws {Error}
  *
  */
-/* eslint-disable operator-linebreak */
-
 exports.crearUsuario = async (req, res) => {
   const {
     nombreCompleto,
@@ -45,16 +43,16 @@ exports.crearUsuario = async (req, res) => {
   } = req.body;
 
   if (
-    !nombreCompleto ||
-    !correoElectronico ||
-    !contrasenia ||
-    !numeroTelefono ||
-    !direccion ||
-    !fechaNacimiento ||
-    !genero ||
-    estatus === undefined ||
-    !idRol ||
-    !idCliente
+    !nombreCompleto
+    || !correoElectronico
+    || !contrasenia
+    || !numeroTelefono
+    || !direccion
+    || !fechaNacimiento
+    || !genero
+    || estatus === undefined
+    || !idRol
+    || !idCliente
   ) {
     return res.status(400).json({ mensaje: 'Faltan campos requeridos' });
   }

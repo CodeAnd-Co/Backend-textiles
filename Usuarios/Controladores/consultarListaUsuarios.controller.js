@@ -8,8 +8,8 @@ const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
  *
  * @function consultarListaUsuarios
  * @async
- * @param {Object} req - Objeto de solicitud HTTP (Request).
- * @param {Object} res - Objeto de respuesta HTTP (Response).
+ * @param {object} req - Objeto de solicitud HTTP (Request).
+ * @param {object} res - Objeto de respuesta HTTP (Response).
  *
  * @returns {Response} Retorna una respuesta con:
  * - Código 200 y lista de usuarios si se encuentran resultados.
