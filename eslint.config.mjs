@@ -44,15 +44,15 @@ export default [
       ],
 
       // Enforce JSDoc content quality - With warnings
-      'jsdoc/require-param': 'warn',
-      'jsdoc/require-param-name': 'warn',
-      'jsdoc/require-param-type': 'warn',
-      'jsdoc/require-returns': 'warn',
-      'jsdoc/require-returns-type': 'warn',
-      'jsdoc/valid-types': 'warn',
-      'jsdoc/check-param-names': 'warn',
-      'jsdoc/check-tag-names': 'warn',
-      'jsdoc/check-types': 'warn',
+      'jsdoc/require-param': 'error',
+      'jsdoc/require-param-name': 'error',
+      'jsdoc/require-param-type': 'error',
+      'jsdoc/require-returns': 'error',
+      'jsdoc/require-returns-type': 'error',
+      'jsdoc/valid-types': 'error',
+      'jsdoc/check-param-names': 'error',
+      'jsdoc/check-tag-names': 'error',
+      'jsdoc/check-types': 'error',
 
       // Optional rules based on your preference
       'jsdoc/require-description': 'warn', // Added: Require general descriptions
