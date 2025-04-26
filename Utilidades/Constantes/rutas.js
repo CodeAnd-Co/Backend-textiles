@@ -1,5 +1,3 @@
-const { ELIMINAR_CATEGORIA } = require("./consultasCategorias");
-
 module.exports = {
   RAIZ: "/",
   API: "/api",

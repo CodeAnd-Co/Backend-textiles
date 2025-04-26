@@ -18,7 +18,7 @@ const MENSAJES_CATEGORIAS = require("@altertex/util/const/mensajesCategorias");
  *
  * @throws {Error}
  */
-/* eslint-disable operator-linebreak */
+ 
 
 exports.eliminarCategoria = async (req, res) => {
   try {

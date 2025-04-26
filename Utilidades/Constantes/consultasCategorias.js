@@ -1,5 +1,3 @@
-const { ELB } = require("aws-sdk");
-
 module.exports = {
   OBTENER_CATEGORIAS_CON_PRODUCTOS: `
     SELECT 
