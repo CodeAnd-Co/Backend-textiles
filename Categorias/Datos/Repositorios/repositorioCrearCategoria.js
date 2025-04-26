@@ -29,21 +29,24 @@ exports.crearCategoria = async (categoria) => {
 
     if (!categoria) {
       console.log('no categoria');
-      throw new Error(MENSAJES.ERROR_CATEGORIA_INVALIDA.mensaje);
+      throw new Error(MENSAJES.PARAMETROS_INVALIDOS.mensaje);
     }
 
     const { nombreCategoria, descripcion, productos } = categoria;
 
     if (!nombreCategoria || typeof nombreCategoria !== 'string') {
-      throw new Error(MENSAJES.ERROR_CATEGORIA_INVALIDA.mensaje);
+      console.log('nombre');
+      throw new Error(MENSAJES.NOMBRE_CATEGORIA_INVALIDO.mensaje);
     }
 
     if (!productos || typeof productos !== 'object') {
-      throw new Error(MENSAJES.ERROR_CATEGORIA_INVALIDA.mensaje);
+      console.log('productos');
+      throw new Error(MENSAJES.PARAMETROS_INVALIDOS.mensaje);
     }
 
     if (productos.length === 0) {
-      throw new Error(MENSAJES.ERROR_CATEGORIA_INVALIDA.mensaje);
+      console.log('longitud');
+      throw new Error(MENSAJES.PARAMETROS_INVALIDOS.mensaje);
     }
 
     const [resultado] = await conexion.execute(CONSULTA.CREAR_CATEGORIAS, [

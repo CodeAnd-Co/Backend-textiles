@@ -18,8 +18,9 @@ const repositorio = require('@altertex/cat/repos/repositorioCrearCategoria');
  * Valida que los datos requeridos estén presentes y maneja errores de forma controlada.
  */
 exports.crearCategoria = async (req, res) => {
-  const categoria = req.body;
+  const categoria = req.body.categoria;
 
+  console.log(categoria);
   if (!categoria.nombreCategoria || !categoria.productos) {
     return res
       .status(MENSAJES.NOMBRE_CATEGORIA_INVALIDO.codigo)
@@ -27,11 +28,11 @@ exports.crearCategoria = async (req, res) => {
   }
 
   try {
-    await repositorio.crearCategoria(categoria);
+    // await repositorio.crearCategoria(categoria);
 
     return res
       .status(MENSAJES.CATEGORIA_CREADA.codigo)
-      .json({ exito: MENSAJES.CATEGORIA_CREADA.mensaje, categoria });
+      .json({ exito: MENSAJES.CATEGORIA_CREADA.mensaje });
   } catch (errorRepo) {
     return res
       .status(MENSAJES.ERROR_CREAR_CATEGORIA.codigo)
