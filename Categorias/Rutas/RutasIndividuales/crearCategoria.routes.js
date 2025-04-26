@@ -7,15 +7,15 @@ const controlador = require('@altertex/cat/ctrl/crearCategoria.controller');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
-// const verificarPermiso = require('@altertex/util/inter/verificarPermisos');
-// const PERMISOS = require('@altertex/util/const/permisos');
+const verificarPermiso = require('@altertex/util/inter/verificarPermisos');
+const PERMISOS = require('@altertex/util/const/permisos');
 
 ruteador.post(
   RUTAS.CATEGORIAS.CREAR_CATEGORIA,
   validarYSanitizar,
   revisarApiKey(),
   autorizarToken,
-  //   verificarPermiso(PERMISOS.CREAR_CATEGORIA),
+  verificarPermiso(PERMISOS.CREAR_CATEGORIA_PRODUCTOS),
   controlador.crearCategoria
 );
 
