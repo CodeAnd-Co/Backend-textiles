@@ -19,11 +19,12 @@ module.exports = {
     GROUP BY 
       c.idCategoria, c.nombreCategoria, c.descripcion, p.idCliente;
   `,
-  ELIMINAR_CATEGORIA: `
+  ELIMINAR_CATEGORIA_PRODUCTO: `
     DELETE FROM CATEGORIA_PRODUCTO
     WHERE idCategoria = ?;
-
-    DELETE FROM CATEGORIA
-    WHERE idCategoria = ?;
   `,
+  ELIMINAR_CATEGORIA: `
+  DELETE FROM CATEGORIA
+  WHERE idCategoria = ?;
+`,
 };

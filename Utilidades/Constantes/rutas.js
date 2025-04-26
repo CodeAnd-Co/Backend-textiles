@@ -1,3 +1,5 @@
+const { ELIMINAR_CATEGORIA } = require("./consultasCategorias");
+
 module.exports = {
   RAIZ: "/",
   API: "/api",
@@ -17,6 +19,7 @@ module.exports = {
   CATEGORIAS: {
     BASE: "/categorias",
     CONSULTAR_LISTA_CATEGORIAS: "/consultar-lista-categorias",
+    ELIMINAR_CATEGORIA: "/eliminar",
   },
   PRODUCTOS: {
     BASE: "/productos",
