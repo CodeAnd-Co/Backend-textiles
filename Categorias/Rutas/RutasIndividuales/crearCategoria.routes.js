@@ -3,7 +3,7 @@
 const express = require('express');
 const ruteador = express.Router();
 const RUTAS = require('@altertex/util/const/rutas');
-const controlador = require('@altertex/pro/ctrl/crearCategoria.controller');
+const controlador = require('@altertex/cat/ctrl/crearCategoria.controller');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
@@ -11,7 +11,7 @@ const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 // const PERMISOS = require('@altertex/util/const/permisos');
 
 ruteador.post(
-  RUTAS.PRODUCTOS.CREAR_CATEGORIA,
+  RUTAS.CATEGORIAS.CREAR_CATEGORIA,
   validarYSanitizar,
   revisarApiKey(),
   autorizarToken,

@@ -1,7 +1,7 @@
 // RF[46] Consulta Lista de Productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF46]
 
 const MENSAJES = require('@altertex/util/const/mensajesCategorias');
-const repositorio = require('@altertex/pro/repos/repositorioCrearCategoria');
+const repositorio = require('@altertex/cat/repos/repositorioCrearCategoria');
 
 /**
  * Crea una nueva categoría y la guarda en la base de datos.
@@ -22,19 +22,19 @@ exports.crearCategoria = async (req, res) => {
 
   if (!categoria.nombreCategoria || !categoria.productos) {
     return res
-      .status(MENSAJES.ERROR_NO_CATEGORIA.codigo)
-      .json({ error: MENSAJES.ERROR_NO_CATEGORIA.mensaje });
+      .status(MENSAJES.NOMBRE_CATEGORIA_INVALIDO.codigo)
+      .json({ error: MENSAJES.NOMBRE_CATEGORIA_INVALIDO.mensaje });
   }
 
   try {
     await repositorio.crearCategoria(categoria);
 
     return res
-      .status(MENSAJES.CREACION_EXITOSA.codigo)
-      .json({ exito: MENSAJES.CREACION_EXITOSA.mensaje, categoria });
+      .status(MENSAJES.CATEGORIA_CREADA.codigo)
+      .json({ exito: MENSAJES.CATEGORIA_CREADA.mensaje, categoria });
   } catch (errorRepo) {
     return res
-      .status(MENSAJES.ERROR_CREACION.codigo)
-      .json({ error: MENSAJES.ERROR_CREACION.mensaje, errorRepo });
+      .status(MENSAJES.ERROR_CREAR_CATEGORIA.codigo)
+      .json({ error: MENSAJES.ERROR_CREAR_CATEGORIA.mensaje, errorRepo });
   }
 };

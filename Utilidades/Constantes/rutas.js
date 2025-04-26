@@ -16,13 +16,13 @@ module.exports = {
     LEER: '/consultar-usuario',
   },
   CATEGORIAS: {
-    BASE: "/categorias",
-    CONSULTAR_LISTA_CATEGORIAS: "/consultar-lista-categorias",
+    BASE: '/categorias',
+    CONSULTAR_LISTA_CATEGORIAS: '/consultar-lista-categorias',
+    CREAR_CATEGORIA: '/crear-categoria',
   },
   PRODUCTOS: {
     BASE: '/productos',
     CONSULTAR_LISTA: '/consultar-lista',
-    CREAR_CATEGORIA: '/crear-categoria',
   },
   CLIENTES: {
     BASE: '/clientes',
