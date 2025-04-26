@@ -28,7 +28,7 @@ exports.crearCategoria = async (req, res) => {
   }
 
   try {
-    // await repositorio.crearCategoria(categoria);
+    await repositorio.crearCategoria(categoria);
 
     return res
       .status(MENSAJES.CATEGORIA_CREADA.codigo)
