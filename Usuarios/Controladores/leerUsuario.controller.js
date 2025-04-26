@@ -1,6 +1,16 @@
-const repositorio = require("@altertex/usu/repos/repositorioLeerUsuario");
-const MENSAJES_USUARIOS = require("@altertex/util/const/mensajesUsuarios");
+const repositorio = require('@altertex/usu/repos/repositorioLeerUsuario');
+const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
 
+/**
+ * Lee los detalles de un usuario desde la base de datos utilizando su ID.
+ *
+ * Valida el parámetro `idUsuario` y obtiene la información del usuario a través del repositorio.
+ * Si el usuario no es encontrado o el parámetro es inválido, retorna un error.
+ *
+ * @param {Express.Request} req - La solicitud HTTP que contiene el `idUsuario` en el cuerpo.
+ * @param {Express.Response} res - La respuesta HTTP para enviar el resultado al cliente.
+ * @returns {Promise<void>} Responde con el usuario encontrado o un mensaje de error.
+ */
 exports.leerUsuario = async (req, res) => {
   const idUsuario = parseInt(req.body.idUsuario);
 
@@ -24,7 +34,7 @@ exports.leerUsuario = async (req, res) => {
       usuario,
     });
   } catch (error) {
-    console.error("Error al consultar usuario:", error);
+    console.error('Error al consultar usuario:', error);
     return res
       .status(MENSAJES_USUARIOS.ERROR_OBTENER_USUARIO.codigo)
       .json({ mensaje: MENSAJES_USUARIOS.ERROR_OBTENER_USUARIO.mensaje });

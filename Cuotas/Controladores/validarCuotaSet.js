@@ -24,43 +24,30 @@
  * @note Esta función depende implícitamente de `res`, pero no se pasa como parámetro.
  * Para que sea reutilizable, se recomienda lanzar errores o retornar un objeto de error en lugar de usar `res` directamente.
  */
+const MENSAJES = require('@altertex/util/const/mensajesCuotas');
+
 exports.validarCuotaSet = (nombre, productosYLimite, res) => {
-  // Validaciones principales
-  if (!nombre || typeof nombre !== "string" || nombre.trim() === "") {
-    return res.status(400).json({ error: 'El campo "nombre" es obligatorio.' });
+  if (!nombre || typeof nombre !== 'string' || nombre.trim() === '') {
+    return res.status(400).json({ error: MENSAJES.NOMBRE_REQUERIDO });
   }
 
   if (!Array.isArray(productosYLimite) || productosYLimite.length === 0) {
-    return res
-      .status(400)
-      .json({ error: "Debes enviar al menos un producto con su límite." });
+    return res.status(400).json({ error: MENSAJES.PRODUCTOS_REQUERIDOS });
   }
 
-  // Validar cada producto
-  for (let iterador = 0; iterador < productosYLimite.length; iterador += 1) {
-    const producto = productosYLimite[iterador];
-    const { idProducto, limite, limiteActual } = producto;
+  for (let iterador = 0; iterador < productosYLimite.length; iterador = iterador + 1) {
+    const { idProducto, limite, limiteActual } = productosYLimite[iterador];
 
-    if (
-      !idProducto
-      || typeof idProducto !== "string"
-      || idProducto.trim() === ""
-    ) {
-      return res.status(400).json({
-        error: `El producto en la posición ${iterador} no tiene un idProducto válido.`,
-      });
+    if (!idProducto || typeof idProducto !== 'string' || idProducto.trim() === '') {
+      return res.status(400).json({ error: MENSAJES.ID_PRODUCTO_INVALIDO(iterador) });
     }
 
-    if (typeof limite !== "number" || isNaN(limite)) {
-      return res.status(400).json({
-        error: `El producto "${idProducto}" tiene un "limite" inválido.`,
-      });
+    if (typeof limite !== 'number' || isNaN(limite)) {
+      return res.status(400).json({ error: MENSAJES.LIMITE_INVALIDO(idProducto) });
     }
 
-    if (typeof limiteActual !== "number" || isNaN(limiteActual)) {
-      return res.status(400).json({
-        error: `El producto "${idProducto}" tiene un "limiteActual" inválido.`,
-      });
+    if (typeof limiteActual !== 'number' || isNaN(limiteActual)) {
+      return res.status(400).json({ error: MENSAJES.LIMITE_ACTUAL_INVALIDO(idProducto) });
     }
   }
 };
