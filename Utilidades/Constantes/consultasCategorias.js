@@ -7,11 +7,11 @@ module.exports = {
       COUNT(p.idProducto) AS cantidadProductos,
       p.idCliente
     FROM 
-      CATEGORIA c
+      categoria c
     JOIN 
-      CATEGORIA_PRODUCTO cp ON c.idCategoria = cp.idCategoria
+      categoria_producto cp ON c.idCategoria = cp.idCategoria
     JOIN 
-      PRODUCTO p ON cp.idProducto = p.idProducto
+      producto p ON cp.idProducto = p.idProducto
     WHERE 
       p.idCliente = ?
     GROUP BY 
@@ -20,8 +20,9 @@ module.exports = {
   CREAR_CATEGORIAS: `
     INSERT INTO categoria (nombreCategoria, descripcion)
     VALUES (?, ?);
-    `,
+  `,
   CREAR_CATEGORIA_PRODUCTOS: `
     INSERT INTO categoria_producto (idCategoria, idProducto) 
-    VALUES (?, ?);`,
+    VALUES (?, ?);
+  `,
 };
