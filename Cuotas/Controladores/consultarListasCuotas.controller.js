@@ -8,10 +8,10 @@ const MENSAJES_CUOTAS = require("@altertex/util/const/mensajesCuotas");
  *
  * @async
  * @function consultarLista
- * @param {Object} req - Objeto de solicitud de Express.
- * @param {Object} req.user - Datos del usuario autenticado.
+ * @param {object} req - Objeto de solicitud de Express.
+ * @param {object} req.user - Datos del usuario autenticado.
  * @param {number} req.user.clienteSeleccionado - ID del cliente autenticado.
- * @param {Object} res - Objeto de respuesta de Express.
+ * @param {object} res - Objeto de respuesta de Express.
  *
  * @returns {Response} Respuesta HTTP con:
  * - 200 si la consulta fue exitosa.

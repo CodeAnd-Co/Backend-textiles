@@ -10,7 +10,7 @@ const CONSULTAS_CUOTAS = require('@altertex/util/const/consultasCuotas');
  * @async
  * @function obtenerCuotas
  * @param {number} idCliente - Identificador único del cliente a consultar.
- * @returns {Promise<Array<Object>>} Retorna una lista de sets de cuotas si existen,
+ * @returns {Promise<Array<object>>} Retorna una lista de sets de cuotas si existen,
  * o un array vacío si ocurre un error o no se encuentran resultados.
  *
  * @throws {Error} En caso de fallo en la ejecución de la consulta, se captura el error
