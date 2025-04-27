@@ -7,4 +7,20 @@ module.exports = {
     WHERE i.tipoImagen = "Imagen Producto"
     AND p.idCliente = ?;
     `,
+  CREAR: `
+    INSERT INTO producto (
+      idCliente, idProveedor, nombreComun, nombreComercial, descripcion,
+      marca, modelo, tipoProducto, precioPuntos, precioCliente,
+      precioVenta, costo, impuesto, descuento, estado, envio
+    ) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    `,
+  CREAR_IMAGEN_PRODUCTO: `
+    INSERT INTO imagen_producto (idImagen, idProducto)
+    VALUES (?, ?);
+    `,
+  CREAR_DATOS_ENVIO: `
+    INSERT INTO datos_envio (idProducto, peso, longitud, ancho, altura, volumen, tipoPaquete)
+    VALUES (?, ?, ?, ?, ?, ?,?);
+    `,
 };
