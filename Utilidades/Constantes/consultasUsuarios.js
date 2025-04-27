@@ -44,7 +44,7 @@ module.exports = {
     r.nombre AS rol,
     uc.idCliente,
     c.nombreComercial AS nombreCliente
-  FROM Usuario u
+  FROM usuario u
   LEFT JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
   LEFT JOIN rol r ON ur.idRol = r.idRol
   LEFT JOIN usuario_cliente uc ON u.idUsuario = uc.idUsuario

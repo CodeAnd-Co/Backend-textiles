@@ -1,5 +1,3 @@
-//RF[03] Leer usuario - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF3]
-
 const correrQuery = require("@altertex/util/ser/correrQuery");
 const CONSULTAS_USUARIOS = require("@altertex/util/const/consultasUsuarios");
 
@@ -11,6 +9,8 @@ const CONSULTAS_USUARIOS = require("@altertex/util/const/consultasUsuarios");
  * @param {number|string} idUsuario - ID del usuario a buscar.
  * @returns {Promise<object|null>} El usuario encontrado o `null` si no existe.
  * @throws {Error} Si ocurre un error al ejecutar la consulta.
+ * 
+ * @see [RF[03] Leer usuario - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF3)
  */
 exports.obtenerUsuarioPorId = async (idUsuario) => {
   const query = CONSULTAS_USUARIOS.LEER_USUARIO;
