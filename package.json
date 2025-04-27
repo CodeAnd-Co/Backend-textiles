@@ -98,6 +98,12 @@
     "@altertex/pro/repos": "Productos/Datos/Repositorios",
     "@altertex/pro/rutas": "Productos/Rutas/",
     "@altertex/pro/rutasInd": "Productos/Rutas/RutasIndividuales",
+    "@altertex/cat": "Categorias/",
+    "@altertex/cat/ctrl": "Categorias/Controladores/",
+    "@altertex/cat/datos": "Categorias/Datos/",
+    "@altertex/cat/repos": "Categorias/Datos/Repositorios",
+    "@altertex/cat/rutas": "Categorias/Rutas/",
+    "@altertex/cat/rutasInd": "Categorias/Rutas/RutasIndividuales",
     "@altertex/util/ser": "Utilidades/Servicios/"
   }
 }
