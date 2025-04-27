@@ -1,34 +1,34 @@
 module.exports = {
   OBTENER_USUARIO: `
       SELECT *
-      FROM Usuario u
+      FROM usuario u
       WHERE u.correoElectronico = ?;
     `,
   OBTENER_CLIENTES_ASOCIADOS: `
       SELECT uc.idCliente
-      FROM Usuario u
-      JOIN Usuario_Cliente uc ON u.idUsuario = uc.idUsuario
+      FROM usuario u
+      JOIN usuario_cliente uc ON u.idUsuario = uc.idUsuario
       WHERE u.correoElectronico = ?;
     `,
   OBTENER_PERMISOS: `
       SELECT p.nombre
-      FROM Usuario u
-      JOIN Usuario_Rol ur ON ur.idUsuario = u.idUsuario
-      JOIN Rol r ON ur.idRol = r.idRol
-      JOIN Rol_Permiso rp ON rp.idRol = r.idRol
-      JOIN Permiso p ON rp.idPermiso = p.idPermiso
+      FROM usuario u
+      JOIN usuario_rol ur ON ur.idUsuario = u.idUsuario
+      JOIN rol r ON ur.idRol = r.idRol
+      JOIN rol_permiso rp ON rp.idRol = r.idRol
+      JOIN permiso p ON rp.idPermiso = p.idPermiso
       WHERE u.correoElectronico = ?;
     `,
   CREAR_USUARIO: `
-  INSERT INTO Usuario ( nombreCompleto, correoElectronico, contrasenia, numeroTelefono, direccion, fechaNacimiento, genero, estatus)
+    INSERT INTO usuario (nombreCompleto, correoElectronico, contrasenia, numeroTelefono, direccion, fechaNacimiento, genero, estatus)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?);
   `,
   ASIGNAR_ROL_A_USUARIO: `
-    INSERT INTO Usuario_Rol (idUsuario, idRol)
+    INSERT INTO usuario_rol (idUsuario, idRol)
     VALUES (?, ?);
   `,
   ASOCIAR_USUARIO_A_CLIENTE: `
-    INSERT INTO Usuario_Cliente (idUsuario, idCliente)
+    INSERT INTO usuario_cliente (idUsuario, idCliente)
     VALUES (?, ?);
   `,
   LEER_USUARIO: `
@@ -60,10 +60,10 @@ module.exports = {
         u.estatus, 
         u.correoElectronico AS correo, 
         u.numeroTelefono AS telefono
-      FROM Usuario u
-      LEFT JOIN Usuario_Rol ur ON u.idUsuario = ur.idUsuario
-      LEFT JOIN Rol r ON ur.idRol = r.idRol
-      LEFT JOIN Usuario_Cliente uc ON u.idUsuario = uc.idUsuario
-      LEFT JOIN Cliente c ON uc.idCliente = c.idCliente;
+      FROM usuario u
+      LEFT JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
+      LEFT JOIN rol r ON ur.idRol = r.idRol
+      LEFT JOIN usuario_cliente uc ON u.idUsuario = uc.idUsuario
+      LEFT JOIN cliente c ON uc.idCliente = c.idCliente;
     `,
 };

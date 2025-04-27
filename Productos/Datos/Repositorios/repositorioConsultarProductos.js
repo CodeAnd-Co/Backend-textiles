@@ -1,11 +1,15 @@
-//RF[27] Consulta Lista de Productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27]
-const correrQuery = require("@altertex/util/ser/correrQuery");
-const consultas = require("@altertex/util/const/consultasProductos");
+// RF[27] Consulta Lista de Productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27]
+const correrQuery = require('@altertex/util/ser/correrQuery');
+const consultas = require('@altertex/util/const/consultasProductos');
+
 /**
+ * Obtiene la lista de productos disponibles para un cliente seleccionado.
  *
- * @function obtenerProductos}
- * @description Obtiene los productos de la base de datos.
- * @param void
+ * Realiza una consulta a la base de datos para obtener la lista de productos basándose en el `clienteSeleccionado`.
+ * Si ocurre algún error durante la consulta, se captura y se devuelve un arreglo vacío.
+ *
+ * @param {number} clienteSeleccionado - El ID del cliente para el que se obtendrán los productos.
+ * @returns {Promise<Array>} Una lista de productos del cliente o un arreglo vacío si ocurre un error.
  */
 exports.obtenerProductos = async (clienteSeleccionado) => {
   const query = consultas.OBTENER_LISTA;
@@ -13,7 +17,7 @@ exports.obtenerProductos = async (clienteSeleccionado) => {
     const resultados = await correrQuery(query, [clienteSeleccionado]);
     return resultados;
   } catch (error) {
-    console.error("Error al obtener los productos:", error);
+    console.error('Error al obtener los productos:', error);
     return [];
   }
 };

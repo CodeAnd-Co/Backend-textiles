@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon app.js",
     "test": "jest",
-    "lint": "npx eslint . --fix"
+    "lint": "npx eslint .",
+    "lint-fix": "npx eslint . --fix"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "@aws-sdk/client-s3": "^3.787.0",
     "@aws-sdk/lib-dynamodb": "^3.751.0",
     "@aws-sdk/s3-request-presigner": "^3.787.0",
+    "@aws-sdk/types": "^3.775.0",
     "aws-sdk": "^2.1692.0",
     "bcryptjs": "^3.0.0",
     "body-parser": "^1.20.3",
@@ -40,7 +42,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
-    "eslint": "^9.22.0"
+    "eslint": "^9.22.0",
+    "eslint-plugin-jsdoc": "^50.6.10"
   },
   "_moduleAliases": {
     "@altertex/root": ".",
@@ -79,7 +82,12 @@
     "@altertex/util/bd": "Utilidades/BaseDeDatos/",
     "@altertex/util/const": "Utilidades/Constantes/",
     "@altertex/util/inter": "Utilidades/Intermediarios/",
-    "@altertex/util/ser": "Utilidades/Servicios/",
+    "@altertex/rol": "Roles",
+    "@altertex/rol/ctrl": "Roles/Controladores",
+    "@altertex/rol/datos": "Roles/Datos",
+    "@altertex/rol/repos": "Roles/Datos/Repositorios",
+    "@altertex/rol/rutas": "Roles/Rutas",
+    "@altertex/rol/rutasInd": "Roles/Rutas/RutasIndividuales",
     "@altertex/CRON": "CRON_JOBS/",
     "@altertex/CRON/ctrl": "CRON_JOBS/Controladores/",
     "@altertex/CRON/datos": "CRON_JOBS/Datos/",
@@ -89,7 +97,13 @@
     "@altertex/pro/datos": "Productos/Datos/",
     "@altertex/pro/repos": "Productos/Datos/Repositorios",
     "@altertex/pro/rutas": "Productos/Rutas/",
-    "@altertex/pro/rutasInd": "Productos/Rutas/RutasIndividuales"
-
+    "@altertex/pro/rutasInd": "Productos/Rutas/RutasIndividuales",
+    "@altertex/cat": "Categorias/",
+    "@altertex/cat/ctrl": "Categorias/Controladores/",
+    "@altertex/cat/datos": "Categorias/Datos/",
+    "@altertex/cat/repos": "Categorias/Datos/Repositorios",
+    "@altertex/cat/rutas": "Categorias/Rutas/",
+    "@altertex/cat/rutasInd": "Categorias/Rutas/RutasIndividuales",
+    "@altertex/util/ser": "Utilidades/Servicios/"
   }
 }
