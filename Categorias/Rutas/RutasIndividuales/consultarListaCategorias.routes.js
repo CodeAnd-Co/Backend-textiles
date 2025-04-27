@@ -1,4 +1,8 @@
-//RF[47] Consulta lista de categorías - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF47]
+/**
+ * Ruteador para la consulta de lista de categorías.
+ * 
+ * @see [RF[47] Consulta lista de categorías](https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF47)
+ */
 
 const express = require("express");
 const ruteador = express.Router();

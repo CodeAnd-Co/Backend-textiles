@@ -1,5 +1,3 @@
-//RF[47] Consulta lista de categorías - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF47]
-
 const repositorio = require('@altertex/cat/repos/repositorioConsultarListaCategorias');
 const MENSAJES_CATEGORIAS = require('@altertex/util/const/mensajesCategorias');
 
