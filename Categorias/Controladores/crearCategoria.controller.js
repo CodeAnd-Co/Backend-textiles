@@ -20,7 +20,6 @@ const repositorio = require('@altertex/cat/repos/repositorioCrearCategoria');
 exports.crearCategoria = async (req, res) => {
   const categoria = req.body.categoria;
 
-  console.log(categoria);
   if (!categoria.nombreCategoria || !categoria.productos) {
     return res
       .status(MENSAJES.NOMBRE_CATEGORIA_INVALIDO.codigo)

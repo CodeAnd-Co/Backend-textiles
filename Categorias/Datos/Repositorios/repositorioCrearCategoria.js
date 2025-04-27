@@ -28,24 +28,20 @@ exports.crearCategoria = async (categoria) => {
     await conexion.beginTransaction();
 
     if (!categoria) {
-      console.log('no categoria');
       throw new Error(MENSAJES.PARAMETROS_INVALIDOS.mensaje);
     }
 
     const { nombreCategoria, descripcion, productos } = categoria;
 
     if (!nombreCategoria || typeof nombreCategoria !== 'string') {
-      console.log('nombre');
       throw new Error(MENSAJES.NOMBRE_CATEGORIA_INVALIDO.mensaje);
     }
 
     if (!productos || typeof productos !== 'object') {
-      console.log('productos');
       throw new Error(MENSAJES.PARAMETROS_INVALIDOS.mensaje);
     }
 
     if (productos.length === 0) {
-      console.log('longitud');
       throw new Error(MENSAJES.PARAMETROS_INVALIDOS.mensaje);
     }
 
