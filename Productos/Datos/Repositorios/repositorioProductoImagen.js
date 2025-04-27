@@ -4,16 +4,18 @@ const consultasProductos = require('@altertex/util/const/consultasProductos');
 const consultasImagenes = require('@altertex/util/const/consultasImagenes');
 
 /**
- * Crea una imagen para un producto y lo relaciona con el producto en la base de datos.
+ * Crea una imagen en la base de datos y la asocia a un producto.
  *
- * @async
- * @function crearImagen
- * @param {number} idProducto - ID del producto al que se le asociará la imagen.
- * @param {string} urlImagenProducto - URL de la imagen a insertar.
- * @param {string} nombreComun - Nombre común del producto (opcional para algunos casos).
- * @returns {Promise<object[]>} - Los resultados de la transacción o un error.
+ * Esta función realiza dos operaciones en una transacción:
+ * - Inserta una nueva imagen en la tabla de imágenes.
+ * - Crea una relación entre la imagen y el producto correspondiente.
+ *
+ * @param {number} idProducto - ID del producto al que se asociará la imagen.
+ * @param {string} urlImagenProducto - URL o ruta de la imagen del producto almacenada.
+ * @param {string} nombreComun - Nombre común o descriptivo asociado al producto.
+ *
+ * @returns {Promise<object|Array>} El resultado de la inserción de la imagen (incluyendo `insertId`) si es exitoso, o un arreglo vacío en caso de error.
  */
-
 exports.crearImagen = async (idProducto, urlImagenProducto, nombreComun) => {
   const queryImagen = consultasImagenes.CREAR;
   const queryRelacionImagenProducto = consultasProductos.CREAR_IMAGEN_PRODUCTO;

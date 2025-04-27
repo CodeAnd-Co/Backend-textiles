@@ -82,6 +82,7 @@
     "@altertex/util/bd": "Utilidades/BaseDeDatos/",
     "@altertex/util/const": "Utilidades/Constantes/",
     "@altertex/util/inter": "Utilidades/Intermediarios/",
+    "@altertex/util/vali": "Utilidades/Intermediarios/Validaciones",
     "@altertex/rol": "Roles",
     "@altertex/rol/ctrl": "Roles/Controladores",
     "@altertex/rol/datos": "Roles/Datos",
@@ -98,12 +99,6 @@
     "@altertex/pro/repos": "Productos/Datos/Repositorios",
     "@altertex/pro/rutas": "Productos/Rutas/",
     "@altertex/pro/rutasInd": "Productos/Rutas/RutasIndividuales",
-    "@altertex/prove": "Proveedores/",
-    "@altertex/prove/ctrl": "Proveedores/Controladores/",
-    "@altertex/prove/datos": "Proveedores/Datos/",
-    "@altertex/prove/repos": "Proveedores/Datos/Repositorios",
-    "@altertex/prove/rutas": "Proveedores/Rutas/",
-    "@altertex/prove/rutasInd": "Proveedores/Rutas/RutasIndividuales",
     "@altertex/util/ser": "Utilidades/Servicios/"
   }
 }

@@ -5,20 +5,22 @@ const consultasVariantes = require('@altertex/util/const/consultasVariantes');
 const consultasImagenes = require('@altertex/util/const/consultasImagenes');
 
 /**
- * Crea una imagen para un producto y lo relaciona con el producto en la base de datos.
+ * Crea una imagen en la base de datos y la asocia a una variante de producto.
  *
- * @async
- * @function crearImagen
- * @param {number} idProducto - ID del producto al que se le asociará la imagen.
- * @param {string} urlImagenProducto - URL de la imagen a insertar.
- * @param {string} nombreComun - Nombre común del producto (opcional para algunos casos).
- * @returns {Promise<object[]>} - Los resultados de la transacción o un error.
+ * Esta función realiza dos operaciones dentro de una transacción:
+ * - Inserta una nueva imagen en la tabla de imágenes.
+ * - Crea una relación entre la imagen y la variante correspondiente.
+ *
+ * @param {number} idVariante - ID de la variante a la que se asociará la imagen.
+ * @param {string} urlImagenVariante - URL o ruta de la imagen de la variante almacenada.
+ * @param {string} nombreComun - Nombre común o descriptivo asociado a la variante.
+ *
+ * @returns {Promise<object|Array>} El resultado de la inserción de la imagen (incluyendo `insertId`) si es exitoso, o un arreglo vacío en caso de error.
  */
-
-exports.crearImagen = async (idVariante, urlImagenProducto, nombreComun) => {
+exports.crearImagen = async (idVariante, urlImagenVariante, nombreComun) => {
   const queryImagen = consultasImagenes.CREAR;
   const queryRelacionImagenVariante = consultasVariantes.CREAR_IMAGEN_VARIANTE;
-  const parametrosImagen = [urlImagenProducto, 'Imagen Variante', nombreComun];
+  const parametrosImagen = [urlImagenVariante, 'Imagen Variante', nombreComun];
 
   try {
     await conexion.beginTransaction();
