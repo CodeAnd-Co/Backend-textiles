@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon app.js",
     "test": "jest",
-    "lint": "npx eslint . --fix"
+    "lint": "npx eslint .",
+    "lint-fix": "npx eslint . --fix"
   },
   "keywords": [],
   "author": "",
@@ -41,7 +42,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
-    "eslint": "^9.22.0"
+    "eslint": "^9.22.0",
+    "eslint-plugin-jsdoc": "^50.6.10"
   },
   "_moduleAliases": {
     "@altertex/root": ".",
@@ -95,7 +97,7 @@
     "@altertex/pro/datos": "Productos/Datos/",
     "@altertex/pro/repos": "Productos/Datos/Repositorios",
     "@altertex/pro/rutas": "Productos/Rutas/",
-    "@altertex/pro/rutasInd": "Productos/Rutas/RutasIndividuales"
-
+    "@altertex/pro/rutasInd": "Productos/Rutas/RutasIndividuales",
+    "@altertex/util/ser": "Utilidades/Servicios/"
   }
 }

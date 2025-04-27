@@ -1,10 +1,10 @@
-const repositorio = require('@altertex/emp/repos/repositorioGrupoDeEmpleados');
-const MENSAJES_GRUPO_EMPLEADOS = require('@altertex/util/const/mensajesGrupoEmpleados');
+const repositorio = require('@altertex/emp/repos/repositorioEmpleados');
+const MENSAJES_EMPLEADOS = require('@altertex/util/const/mensajesEmpleados');
 
 /**
  * Controlador para la consulta de la lista de empleados de un cliente.
  *
- * RF22 - Consulta Lista de Grupo Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF22
+ * RF17 - Consulta Lista de Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF17
  *
  * @async
  * @function consultarLista
@@ -26,27 +26,27 @@ exports.consultarLista = async (req, res) => {
 
   if (!idCliente) {
     return res
-      .status(MENSAJES_GRUPO_EMPLEADOS.PARAMETROS_INVALIDOS.codigo)
-      .json({ mensaje: MENSAJES_GRUPO_EMPLEADOS.PARAMETROS_INVALIDOS.mensaje });
+      .status(MENSAJES_EMPLEADOS.PARAMETROS_INVALIDOS.codigo)
+      .json({ mensaje: MENSAJES_EMPLEADOS.PARAMETROS_INVALIDOS.mensaje });
   }
 
   try {
-    const resultados = await repositorio.obtenerGrupoDeEmpleados(idCliente);
+    const resultados = await repositorio.obtenerEmpleados(idCliente);
 
     if (!resultados || resultados.length === 0) {
       return res
-        .status(MENSAJES_GRUPO_EMPLEADOS.SIN_RESULTADOS.codigo)
-        .json({ mensaje: MENSAJES_GRUPO_EMPLEADOS.SIN_RESULTADOS.mensaje });
+        .status(MENSAJES_EMPLEADOS.SIN_RESULTADOS.codigo)
+        .json({ mensaje: MENSAJES_EMPLEADOS.SIN_RESULTADOS.mensaje });
     }
 
-    return res.status(MENSAJES_GRUPO_EMPLEADOS.CONSULTA_EXITOSA.codigo).json({
-      mensaje: MENSAJES_GRUPO_EMPLEADOS.CONSULTA_EXITOSA.mensaje,
-      grupoEmpleados: resultados,
+    return res.status(MENSAJES_EMPLEADOS.CONSULTA_EXITOSA.codigo).json({
+      mensaje: MENSAJES_EMPLEADOS.CONSULTA_EXITOSA.mensaje,
+      empleados: resultados,
     });
   } catch (error) {
     console.error('Error al consultar grupo de empleados:', error);
-    return res.status(MENSAJES_GRUPO_EMPLEADOS.ERROR_CONSULTAR_GRUPOS.codigo).json({
-      mensaje: MENSAJES_GRUPO_EMPLEADOS.ERROR_CONSULTAR_GRUPOS.mensaje,
+    return res.status(MENSAJES_EMPLEADOS.ERROR_CONSULTAR_EMPLEADOS.codigo).json({
+      mensaje: MENSAJES_EMPLEADOS.ERROR_CONSULTAR_EMPLEADOS.mensaje,
     });
   }
 };
