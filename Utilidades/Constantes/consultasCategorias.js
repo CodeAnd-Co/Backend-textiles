@@ -18,11 +18,11 @@ module.exports = {
       c.idCategoria, c.nombreCategoria, c.descripcion, p.idCliente;
   `,
   ELIMINAR_CATEGORIA_PRODUCTO: `
-    DELETE FROM CATEGORIA_PRODUCTO
+    DELETE FROM categoria_producto
     WHERE idCategoria = ?;
   `,
   ELIMINAR_CATEGORIA: `
-  DELETE FROM CATEGORIA
+  DELETE FROM categoria
   WHERE idCategoria = ?;
 `,
 };
