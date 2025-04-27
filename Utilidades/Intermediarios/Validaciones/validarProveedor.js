@@ -30,7 +30,6 @@
  * console.log(resultado); // null si todo está bien, o un objeto de error si algo es inválido
  */
 module.exports = (proveedor) => {
-  console.log(proveedor);
   if (!proveedor.nombre || typeof proveedor.nombre !== 'string' || proveedor.nombre.length > 100) {
     return {
       error: 'nombre es obligatorio y debe ser una cadena de texto de máximo 100 caracteres.',
