@@ -16,5 +16,13 @@ module.exports = {
       p.idCliente = ?
     GROUP BY 
       c.idCategoria, c.nombreCategoria, c.descripcion, p.idCliente;
-  `
+  `,
+  CREAR_CATEGORIAS: `
+    INSERT INTO categoria (nombreCategoria, descripcion)
+    VALUES (?, ?);
+  `,
+  CREAR_CATEGORIA_PRODUCTOS: `
+    INSERT INTO categoria_producto (idCategoria, idProducto) 
+    VALUES (?, ?);
+  `,
 };
