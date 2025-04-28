@@ -32,9 +32,24 @@ module.exports = {
     VALUES (?, ?);
   `,
   LEER_USUARIO: `
-    SELECT idUsuario, nombreCompleto, correoElectronico, numeroTelefono, direccion, fechaNacimiento, genero, estatus
-    FROM usuario
-    WHERE idUsuario = ?;
+  SELECT 
+    u.idUsuario,
+    u.nombreCompleto,
+    u.correoElectronico,
+    u.numeroTelefono,
+    u.direccion,
+    u.fechaNacimiento,
+    u.genero,
+    u.estatus,
+    r.nombre AS rol,
+    uc.idCliente,
+    c.nombreComercial AS nombreCliente
+  FROM usuario u
+  LEFT JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
+  LEFT JOIN rol r ON ur.idRol = r.idRol
+  LEFT JOIN usuario_cliente uc ON u.idUsuario = uc.idUsuario
+  LEFT JOIN cliente c ON uc.idCliente = c.idCliente
+  WHERE u.idUsuario = ?;
   `,
   OBTENER_LISTA: `
       SELECT 

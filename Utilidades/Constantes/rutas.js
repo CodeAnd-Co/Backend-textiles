@@ -17,6 +17,17 @@ module.exports = {
     ELIMINAR_USUARIOS: '/eliminar-usuarios',
     LEER: '/consultar-usuario',
   },
+  CATEGORIAS: {
+    BASE: '/categorias',
+    CONSULTAR_LISTA_CATEGORIAS: '/consultar-lista-categorias',
+    CREAR_CATEGORIA: '/crear-categoria',
+    ELIMINAR_CATEGORIA: '/eliminar',
+    BASE: '/usuarios',
+    CONSULTAR_LISTA_USUARIOS: '/consultar-lista-usuarios',
+    CREAR: '/crear',
+    ELIMINAR_USUARIOS: '/eliminar-usuarios',
+    LEER: '/consultar-usuario',
+  },
   PRODUCTOS: {
     BASE: '/productos',
     CONSULTAR_LISTA: '/consultar-lista',
@@ -35,6 +46,7 @@ module.exports = {
     BASE: '/cuotas',
     AGREGAR: '/crear-cuota',
     OPCIONES: '/obtener-opciones',
+    CONSULTAR_LISTA: '/consultar-lista',
   },
   ROLES: {
     BASE: '/roles',
