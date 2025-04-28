@@ -10,11 +10,11 @@ const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
 
-ruteador.delete(
-  RUTAS.USUARIOS.ELIMINAR_USUARIO,
+ruteador.post(
+  RUTAS.USUARIOS.ELIMINAR_USUARIOS,
   revisarApiKey(),
   autorizarToken,
-  verificarPermisos(PERMISOS.ELIMINAR_USUARIO),
+  verificarPermisos(PERMISOS.ELIMINAR_USUARIOS),
   controlador.eliminarUsuario
 );
 

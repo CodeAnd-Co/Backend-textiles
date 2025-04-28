@@ -1,4 +1,4 @@
-const { ELIMINAR_USUARIO } = require('./permisos');
+const { ELIMINAR_USUARIOS } = require('./permisos');
 
 module.exports = {
   RAIZ: '/',
@@ -14,7 +14,7 @@ module.exports = {
     BASE: '/usuarios',
     CONSULTAR_LISTA_USUARIOS: '/consultar-lista-usuarios',
     CREAR: '/crear',
-    ELIMINAR_USUARIO: '/eliminar-usuario',
+    ELIMINAR_USUARIOS: '/eliminar-usuarios',
     LEER: '/consultar-usuario',
   },
   PRODUCTOS: {
@@ -36,13 +36,9 @@ module.exports = {
     AGREGAR: '/crear-cuota',
     OPCIONES: '/obtener-opciones',
   },
-<<<<<<< HEAD
-  API_DOCS: '/api-docs',
-=======
   ROLES: {
-    BASE: "/roles",
-    CONSULTAR_LISTA: "/consultar-lista",
+    BASE: '/roles',
+    CONSULTAR_LISTA: '/consultar-lista',
   },
-  API_DOCS: "/api-docs",
->>>>>>> 8a3003e0b8767cbcbfd0a311ab0b2ac11bf84ebf
+  API_DOCS: '/api-docs',
 };
