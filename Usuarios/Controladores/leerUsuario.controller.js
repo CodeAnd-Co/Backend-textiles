@@ -11,7 +11,7 @@ const MENSAJES_USUARIOS = require("@altertex/util/const/mensajesUsuarios");
  * @param {Express.Response} res - La respuesta HTTP para enviar el resultado al cliente.
  * @returns {Promise<void>} Responde con el usuario encontrado o un mensaje de error.
  * 
- * @see [RF[03] Leer usuario - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF3)
+ * @see [RF03 Leer usuario](https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF3)
  */
 exports.leerUsuario = async (req, res) => {
   const idUsuario = parseInt(req.body.idUsuario);
