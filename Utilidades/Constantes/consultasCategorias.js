@@ -25,7 +25,6 @@ module.exports = {
     INSERT INTO categoria_producto (idCategoria, idProducto) 
     VALUES (?, ?);
   `,
-  `,
   ELIMINAR_CATEGORIA_PRODUCTO: `
     DELETE FROM categoria_producto
     WHERE idCategoria = ?;
