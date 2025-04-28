@@ -22,6 +22,7 @@ module.exports = {
   PRODUCTOS: {
     BASE: "/productos",
     CONSULTAR_LISTA: "/consultar-lista",
+    ELIMINAR_PRODUCTO: "/eliminar",
   },
   CLIENTES: {
     BASE: "/clientes",
