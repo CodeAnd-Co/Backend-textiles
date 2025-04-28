@@ -1,4 +1,3 @@
-//checar este no sirve
 const repositorio = require('@altertex/setspro/repos/repositorioConsultarSetsProductos');
 const MENSAJES_SETS_PRODUCTOS = require('@altertex/util/const/mensajesSetsProductos');
 
@@ -17,7 +16,7 @@ const MENSAJES_SETS_PRODUCTOS = require('@altertex/util/const/mensajesSetsProduc
  *
  * @returns {Response} Respuesta HTTP con estado:
  * - 200 si la consulta es exitosa, junto con los datos de los sets de productos.
- * - 400 si los parámetros proporcionados son inválidos.
+ * - 204 y mensaje si no hay usuarios en la base de datos.
  * - 500 si ocurre un error en el servidor.
  *
  * @throws {Error} Si ocurre un error inesperado durante la operación.
@@ -25,6 +24,7 @@ const MENSAJES_SETS_PRODUCTOS = require('@altertex/util/const/mensajesSetsProduc
 exports.consultarLista = async (req, res) => {
   const idCliente = parseInt(req.user.clienteSeleccionado);
 
+  // Validación del ID de cliente
   if (!idCliente) {
     return res
       .status(MENSAJES_SETS_PRODUCTOS.PARAMETROS_INVALIDOS.codigo)
@@ -46,8 +46,8 @@ exports.consultarLista = async (req, res) => {
     });
   } catch (error) {
     console.error('Error al consultar sets de productos:', error);
-    return res.status(MENSAJES_SETS_PRODUCTOS.ERROR_CONSULTAR_SETS_PRODUCTOS.codigo).json({
-      mensaje: MENSAJES_SETS_PRODUCTOS.ERROR_CONSULTAR_SETS_PRODUCTOS.mensaje,
-    });
+    return res
+      .status(MENSAJES_SETS_PRODUCTOS.ERROR_CONSULTAR_SETS_PRODUCTOS.codigo)
+      .json({ mensaje: MENSAJES_SETS_PRODUCTOS.ERROR_CONSULTAR_SETS_PRODUCTOS.mensaje });
   }
 };

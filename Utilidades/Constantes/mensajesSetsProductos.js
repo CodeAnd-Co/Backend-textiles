@@ -11,12 +11,6 @@ module.exports = {
     mensaje: 'No se encontraron sets de productos registrados para el cliente.',
   },
 
-  // 400 - Bad Request
-  PARAMETROS_INVALIDOS: {
-    codigo: 400,
-    mensaje: 'Los parámetros proporcionados no son válidos o están incompletos.',
-  },
-
   // 403 - Forbidden
   PERMISO_DENEGADO: {
     codigo: 403,
