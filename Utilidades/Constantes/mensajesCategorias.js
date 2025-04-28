@@ -18,10 +18,6 @@ module.exports = {
     codigo: 200,
     mensaje: 'Categoría eliminada correctamente.',
   },
-  CATEGORIA_ELIMINADA: {
-    codigo: 200,
-    mensaje: 'Categoría eliminada correctamente.',
-  },
 
   // 204 - Sin contenido
   CATEGORIAS_NO_ENCONTRADAS: {
