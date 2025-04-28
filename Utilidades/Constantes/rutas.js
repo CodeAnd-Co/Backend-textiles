@@ -25,6 +25,10 @@ module.exports = {
     BASE: '/productos',
     CONSULTAR_LISTA: '/consultar-lista',
   },
+  SETS_PRODUCTOS: {
+    BASE: '/sets-productos',
+    CONSULTAR_LISTA: '/consultar-lista',
+  },
   CLIENTES: {
     BASE: '/clientes',
     CONSULTAR_SISTEMA: '/consultar-sistema',
