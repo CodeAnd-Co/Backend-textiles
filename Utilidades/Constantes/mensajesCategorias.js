@@ -14,6 +14,10 @@ module.exports = {
     codigo: 200,
     mensaje: 'Lista de categorías obtenida exitosamente.',
   },
+  CATEGORIA_ELIMINADA: {
+    codigo: 200,
+    mensaje: 'Categoría eliminada correctamente.',
+  },
 
   // 204 - Sin contenido
   CATEGORIAS_NO_ENCONTRADAS: {
@@ -69,5 +73,9 @@ module.exports = {
   ERROR_OBTENER_CATEGORIA: {
     codigo: 500,
     mensaje: 'Ocurrió un error al obtener los datos de la categoría.',
+  },
+  ERROR_ELIMINAR_CATEGORIA: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error al eliminar la categoría.',
   },
 };

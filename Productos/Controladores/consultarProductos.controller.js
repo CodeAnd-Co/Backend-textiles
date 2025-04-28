@@ -23,7 +23,7 @@ exports.consultarProductos = async (req, res) => {
     req.productos = productos;
 
     if (!productos || productos.length === 0) {
-      return res.status(MENSAJES_PRODUCTOS.SIN_RESULTADOS.codigo).json({
+      return res.status(200).json({
         mensaje: MENSAJES_PRODUCTOS.SIN_RESULTADOS.mensaje,
       });
     }

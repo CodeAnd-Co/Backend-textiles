@@ -19,6 +19,7 @@ module.exports = {
     BASE: '/categorias',
     CONSULTAR_LISTA_CATEGORIAS: '/consultar-lista-categorias',
     CREAR_CATEGORIA: '/crear-categoria',
+    ELIMINAR_CATEGORIA: '/eliminar',
   },
   PRODUCTOS: {
     BASE: '/productos',
