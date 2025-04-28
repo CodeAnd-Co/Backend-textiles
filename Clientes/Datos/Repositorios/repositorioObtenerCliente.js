@@ -1,5 +1,5 @@
-const correrQuery = require("@altertex/util/ser/correrQuery");
-const CONSULTAS_CLIENTES = require("@altertex/util/const/consultasClientes");
+const correrQuery = require('@altertex/util/ser/correrQuery');
+const CONSULTAS_CLIENTES = require('@altertex/util/const/consultasClientes');
 
 /**
  * Obtiene la información de un cliente a partir de su ID.
@@ -10,7 +10,7 @@ const CONSULTAS_CLIENTES = require("@altertex/util/const/consultasClientes");
  * @function obtenerCliente
  * @param {number} idCliente - ID del cliente a buscar.
  *
- * @returns {Promise<Object|string>} Objeto con la información del cliente si se encuentra,
+ * @returns {Promise<object|string>} Objeto con la información del cliente si se encuentra,
  * o un string con un mensaje de error si ocurre un fallo durante la operación.
  */
 exports.obtenerCliente = async (idCliente) => {

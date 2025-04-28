@@ -16,7 +16,6 @@ const path = require("path");
  * const nombre = generarNombreArchivo("foto.png");
  * console.log(nombre); // "1713804721345-a1b2c3d4e5f6g7h8.png"
  */
-
 module.exports = (nombreOriginal = "") => {
   const ext = path.extname(nombreOriginal);
   const randomBytes = crypto.randomBytes(16).toString("hex");

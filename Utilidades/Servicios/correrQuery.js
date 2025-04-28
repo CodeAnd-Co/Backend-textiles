@@ -1,3 +1,5 @@
+const conexion = require('@altertex/util/bd/db');
+
 /**
  * Ejecuta una consulta SQL utilizando la conexión a la base de datos.
  *
@@ -10,9 +12,6 @@
  * @example
  * const resultados = await runQuery('SELECT * FROM usuarios WHERE id = ?', [1]);
  */
-
-const conexion = require("@altertex/util/bd/db");
-
 module.exports = async (query, params = []) => {
   return new Promise((resolver, rechazar) => {
     conexion.query(query, params, (err, results) => {
