@@ -35,9 +35,10 @@ module.exports = {
     CONSULTAR_GRUPO: '/consultar-grupo',
   },
   CUOTAS: {
-    BASE: '/cuotas',
-    AGREGAR: '/crear-cuota',
-    OPCIONES: '/obtener-opciones',
+    BASE: "/cuotas",
+    AGREGAR: "/crear-cuota",
+    OPCIONES: "/obtener-opciones",
+    CONSULTAR_LISTA: "/consultar-lista",
   },
   ROLES: {
     BASE: '/roles',

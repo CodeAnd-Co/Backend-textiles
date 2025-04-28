@@ -19,4 +19,25 @@ module.exports = {
   LIMITE_INVALIDO: (id) => `El producto "${id}" tiene un "limite" inválido.`,
   LIMITE_ACTUAL_INVALIDO: (id) =>
     `El producto "${id}" tiene un "limiteActual" inválido.`,
+
+    // consultarListaCuotas
+  CONSULTA_EXITOSA: {
+    codigo: 200,
+    mensaje: "Lista de sets de cuotas obtenida exitosamente.",
+  },
+
+  SIN_RESULTADOS: {
+    codigo: 204,
+    mensaje: "No se encontraron sets de cuotas registrados para el cliente.",
+  },
+
+  PARAMETROS_INVALIDOS: {
+    codigo: 400,
+    mensaje: "Falta el ID del cliente para realizar la consulta.",
+  },
+
+  ERROR_CONSULTAR_CUOTAS: {
+    codigo: 500,
+    mensaje: "Error al consultar los sets de cuotas.",
+  },
 };
