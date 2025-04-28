@@ -18,6 +18,8 @@ module.exports = {
   CATEGORIAS: {
     BASE: '/categorias',
     CONSULTAR_LISTA_CATEGORIAS: '/consultar-lista-categorias',
+    CREAR_CATEGORIA: '/crear-categoria',
+    ELIMINAR_CATEGORIA: '/eliminar',
   },
   PRODUCTOS: {
     BASE: '/productos',
@@ -38,9 +40,10 @@ module.exports = {
     CONSULTAR_GRUPO: '/consultar-grupo',
   },
   CUOTAS: {
-    BASE: '/cuotas',
-    AGREGAR: '/crear-cuota',
-    OPCIONES: '/obtener-opciones',
+    BASE: "/cuotas",
+    AGREGAR: "/crear-cuota",
+    OPCIONES: "/obtener-opciones",
+    CONSULTAR_LISTA: "/consultar-lista",
   },
   ROLES: {
     BASE: '/roles',

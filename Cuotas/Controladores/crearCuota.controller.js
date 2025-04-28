@@ -26,6 +26,10 @@ exports.crearCuota = async (req, res) => {
       return res.status(400).json({ error: MENSAJES.FORMATO_INVALIDO });
     }
 
+    if (!cuotaSetModelo.nombre || cuotaSetModelo.nombre.trim() === '') {
+      return res.status(400).json({ error: MENSAJES.NOMBRE_OBLIGATORIO });
+    }
+
     validarCuotaSet(cuotaSetModelo.nombre, cuotaSetModelo.productosYLimite, res);
 
     const hoy = new Date();
