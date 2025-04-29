@@ -38,12 +38,13 @@ module.exports = {
     BASE: '/empleados',
     CONSULTAR_LISTA: '/consultar-lista',
     CONSULTAR_GRUPO: '/consultar-grupo',
+    ELIMINAR_GRUPO: '/eliminar-grupo',
   },
   CUOTAS: {
-    BASE: "/cuotas",
-    AGREGAR: "/crear-cuota",
-    OPCIONES: "/obtener-opciones",
-    CONSULTAR_LISTA: "/consultar-lista",
+    BASE: '/cuotas',
+    AGREGAR: '/crear-cuota',
+    OPCIONES: '/obtener-opciones',
+    CONSULTAR_LISTA: '/consultar-lista',
   },
   ROLES: {
     BASE: '/roles',
