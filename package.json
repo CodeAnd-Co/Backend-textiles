@@ -111,6 +111,5 @@
     "@altertex/setspro/repos": "SetsProductos/Datos/Repositorios",
     "@altertex/setspro/rutas": "SetsProductos/Rutas/",
     "@altertex/setspro/rutasInd": "SetsProductos/Rutas/RutasIndividuales"
-    ""
   }
 }
