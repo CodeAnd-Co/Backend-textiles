@@ -110,6 +110,12 @@
     "@altertex/setspro/datos": "SetsProductos/Datos/",
     "@altertex/setspro/repos": "SetsProductos/Datos/Repositorios",
     "@altertex/setspro/rutas": "SetsProductos/Rutas/",
-    "@altertex/setspro/rutasInd": "SetsProductos/Rutas/RutasIndividuales"
+    "@altertex/setspro/rutasInd": "SetsProductos/Rutas/RutasIndividuales",
+    "@altertex/eve": "Eventos/",
+    "@altertex/eve/ctrl": "Eventos/Controladores/",
+    "@altertex/eve/datos": "Eventos/Datos/",
+    "@altertex/eve/repos": "Eventos/Datos/Repositorios",
+    "@altertex/eve/rutas": "Eventos/Rutas/",
+    "@altertex/eve/rutasInd": "Eventos/Rutas/RutasIndividuales"
   }
 }
