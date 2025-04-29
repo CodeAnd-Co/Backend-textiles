@@ -12,4 +12,8 @@ module.exports = {
         WHERE i.tipoImagen LIKE 'Logo'
         AND c.idCliente IN (?);
     `,
+  ELIMINAR_CLIENTE: `
+        DELETE FROM cliente
+        WHERE idCliente = ?;
+  `,
 };
