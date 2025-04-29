@@ -29,9 +29,6 @@ exports.eliminarSetProductos = async (req, res) => {
 
     await Promise.all(
       idsSetsProductos.map(async (idSetProducto) => {
-        await repositorio.eliminarSetProductoGrupoEmpleado(idSetProducto);
-        await repositorio.eliminarProductoSetProducto(idSetProducto);
-
         const resultadoSetProducto = await repositorio.eliminarSetProducto(idSetProducto);
 
         if (resultadoSetProducto.affectedRows === 0) {
