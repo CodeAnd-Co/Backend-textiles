@@ -1,3 +1,5 @@
+const { ELIMINAR_SET_PRODUCTOS } = require('./permisos');
+
 module.exports = {
   RAIZ: '/',
   API: '/api',
@@ -28,6 +30,7 @@ module.exports = {
   SETS_PRODUCTOS: {
     BASE: '/sets-productos',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_SET_PRODUCTOS: '/eliminar',
   },
   CLIENTES: {
     BASE: '/clientes',
@@ -40,10 +43,10 @@ module.exports = {
     CONSULTAR_GRUPO: '/consultar-grupo',
   },
   CUOTAS: {
-    BASE: "/cuotas",
-    AGREGAR: "/crear-cuota",
-    OPCIONES: "/obtener-opciones",
-    CONSULTAR_LISTA: "/consultar-lista",
+    BASE: '/cuotas',
+    AGREGAR: '/crear-cuota',
+    OPCIONES: '/obtener-opciones',
+    CONSULTAR_LISTA: '/consultar-lista',
   },
   ROLES: {
     BASE: '/roles',
