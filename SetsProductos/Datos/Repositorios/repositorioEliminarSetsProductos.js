@@ -10,7 +10,6 @@ const CONSULTAS_SETS_PRODUCTOS = require('@altertex/util/const/consultasSetsProd
  * @returns {Promise<object>} Objeto de resultado de la operación MySQL (por ejemplo, `affectedRows`).
  * @throws {Error} Si ocurre un error durante la ejecución del query para eliminar la relación.
  */
-
 exports.eliminarSetProductoGrupoEmpleado = async (idSetProducto) => {
   const query = CONSULTAS_SETS_PRODUCTOS.ELIMINAR_SET_PRODUCTOS_GRUPO_EMPLEADOS;
   try {

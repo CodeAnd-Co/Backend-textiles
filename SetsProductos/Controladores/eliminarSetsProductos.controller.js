@@ -6,7 +6,7 @@ const MENSAJES_SETS_PRODUCTOS = require('@altertex/util/const/mensajesSetsProduc
  * //RF[45] Elimina set de productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF45]
  *
  * @async
- * @function eliminarCategoria
+ * @function eliminarSetProductos
  * @param {object} req - Objeto de solicitud de Express.
  * @param {object} req.body - Cuerpo de la solicitud HTTP.
  * @param {number[]} req.body.idsSetProductos - Array de IDs numéricos de los sets de productos a eliminar.
@@ -17,7 +17,6 @@ const MENSAJES_SETS_PRODUCTOS = require('@altertex/util/const/mensajesSetsProduc
  * - 500 si ocurre un error en el servidor.
  * @throws {Error} Si ocurre un error durante la eliminación.
  */
-
 exports.eliminarSetProductos = async (req, res) => {
   try {
     const idsSetsProductos = req.body.idsSetProductos;
