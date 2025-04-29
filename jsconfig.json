@@ -57,7 +57,12 @@
       "@altertex/cat/repos/*": ["Categorias/Datos/Repositorios/*"],
       "@altertex/cat/rutas/*": ["Categorias/Rutas/*"],
       "@altertex/cat/rutasInd/*": ["Categorias/Rutas/RutasIndividuales/*"],
-
+      "@altertex/setspro/*": ["SetsProductos/*"],
+      "@altertex/setspro/ctrl/*": ["SetsProductos/Controladores/*"],
+      "@altertex/setspro/datos/*": ["SetsProductos/Datos/*"],
+      "@altertex/setspro/repos/*": ["SetsProductos/Datos/Repositorios/*"],
+      "@altertex/setspro/rutas/*": ["SetsProductos/Rutas/*"],
+      "@altertex/setspro/rutasInd/*": ["SetsProductos/Rutas/RutasIndividuales/*"],
       "@altertex/CRON/*": ["CRON_JOBS/*"],
       "@altertex/CRON/ctrl/*": ["CRON_JOBS/Controladores/*"],
       "@altertex/CRON/datos/*": ["CRON_JOBS/Datos/*"],
