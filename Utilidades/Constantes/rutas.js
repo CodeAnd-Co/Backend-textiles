@@ -16,11 +16,18 @@ module.exports = {
     LEER: '/consultar-usuario',
   },
   CATEGORIAS: {
-    BASE: "/categorias",
-    CONSULTAR_LISTA_CATEGORIAS: "/consultar-lista-categorias",
+    BASE: '/categorias',
+    CONSULTAR_LISTA_CATEGORIAS: '/consultar-lista-categorias',
+    CREAR_CATEGORIA: '/crear-categoria',
+    ELIMINAR_CATEGORIA: '/eliminar',
   },
   PRODUCTOS: {
     BASE: '/productos',
+    CONSULTAR_LISTA: '/consultar-lista',
+    CREAR: '/crear',
+  },
+  SETS_PRODUCTOS: {
+    BASE: '/sets-productos',
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
     SUBIR_IMAGEN: '/subir-imagen',
@@ -39,6 +46,7 @@ module.exports = {
     BASE: '/cuotas',
     AGREGAR: '/crear-cuota',
     OPCIONES: '/obtener-opciones',
+    CONSULTAR_LISTA: '/consultar-lista',
   },
   ROLES: {
     BASE: '/roles',
