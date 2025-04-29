@@ -1,50 +1,65 @@
-const { eliminarProductos } = require("../Datos/Repositorios/productosRepositorio");
-const { RESPUESTA_ELIMINAR_PRODUCTO_EXITOSA, RESPUESTA_ERROR_GENERAL } = require("../../Utilidades/Constantes/mensajesProductos");
+// Importación de la función que elimina productos en el repositorio de datos.
+const { eliminarProductos } = require('../Datos/Repositorios/productosRepositorio');
+
+// Importación de las constantes de mensajes utilizados para respuestas del módulo de productos.
+const {
+  RESPUESTA_ELIMINAR_PRODUCTO_EXITOSA,
+  RESPUESTA_ERROR_GENERAL,
+} = require('../../Utilidades/Constantes/mensajesProductos');
 
 /**
- * Controlador para eliminar uno o múltiples productos, recibiendo un array de IDs.
- * Este controlador se encarga de recibir la solicitud de eliminación de productos y 
- * delegar la lógica de eliminación al repositorio.
- *
- * RF30 - Eliminar Producto - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF30]
+ * RF30 - Eliminar Producto
+ * Requerimiento funcional: 
+ * https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF30
+ */
+
+/**
+ * Controlador encargado de eliminar uno o múltiples productos.
  *
  * @async
  * @function eliminarProductoController
- * @param {object} req - Objeto de solicitud (request).
- * @param {object} res - Objeto de respuesta (response).
+ * @param {object} req - Objeto de solicitud HTTP (Request). Debe contener en el body un array de IDs bajo `req.body.ids`.
+ * @param {object} res - Objeto de respuesta HTTP (Response).
+ * @returns {Promise<void>} No retorna datos directamente; envía la respuesta HTTP al cliente.
  *
- * @returns {void}
+ * @description
+ * Recibe un array de IDs de productos a eliminar a través del cuerpo de la solicitud (body).
+ * Valida que los IDs sean un arreglo no vacío. Llama al repositorio para realizar la eliminación
+ * y responde al cliente con éxito o error según corresponda.
  */
-
 const eliminarProductoController = async (req, res) => {
   try {
     const { ids } = req.body;
 
-    console.log("IDs recibidos en eliminarProductoController:", ids);
+    console.log('IDs recibidos en eliminarProductoController:', ids);
 
+    // Validación de los IDs recibidos.
     if (!Array.isArray(ids) || ids.length === 0) {
-      console.log("Error: IDs no son un array o están vacíos.");
+      console.log('Error: IDs no son un array o están vacíos.');
       return res.status(400).json({
         codigo: 400,
-        mensaje: "Debes proporcionar al menos un ID de producto para eliminar.",
+        mensaje: 'Debes proporcionar al menos un ID de producto para eliminar.',
       });
     }
 
+    // Se realiza la eliminación de los productos.
     const resultado = await eliminarProductos(ids);
 
-    console.log("Resultado eliminarProductos:", resultado);
+    console.log('Resultado eliminarProductos:', resultado);
 
+    // Se responde dependiendo del éxito o fallo de la operación.
     if (resultado) {
-      res.status(200).json(RESPUESTA_ELIMINAR_PRODUCTO_EXITOSA);
+      return res.status(200).json(RESPUESTA_ELIMINAR_PRODUCTO_EXITOSA);
     } else {
-      res.status(400).json(RESPUESTA_ERROR_GENERAL);
+      return res.status(400).json(RESPUESTA_ERROR_GENERAL);
     }
   } catch (error) {
-    console.error("Error en eliminarProductoController:", error);
-    res.status(500).json(RESPUESTA_ERROR_GENERAL);
+    console.error('Error en eliminarProductoController:', error);
+    return res.status(500).json(RESPUESTA_ERROR_GENERAL);
   }
 };
 
+// Exporta el controlador para su uso en las rutas correspondientes.
 module.exports = {
   eliminarProductoController,
 };
