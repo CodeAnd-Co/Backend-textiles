@@ -48,6 +48,9 @@ module.exports = {
   ROLES: {
     BASE: '/roles',
     CONSULTAR_LISTA: '/consultar-lista',
+    CREAR_ROL: '/crear-rol',
+    OBTENER_OPCIONES: '/obtener-opciones',
+    CONFIRMAR_CREACION: '/confirmar-creacion',
   },
   API_DOCS: '/api-docs',
 };
