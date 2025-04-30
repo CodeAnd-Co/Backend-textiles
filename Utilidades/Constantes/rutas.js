@@ -50,5 +50,9 @@ module.exports = {
     BASE: '/roles',
     CONSULTAR_LISTA: '/consultar-lista',
   },
+  PEDIDOS: {
+    BASE: '/pedidos',
+    CONSULTAR_LISTA: '/consultar-lista',
+  },
   API_DOCS: '/api-docs',
 };

@@ -41,10 +41,9 @@ exports.obtenerCuota = async () => {
       };
     }
 
-    const [resultadoActualizacion] = await conexion.execute(QUERY.ACTUALIZAR_FECHAS);
+    await conexion.execute(QUERY.ACTUALIZAR_FECHAS);
 
     await conexion.commit();
-    console.log('Transacción exitosa', resultadoActualizacion);
 
     return { exito: 'Actualizacion exitosa' };
   } catch (error) {
