@@ -28,6 +28,7 @@ module.exports = {
   SETS_PRODUCTOS: {
     BASE: '/sets-productos',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_SET_PRODUCTOS: '/eliminar',
   },
   CLIENTES: {
     BASE: '/clientes',
