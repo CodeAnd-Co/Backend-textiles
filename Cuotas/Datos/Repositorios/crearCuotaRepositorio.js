@@ -114,7 +114,6 @@ exports.crearCuota = async (data) => {
     }
 
     await conexion.commit();
-    console.log('Transaccion exitosa');
 
     return cuotaSetId;
   } catch (error) {
