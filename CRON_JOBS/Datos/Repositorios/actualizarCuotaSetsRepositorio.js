@@ -41,7 +41,7 @@ exports.obtenerCuota = async () => {
       };
     }
 
-    const [resultadoActualizacion] = await conexion.execute(QUERY.ACTUALIZAR_FECHAS);
+    await conexion.execute(QUERY.ACTUALIZAR_FECHAS);
 
     await conexion.commit();
 
