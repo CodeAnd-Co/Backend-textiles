@@ -40,8 +40,8 @@ module.exports = {
     SELECT idPermiso FROM permiso WHERE idPermiso = ? LIMIT 1`,
 
   INSERTAR_ROL: `
-    INSERT INTO rol (nombre)
-    VALUES (?)`,
+    INSERT INTO rol (nombre, descripcion)
+    VALUES (?, ?)`,
 
   INSERTAR_ROL_PERMISO: `
     INSERT INTO rol_permiso (idRol, idPermiso)

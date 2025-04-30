@@ -13,9 +13,9 @@ exports.verificarPermiso = async (idPermiso) => {
   return rows.length > 0;
 };
 
-exports.crearRol = async (nombre) => {
+exports.crearRol = async (nombre, descripcion) => {
   const conexion = db.promise();
-  const [resultado] = await conexion.execute(QUERY.INSERTAR_ROL, [nombre]);
+  const [resultado] = await conexion.execute(QUERY.INSERTAR_ROL, [nombre, descripcion]);
   return resultado;
 };
 

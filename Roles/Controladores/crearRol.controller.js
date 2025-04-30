@@ -2,7 +2,7 @@ const repositorio = require('@altertex/rol/repos/repositorioCrearRol');
 const MENSAJES = require("@altertex/util/const/mensajesRoles");
 
 exports.crearRol = async (req, res) => {
-  const { nombre, permisos } = req.body;
+  const { nombre, descripcion, permisos } = req.body;
 
   if (!nombre || typeof nombre !== "string") {
     return res.status(400).json({ mensaje: MENSAJES.NOMBRE_OBLIGATORIO });
@@ -27,7 +27,7 @@ exports.crearRol = async (req, res) => {
       }
     }
 
-    const resultado = await repositorio.crearRol(nombre);
+    const resultado = await repositorio.crearRol(nombre, descripcion);
     if (resultado.insertId) {
       await repositorio.asociarPermisosARol(resultado.insertId, permisos);
       return res.status(201).json({ mensaje: MENSAJES.ROL_CREADO });
