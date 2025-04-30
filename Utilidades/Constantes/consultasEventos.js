@@ -1,8 +1,7 @@
-const { ELIMINAR_EVENTO } = require('./permisos');
-
 module.exports = {
   OBTENER_LISTA_EVENTOS: `
         SELECT 
+        e.idEvento,
         e.nombre,
         e.descripcion,
         e.puntos,
@@ -12,7 +11,4 @@ module.exports = {
         evento e
         WHERE e.idCliente = ?   
     `,
-  ELIMINAR_EVENTO: `
-    DELETE FROM evento WHERE idCliente = ?
-`,
 };
