@@ -1,7 +1,7 @@
 module.exports = {
   SIN_RESULTADOS: {
     codigo: 204,
-    mensaje: 'No se encotraron pedidos.',
+    mensaje: 'No se encontraron pedidos.',
   },
   CONSULTA_EXITOSA: {
     codigo: 200,

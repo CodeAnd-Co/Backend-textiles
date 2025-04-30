@@ -19,8 +19,7 @@ exports.obteneLista = async (idCliente) => {
     }
 
     return correrQuery(CONSULTAS.OBTENER_LISTA, [idCliente]);
-  } catch (error) {
-    console.log(error);
+  } catch {
     throw new Error(MENSAJES.ERROR_CONSULTAR_PEDIDOS.mensaje);
   }
 };

@@ -38,8 +38,7 @@ exports.obtenerLista = async (req, res) => {
     return res
       .status(MENSAJES.CONSULTA_EXITOSA.codigo)
       .json({ mensaje: MENSAJES.CONSULTA_EXITOSA.mensaje, pedidos: resultado });
-  } catch (error) {
-    console.log(error);
+  } catch {
     return res
       .status(MENSAJES.ERROR_CONSULTAR_PEDIDOS.codigo)
       .json({ error: MENSAJES.ERROR_CONSULTAR_PEDIDOS.mensaje });
