@@ -1,5 +1,3 @@
-const { ELIMINAR_CLIENTE } = require("./permisos");
-
 module.exports = {
   RAIZ: '/',
   API: '/api',
