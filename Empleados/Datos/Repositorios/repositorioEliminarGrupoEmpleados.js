@@ -1,3 +1,5 @@
+//RF25 - Eliminar Grupo de Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF25
+
 const conexion = require('@altertex/util/bd/db');
 const CONSULTAS_GRUPOS = require('@altertex/util/const/consultasGrupoEmpleados');
 
