@@ -21,10 +21,6 @@ exports.obtenerSetsProductos = async (idCliente) => {
   try {
     const setsProductos = await correrQuery(query, [idCliente]);
 
-    if (!setsProductos || setsProductos.length === 0) {
-      throw new Error('No hay sets de productos');
-    }
-
     return setsProductos;
   } catch (error) {
     console.error('Error al obtener los sets de productos:', error);

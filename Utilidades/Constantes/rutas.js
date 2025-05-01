@@ -28,6 +28,7 @@ module.exports = {
   SETS_PRODUCTOS: {
     BASE: '/sets-productos',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_SET_PRODUCTOS: '/eliminar',
   },
   CLIENTES: {
     BASE: '/clientes',
@@ -48,6 +49,10 @@ module.exports = {
   },
   ROLES: {
     BASE: '/roles',
+    CONSULTAR_LISTA: '/consultar-lista',
+  },
+  PEDIDOS: {
+    BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
   },
   API_DOCS: '/api-docs',
