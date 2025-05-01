@@ -1,5 +1,3 @@
-const { ELIMINAR_USUARIOS } = require('./permisos');
-
 module.exports = {
   RAIZ: '/',
   API: '/api',
@@ -22,7 +20,6 @@ module.exports = {
     CONSULTAR_LISTA_CATEGORIAS: '/consultar-lista-categorias',
     CREAR_CATEGORIA: '/crear-categoria',
     ELIMINAR_CATEGORIA: '/eliminar',
-    BASE: '/usuarios',
     CONSULTAR_LISTA_USUARIOS: '/consultar-lista-usuarios',
     CREAR: '/crear',
     ELIMINAR_USUARIOS: '/eliminar-usuarios',

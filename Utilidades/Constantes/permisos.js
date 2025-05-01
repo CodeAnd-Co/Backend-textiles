@@ -2,8 +2,6 @@ module.exports = {
   // Sistema
   CONSULTAR_SISTEMA_ADMINISTRATIVO: 'Consultar Sistema Administrativo',
   CONSULTAR_TIENDA: 'Consultar Tienda',
-  CONSULTAR_SISTEMA_ADMINISTRATIVO: 'Consultar Sistema Administrativo',
-  CONSULTAR_TIENDA: 'Consultar Tienda',
 
   // Usuario
   CREAR_USUARIO: 'Crear Usuario',

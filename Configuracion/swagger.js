@@ -12,7 +12,6 @@ const opcionesSwagger = {
       },
     ],
   },
-  apis: ['./Autenticacion/Rutas/RutasIndividuales/inicioSesion.routes.js'],
   apis: [
     './Autenticacion/Rutas/RutasIndividuales/inicioSesion.routes.js',
     './Clientes/Rutas/RutasIndividuales/consultarSistema.routes.js',

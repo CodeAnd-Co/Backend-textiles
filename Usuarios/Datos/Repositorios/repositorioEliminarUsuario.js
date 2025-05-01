@@ -1,12 +1,11 @@
 // RF5 - Eliminar Usuario - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/rf5/
 
 const correrQuery = require('@altertex/util/ser/correrQuery');
-const CONSULTAS_USUARIOS = require('@altertex/util/const/consultasUsuarios');
 
 /**
  * Elimina uno o varios usuarios de la base de datos junto con todas sus relaciones.
  * @param {Array<number>} usuarios - IDs de los usuarios a eliminar
- * @returns {Promise<boolean>} - Verdadero si la eliminación fue exitosa
+ * @returns {Promise<boolean>} - `true` si la eliminación fue exitosa, `false` si no se encontraron usuarios.
  */
 exports.eliminarUsuarios = async (usuarios) => {
   try {
@@ -17,7 +16,7 @@ exports.eliminarUsuarios = async (usuarios) => {
     const empleados = await correrQuery(queryObtenerEmpleados, usuarios);
 
     if (empleados && empleados.length > 0) {
-      const idsEmpleados = empleados.map((e) => e.idEmpleado);
+      const idsEmpleados = empleados.map((empleado) => empleado.idEmpleado);
 
       // 2. Eliminar todas las relaciones de empleado en orden
 
@@ -60,7 +59,7 @@ exports.eliminarUsuarios = async (usuarios) => {
     const carritos = await correrQuery(queryObtenerCarritos, usuarios);
 
     if (carritos && carritos.length > 0) {
-      const idsCarritos = carritos.map((c) => c.idCarrito);
+      const idsCarritos = carritos.map((carrito) => carrito.idCarrito);
       const placeholdersCarrito = idsCarritos.map(() => '?').join(',');
 
       // 3.1 Eliminar registros relacionados en carrito_opcion
@@ -101,7 +100,7 @@ exports.eliminarUsuarios = async (usuarios) => {
 
     return resultado.affectedRows > 0;
   } catch (error) {
-    console.error('❌ Error al eliminar usuario(s):', error);
+    console.error('Error al eliminar usuario(s):', error);
 
     throw error;
   }

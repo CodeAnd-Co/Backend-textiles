@@ -36,14 +36,6 @@ const RUTAS = require('@altertex/util/const/rutas');
  *  responses:
  *   204:
  *    description: Usuarios eliminados exitosamente.
- *   content:
- *    application/json:
- *     schema:
- *      type: object
- *     properties:
- *      mensaje:
- *       type: string
- *      example: Usuarios eliminados correctamente.
  *  404:
  *   description: Usuarios no encontrados.
  *  content:
