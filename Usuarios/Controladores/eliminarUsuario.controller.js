@@ -26,11 +26,7 @@ const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
 
 exports.eliminarUsuario = async (req, res) => {
   try {
-    console.log('Cuerpo completo de la solicitud:', req.body);
-
     let idsUsuarios = req.body.ids;
-
-    console.log('IDs de usuarios encontrados:', idsUsuarios);
 
     if (!idsUsuarios || (Array.isArray(idsUsuarios) && idsUsuarios.length === 0)) {
       return res.status(MENSAJES_USUARIOS.PARAMETROS_INVALIDOS.codigo).json({
@@ -53,7 +49,6 @@ exports.eliminarUsuario = async (req, res) => {
       mensaje: 'Usuarios eliminados correctamente.',
     });
   } catch (error) {
-    console.error('Error al eliminar usuarios:', error);
     return res.status(MENSAJES_USUARIOS.ERROR_ELIMINAR_USUARIO.codigo).json({
       mensaje: MENSAJES_USUARIOS.ERROR_ELIMINAR_USUARIO.mensaje,
     });
