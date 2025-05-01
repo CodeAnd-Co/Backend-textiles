@@ -16,6 +16,7 @@ const opcionesSwagger = {
     './Autenticacion/Rutas/RutasIndividuales/inicioSesion.routes.js',
     './Clientes/Rutas/RutasIndividuales/consultarSistema.routes.js',
     './Pedidos/Rutas/RutasIndividuales/obtenerPedidos.routes.js',
+    './Clientes/Rutas/RutasIndividuales/eliminarCliente.routes.js',
   ],
 };
 
