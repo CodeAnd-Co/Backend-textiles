@@ -33,4 +33,21 @@ module.exports = {
     LEFT JOIN Usuario_Rol ur ON r.idRol = ur.idRol
     GROUP BY r.idRol;
   `,
+  VERIFICAR_NOMBRE_ROL: `
+    SELECT idRol FROM rol WHERE nombre = ? LIMIT 1`,
+
+  VERIFICAR_PERMISO: `
+    SELECT idPermiso FROM permiso WHERE idPermiso = ? LIMIT 1`,
+
+  INSERTAR_ROL: `
+    INSERT INTO rol (nombre, descripcion)
+    VALUES (?, ?)`,
+
+  INSERTAR_ROL_PERMISO: `
+    INSERT INTO rol_permiso (idRol, idPermiso)
+    VALUES (?, ?)`,
+  
+  OBTENER_PERMISOS_POR_CLIENTE: `
+    SELECT idPermiso AS id, nombre FROM permiso;
+  `,
 };
