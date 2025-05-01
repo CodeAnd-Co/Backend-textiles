@@ -12,15 +12,12 @@ const opcionesSwagger = {
       },
     ],
   },
-<<<<<<< HEAD
   apis: ['./Autenticacion/Rutas/RutasIndividuales/inicioSesion.routes.js'],
-=======
   apis: [
     './Autenticacion/Rutas/RutasIndividuales/inicioSesion.routes.js',
     './Clientes/Rutas/RutasIndividuales/consultarSistema.routes.js',
     './Pedidos/Rutas/RutasIndividuales/obtenerPedidos.routes.js',
   ],
->>>>>>> 6dbdf781e9faeea5066265607bdd5851cb15b109
 };
 
 module.exports = opcionesSwagger;
