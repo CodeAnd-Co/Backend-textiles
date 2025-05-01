@@ -36,7 +36,7 @@ exports.verificarPermiso = async (idPermiso) => {
  * @function crearRol
  * @param {string} nombre - Nombre del nuevo rol.
  * @param {string} descripcion - Descripción del nuevo rol.
- * @returns {Promise<Object>} Retorna el resultado de la operación de inserción, incluyendo el ID del nuevo rol.
+ * @returns {Promise<object>} Retorna el resultado de la operación de inserción, incluyendo el ID del nuevo rol.
  */
 exports.crearRol = async (nombre, descripcion) => {
   const conexion = db.promise();
@@ -66,7 +66,7 @@ exports.asociarPermisosARol = async (idRol, permisos) => {
     }
 
     await conexion.commit();
-  } catch (error) {
+  } catch {
     await conexion.rollback();
     throw new Error("Error asociando permisos al rol");
   }
