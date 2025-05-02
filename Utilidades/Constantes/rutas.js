@@ -59,5 +59,9 @@ module.exports = {
     BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
   },
+  EVENTOS: {
+    BASE: '/eventos',
+    CONSULTAR_LISTA: '/consultar-lista',
+  },
   API_DOCS: '/api-docs',
 };
