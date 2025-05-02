@@ -12,7 +12,7 @@ module.exports = {
     BASE: '/usuarios',
     CONSULTAR_LISTA_USUARIOS: '/consultar-lista-usuarios',
     CREAR: '/crear',
-    ELIMINAR: '/eliminar',
+    ELIMINAR_USUARIOS: '/eliminar-usuarios',
     LEER: '/consultar-usuario',
   },
   CATEGORIAS: {
@@ -20,6 +20,10 @@ module.exports = {
     CONSULTAR_LISTA_CATEGORIAS: '/consultar-lista-categorias',
     CREAR_CATEGORIA: '/crear-categoria',
     ELIMINAR_CATEGORIA: '/eliminar',
+    CONSULTAR_LISTA_USUARIOS: '/consultar-lista-usuarios',
+    CREAR: '/crear',
+    ELIMINAR_USUARIOS: '/eliminar-usuarios',
+    LEER: '/consultar-usuario',
   },
   EVENTOS: {
     BASE: "/eventos",
@@ -32,6 +36,7 @@ module.exports = {
   PRODUCTOS: {
     BASE: '/productos',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_PRODUCTO: "/eliminar",
   },
   SETS_PRODUCTOS: {
     BASE: '/sets-productos',
