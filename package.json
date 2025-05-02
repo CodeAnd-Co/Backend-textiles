@@ -109,6 +109,12 @@
     "@altertex/eve/datos": "Eventos/Datos/",
     "@altertex/eve/repos": "Eventos/Datos/Repositorios",
     "@altertex/eve/rutas": "Eventos/Rutas/",
-    "@altertex/eve/rutasInd": "Eventos/Rutas/RutasIndividuales"
+    "@altertex/eve/rutasInd": "Eventos/Rutas/RutasIndividuales",
+    "@altertex/pedidos/": "Pedidos/",
+    "@altertex/pedidos/ctrl": "Pedidos/Controladores/",
+    "@altertex/pedidos/datos": "Pedidos/Datos/",
+    "@altertex/pedidos/repos": "Pedidos/Datos/Repositorios",
+    "@altertex/pedidos/rutas": "Pedidos/Rutas",
+    "@altertex/pedidos/rutasInd": "Pedidos/Rutas/RutasIndividuales"
   }
 }
