@@ -2,11 +2,9 @@
 const multer = require('multer');
 const enviarS3 = require('@altertex/util/ser/enviarS3');
 const MENSAJES_PRODUCTOS = require('@altertex/util/const/mensajesProductos');
-const validarProveedor = require('@altertex/util/vali/validarProveedor');
 const validarProducto = require('@altertex/util/vali/validarProducto');
 const validarVariante = require('@altertex/util/vali/validarVariante');
 const validarOpciones = require('@altertex/util/vali/validarOpciones');
-const repositorioCrearProveedor = require('@altertex/pro/repos/repositorioCrearProvedor');
 const repositorioCrearProducto = require('@altertex/pro/repos/repositorioCrearProducto');
 const repositorioProductoImagen = require('@altertex/pro/repos/repositorioProductoImagen');
 const repositorioCrearVariante = require('@altertex/pro/repos/repositorioCrearVariante');
@@ -26,8 +24,8 @@ const upload = multer({ storage: multer.memoryStorage() });
  * @param {object} req - El objeto de solicitud.
  * @param {object} req.user - El usuario autenticado.
  * @param {string} req.user.clienteSeleccionado - El ID del cliente seleccionado por el usuario.
+ * @param {string} req.body.proveedor - EL ID del proveedor seleccionado por el usuario.
  * @param {object} req.body - El cuerpo de la solicitud.
- * @param {string} req.body.proveedor - Información del proveedor en formato JSON.
  * @param {string} req.body.producto - Información del producto en formato JSON.
  * @param {string} req.body.variantes - Información de las variantes del producto en formato JSON.
  * @param {object} req.files - Archivos enviados en la solicitud.
@@ -58,18 +56,11 @@ exports.crearProducto = [
 
   async (req, res) => {
     const idCliente = parseInt(req.user.clienteSeleccionado);
-    const proveedor = JSON.parse(req.body.proveedor);
+    const idProveedor = parseInt(req.body.idProveedor);
     const producto = JSON.parse(req.body.producto);
     const variantes = JSON.parse(req.body.variantes);
     const imagenProducto = req.files.imagenProducto ? req.files.imagenProducto[0] : null;
     const imagenesVariante = req.files.imagenesVariante || [];
-
-    const errorProveedor = validarProveedor(proveedor);
-    if (errorProveedor) {
-      return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
-        mensaje: errorProveedor.error,
-      });
-    }
 
     const errorProducto = validarProducto(producto);
     if (errorProducto) {
@@ -78,7 +69,7 @@ exports.crearProducto = [
       });
     }
 
-    if (!idCliente) {
+    if (!idCliente || !idProveedor) {
       return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
         mensaje: MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.mensaje,
       });
@@ -86,11 +77,6 @@ exports.crearProducto = [
 
     try {
       await conexion.beginTransaction();
-
-      const idProveedor = await repositorioCrearProveedor.crearProveedor(proveedor);
-      if (!idProveedor) {
-        throw new Error('Error al crear proveedor');
-      }
 
       producto.idProveedor = idProveedor;
       const idProducto = await repositorioCrearProducto.crearProducto(idCliente, producto);
@@ -111,8 +97,7 @@ exports.crearProducto = [
           Key: `productos/${imagenVariante.originalname}`,
           Body: imagenVariante.buffer,
           ContentType: imagenVariante.mimetype,
-        })
-      );
+      }));
 
       const [urlImagenProducto, ...urlImagenVariantes] = await Promise.all([
         urlImagenProductoPromise,
@@ -175,9 +160,7 @@ exports.crearProducto = [
 
       let errorMensaje = MENSAJES_PRODUCTOS.ERROR_CREAR_PRODUCTO;
 
-      if (error.message.includes('Error al crear proveedor')) {
-        errorMensaje = MENSAJES_PRODUCTOS.ERROR_CREAR_PROVEEDOR;
-      } else if (error.message.includes('Error al subir imágenes al servidor')) {
+      if (error.message.includes('Error al subir imágenes al servidor')) {
         errorMensaje = MENSAJES_PRODUCTOS.ERROR_ENVIAR_IMAGENES_S3;
       } else if (error.message.includes('Error al crear variante')) {
         errorMensaje = MENSAJES_PRODUCTOS.ERROR_CREAR_VARIANTE;

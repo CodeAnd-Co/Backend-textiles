@@ -26,6 +26,11 @@ module.exports = {
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
   },
+  PROVEEDORES: {
+    BASE: '/proveedores',
+    CONSULTAR_LISTA: '/consultar-lista',
+    CREAR: '/crear',
+  },
   SETS_PRODUCTOS: {
     BASE: '/sets-productos',
     CONSULTAR_LISTA: '/consultar-lista',

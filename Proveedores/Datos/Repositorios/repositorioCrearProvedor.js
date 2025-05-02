@@ -9,6 +9,7 @@ const consultas = require('@altertex/util/const/consultasProveedores');
  * utilizando los parámetros proporcionados. Devuelve el ID del proveedor recién creado
  * en caso de éxito, o un array vacío si ocurre algún error durante la operación.
  *
+ * @param {string|number} clienteSeleccionado - ID o identificador del cliente del cual se quieren obtener los proveedores.
  * @param {object} proveedor - Objeto que contiene la información del proveedor.
  * @param {string} proveedor.nombre - Nombre del contacto del proveedor.
  * @param {string} proveedor.nombreCompania - Nombre de la compañía del proveedor.
@@ -20,9 +21,10 @@ const consultas = require('@altertex/util/const/consultasProveedores');
  *
  * @returns {Promise<number|Array>} El ID del proveedor recién creado en caso de éxito, o un arreglo vacío en caso de error.
  */
-exports.crearProveedor = async (proveedor) => {
+exports.crearProveedor = async (clienteSeleccionado, proveedor) => {
   const query = consultas.CREAR;
   const parametros = [
+    clienteSeleccionado,
     proveedor.nombre,
     proveedor.nombreCompania,
     proveedor.telefonoContacto,

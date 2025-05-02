@@ -44,11 +44,6 @@ module.exports = {
     codigo: 500,
     mensaje: 'Ocurrió un error al subir las imágenes al servidor. Intente nuevamente.',
   },
-  ERROR_CREAR_PROVEEDOR: {
-    codigo: 500,
-    mensaje:
-      'Ocurrió un error al crear el proveedor. Asegúrese de que los datos del proveedor sean correctos.',
-  },
   ERROR_CREAR_VARIANTE: {
     codigo: 500,
     mensaje:
