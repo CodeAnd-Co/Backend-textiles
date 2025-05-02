@@ -7,4 +7,7 @@ module.exports = {
     WHERE i.tipoImagen = "Imagen Producto"
     AND p.idCliente = ?;
     `,
+
+  ELIMINAR_PRODUCTOS: 
+    "DELETE FROM producto WHERE idProducto IN (?)",
 };

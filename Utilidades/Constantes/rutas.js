@@ -24,6 +24,7 @@ module.exports = {
   PRODUCTOS: {
     BASE: '/productos',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_PRODUCTO: "/eliminar",
   },
   SETS_PRODUCTOS: {
     BASE: '/sets-productos',
@@ -34,7 +35,7 @@ module.exports = {
     BASE: '/clientes',
     CONSULTAR_SISTEMA: '/consultar-sistema',
     CONSULTAR_LISTA: '/consultar-lista',
-
+    ELIMINAR_CLIENTE: '/eliminar',
     LEER: '/consultar-cliente',
   },
   EMPLEADOS: {
@@ -51,6 +52,9 @@ module.exports = {
   ROLES: {
     BASE: '/roles',
     CONSULTAR_LISTA: '/consultar-lista',
+    CREAR_ROL: '/crear-rol',
+    OBTENER_OPCIONES: '/obtener-opciones',
+    CONFIRMAR_CREACION: '/confirmar-creacion',
   },
   PEDIDOS: {
     BASE: '/pedidos',
