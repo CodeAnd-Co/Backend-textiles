@@ -30,7 +30,7 @@ exports.consultarListaEventos = async (req, res) => {
 
     return res.status(MENSAJES_EVENTOS.LISTA_EVENTOS_OBTENIDA.codigo).json({
       mensaje: MENSAJES_EVENTOS.LISTA_EVENTOS_OBTENIDA.mensaje,
-      lista_eventos: resultados,
+      listaEventos: resultados,
     });
   } catch (error) {
     console.error('Error al consultar eventos:', error);
