@@ -26,6 +26,7 @@ exports.obtenerClientePorId = async (idCliente) => {
       nombreVisible: resultado[0].nombreComercial,
       empleados: resultado[0].empleados,
       usuariosAsignados: resultado[0].usuariosAsignados,
+      numeroEmpleados: resultado[0].numeroEmpleados,
     };
 
     return cliente;
