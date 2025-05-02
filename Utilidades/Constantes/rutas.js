@@ -1,3 +1,5 @@
+const { LEER_EVENTO } = require('./permisos');
+
 module.exports = {
   RAIZ: '/',
   API: '/api',
@@ -62,6 +64,7 @@ module.exports = {
   EVENTOS: {
     BASE: '/eventos',
     CONSULTAR_LISTA: '/consultar-lista',
+    LEER_EVENTO: '/consultar-evento',
   },
   API_DOCS: '/api-docs',
 };

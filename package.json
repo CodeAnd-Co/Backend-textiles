@@ -122,6 +122,6 @@
     "@altertex/eve/datos": "Eventos/Datos/",
     "@altertex/eve/repos": "Eventos/Datos/Repositorios/",
     "@altertex/eve/rutas": "Eventos/Rutas/",
-    "@altertex/eve/rutasInd": "Eventos/Rutas/RutasIndividuales"
+    "@altertex/eve/rutasInd": "Eventos/Rutas/RutasIndividuales/"
   }
 }
