@@ -34,17 +34,17 @@
 module.exports = (opciones) => {
   for (const opcion of opciones) {
     if (
-      typeof opcion.cantidad !== 'number' ||
-      opcion.cantidad < 0 ||
-      !Number.isInteger(opcion.cantidad)
+      typeof opcion.cantidad !== 'number' 
+      || opcion.cantidad < 0 
+      || !Number.isInteger(opcion.cantidad)
     ) {
       return { error: 'cantidad de la opción debe ser un número entero positivo o cero.' };
     }
 
     if (
-      !opcion.valorOpcion ||
-      typeof opcion.valorOpcion !== 'string' ||
-      opcion.valorOpcion.length > 100
+      !opcion.valorOpcion 
+      || typeof opcion.valorOpcion !== 'string' 
+      || opcion.valorOpcion.length > 100
     ) {
       return {
         error: 'valorOpcion es requerido y debe ser una cadena de texto de máximo 100 caracteres.',
@@ -52,14 +52,14 @@ module.exports = (opciones) => {
     }
 
     if (
-      opcion.SKUautomatico &&
-      (typeof opcion.SKUautomatico !== 'string' || opcion.SKUautomatico.length > 50)
+      opcion.SKUautomatico 
+      && (typeof opcion.SKUautomatico !== 'string' || opcion.SKUautomatico.length > 50)
     ) {
       return { error: 'SKUautomatico debe ser una cadena de texto de máximo 50 caracteres.' };
     }
     if (
-      opcion.SKUcomercial &&
-      (typeof opcion.SKUcomercial !== 'string' || opcion.SKUcomercial.length > 50)
+      opcion.SKUcomercial 
+      && (typeof opcion.SKUcomercial !== 'string' || opcion.SKUcomercial.length > 50)
     ) {
       return { error: 'SKUcomercial debe ser una cadena de texto de máximo 50 caracteres.' };
     }

@@ -45,18 +45,18 @@
  */
 module.exports = (producto) => {
   if (
-    producto.idProveedor !== null &&
-    (typeof producto.idProveedor !== 'number' ||
-      producto.idProveedor <= 0 ||
-      !Number.isInteger(producto.idProveedor))
+    producto.idProveedor !== null 
+    && (typeof producto.idProveedor !== 'number' 
+      || producto.idProveedor <= 0 
+      || !Number.isInteger(producto.idProveedor))
   ) {
     return { error: 'idProveedor debe ser un número entero positivo o NULL.' };
   }
 
   if (
-    !producto.nombreComun ||
-    typeof producto.nombreComun !== 'string' ||
-    producto.nombreComun.length > 100
+    !producto.nombreComun 
+    || typeof producto.nombreComun !== 'string' 
+    || producto.nombreComun.length > 100
   ) {
     return {
       error: 'nombreComun es requerido, debe ser una cadena de texto y no exceder 100 caracteres.',
@@ -64,8 +64,8 @@ module.exports = (producto) => {
   }
 
   if (
-    producto.nombreComercial !== null &&
-    (typeof producto.nombreComercial !== 'string' || producto.nombreComercial.length > 150)
+    producto.nombreComercial !== null 
+    && (typeof producto.nombreComercial !== 'string' || producto.nombreComercial.length > 150)
   ) {
     return {
       error: 'nombreComercial debe ser una cadena de texto o NULL y no exceder 150 caracteres.',
@@ -73,8 +73,8 @@ module.exports = (producto) => {
   }
 
   if (
-    producto.descripcion !== null &&
-    (typeof producto.descripcion !== 'string' || producto.descripcion.length > 1000)
+    producto.descripcion !== null 
+    && (typeof producto.descripcion !== 'string' || producto.descripcion.length > 1000)
   ) {
     return {
       error: 'descripcion debe ser una cadena de texto o NULL y no exceder 1000 caracteres.',
@@ -82,22 +82,22 @@ module.exports = (producto) => {
   }
 
   if (
-    producto.marca !== null &&
-    (typeof producto.marca !== 'string' || producto.marca.length > 100)
+    producto.marca !== null 
+    && (typeof producto.marca !== 'string' || producto.marca.length > 100)
   ) {
     return { error: 'marca debe ser una cadena de texto o NULL y no exceder 100 caracteres.' };
   }
 
   if (
-    producto.modelo !== null &&
-    (typeof producto.modelo !== 'string' || producto.modelo.length > 100)
+    producto.modelo !== null 
+    && (typeof producto.modelo !== 'string' || producto.modelo.length > 100)
   ) {
     return { error: 'modelo debe ser una cadena de texto o NULL y no exceder 100 caracteres.' };
   }
 
   if (
-    producto.tipoProducto !== null &&
-    (typeof producto.tipoProducto !== 'string' || producto.tipoProducto.length > 50)
+    producto.tipoProducto !== null 
+    && (typeof producto.tipoProducto !== 'string' || producto.tipoProducto.length > 50)
   ) {
     return {
       error: 'tipoProducto debe ser una cadena de texto o NULL y no exceder 50 caracteres.',
@@ -115,10 +115,10 @@ module.exports = (producto) => {
 
   for (const campo of camposNumericos) {
     if (
-      producto[campo] !== null &&
-      (typeof producto[campo] !== 'number' ||
-        (campo === 'precioPuntos' && !Number.isInteger(producto[campo])) ||
-        (campo !== 'precioPuntos' && producto[campo] < 0))
+      producto[campo] !== null 
+      && (typeof producto[campo] !== 'number' 
+        || (campo === 'precioPuntos' && !Number.isInteger(producto[campo])) 
+        || (campo !== 'precioPuntos' && producto[campo] < 0))
     ) {
       return { error: `${campo} debe ser un número válido y mayor o igual a cero.` };
     }

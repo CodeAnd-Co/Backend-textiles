@@ -19,9 +19,9 @@
  */
 module.exports = (variante) => {
   if (
-    !variante.nombreVariante ||
-    typeof variante.nombreVariante !== 'string' ||
-    variante.nombreVariante.length > 100
+    !variante.nombreVariante 
+    || typeof variante.nombreVariante !== 'string' 
+    || variante.nombreVariante.length > 100
   ) {
     return {
       error:
@@ -30,8 +30,8 @@ module.exports = (variante) => {
   }
 
   if (
-    variante.descripcion !== null &&
-    (typeof variante.descripcion !== 'string' || variante.descripcion.length > 1000)
+    variante.descripcion !== null 
+    && (typeof variante.descripcion !== 'string' || variante.descripcion.length > 1000)
   ) {
     return {
       error: 'descripcion debe ser una cadena de texto o NULL y no exceder 1000 caracteres.',
