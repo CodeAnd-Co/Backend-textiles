@@ -42,6 +42,7 @@ module.exports = {
     BASE: '/clientes',
     CONSULTAR_SISTEMA: '/consultar-sistema',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_CLIENTE: '/eliminar',
   },
   EMPLEADOS: {
     BASE: '/empleados',
@@ -57,6 +58,9 @@ module.exports = {
   ROLES: {
     BASE: '/roles',
     CONSULTAR_LISTA: '/consultar-lista',
+    CREAR_ROL: '/crear-rol',
+    OBTENER_OPCIONES: '/obtener-opciones',
+    CONFIRMAR_CREACION: '/confirmar-creacion',
   },
   PEDIDOS: {
     BASE: '/pedidos',
