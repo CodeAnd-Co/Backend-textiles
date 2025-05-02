@@ -3,11 +3,11 @@ const correrQuery = require('@altertex/util/ser/correrQuery');
 const CONSULTAS_EVENTOS = require('@altertex/util/const/consultasEventos');
 
 /**
+ * Elimina un evento específico de la base de datos
  * @function eliminarEvento
- * @description Elimina un evento específico de la base de datos
  * @param {number} idEvento - ID del evento a eliminar
  * @param {number} idCliente - ID del cliente propietario del evento
- * @returns {Object} - Resultado de la operación de eliminación
+ * @returns {object} - Resultado de la operación de eliminación
  */
 exports.eliminarEvento = async (idEvento, idCliente) => {
   const query = CONSULTAS_EVENTOS.ELIMINAR_EVENTO;

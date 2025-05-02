@@ -3,11 +3,11 @@ const repositorio = require('@altertex/eve/repos/repositorioEliminarEvento');
 const MENSAJES_EVENTOS = require('@altertex/util/const/mensajesEventos');
 
 /**
+ * Elimina un evento específico para un cliente
  * @function eliminarEvento
- * @description Elimina un evento específico para un cliente
- * @param {Object} req - Objeto de solicitud Express
- * @param {Object} res - Objeto de respuesta Express
- * @returns {Object} Respuesta JSON con confirmación o mensaje de error
+ * @param {object} req - Objeto de solicitud Express
+ * @param {object} res - Objeto de respuesta Express
+ * @returns {object} Respuesta JSON con confirmación o mensaje de error
  */
 exports.eliminarEvento = async (req, res) => {
   try {

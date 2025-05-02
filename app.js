@@ -25,6 +25,7 @@ const rutasRoles = require('@altertex/rol/rutas/indexRoles.routes');
 const rutasCuotas = require('@altertex/cuota/rutas/indexCuotas.routes');
 const rutasCategorias = require('@altertex/cat/rutas/indexCategorias.routes');
 const rutasPedidos = require('@altertex/pedidos/rutas/indexPedidos.routes');
+const rutasEventos = require('@altertex/eve/rutas/indexEventos.routes');
 const RUTAS = require('@altertex/util/const/rutas');
 
 //Importaciones de CRON jobs
@@ -50,8 +51,8 @@ app.use(RUTAS.API, rutasClientes);
 app.use(RUTAS.API, rutasRoles);
 app.use(RUTAS.API, rutasCuotas);
 app.use(RUTAS.API, rutasCategorias);
-app.use(RUTAS.API, rutasEventos);
 app.use(RUTAS.API, rutasPedidos);
+app.use(RUTAS.API, rutasEventos);
 
 //Configuracion de swaggerUI
 const swaggerSpec = swaggerJSDoc(opcionesSwagger);
