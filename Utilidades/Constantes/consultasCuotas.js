@@ -27,4 +27,11 @@ module.exports = {
     FROM producto
     WHERE idCliente = ?;
   `,
+  OBTENER_CUOTAS: `
+  SELECT idCuotaSet, idCliente, nombre, periodoRenovacion, renovacionHabilitada
+  FROM cuota_set
+  WHERE idCliente = ?;
+`,
+
+  
 };

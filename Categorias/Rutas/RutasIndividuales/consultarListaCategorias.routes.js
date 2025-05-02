@@ -1,4 +1,81 @@
-//RF[47] Consulta lista de categorías - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF47]
+/**
+ * RF[47] Consulta lista de categorías - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF47
+ */
+
+/**
+ * @swagger
+ * /api/categorias/consultar-lista-categorias:
+ *   post:
+ *     summary: Consulta la lista de categorías de productos asociadas a un cliente.
+ *     description: |
+ *       Este endpoint permite consultar las categorías de productos disponibles para el 
+ *       cliente autenticado.
+ *     tags: [Categorías]
+ *     security:
+ *       - ApiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: Consulta exitosa. Se devuelve la lista de categorías.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: "Lista de categorías obtenida exitosamente."
+ *                 listaCategoria:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       idCategoria:
+ *                         type: integer
+ *                         example: 1
+ *                       nombreCategoria:
+ *                         type: string
+ *                         example: "Calzado"
+ *                       descripcion:
+ *                         type: string
+ *                         example: "Zapatos, botas y accesorios."
+ *                       cantidadProductos:
+ *                         type: integer
+ *                         example: 5
+ *                       idCliente:
+ *                         type: integer
+ *                         example: 123
+ *       400:
+ *         description: Los parámetros 'limit' o 'offset' son inválidos o faltan.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: "Parámetros inválidos."
+ *       204:
+ *         description: No se encontraron categorías registradas para el cliente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: "No se encontraron categorías registradas."
+ *       500:
+ *         description: Error en el servidor al intentar obtener la lista de categorías.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: "Ocurrió un error al obtener la lista de categorías."
+ * 
+ */
 
 const express = require("express");
 const ruteador = express.Router();

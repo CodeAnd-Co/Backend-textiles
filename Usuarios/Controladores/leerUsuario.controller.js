@@ -1,5 +1,5 @@
-const repositorio = require('@altertex/usu/repos/repositorioLeerUsuario');
-const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
+const repositorio = require("@altertex/usu/repos/repositorioLeerUsuario");
+const MENSAJES_USUARIOS = require("@altertex/util/const/mensajesUsuarios");
 
 /**
  * Lee los detalles de un usuario desde la base de datos utilizando su ID.
@@ -10,6 +10,8 @@ const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
  * @param {Express.Request} req - La solicitud HTTP que contiene el `idUsuario` en el cuerpo.
  * @param {Express.Response} res - La respuesta HTTP para enviar el resultado al cliente.
  * @returns {Promise<void>} Responde con el usuario encontrado o un mensaje de error.
+ * 
+ * @see [RF03 Leer usuario](https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF3)
  */
 exports.leerUsuario = async (req, res) => {
   const idUsuario = parseInt(req.body.idUsuario);

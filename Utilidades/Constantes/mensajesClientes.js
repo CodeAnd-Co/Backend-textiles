@@ -8,6 +8,10 @@ module.exports = {
     codigo: 200,
     mensaje: "Lista de clientes obtenida exitosamente.",
   },
+  CLIENTE_ELIMINADO: {
+    codigo: 200,
+    mensaje: "Cliente eliminado exitosamente.",
+  },
 
   // 204 - No Content
   CLIENTE_SIN_SISTEMA: {
@@ -38,6 +42,11 @@ module.exports = {
     codigo: 400,
     mensaje: "No se proporcionó la lista de clientes asociados.",
   },
+  CLIENTE_INVALIDO: {
+    codigo: 400,
+    mensaje: "El ID del cliente debe ser un número entero válido.",
+  },
+  
 
   // 403 - Forbidden
   ACCESO_NO_AUTORIZADO: {
@@ -68,5 +77,9 @@ module.exports = {
   ERROR_CONSULTAR_LISTA_CLIENTES: {
     codigo: 500,
     mensaje: "Ocurrió un error al obtener la lista de clientes.",
+  },
+  ERROR_ELIMINAR_CLIENTE: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error al eliminar el cliente.',
   },
 };

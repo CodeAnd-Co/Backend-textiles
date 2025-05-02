@@ -7,19 +7,8 @@ module.exports = {
 
   // 204 - No Content
   SIN_RESULTADOS: {
-    codigo: 204,
+    codigo: 200,
     mensaje: "No se encontraron productos registrados para el cliente.",
-  },
-
-  // 400 - Bad Request
-  PARAMETROS_INVALIDOS: {
-    codigo: 400,
-    mensaje:
-      "Los parámetros proporcionados no son válidos o están incompletos.",
-  },
-  LIMITE_OFFSET_INVALIDOS: {
-    codigo: 400,
-    mensaje: "Los valores de límite u offset deben ser números positivos.",
   },
 
   // 403 - Forbidden
