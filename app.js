@@ -22,7 +22,7 @@ const rutasClientes = require('@altertex/cli/rutas/indexClientes.routes');
 const rutasRoles = require('@altertex/rol/rutas/indexRoles.routes');
 const rutasCuotas = require('@altertex/cuota/rutas/indexCuotas.routes');
 const rutasCategorias = require('@altertex/cat/rutas/indexCategorias.routes');
-const rutasEventos = require('@altertex/cli/rutas/indexEventos.routes');
+const rutasEventos = require('@altertex/eve/rutas/indexEventos.routes');
 const rutasPedidos = require('@altertex/pedidos/rutas/indexPedidos.routes');
 const RUTAS = require('@altertex/util/const/rutas');
 
