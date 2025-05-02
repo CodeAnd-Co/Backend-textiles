@@ -22,4 +22,17 @@ module.exports = {
     codigo: 500,
     mensaje: "Ocurrió un error al obtener la lista de productos.",
   },
+
+  // 200 - OK
+  RESPUESTA_ELIMINAR_PRODUCTO_EXITOSA: {
+    codigo: 200,
+    mensaje: "Producto eliminado exitosamente.",
+  },
+  
+  // 500 - Internal Server Error
+  RESPUESTA_ERROR_GENERAL: {
+    codigo: 500,
+    mensaje: "Ocurrió un error al procesar la solicitud.",
+  },
+  
 };
