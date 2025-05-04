@@ -8,7 +8,7 @@ module.exports = {
   CONSULTAR_USUARIOS: 'Consultar Lista de Usuarios',
   LEER_USUARIO: 'Leer Usuario',
   ACTUALIZAR_USUARIO: 'Actualizar Usuario',
-  ELIMINAR_USUARIO: 'Eliminar Usuario',
+  ELIMINAR_USUARIOS: 'Eliminar Usuario',
 
   // Rol
   CREAR_ROL: 'Crear Rol',

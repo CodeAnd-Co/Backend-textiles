@@ -5,4 +5,8 @@ module.exports = {
         JOIN usuario u ON e.idUsuario = u.idUsuario
         WHERE e.idCliente = ?;
       `,
+  ELIMINAR_EMPLEADO: `
+      DELETE FROM empleado
+      WHERE idEmpleado = ?;
+    `,  
 };
