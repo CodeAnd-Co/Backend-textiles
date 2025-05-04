@@ -1,3 +1,5 @@
+const { ELIMINAR_PEDIDO } = require('./consultasPedidos');
+
 module.exports = {
   RAIZ: '/',
   API: '/api',
@@ -28,7 +30,7 @@ module.exports = {
   PRODUCTOS: {
     BASE: '/productos',
     CONSULTAR_LISTA: '/consultar-lista',
-    ELIMINAR_PRODUCTO: "/eliminar",
+    ELIMINAR_PRODUCTO: '/eliminar',
   },
   SETS_PRODUCTOS: {
     BASE: '/sets-productos',
@@ -63,6 +65,7 @@ module.exports = {
   PEDIDOS: {
     BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_PEDIDO: '/eliminar',
   },
   API_DOCS: '/api-docs',
 };

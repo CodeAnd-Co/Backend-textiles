@@ -5,5 +5,6 @@ const rutasEliminarPedido = require('@altertex/pedidos/rutasInd/eliminarPedidos.
 const RUTAS = require('@altertex/util/const/rutas');
 
 ruteador.use(RUTAS.PEDIDOS.BASE, rutasObtenerPedidos);
+ruteador.use(RUTAS.PEDIDOS.BASE, rutasEliminarPedido);
 
 module.exports = ruteador;
