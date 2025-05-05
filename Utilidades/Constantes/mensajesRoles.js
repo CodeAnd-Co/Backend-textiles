@@ -70,7 +70,7 @@ module.exports = {
 
   ELIMINAR_ROL_EXITO: {
     codigo: 200,
-    mensaje: 'Se elimino correctamente',
+    mensaje: 'Se elimino el rol correctamente',
   },
   ELIMINAR_ROL_ERROR: {
     codigo: 400,
