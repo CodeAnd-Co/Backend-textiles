@@ -6,7 +6,7 @@
  * Cada constante define un código de estado HTTP y un mensaje descriptivo,
  * lo cual facilita respuestas consistentes y claras desde los controladores.
  *
- * @exports CONSULTA_EXITOSA, SIN_RESULTADOS, PARAMETROS_INVALIDOS, 
+ * @exports CONSULTA_EXITOSA, SIN_RESULTADOS, PARAMETROS_INVALIDOS,
  * LIMITE_OFFSET_INVALIDOS, ERROR_CONSULTAR_ROLES
  */
 
@@ -68,14 +68,22 @@ module.exports = {
     mensaje: 'Ocurrió un error al obtener la lista de roles.',
   },
 
-  NOMBRE_OBLIGATORIO: "El nombre del rol es obligatorio.",
-  PERMISOS_OBLIGATORIOS: "Debes seleccionar al menos un permiso.",
-  ROL_EXISTENTE: "Ya existe un rol con ese nombre.",
-  ROL_CREADO: "Rol creado exitosamente.",
-  ERROR_CREACION: "Error al crear el rol.",
+  ELIMINAR_ROL_EXITO: {
+    codigo: 200,
+    mensaje: 'Se elimino correctamente',
+  },
+  ELIMINAR_ROL_ERROR: {
+    codigo: 400,
+    mensaje: 'Ocurrió un error al eliminar rol',
+  },
+
+  NOMBRE_OBLIGATORIO: 'El nombre del rol es obligatorio.',
+  PERMISOS_OBLIGATORIOS: 'Debes seleccionar al menos un permiso.',
+  ROL_EXISTENTE: 'Ya existe un rol con ese nombre.',
+  ROL_CREADO: 'Rol creado exitosamente.',
+  ERROR_CREACION: 'Error al crear el rol.',
   PERMISO_INVALIDO: (id) => `El permiso con ID "${id}" no existe.`,
   FALTA_ID_CLIENTE: 'Falta el ID del cliente',
   OPCIONES_OBTENIDAS: 'Permisos obtenidos correctamente',
   ERROR_OBTENIENDO_OPCIONES: 'Error al obtener permisos',
-
 };
