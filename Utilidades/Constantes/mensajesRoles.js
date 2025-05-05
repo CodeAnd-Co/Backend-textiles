@@ -75,6 +75,7 @@ module.exports = {
   ELIMINAR_ROL_ERROR: {
     codigo: 400,
     mensaje: 'Ocurrió un error al eliminar rol',
+    mensaje_no_existe: 'Ocurrió un error, rol no existe',
   },
 
   NOMBRE_OBLIGATORIO: 'El nombre del rol es obligatorio.',
