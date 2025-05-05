@@ -52,7 +52,7 @@ exports.crearUsuario = async (req, res) => {
     || !genero
     || estatus === undefined
     || !idRol
-    || !idCliente
+    || idCliente === undefined || (Array.isArray(idCliente) && idCliente.length === 0)
   ) {
     return res.status(400).json({ mensaje: 'Faltan campos requeridos' });
   }
@@ -87,7 +87,7 @@ exports.crearUsuario = async (req, res) => {
   try {
     const contraseniaEncriptada = await bcrypt.hash(contrasenia, 10);
 
-    const resultado = await repositorio.crearUsuario(
+    const resultado = await repositorio.crearUsuarioConAsociaciones(
       nombreCompleto,
       correoElectronico,
       contraseniaEncriptada,
@@ -95,22 +95,18 @@ exports.crearUsuario = async (req, res) => {
       direccion,
       fechaNacimiento,
       genero,
-      estatus
+      estatus,
+      idRol,
+      idCliente
     );
 
-    if (resultado.affectedRows && resultado.insertId) {
-      const idUsuarioInsertado = resultado.insertId;
-      await repositorio.asociarRolAUsuario(idUsuarioInsertado, idRol);
-      await repositorio.asociarClienteAUsuario(idUsuarioInsertado, idCliente);
+    return res
+      .status(MENSAJES_USUARIOS.USUARIO_CREADO.codigo)
+      .json({
+        mensaje: MENSAJES_USUARIOS.USUARIO_CREADO.mensaje,
+        idUsuario: resultado.idUsuario
+      });
 
-      return res
-        .status(MENSAJES_USUARIOS.USUARIO_CREADO.codigo)
-        .json({ mensaje: MENSAJES_USUARIOS.USUARIO_CREADO.mensaje });
-    } else {
-      return res
-        .status(MENSAJES_USUARIOS.DATOS_INCOMPLETOS.codigo)
-        .json({ mensaje: MENSAJES_USUARIOS.DATOS_INCOMPLETOS.mensaje });
-    }
   } catch (error) {
     console.error('Error en el controlador:', error);
     return res
