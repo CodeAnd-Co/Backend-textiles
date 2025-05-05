@@ -1,23 +1,22 @@
-const correrQuery = require('@altertex/util/ser/correrQuery');
+const conexion = require('@altertex/util/bd/db');
 const CONSULTAS_USUARIOS = require('@altertex/util/const/consultasUsuarios');
 
 /**
- * Crea un nuevo usuario en la base de datos.
- *
- * Ejecuta una consulta SQL para insertar los datos del usuario.
- *
- * @param {string} nombreCompleto - Nombre completo del usuario.
- * @param {string} correoElectronico - Correo electrónico del usuario.
- * @param {string} contrasenia - Contraseña del usuario.
- * @param {string} numeroTelefono - Número de teléfono del usuario.
- * @param {string} direccion - Dirección del usuario.
- * @param {string} fechaNacimiento - Fecha de nacimiento del usuario.
- * @param {string} genero - Género del usuario.
- * @param {string} estatus - Estatus del usuario (activo, inactivo, etc.).
- * @returns {Promise<object>} El resultado de la operación de inserción en la base de datos.
- * @throws {Error} Si ocurre un error al ejecutar la consulta.
+ * Crea un usuario y lo asocia a un rol y a uno o varios clientes en una transacción.
+ * 
+ * @param {string} nombreCompleto 
+ * @param {string} correoElectronico 
+ * @param {string} contrasenia 
+ * @param {string} numeroTelefono 
+ * @param {string} direccion 
+ * @param {string} fechaNacimiento 
+ * @param {string} genero 
+ * @param {boolean} estatus 
+ * @param {number} idRol 
+ * @param {number[]|number} idCliente 
+ * @returns {Promise<object>} Resultado con idUsuario
  */
-exports.crearUsuario = async (
+exports.crearUsuarioConAsociaciones = (
   nombreCompleto,
   correoElectronico,
   contrasenia,
@@ -25,65 +24,62 @@ exports.crearUsuario = async (
   direccion,
   fechaNacimiento,
   genero,
-  estatus
+  estatus,
+  idRol,
+  idCliente
 ) => {
-  const query = CONSULTAS_USUARIOS.CREAR_USUARIO;
-  try {
-    const resultado = await correrQuery(query, [
-      nombreCompleto,
-      correoElectronico,
-      contrasenia,
-      numeroTelefono,
-      direccion,
-      fechaNacimiento,
-      genero,
-      estatus,
-    ]);
-    return resultado;
-  } catch (error) {
-    console.error('Error al crear usuario', error);
-    throw error;
-  }
-};
+  return new Promise((resolve, reject) => {
+    conexion.beginTransaction((err) => {
+      if (err) return reject(err);
 
-/**
- * Asocia un rol a un usuario en la base de datos.
- *
- * Ejecuta una consulta SQL para asignar un rol a un usuario específico.
- *
- * @param {number|string} idUsuario - ID del usuario al que se le asignará el rol.
- * @param {number|string} idRol - ID del rol que se asignará al usuario.
- * @returns {Promise<object>} El resultado de la operación de asignación en la base de datos.
- * @throws {Error} Si ocurre un error al ejecutar la consulta.
- */
-exports.asociarRolAUsuario = async (idUsuario, idRol) => {
-  const query = CONSULTAS_USUARIOS.ASIGNAR_ROL_A_USUARIO;
-  try {
-    const resultado = await correrQuery(query, [idUsuario, idRol]);
-    return resultado;
-  } catch (error) {
-    console.error('Error al asociar rol al usuario:', error);
-    throw error;
-  }
-};
+      const valoresUsuario = [
+        nombreCompleto,
+        correoElectronico,
+        contrasenia,
+        numeroTelefono,
+        direccion,
+        fechaNacimiento,
+        genero,
+        estatus
+      ];
 
-/**
- * Asocia un cliente a un usuario en la base de datos.
- *
- * Ejecuta una consulta SQL para asociar un cliente a un usuario específico.
- *
- * @param {number|string} idUsuario - ID del usuario al que se le asociará el cliente.
- * @param {number|string} idCliente - ID del cliente que se asociará al usuario.
- * @returns {Promise<object>} El resultado de la operación de asociación en la base de datos.
- * @throws {Error} Si ocurre un error al ejecutar la consulta.
- */
-exports.asociarClienteAUsuario = async (idUsuario, idCliente) => {
-  const query = CONSULTAS_USUARIOS.ASOCIAR_USUARIO_A_CLIENTE;
-  try {
-    const resultado = await correrQuery(query, [idUsuario, idCliente]);
-    return resultado;
-  } catch (error) {
-    console.error('Error al asociar cliente al usuario:', error);
-    throw error;
-  }
+      // 1. Insertar usuario
+      conexion.query(CONSULTAS_USUARIOS.CREAR_USUARIO, valoresUsuario, (err1, resultadoUsuario) => {
+        if (err1) return conexion.rollback(() => reject(err1));
+
+        const idUsuario = resultadoUsuario.insertId;
+
+        // 2. Asociar rol
+        conexion.query(CONSULTAS_USUARIOS.ASIGNAR_ROL_A_USUARIO, [idUsuario, idRol], (err2) => {
+          if (err2) return conexion.rollback(() => reject(err2));
+
+          const clientes = Array.isArray(idCliente) ? idCliente : [idCliente];
+
+          
+          /**
+           * Inserta una asociación de cliente para el usuario de forma recursiva.
+           * 
+           * @param {number} indice - El índice actual del cliente en el arreglo que se está procesando.
+           * @returns {void} Esta función no retorna un valor.
+           */
+          const insertarCliente = (indice) => {
+            if (indice >= clientes.length) {
+              return conexion.commit((errCommit) => {
+                if (errCommit) return conexion.rollback(() => reject(errCommit));
+                resolve({ success: true, idUsuario });
+              });
+            }
+
+            const idCliente = clientes[indice];
+            conexion.query(CONSULTAS_USUARIOS.ASOCIAR_USUARIO_A_CLIENTE, [idUsuario, idCliente], (err3) => {
+              if (err3) return conexion.rollback(() => reject(err3));
+              insertarCliente(indice + 1);
+            });
+          };
+
+          insertarCliente(0); // Inicia inserción de clientes
+        });
+      });
+    });
+  });
 };
