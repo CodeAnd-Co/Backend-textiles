@@ -55,25 +55,25 @@ exports.crearUsuarioConAsociaciones = (
 
           const clientes = Array.isArray(idCliente) ? idCliente : [idCliente];
 
-          // Función recursiva para insertar clientes uno por uno
+          
           /**
-           * Inserts a client association for the user recursively.
+           * Inserta una asociación de cliente para el usuario de forma recursiva.
            * 
-           * @param {number} index - The current index of the client in the array to be processed.
-           * @returns {void} This function does not return a value.
+           * @param {number} indice - El índice actual del cliente en el arreglo que se está procesando.
+           * @returns {void} Esta función no retorna un valor.
            */
-          const insertarCliente = (index) => {
-            if (index >= clientes.length) {
+          const insertarCliente = (indice) => {
+            if (indice >= clientes.length) {
               return conexion.commit((errCommit) => {
                 if (errCommit) return conexion.rollback(() => reject(errCommit));
                 resolve({ success: true, idUsuario });
               });
             }
 
-            const idCliente = clientes[index];
+            const idCliente = clientes[indice];
             conexion.query(CONSULTAS_USUARIOS.ASOCIAR_USUARIO_A_CLIENTE, [idUsuario, idCliente], (err3) => {
               if (err3) return conexion.rollback(() => reject(err3));
-              insertarCliente(index + 1);
+              insertarCliente(indice + 1);
             });
           };
 
