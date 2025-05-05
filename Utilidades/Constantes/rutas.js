@@ -1,3 +1,5 @@
+const { ELIMINAR_SET_CUOTAS } = require("./permisos");
+
 module.exports = {
   RAIZ: '/',
   API: '/api',
@@ -52,6 +54,7 @@ module.exports = {
     AGREGAR: '/crear-cuota',
     OPCIONES: '/obtener-opciones',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_SET_CUOTAS: '/eliminar-set-cuotas',
   },
   ROLES: {
     BASE: '/roles',
