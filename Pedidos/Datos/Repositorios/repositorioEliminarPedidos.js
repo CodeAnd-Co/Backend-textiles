@@ -1,4 +1,4 @@
-const conexion = require('@altertex/util/bd/db');
+const db = require('@altertex/util/bd/db');
 const correrQuery = require('@altertex/util/ser/correrQuery');
 const CONSULTAS_PEDIDOS = require('@altertex/util/const/consultasPedidos');
 
@@ -6,12 +6,13 @@ const CONSULTAS_PEDIDOS = require('@altertex/util/const/consultasPedidos');
  * Elimina las opciones asociadas a un pedido.
  * //RF[63] Elimina pedido - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF63]
  * @async
- * @function eliminarPedidoConTransaccion
+ * @function eliminarPedido
  * @param {number} idPedido - ID del pedido a eliminar.
  * @returns {Promise<object>} Objeto de resultado de la operación MySQL (por ejemplo, `affectedRows`).
  * @throws {Error} Si ocurre un error durante la ejecución de la transacción.
  */
 exports.eliminarPedido = async (idPedido) => {
+  const conexion = db.promise();
   try {
     // Eliminar las opciones asociadas al pedido
     const resultadoOpciones = await correrQuery(
@@ -47,12 +48,8 @@ exports.eliminarPedido = async (idPedido) => {
       resultadoPedido,
     };
   } catch (error) {
-    // Revertir la transacción en caso de error
-    await conexion.rollback();
-    console.error('Error al eliminar pedido con transacción:', error);
-    throw error;
-  } finally {
-    // Liberar la conexión
-    await conexion.release();
+    if (conexion) await conexion.rollback();
+    console.error('Transaccion fallida:', error);
+    throw new Error('Error eliminando pedido');
   }
 };

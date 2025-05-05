@@ -31,7 +31,7 @@ exports.eliminarPedido = async (req, res) => {
     // Usar transacciones para eliminar los pedidos
     await Promise.all(
       idsPedidos.map(async (idPedido) => {
-        const resultadoPedido = await repositorio.eliminarPedidoConTransaccion(idPedido);
+        const resultadoPedido = await repositorio.eliminarPedido(idPedido);
 
         if (resultadoPedido.resultadoPedido.affectedRows === 0) {
           throw new Error(`Pedido con ID ${idPedido} no encontrado`);

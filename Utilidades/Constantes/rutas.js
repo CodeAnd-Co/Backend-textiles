@@ -1,5 +1,3 @@
-const { ELIMINAR_PEDIDO } = require('./consultasPedidos');
-
 module.exports = {
   RAIZ: '/',
   API: '/api',
