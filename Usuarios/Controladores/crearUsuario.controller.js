@@ -65,6 +65,7 @@ exports.crearUsuario = async (req, res) => {
   }
 
   const tieneCaracterEspecial = /[!@#$%^&*(),.?":{}|<>]/;
+  const tieneMayuscula = /[A-Z]/;
   if (contrasenia.length < 8) {
     return res
       .status(MENSAJES_USUARIOS.CONTRASENA_DEBIL.codigo)
@@ -75,6 +76,14 @@ exports.crearUsuario = async (req, res) => {
     return res
       .status(MENSAJES_USUARIOS.CONTRASENA_DEBIL.codigo)
       .json({ mensaje: MENSAJES_USUARIOS.CONTRASENA_DEBIL.mensaje });
+  }
+
+  if (!tieneMayuscula.test(contrasenia)) {
+    return res
+      .status(MENSAJES_USUARIOS.CONTRASENA_DEBIL.codigo)
+      .json({
+        mensaje: 'La contraseña debe contener al menos una letra mayúscula.',
+      });
   }
 
   const telefonoValido = /^\d{10}$/;
