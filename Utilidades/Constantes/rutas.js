@@ -73,6 +73,7 @@ module.exports = {
   PEDIDOS: {
     BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_PEDIDO: '/eliminar',
   },
   API_DOCS: '/api-docs',
 };
