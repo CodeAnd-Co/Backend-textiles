@@ -1,5 +1,3 @@
-const { ELIMINAR_SET_CUOTAS } = require("./permisos");
-
 module.exports = {
   RAIZ: '/',
   API: '/api',
