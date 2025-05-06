@@ -10,10 +10,14 @@ const CONSULTAS_EVENTOS = require('@altertex/util/const/consultasEventos');
  * @returns {object} - Resultado de la operación de eliminación
  */
 exports.eliminarEvento = async (idEvento, idCliente) => {
-  const query = CONSULTAS_EVENTOS.ELIMINAR_EVENTO;
+  const query1 = CONSULTAS_EVENTOS.ELIMINAR_EMPLEADO_EVENTO;
+  const query2 = CONSULTAS_EVENTOS.ELIMINAR_EVENTO;
 
   try {
-    const resultado = await correrQuery(query, [idEvento, idCliente]);
+    // Verificar si el evento existe
+    await correrQuery(query1, [idEvento]);
+
+    const resultado = await correrQuery(query2, [idEvento, idCliente]);
 
     if (resultado && resultado.affectedRows > 0) {
       return { eliminado: true };
