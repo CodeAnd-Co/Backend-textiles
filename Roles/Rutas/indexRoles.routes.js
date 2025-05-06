@@ -19,13 +19,15 @@ const rutasCrearRol = require('@altertex/rol/rutasInd/crearRol.routes');
 
 const rutasObtenerOpcionesRol = require('@altertex/rol/rutasInd/obtenerOpcionesRol.routes');
 
+const rutasEliminarRol = require('@altertex/rol/rutasInd/eliminarRol.routes');
+
 // Importación del archivo de constantes donde están definidas las rutas base del sistema.
 const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * Se monta el grupo de rutas relacionadas con roles bajo el prefijo definido.
  * Por convención, este prefijo suele ser: /api/roles
- * 
+ *
  * Ejemplo final de ruta expuesta:
  * POST /api/roles/consultar-lista
  */
@@ -34,6 +36,8 @@ ruteador.use(RUTAS.ROLES.BASE, rutasConsultarLista);
 ruteador.use(RUTAS.ROLES.BASE, rutasCrearRol);
 
 ruteador.use(RUTAS.ROLES.BASE, rutasObtenerOpcionesRol);
+
+ruteador.use(RUTAS.ROLES.BASE, rutasEliminarRol);
 
 // Exporta el enrutador para ser utilizado en el archivo principal de rutas de la aplicación (por ejemplo: app.js).
 module.exports = ruteador;
