@@ -68,7 +68,7 @@ module.exports = {
     CREAR_ROL: '/crear-rol',
     OBTENER_OPCIONES: '/obtener-opciones',
     CONFIRMAR_CREACION: '/confirmar-creacion',
-    ELIMINAR_ROL: '/eliminar-rol',
+    ELIMINAR_ROL: '/eliminar',
   },
   PEDIDOS: {
     BASE: '/pedidos',

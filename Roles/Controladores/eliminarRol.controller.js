@@ -16,8 +16,9 @@ const repositorio = require('@altertex/rol/repos/repositoriorEliminar');
  * Si ocurre un error, responde con un código 400 y un mensaje de error.
  */
 exports.eliminarRol = async (req, res) => {
-  const idRol = req.body.idRol;
+  const idRol = req.body.idsRol;
   try {
+    console.log(idRol);
     await repositorio.eliminarRol(idRol);
     return res
       .status(MENSAJES.ELIMINAR_ROL_EXITO.codigo)
