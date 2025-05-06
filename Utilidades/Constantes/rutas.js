@@ -27,6 +27,14 @@ module.exports = {
     ELIMINAR_USUARIOS: '/eliminar-usuarios',
     LEER: '/consultar-usuario',
   },
+  EVENTOS: {
+    BASE: "/eventos",
+    CREAR: "/crear",
+    ELIMINAR: "/eliminar",
+    EDITAR: "/editar",
+    CONSULTAR_LISTA_EVENTOS: "/consultar-lista-eventos",
+    CONSULTAR_EVENTO: "/consultar-evento",
+  },
   PRODUCTOS: {
     BASE: '/productos',
     CONSULTAR_LISTA: '/consultar-lista',
