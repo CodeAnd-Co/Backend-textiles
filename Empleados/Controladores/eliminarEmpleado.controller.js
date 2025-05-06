@@ -28,9 +28,14 @@ exports.eliminarEmpleado = async (req, res) => {
 
     await Promise.all(
       idsEmpleado.map(async (id) => {
-        const resultado = await repositorio.eliminarEmpleado(id);
-        if (resultado.affectedRows === 0) {
-          throw new Error(`Empleado con ID ${id} no encontrado`);
+        try {
+          const resultado = await repositorio.eliminarEmpleado(id);
+    
+          if (resultado.affectedRows === 0) {
+            console.warn(`Empleado con ID ${id} no encontrado o ya eliminado`);
+          }
+        } catch (error) {
+          console.error(`Error al eliminar empleado con ID ${id}:`, error.message);
         }
       })
     );
