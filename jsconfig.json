@@ -72,7 +72,13 @@
       "@altertex/pedidos/datos/*": ["Pedidos/Datos/*"],
       "@altertex/pedidos/repos/*": ["Pedidos/Datos/Repositorios/*"],
       "@altertex/pedidos/rutas/*": ["Pedidos/Rutas/*"],
-      "@altertex/pedidos/rutasInd/*": ["Pedidos/Rutas/RutasIndividuales/*"]
+      "@altertex/pedidos/rutasInd/*": ["Pedidos/Rutas/RutasIndividuales/*"],
+      "@altertex/eve/*": ["Eventos/*"],
+      "@altertex/eve/ctrl/*": ["Eventos/Controladores/*"],
+      "@altertex/eve/datos/*": ["Eventos/Datos/*"],
+      "@altertex/eve/repos/*": ["Eventos/Datos/Repositorios/*"],
+      "@altertex/eve/rutas/*": ["Eventos/Rutas/*"],
+      "@altertex/eve/rutasInd/*": ["Eventos/Rutas/RutasIndividuales/*"]
     }
   },
   "include": ["**/*.js"]
