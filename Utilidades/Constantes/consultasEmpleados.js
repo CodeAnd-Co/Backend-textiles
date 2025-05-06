@@ -4,5 +4,12 @@ module.exports = {
         FROM empleado e
         JOIN usuario u ON e.idUsuario = u.idUsuario
         WHERE e.idCliente = ?;
-      `,
+    `,
+  OBTENER_ID_USUARIO_POR_EMPLEADO: `
+        SELECT idUsuario FROM empleado WHERE idEmpleado = ?;
+    `,
+  ELIMINAR_EMPLEADO: `
+        DELETE FROM empleado
+        WHERE idEmpleado = ?;
+    `,  
 };

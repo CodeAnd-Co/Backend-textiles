@@ -33,4 +33,19 @@ module.exports = {
     codigo: 500,
     mensaje: "Ocurrió un error al obtener la lista de empleados.",
   },
+  // 404 - Not Found
+  EMPLEADO_NO_ENCONTRADO: {
+    codigo: 404,
+    mensaje: 'No se encontró el empleado especificado.',
+  },
+  // 200 - OK
+  EMPLEADO_ELIMINADO: {
+    codigo: 200,
+    mensaje: 'Empleado(s) eliminado(s) correctamente.',
+  },
+  // 500 - Internal Server Error
+  ERROR_ELIMINAR_EMPLEADO: {
+    codigo: 500,
+    mensaje: 'Error al eliminar los empleados.',
+  },
 };
