@@ -17,32 +17,29 @@ exports.eliminarEvento = async (req, res) => {
     // Validar parámetros
     if (isNaN(idEvento)) {
       return res.status(MENSAJES_EVENTOS.PARAMETROS_INVALIDOS.codigo).json({
-        mensaje: 'ID del evento no válido o no proporcionado',
+        mensaje: MENSAJES_EVENTOS.PARAMETROS_INVALIDOS.mensaje,
       });
     }
-
-    if (isNaN(idCliente)) {
-      return res.status(MENSAJES_EVENTOS.PARAMETROS_INVALIDOS.codigo).json({
-        mensaje: 'ID del cliente no válido o no seleccionado',
-      });
-    }
-
-    // Llamar al repositorio para eliminar el evento
-    const resultado = await repositorio.eliminarEvento(idEvento, idCliente);
-
-    if (!resultado || !resultado.eliminado) {
-      return res.status(MENSAJES_EVENTOS.EVENTO_NO_ENCONTRADO.codigo).json({
-        mensaje: MENSAJES_EVENTOS.EVENTO_NO_ENCONTRADO.mensaje,
-      });
-    }
-
-    return res.status(200).json({
-      mensaje: 'Evento eliminado exitosamente',
-    });
   } catch (error) {
-    console.error('Error al eliminar evento:', error);
-    return res.status(MENSAJES_EVENTOS.ERROR_ELIMINAR_EVENTO.codigo || 500).json({
-      mensaje: MENSAJES_EVENTOS.ERROR_ELIMINAR_EVENTO.mensaje || 'Error al eliminar el evento',
+    console.error('Error al eliminar el evento:', error);
+    return res.status(500).json({
+      mensaje: 'Error interno del servidor',
     });
   }
 };
+
+if (isNaN(idCliente)) {
+  return res.status(MENSAJES_EVENTOS.PARAMETROS_INVALIDOS.codigo).json({
+    mensaje: MENSAJES_EVENTOS.PARAMETROS_INVALIDOS.mensaje,
+  });
+}
+
+// Llamar al repositorio para eliminar el evento
+const resultado = await repositorio.eliminarEvento(idEvento, idCliente);
+
+if (resultado.affectedRows === 0) {
+  console.warn(`Evento con ID ${idEvento} no encontrado o ya eliminado`);
+  return res.status(MENSAJES_EVENTOS.EVENTO_NO_ENCONTRADO.codigo).json({
+    mensaje: MENSAJES_EVENTOS.EVENTO_NO_ENCONTRADO.mensaje,
+  });
+}

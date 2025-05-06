@@ -15,7 +15,6 @@ exports.eliminarEvento = async (idEvento, idCliente) => {
   try {
     const resultado = await correrQuery(query, [idEvento, idCliente]);
 
-    // Verificar si se eliminó correctamente (affectedRows > 0)
     if (resultado && resultado.affectedRows > 0) {
       return { eliminado: true };
     }
