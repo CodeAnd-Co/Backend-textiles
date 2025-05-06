@@ -4,6 +4,9 @@ const MENSAJES_SET_CUOTAS = require('@altertex/util/const/mensajesCuotas');
 exports.eliminarSetCuotas = async(req, res) => {
     try{
         const idsSetCuotas = req.body.idsSetCuotas;
+        console.log('Body recibido:', req.body);
+        console.log('idsSetCuotas extraído:', idsSetCuotas);
+
 
         if(!Array.isArray(idsSetCuotas) || idsSetCuotas.length === 0){
             return res.status(MENSAJES_SET_CUOTAS.SET_CUOTA_NO_ENCONTRADO.codigo).json({

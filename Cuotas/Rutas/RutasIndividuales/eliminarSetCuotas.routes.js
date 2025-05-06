@@ -16,4 +16,6 @@ ruteador.post(
     controlador.eliminarSetCuotas
 );
 
+console.log('Ruta /eliminar-set-cuotas cargada correctamente');
+
 module.exports = ruteador;
