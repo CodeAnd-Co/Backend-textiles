@@ -15,6 +15,6 @@ module.exports = {
         DELETE FROM empleado_evento WHERE idEvento = ?;
     `,
   ELIMINAR_EVENTO: `
-        DELETE FROM evento WHERE idEvento = ? AND idCliente = ?;
+        DELETE FROM evento WHERE idEvento = ?;
     `,
 };
