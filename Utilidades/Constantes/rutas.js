@@ -53,6 +53,7 @@ module.exports = {
     BASE: '/empleados',
     CONSULTAR_LISTA: '/consultar-lista',
     CONSULTAR_GRUPO: '/consultar-grupo',
+    ELIMINAR_GRUPO: '/eliminar-grupo',
     ELIMINAR_EMPLEADO: '/eliminar',
   },
   CUOTAS: {
@@ -67,10 +68,12 @@ module.exports = {
     CREAR_ROL: '/crear-rol',
     OBTENER_OPCIONES: '/obtener-opciones',
     CONFIRMAR_CREACION: '/confirmar-creacion',
+    ELIMINAR_ROL: '/eliminar',
   },
   PEDIDOS: {
     BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_PEDIDO: '/eliminar',
   },
   API_DOCS: '/api-docs',
 };

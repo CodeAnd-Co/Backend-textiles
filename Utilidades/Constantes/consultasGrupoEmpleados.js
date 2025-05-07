@@ -11,4 +11,13 @@ module.exports = {
       WHERE ge.idCliente = ?
       GROUP BY ge.idGrupo, sp.idSetProducto;
     `,
+  ELIMINAR_SET_PRODUCTO_GRUPO: `
+    DELETE FROM set_producto_grupo_empleado WHERE idGrupo = ?;
+  `,
+  ELIMINAR_GRUPO: `
+      DELETE FROM grupo_empleado WHERE idGrupo = ?;
+    `,
+  ELIMINAR_EMPLEADO_GRUPO: `
+      DELETE FROM empleado_grupo WHERE idGrupo = ?;
+    `,
 };

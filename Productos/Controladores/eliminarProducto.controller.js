@@ -9,7 +9,7 @@ const {
 
 /**
  * RF30 - Eliminar Producto
- * Requerimiento funcional: 
+ * Requerimiento funcional:
  * https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF30
  */
 
@@ -31,11 +31,8 @@ const eliminarProductoController = async (req, res) => {
   try {
     const { ids } = req.body;
 
-    console.log('IDs recibidos en eliminarProductoController:', ids);
-
     // Validación de los IDs recibidos.
     if (!Array.isArray(ids) || ids.length === 0) {
-      console.log('Error: IDs no son un array o están vacíos.');
       return res.status(400).json({
         codigo: 400,
         mensaje: 'Debes proporcionar al menos un ID de producto para eliminar.',
@@ -44,8 +41,6 @@ const eliminarProductoController = async (req, res) => {
 
     // Se realiza la eliminación de los productos.
     const resultado = await eliminarProductos(ids);
-
-    console.log('Resultado eliminarProductos:', resultado);
 
     // Se responde dependiendo del éxito o fallo de la operación.
     if (resultado) {
