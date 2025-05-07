@@ -28,7 +28,7 @@ exports.eliminarEvento = async (req, res) => {
         if (resultadoEvento.affectedRows === 0) {
           noEncontrados.push(idEvento);
         } else {
-          eliminados++;
+          eliminados += 1;
         }
       })
     );
