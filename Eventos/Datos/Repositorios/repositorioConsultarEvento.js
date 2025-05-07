@@ -15,23 +15,19 @@ const CONSULTAS_EVENTOS = require('@altertex/util/const/consultasEventos');
 exports.obtenerEventoPorId = async (idEvento) => {
   const query = CONSULTAS_EVENTOS.LEER_EVENTO;
 
-  try {
-    const resultado = await correrQuery(query, [idEvento]);
+  const resultado = await correrQuery(query, [idEvento]);
 
-    if (resultado.length === 0) return null;
+  if (resultado.length === 0) return null;
 
-    const evento = {
-      idEvento: resultado[0].idEvento,
-      nombre: resultado[0].nombre,
-      descripcion: resultado[0].descripcion,
-      puntos: resultado[0].puntos,
-      multiplicador: resultado[0].multiplicador,
-      periodoRenovacion: resultado[0].periodoRenovacion,
-      renovacion: resultado[0].renovacion,
-    };
+  const evento = {
+    idEvento: resultado[0].idEvento,
+    nombre: resultado[0].nombre,
+    descripcion: resultado[0].descripcion,
+    puntos: resultado[0].puntos,
+    multiplicador: resultado[0].multiplicador,
+    periodoRenovacion: resultado[0].periodoRenovacion,
+    renovacion: resultado[0].renovacion,
+  };
 
-    return evento;
-  } catch (error) {
-    throw error;
-  }
+  return evento;
 };
