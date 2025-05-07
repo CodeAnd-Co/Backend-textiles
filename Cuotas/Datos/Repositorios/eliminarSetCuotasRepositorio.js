@@ -42,7 +42,6 @@ exports.eliminarSetCuotas = async (idSetCuotas) => {
     };
   } catch (error) {
     if (conexion) await conexion.rollback();
-    console.error('Error durante la transacción de eliminarSetCuotas:', error.message);
     throw new Error('Error eliminando set de cuotas');
   }
 };

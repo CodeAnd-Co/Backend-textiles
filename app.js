@@ -52,7 +52,6 @@ app.use(RUTAS.API, rutasCategorias);
 app.use(RUTAS.API, rutasPedidos);
 app.use(RUTAS.API, rutasEventos);
 
-console.log('Rutas de cuotas montadas en /api/cuotas');
 
 //Configuracion de swaggerUI
 const swaggerSpec = swaggerJSDoc(opcionesSwagger);
