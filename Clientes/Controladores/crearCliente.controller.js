@@ -24,7 +24,7 @@ exports.crearCliente = async (req, res) => {
   const { nombreComercial, nombreFiscal, imagen } = req.body;
 
   // Validación del nombre del cliente
-  if (!nombreComercial || typeof nombre !== "string") {
+  if (!nombreComercial || typeof nombreComercial !== "string") {
     return res.status(400).json({ mensaje: MENSAJES.NOMBRE_OBLIGATORIO });
   }
 

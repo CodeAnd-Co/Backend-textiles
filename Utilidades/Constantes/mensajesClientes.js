@@ -82,4 +82,24 @@ module.exports = {
     codigo: 500,
     mensaje: 'Ocurrió un error al eliminar el cliente.',
   },
+
+
+  // Crear cliente
+  ERROR_CREAR_CLIENTE: {
+    codigo: 500,
+    mensaje: "Ocurrió un error al obtener la información del cliente.",
+  },
+  ERROR_CONSULTAR_SISTEMA: {
+    codigo: 500,
+    mensaje:
+      "Ocurrió un error al obtener la información del sistema del cliente.",
+  },
+  ERROR_CONSULTAR_LISTA_CLIENTES: {
+    codigo: 500,
+    mensaje: "Ocurrió un error al obtener la lista de clientes.",
+  },
+  ERROR_ELIMINAR_CLIENTE: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error al eliminar el cliente.',
+  },
 };
