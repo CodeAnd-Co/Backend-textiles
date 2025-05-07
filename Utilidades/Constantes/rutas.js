@@ -1,5 +1,3 @@
-const { LEER_EVENTO } = require('./permisos');
-
 module.exports = {
   RAIZ: '/',
   API: '/api',
@@ -34,6 +32,7 @@ module.exports = {
     EDITAR: '/editar',
     CONSULTAR_LISTA_EVENTOS: '/consultar-lista-eventos',
     CONSULTAR_EVENTO: '/consultar-evento',
+    LEER_EVENTO: '/consultar-evento',
   },
   PRODUCTOS: {
     BASE: '/productos',
@@ -77,11 +76,6 @@ module.exports = {
     BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_PEDIDO: '/eliminar',
-  },
-  EVENTOS: {
-    BASE: '/eventos',
-    CONSULTAR_LISTA: '/consultar-lista',
-    LEER_EVENTO: '/consultar-evento',
   },
   API_DOCS: '/api-docs',
 };
