@@ -32,7 +32,6 @@ exports.obtenerEventoPorId = async (idEvento) => {
 
     return evento;
   } catch (error) {
-    console.error('Error al obtener el evento con id:', error);
     throw error;
   }
 };
