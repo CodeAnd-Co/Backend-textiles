@@ -40,4 +40,20 @@ module.exports = {
     codigo: 500,
     mensaje: "Error al consultar los sets de cuotas.",
   },
+  
+  SET_CUOTA_NO_ENCONTRADO: {
+    codigo: 404,
+    mensaje: 'Set de cuotas no encontrado.',
+  },
+
+  SET_CUOTA_ELIMINADO: {
+    codigo: 200,
+    mensaje: 'Set de cuotas eliminado correctamente.',
+  },
+
+  ERROR_ELIMINAR_SET_CUOTAS: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error al eliminar el set de productos.',
+  },
+  
 };
