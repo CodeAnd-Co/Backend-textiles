@@ -15,6 +15,10 @@ const ruteador = express.Router();
 // Importación del archivo que contiene las rutas individuales para consultar la lista de roles.
 const rutasConsultarLista = require('@altertex/rol/rutasInd/consultarLista.routes');
 
+const rutasCrearRol = require('@altertex/rol/rutasInd/crearRol.routes');
+
+const rutasObtenerOpcionesRol = require('@altertex/rol/rutasInd/obtenerOpcionesRol.routes');
+
 // Importación del archivo de constantes donde están definidas las rutas base del sistema.
 const RUTAS = require('@altertex/util/const/rutas');
 
@@ -26,6 +30,10 @@ const RUTAS = require('@altertex/util/const/rutas');
  * POST /api/roles/consultar-lista
  */
 ruteador.use(RUTAS.ROLES.BASE, rutasConsultarLista);
+
+ruteador.use(RUTAS.ROLES.BASE, rutasCrearRol);
+
+ruteador.use(RUTAS.ROLES.BASE, rutasObtenerOpcionesRol);
 
 // Exporta el enrutador para ser utilizado en el archivo principal de rutas de la aplicación (por ejemplo: app.js).
 module.exports = ruteador;

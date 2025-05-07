@@ -57,7 +57,6 @@ exports.crearCategoria = async (categoria) => {
     }
 
     await conexion.commit();
-    console.log('transaccion exitosa');
 
     return categoriaId;
   } catch {

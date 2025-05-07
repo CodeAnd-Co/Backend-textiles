@@ -23,4 +23,7 @@ module.exports = {
     INSERT INTO datos_envio (idProducto, peso, longitud, ancho, altura, volumen, tipoPaquete)
     VALUES (?, ?, ?, ?, ?, ?,?);
     `,
+
+  ELIMINAR_PRODUCTOS: 
+    "DELETE FROM producto WHERE idProducto IN (?)",
 };

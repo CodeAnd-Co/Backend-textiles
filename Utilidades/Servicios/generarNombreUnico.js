@@ -1,5 +1,5 @@
-const crypto = require("crypto");
-const path = require("path");
+const crypto = require('crypto');
+const path = require('path');
 
 /**
  * Genera un nombre de archivo único basado en la fecha actual y un hash aleatorio.
@@ -14,10 +14,9 @@ const path = require("path");
  *
  * @example
  * const nombre = generarNombreArchivo("foto.png");
- * console.log(nombre); // "1713804721345-a1b2c3d4e5f6g7h8.png"
  */
-module.exports = (nombreOriginal = "") => {
+module.exports = (nombreOriginal = '') => {
   const ext = path.extname(nombreOriginal);
-  const randomBytes = crypto.randomBytes(16).toString("hex");
+  const randomBytes = crypto.randomBytes(16).toString('hex');
   return `${Date.now()}-${randomBytes}${ext}`;
 };

@@ -59,4 +59,17 @@ module.exports = {
     mensaje:
       'Ocurrió un error al asociar la imagen con la variante. Verifique los datos de las imágenes de variantes.',
   },
+
+  // 200 - OK
+  RESPUESTA_ELIMINAR_PRODUCTO_EXITOSA: {
+    codigo: 200,
+    mensaje: "Producto eliminado exitosamente.",
+  },
+  
+  // 500 - Internal Server Error
+  RESPUESTA_ERROR_GENERAL: {
+    codigo: 500,
+    mensaje: "Ocurrió un error al procesar la solicitud.",
+  },
+  
 };

@@ -12,7 +12,7 @@ module.exports = {
     BASE: '/usuarios',
     CONSULTAR_LISTA_USUARIOS: '/consultar-lista-usuarios',
     CREAR: '/crear',
-    ELIMINAR: '/eliminar',
+    ELIMINAR_USUARIOS: '/eliminar-usuarios',
     LEER: '/consultar-usuario',
   },
   CATEGORIAS: {
@@ -20,6 +20,10 @@ module.exports = {
     CONSULTAR_LISTA_CATEGORIAS: '/consultar-lista-categorias',
     CREAR_CATEGORIA: '/crear-categoria',
     ELIMINAR_CATEGORIA: '/eliminar',
+    CONSULTAR_LISTA_USUARIOS: '/consultar-lista-usuarios',
+    CREAR: '/crear',
+    ELIMINAR_USUARIOS: '/eliminar-usuarios',
+    LEER: '/consultar-usuario',
   },
   PRODUCTOS: {
     BASE: '/productos',
@@ -30,22 +34,26 @@ module.exports = {
     BASE: '/proveedores',
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
+    ELIMINAR_PRODUCTO: "/eliminar",
   },
   SETS_PRODUCTOS: {
     BASE: '/sets-productos',
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
     SUBIR_IMAGEN: '/subir-imagen',
+    ELIMINAR_SET_PRODUCTOS: '/eliminar',
   },
   CLIENTES: {
     BASE: '/clientes',
     CONSULTAR_SISTEMA: '/consultar-sistema',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_CLIENTE: '/eliminar',
   },
   EMPLEADOS: {
     BASE: '/empleados',
     CONSULTAR_LISTA: '/consultar-lista',
     CONSULTAR_GRUPO: '/consultar-grupo',
+    ELIMINAR_EMPLEADO: '/eliminar',
   },
   CUOTAS: {
     BASE: '/cuotas',
@@ -55,6 +63,13 @@ module.exports = {
   },
   ROLES: {
     BASE: '/roles',
+    CONSULTAR_LISTA: '/consultar-lista',
+    CREAR_ROL: '/crear-rol',
+    OBTENER_OPCIONES: '/obtener-opciones',
+    CONFIRMAR_CREACION: '/confirmar-creacion',
+  },
+  PEDIDOS: {
+    BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
   },
   API_DOCS: '/api-docs',

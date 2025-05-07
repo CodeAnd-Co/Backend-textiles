@@ -67,4 +67,15 @@ module.exports = {
     codigo: 500,
     mensaje: 'Ocurrió un error al obtener la lista de roles.',
   },
+
+  NOMBRE_OBLIGATORIO: "El nombre del rol es obligatorio.",
+  PERMISOS_OBLIGATORIOS: "Debes seleccionar al menos un permiso.",
+  ROL_EXISTENTE: "Ya existe un rol con ese nombre.",
+  ROL_CREADO: "Rol creado exitosamente.",
+  ERROR_CREACION: "Error al crear el rol.",
+  PERMISO_INVALIDO: (id) => `El permiso con ID "${id}" no existe.`,
+  FALTA_ID_CLIENTE: 'Falta el ID del cliente',
+  OPCIONES_OBTENIDAS: 'Permisos obtenidos correctamente',
+  ERROR_OBTENIENDO_OPCIONES: 'Error al obtener permisos',
+
 };

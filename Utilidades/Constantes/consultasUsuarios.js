@@ -66,4 +66,8 @@ module.exports = {
       LEFT JOIN usuario_cliente uc ON u.idUsuario = uc.idUsuario
       LEFT JOIN cliente c ON uc.idCliente = c.idCliente;
     `,
+  ELIMINAR_USUARIOS: `
+    DELETE FROM usuario
+    WHERE idUsuario = (?);
+  `,
 };
