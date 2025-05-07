@@ -18,20 +18,27 @@ module.exports = {
   `,
   LEER_CLIENTE: `
         SELECT 
-          c.idCliente,
-          c.nombreComercial,
-          c.nombreFiscal,
-          (
-            SELECT COUNT(*) 
-            FROM empleado e 
-            WHERE e.idCliente = c.idCliente
-          ) AS numeroEmpleados,
-          (
-            SELECT COUNT(*) 
-            FROM usuario_cliente uc 
-            WHERE uc.idCliente = c.idCliente
-          ) AS usuariosAsignados
-        FROM cliente c
-        WHERE c.idCliente = ?;
-    `,
+            c.idCliente,
+            c.nombreComercial,
+            c.nombreFiscal,
+            (
+                SELECT COUNT(*) 
+                FROM empleado e 
+                WHERE e.idCliente = c.idCliente
+            ) AS numeroEmpleados,
+            (
+                SELECT COUNT(*) 
+                FROM usuario_cliente uc 
+                WHERE uc.idCliente = c.idCliente
+            ) AS usuariosAsignados,
+            i.urlImagen  -- Asumiendo que tienes un campo llamado 'urlImagen'
+        FROM 
+            cliente c
+        LEFT JOIN 
+            imagen_cliente ic ON c.idCliente = ic.idCliente
+        LEFT JOIN 
+            imagen i ON ic.idImagen = i.idImagen AND i.tipoImagen = "Logo"
+        WHERE 
+            c.idCliente = ?;
+            `,
 };

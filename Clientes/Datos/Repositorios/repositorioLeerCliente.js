@@ -1,5 +1,5 @@
-const correrQuery = require("@altertex/util/ser/correrQuery");
-const CONSULTAS_CLIENTES = require("@altertex/util/const/consultasClientes");
+const correrQuery = require('@altertex/util/ser/correrQuery');
+const CONSULTAS_CLIENTES = require('@altertex/util/const/consultasClientes');
 
 /**
  * Obtiene un cliente desde la base de datos mediante su ID.
@@ -9,7 +9,7 @@ const CONSULTAS_CLIENTES = require("@altertex/util/const/consultasClientes");
  * @param {number|string} idCliente - ID del cliente a buscar.
  * @returns {Promise<object|null>} El cliente encontrado o `null` si no existe.
  * @throws {Error} Si ocurre un error al ejecutar la consulta.
- * 
+ *
  * @see [RF13 Leer cliente](https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/rf13/)
  */
 exports.obtenerClientePorId = async (idCliente) => {
@@ -27,11 +27,12 @@ exports.obtenerClientePorId = async (idCliente) => {
       empleados: resultado[0].empleados,
       usuariosAsignados: resultado[0].usuariosAsignados,
       numeroEmpleados: resultado[0].numeroEmpleados,
+      urlImagen: resultado[0].urlImagen,
     };
 
     return cliente;
   } catch (error) {
-    console.error("Error al obtener el cliente con id:", error);
+    console.error('Error al obtener el cliente con id:', error);
     throw error;
   }
 };
