@@ -55,6 +55,7 @@ module.exports = {
     CONSULTAR_GRUPO: '/consultar-grupo',
     ELIMINAR_GRUPO: '/eliminar-grupo',
     ELIMINAR_EMPLEADO: '/eliminar',
+    CREAR_GRUPO: '/crear-grupo',
   },
   CUOTAS: {
     BASE: '/cuotas',
