@@ -48,6 +48,7 @@ module.exports = {
     CONSULTAR_SISTEMA: '/consultar-sistema',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_CLIENTE: '/eliminar',
+    CREAR_CLIENTE: '/crear',
   },
   EMPLEADOS: {
     BASE: '/empleados',
