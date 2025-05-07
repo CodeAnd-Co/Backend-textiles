@@ -42,6 +42,7 @@ exports.eliminarSetCuotas = async (req, res) => {
       mensaje: MENSAJES_SET_CUOTAS.SET_CUOTA_ELIMINADO.mensaje,
     });
   } catch (error) {
+    console.error('Error al eliminar set de cuota:', error);
     return res.status(MENSAJES_SET_CUOTAS.ERROR_ELIMINAR_SET_CUOTAS.codigo).json({
       mensaje: MENSAJES_SET_CUOTAS.ERROR_ELIMINAR_SET_CUOTAS.mensaje,
     });
