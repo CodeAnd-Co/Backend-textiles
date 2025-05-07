@@ -26,6 +26,10 @@ module.exports = {
     codigo: 200,
     mensaje: 'Lista de eventos obtenida exitosamente.',
   },
+  EVENTO_ELIMINADO: {
+    codigo: 200,
+    mensaje: 'Evento eliminado correctamente.',
+  },
 
   // 204 - Sin contenido
   CATEGORIAS_NO_ENCONTRADAS: {
@@ -112,5 +116,13 @@ module.exports = {
   ERROR_OBTENER_EVENTO: {
     codigo: 500,
     mensaje: 'Ocurrió un error al obtener los datos del evento.',
+  },
+  ERROR_ELIMINAR_EVENTO: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error al eliminar el evento.',
+  },
+  ERROR_INTERNO: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error interno en el servidor.',
   },
 };

@@ -56,6 +56,7 @@ module.exports = {
     CONSULTAR_SISTEMA: '/consultar-sistema',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_CLIENTE: '/eliminar',
+    LEER: '/consultar-cliente',
   },
   EMPLEADOS: {
     BASE: '/empleados',
@@ -69,6 +70,7 @@ module.exports = {
     AGREGAR: '/crear-cuota',
     OPCIONES: '/obtener-opciones',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_SET_CUOTAS: '/eliminar-set-cuotas',
   },
   ROLES: {
     BASE: '/roles',
