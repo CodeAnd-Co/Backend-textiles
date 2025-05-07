@@ -31,7 +31,7 @@ module.exports = {
                 FROM usuario_cliente uc 
                 WHERE uc.idCliente = c.idCliente
             ) AS usuariosAsignados,
-            i.urlImagen  -- Asumiendo que tienes un campo llamado 'urlImagen'
+            i.urlImagen  
         FROM 
             cliente c
         LEFT JOIN 
