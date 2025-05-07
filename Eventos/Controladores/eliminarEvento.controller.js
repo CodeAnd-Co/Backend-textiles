@@ -29,14 +29,13 @@ exports.eliminarEvento = async (req, res) => {
         mensaje: MENSAJES_EVENTOS.EVENTO_NO_ENCONTRADO.mensaje,
       });
     }
-
-    return res.status(MENSAJES_EVENTOS.EVENTO_ELIMINADO.codigo).json({
-      mensaje: MENSAJES_EVENTOS.EVENTO_ELIMINADO.mensaje,
-    });
   } catch (error) {
-    console.error('Error al eliminar el evento:', error);
-    return res.status(MENSAJES_EVENTOS.ERROR_ELIMINAR_EVENTO.codigo).json({
-      mensaje: MENSAJES_EVENTOS.ERROR_ELIMINAR_EVENTO.mensaje,
+    console.error('Error al eliminar evento:', error);
+    return res.status(MENSAJES_EVENTOS.ERROR_INTERNO.codigo).json({
+      mensaje: MENSAJES_EVENTOS.ERROR_INTERNO.mensaje,
     });
   }
+  return res.status(MENSAJES_EVENTOS.EVENTO_ELIMINADO.codigo).json({
+    mensaje: MENSAJES_EVENTOS.EVENTO_ELIMINADO.mensaje,
+  });
 };
