@@ -29,12 +29,12 @@ module.exports = {
     BASE: '/productos',
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
+    ELIMINAR_PRODUCTO: "/eliminar",
   },
   PROVEEDORES: {
     BASE: '/proveedores',
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
-    ELIMINAR_PRODUCTO: "/eliminar",
   },
   SETS_PRODUCTOS: {
     BASE: '/sets-productos',

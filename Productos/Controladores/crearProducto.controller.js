@@ -28,6 +28,7 @@ const upload = multer({ storage: multer.memoryStorage() });
  * @param {object} req.body - El cuerpo de la solicitud.
  * @param {string} req.body.producto - Información del producto en formato JSON.
  * @param {string} req.body.variantes - Información de las variantes del producto en formato JSON.
+ * @param {string} req.body.mapaImagenes - Información del mapa de imagenes de las variantes en formato JSON.
  * @param {object} req.files - Archivos enviados en la solicitud.
  * @param {Array} req.files.imagenProducto - La imagen principal del producto.
  * @param {Array} req.files.imagenesVariante - Las imágenes asociadas a las variantes del producto.
@@ -56,9 +57,9 @@ exports.crearProducto = [
 
   async (req, res) => {
     const idCliente = parseInt(req.user.clienteSeleccionado);
-    const idProveedor = parseInt(req.body.idProveedor);
     const producto = JSON.parse(req.body.producto);
     const variantes = JSON.parse(req.body.variantes);
+    const mapaImagenes = JSON.parse(req.body.mapaImagenes);
     const imagenProducto = req.files.imagenProducto ? req.files.imagenProducto[0] : null;
     const imagenesVariante = req.files.imagenesVariante || [];
 
@@ -69,65 +70,34 @@ exports.crearProducto = [
       });
     }
 
-    if (!idCliente || !idProveedor) {
+    if (!idCliente || !mapaImagenes) {
       return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
         mensaje: MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.mensaje,
+      });
+    }
+
+    if (imagenesVariante.length !== mapaImagenes.length) {
+      return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
+        mensaje: 'La cantidad de imágenes no coincide con el mapa de imágenes',
       });
     }
 
     try {
       await conexion.beginTransaction();
 
-      producto.idProveedor = idProveedor;
       const idProducto = await repositorioCrearProducto.crearProducto(idCliente, producto);
       if (!idProducto) {
         throw new Error('Error al crear producto');
       }
 
-      const urlImagenProductoPromise = enviarS3({
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: `productos/${imagenProducto.originalname}`,
-        Body: imagenProducto.buffer,
-        ContentType: imagenProducto.mimetype,
-      });
-
-      const urlImagenVariantePromises = imagenesVariante.map((imagenVariante) =>
-        enviarS3({
-          Bucket: process.env.AWS_BUCKET_NAME,
-          Key: `productos/${imagenVariante.originalname}`,
-          Body: imagenVariante.buffer,
-          ContentType: imagenVariante.mimetype,
-      }));
-
-      const [urlImagenProducto, ...urlImagenVariantes] = await Promise.all([
-        urlImagenProductoPromise,
-        ...urlImagenVariantePromises,
-      ]);
-
-      if (!urlImagenProducto || urlImagenVariantes.includes(null)) {
-        throw new Error('Error al subir imágenes al servidor');
-      }
-
-      const nombreImagenProducto = imagenProducto.originalname;
-      const nombresImagenesVariantes = imagenesVariante.map(
-        (imagenVariante) => imagenVariante.originalname
-      );
-
-      await repositorioProductoImagen.crearImagen(
-        idProducto,
-        nombreImagenProducto,
-        producto.nombreComun
-      );
-
-      const promises = variantes.map(async (variante, index) => {
+      const varianteIdMap = {};
+      const variantesPromises = variantes.map(async (variante) => {
         const errorVariante = validarVariante({
           nombreVariante: variante.nombreVariante,
           descripcion: variante.descripcion,
         });
         if (errorVariante) {
-          return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
-            mensaje: errorVariante.error,
-          });
+          throw new Error(errorVariante.error);
         }
 
         const idVariante = await repositorioCrearVariante.crearVariante(idProducto, variante);
@@ -135,23 +105,72 @@ exports.crearProducto = [
           throw new Error('Error al crear variante');
         }
 
-        await repositorioVarianteImagen.crearImagen(
-          idVariante,
-          nombresImagenesVariantes[index],
-          variante.nombreVariante
-        );
+        varianteIdMap[variante.identificador] = {
+          id: idVariante,
+          nombre: variante.nombreVariante,
+        };
 
         const errorOpciones = validarOpciones(variante.opciones);
         if (errorOpciones) {
-          return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
-            mensaje: errorOpciones.error,
-          });
+          throw new Error(errorOpciones.error);
         }
 
         await repositorioCrearOpcion.crearOpcion(idVariante, variante.opciones);
       });
 
-      await Promise.all(promises);
+      await Promise.all(variantesPromises);
+
+      const urlImagenProductoPromise = imagenProducto
+        ? enviarS3({
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: `productos/${imagenProducto.originalname}`,
+            Body: imagenProducto.buffer,
+            ContentType: imagenProducto.mimetype,
+          })
+        : Promise.resolve(null);
+
+      const urlImagenVariantePromises = imagenesVariante.map((imagenVariante) =>
+        enviarS3({
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: `productos/${imagenVariante.originalname}`,
+          Body: imagenVariante.buffer,
+          ContentType: imagenVariante.mimetype,
+        })
+      );
+
+      const [urlImagenProducto, ...urlImagenVariantes] = await Promise.all([
+        urlImagenProductoPromise,
+        ...urlImagenVariantePromises,
+      ]);
+
+      if ((imagenProducto && !urlImagenProducto) || urlImagenVariantes.includes(null)) {
+        throw new Error('Error al subir imágenes al servidor');
+      }
+
+      if (imagenProducto) {
+        await repositorioProductoImagen.crearImagen(
+          idProducto,
+          imagenProducto.originalname,
+          producto.nombreComun
+        );
+      }
+
+      const imagenesVariantePromises = imagenesVariante.map(async (imagen, index) => {
+        const { idVariante: tempIdVariante } = mapaImagenes[index];
+        const varianteInfo = varianteIdMap[tempIdVariante];
+
+        if (!varianteInfo) {
+          throw new Error(`Variante con ID temporal ${tempIdVariante} no encontrada`);
+        }
+
+        await repositorioVarianteImagen.crearImagen(
+          varianteInfo.id,
+          imagen.originalname,
+          varianteInfo.nombre
+        );
+      });
+
+      await Promise.all(imagenesVariantePromises);
 
       await conexion.commit();
       return res.status(200).json({ mensaje: 'Producto creado correctamente' });
