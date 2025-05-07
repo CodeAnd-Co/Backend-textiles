@@ -55,4 +55,5 @@ app.use(RUTAS.API, rutasEventos);
 //Configuracion de swaggerUI
 const swaggerSpec = swaggerJSDoc(opcionesSwagger);
 app.use(RUTAS.API_DOCS, swaggerUI.serve, swaggerUI.setup(swaggerSpec));
-app.listen(puerto);
+app.listen(puerto, () =>
+  console.log(`Servidor corriendo en puerto ${puerto} [${process.env.NODE_ENV}]`));
