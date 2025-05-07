@@ -46,3 +46,6 @@ exports.eliminarSetCuotas = async (idSetCuotas) => {
     throw new Error('Error eliminando set de cuotas');
   }
 };
+
+
+//Errores Npm Run Lint
