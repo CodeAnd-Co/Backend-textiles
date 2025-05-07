@@ -34,5 +34,4 @@ module.exports = {
     codigo: 500,
     mensaje: "Ocurrió un error al procesar la solicitud.",
   },
-  
 };

@@ -22,4 +22,16 @@ module.exports = {
         envio e ON p.idEnvio = e.idEnvio
     ORDER BY 
         p.idPedido;`,
+
+  ELIMINAR_PEDIDO_OPCION: `
+    DELETE FROM pedido_opcion
+    WHERE idPedido = ?;`,
+
+  ELIMINAR_EMPLEADO_PEDIDO: `
+    DELETE FROM empleado_pedido
+    WHERE idPedido = ?;`,
+
+  ELIMINAR_PEDIDO: `
+    DELETE FROM pedido
+    WHERE idPedido = ?;`,
 };
