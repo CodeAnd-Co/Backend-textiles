@@ -9,6 +9,21 @@ const s3 = new S3Client({
   },
 });
 
+/**
+ * Obtiene URL firmadas temporalmente para acceder a una imagen almacenada en S3.
+ *
+ * Esta función toma un nombre de archivo, busca las imágenes
+ * dentro de esa carpeta indicadas por su `urlImagen`, y reemplaza la ruta por una URL
+ * firmada y válida por una hora, generadas con AWS S3.
+ *
+ * @async
+ * @function obtenerImagenCliente
+ * @param {string} nombreImagen - Nombre de la imagen para obtener URL de S3.
+ *
+ * @returns {string} imagenUrl
+ *
+ * @throws {Error} - Si ocurre un error al obtener la imagen desde S3.
+ */
 async function obtenerImagenCliente(nombreImagen) {
   if (!nombreImagen) {
     return null; // O lanzar un error si prefieres
