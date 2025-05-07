@@ -7,7 +7,6 @@ const CONSULTAS_EVENTOS = require('@altertex/util/const/consultasEventos');
  * Elimina un evento específico de la base de datos
  * @function eliminarEvento
  * @param {number} idEvento - ID del evento a eliminar
- * @param {number} idCliente - ID del cliente propietario del evento
  * @returns {object} - Resultado de la operación de eliminación
  */
 exports.eliminarEvento = async (idEvento) => {

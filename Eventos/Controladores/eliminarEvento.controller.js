@@ -20,7 +20,7 @@ exports.eliminarEvento = async (req, res) => {
     }
 
     let eliminados = 0;
-    let noEncontrados = [];
+    const noEncontrados = [];
 
     await Promise.all(
       idsEvento.map(async (idEvento) => {
