@@ -1,4 +1,9 @@
 module.exports = {
+  //200 - OK
+  EVENTO_OBTENIDO: {
+    codigo: 200,
+    mensaje: 'Evento obtenido exitosamente.',
+  },
   // 201 - Creado
   CATEGORIA_CREADA: {
     codigo: 201,

@@ -22,6 +22,7 @@ const rutasClientes = require('@altertex/cli/rutas/indexClientes.routes');
 const rutasRoles = require('@altertex/rol/rutas/indexRoles.routes');
 const rutasCuotas = require('@altertex/cuota/rutas/indexCuotas.routes');
 const rutasCategorias = require('@altertex/cat/rutas/indexCategorias.routes');
+const rutasEventos = require('@altertex/eve/rutas/indexEventos.routes');
 const rutasPedidos = require('@altertex/pedidos/rutas/indexPedidos.routes');
 const rutasEventos = require('@altertex/eve/rutas/indexEventos.routes');
 const RUTAS = require('@altertex/util/const/rutas');
@@ -57,4 +58,5 @@ app.use(RUTAS.API, rutasEventos);
 const swaggerSpec = swaggerJSDoc(opcionesSwagger);
 app.use(RUTAS.API_DOCS, swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.listen(puerto, () =>
-  console.log(`Servidor corriendo en puerto ${puerto} [${process.env.NODE_ENV}]`));
+  console.log(`Servidor corriendo en puerto ${puerto} [${process.env.NODE_ENV}]`)
+);
