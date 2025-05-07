@@ -11,6 +11,12 @@ module.exports = {
         evento e
         WHERE e.idCliente = ?   
     `,
+  ELIMINAR_EMPLEADO_EVENTO: `
+        DELETE FROM empleado_evento WHERE idEvento = ?;
+    `,
+  ELIMINAR_EVENTO: `
+        DELETE FROM evento WHERE idEvento = ?;
+    `,
   LEER_EVENTO: `
         SELECT 
         e.idEvento,
