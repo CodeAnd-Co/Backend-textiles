@@ -26,12 +26,12 @@ module.exports = {
     LEER: '/consultar-usuario',
   },
   EVENTOS: {
-    BASE: "/eventos",
-    CREAR: "/crear",
-    ELIMINAR: "/eliminar",
-    EDITAR: "/editar",
-    CONSULTAR_LISTA_EVENTOS: "/consultar-lista-eventos",
-    CONSULTAR_EVENTO: "/consultar-evento",
+    BASE: '/eventos',
+    CREAR: '/crear',
+    ELIMINAR: '/eliminar',
+    EDITAR: '/editar',
+    CONSULTAR_LISTA_EVENTOS: '/consultar-lista-eventos',
+    CONSULTAR_EVENTO: '/consultar-evento',
   },
   PRODUCTOS: {
     BASE: '/productos',
@@ -75,6 +75,10 @@ module.exports = {
     BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_PEDIDO: '/eliminar',
+  },
+  PAGOS: {
+    BASE: '/pagos',
+    CONSULTAR_LISTA: '/consultar-lista',
   },
   API_DOCS: '/api-docs',
 };
