@@ -32,7 +32,6 @@ module.exports = {
     EDITAR: '/editar',
     CONSULTAR_LISTA_EVENTOS: '/consultar-lista-eventos',
     CONSULTAR_EVENTO: '/consultar-evento',
-    LEER_EVENTO: '/consultar-evento',
   },
   PRODUCTOS: {
     BASE: '/productos',
@@ -49,6 +48,7 @@ module.exports = {
     CONSULTAR_SISTEMA: '/consultar-sistema',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_CLIENTE: '/eliminar',
+    LEER: '/consultar-cliente',
   },
   EMPLEADOS: {
     BASE: '/empleados',
