@@ -31,7 +31,15 @@ module.exports = {
   SELECT idCuotaSet, idCliente, nombre, periodoRenovacion, renovacionHabilitada
   FROM cuota_set
   WHERE idCliente = ?;
-`,
+  `,
+
+  ELIMINAR_CUOTA_SET_PRODUCTO: `
+  DELETE FROM cuota_set_producto WHERE idCuotaSet = ?;
+  `,
+
+  ELIMINAR_CUOTA_SET: `
+  DELETE FROM cuota_set WHERE idCuotaSet = ?;
+  `,
 
   
 };
