@@ -11,4 +11,12 @@ module.exports = {
     codigo: 400,
     mensaje: 'No se ha seleccionado un cliente',
   },
+  EXITO_ACTUALIZAR: {
+    codigo: 200,
+    mensaje: 'Actualizacion exitosa',
+  },
+  ERROR_ACTUALIZAR: {
+    codigo: 400,
+    mensaje: 'Error al actualizar',
+  },
 };

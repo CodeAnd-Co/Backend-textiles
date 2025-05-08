@@ -80,6 +80,7 @@ module.exports = {
   PAGOS: {
     BASE: '/pagos',
     CONSULTAR_LISTA: '/consultar-lista',
+    ACTUALIZAR: '/actualizar',
   },
   API_DOCS: '/api-docs',
 };
