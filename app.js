@@ -16,7 +16,6 @@ const swaggerUI = require('swagger-ui-express');
 const rutasAutenticacion = require('@altertex/aut/rutas/indexAutenticacion.routes');
 const rutasUsuarios = require('@altertex/usu/rutas/indexUsuarios.routes');
 const rutasCategorias = require('@altertex/cat/rutas/indexCategorias.routes');
-const rutasEventos = require('@altertex/eve/rutas/indexEventos.routes');
 const rutasProductos = require('@altertex/pro/rutas/indexProductos.routes');
 const rutasSetsProductos = require('@altertex/setspro/rutas/indexSetsProductos.routes');
 const rutasEmpleados = require('@altertex/emp/rutas/indexEmpleados.routes');
