@@ -11,10 +11,89 @@ const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 
 //RF[52] Consulta Lista de Pago - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF52]
 
+/**
+ * @swagger
+ * /api/pagos/actualizar:
+ *   put:
+ *     summary: Actualiza el estado de métodos de pago habilitados.
+ *     description: Actualiza la configuración de los tipos de pago habilitados o deshabilitados.
+ *     tags:
+ *       - Pagos
+ *     security:
+ *       - ApiKeyAuth: []
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               cambios:
+ *                 type: array
+ *                 description: Lista de tipos de pago a actualizar.
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - id
+ *                     - metodo
+ *                     - habilitado
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       example: 1
+ *                     metodo:
+ *                       type: string
+ *                       example: "tarjeta_credito"
+ *                     habilitado:
+ *                       type: boolean
+ *                       example: true
+ *     responses:
+ *       200:
+ *         description: Tipos de pago actualizados correctamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: "Método(s) de pago actualizados correctamente."
+ *                 datos:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                       metodo:
+ *                         type: string
+ *                       habilitado:
+ *                         type: boolean
+ *       400:
+ *         description: Error en los datos enviados o en la actualización.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: "Error al actualizar los métodos de pago."
+ *     x-codeSamples:
+ *       - lang: JavaScript
+ *         label: cURL
+ *         source: |
+ *           curl -X PUT "https://tu-api.com/api/pagos/tipo" \
+ *           -H "x-api-key: TU_API_KEY" \
+ *           -H "Authorization: Bearer TU_TOKEN" \
+ *           -H "Content-Type: application/json" \
+ *           -d '{"cambios":[{"id":1,"metodo":"tarjeta_credito","habilitado":true}]}'
+ */
 ruteador.put(
   RUTAS.PAGOS.ACTUALIZAR,
   revisarApiKey(),
-  validarYSanitizar(),
+  validarYSanitizar,
   autorizarToken,
   revisarPermisos(PERMISOS.ACTUALIZAR_TIPO_PAGO),
   controlador.actualizarTipoPago
