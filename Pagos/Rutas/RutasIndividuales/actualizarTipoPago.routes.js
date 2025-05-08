@@ -9,10 +9,12 @@ const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const revisarPermisos = require('@altertex/util/inter/verificarPermisos');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 
+//RF[52] Consulta Lista de Pago - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF52]
+
 ruteador.put(
   RUTAS.PAGOS.ACTUALIZAR,
   revisarApiKey(),
-  //   validarYSanitizar(),
+  validarYSanitizar(),
   autorizarToken,
   revisarPermisos(PERMISOS.ACTUALIZAR_TIPO_PAGO),
   controlador.actualizarTipoPago
