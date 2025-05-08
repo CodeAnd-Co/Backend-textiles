@@ -52,7 +52,6 @@ app.use(RUTAS.API, rutasCategorias);
 app.use(RUTAS.API, rutasPedidos);
 app.use(RUTAS.API, rutasEventos);
 
-
 //Configuracion de swaggerUI
 const swaggerSpec = swaggerJSDoc(opcionesSwagger);
 app.use(RUTAS.API_DOCS, swaggerUI.serve, swaggerUI.setup(swaggerSpec));
