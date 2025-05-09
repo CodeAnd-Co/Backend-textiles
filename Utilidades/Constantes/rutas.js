@@ -63,6 +63,7 @@ module.exports = {
     OPCIONES: '/obtener-opciones',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_SET_CUOTAS: '/eliminar-set-cuotas',
+    LEER_SET_CUOTAS: '/leer-set-cuotas',
   },
   ROLES: {
     BASE: '/roles',

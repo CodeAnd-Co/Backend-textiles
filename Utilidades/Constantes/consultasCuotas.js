@@ -40,6 +40,15 @@ module.exports = {
   ELIMINAR_CUOTA_SET: `
   DELETE FROM cuota_set WHERE idCuotaSet = ?;
   `,
-
-  
+  LEER_CUOTA_SET: `
+  SELECT 
+  cs.idCuotaSet,
+  cs.nombre,
+  cs.descripcion,
+  cs.periodoRenovacion,
+  cs.renovacionHabilitada,
+  cs.ultimaActualizacion,
+  FROM cuota_set cs
+  WHERE cs.idCuotaSet = ?;
+  `,
 };
