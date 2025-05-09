@@ -1,90 +1,120 @@
+// src/emp/repos/repositorioImportarEmpleado.js
 const conexion = require('@altertex/util/bd/db');
-const crearUsuario = require('@altertex/usu/repos/repositorioCrearUsuario');
-const correrQuery = require('@altertex/util/ser/correrQuery');
-const CONSULTAS_EMPLEADOS = require('@altertex/util/const/consultasEmpleados');
-const CONSULTAS_USUARIOS = require('@altertex/util/const/consultasUsuarios');
 
 /**
- * Inserta un nuevo usuario con asociaciones y luego su registro de empleado.
+ * Importación masiva de empleados con creación de usuario, asignación de rol y cliente.
  *
  * @async
- * @function importarEmpleadoConUsuario
- * @param {object} datos - Objeto con datos del usuario y empleado.
- * @param {string} datos.nombreCompleto - Nombre completo del usuario.
- * @param {string} datos.correoElectronico - Correo electrónico único del usuario.
- * @param {string} datos.contrasena - Contraseña ya validada.
- * @param {string} datos.numeroTelefono - Número de teléfono.
- * @param {string} datos.direccion - Dirección del usuario.
- * @param {string} datos.fechaNacimiento - Fecha de nacimiento (YYYY-MM-DD).
- * @param {string} datos.genero - Género del usuario.
- * @param {boolean} datos.estatus - Estatus del usuario (true = activo).
- * @param {number} datos.idRol - ID del rol asignado al usuario.
- * @param {number|number[]} datos.idCliente - Cliente(s) asociados al usuario.
- * @param {string} datos.numeroEmergencia - Teléfono de emergencia.
- * @param {string} datos.areaTrabajo - Área de trabajo del empleado.
- * @param {string} datos.posicion - Posición del empleado.
- * @param {number} datos.cantidadPuntos - Puntaje inicial.
- * @param {string} datos.antiguedad - Fecha de ingreso (YYYY-MM-DD).
- * @returns {Promise<void>} Lanza error si ocurre algún fallo en la inserción.
- *
- * @throws {Error} Si la inserción del usuario o del empleado falla.
+ * @function importarEmpleadosMasivo
+ * @param {object[]} empleados Array de objetos con datos de usuario y empleado.
+ * @throws {Error} Si no hay datos o si ocurre un fallo en la transacción.
  */
-exports.importarEmpleadoConUsuario = async (datos) => {
+exports.importarEmpleadosMasivo = async (empleados) => {
+  if (!Array.isArray(empleados) || empleados.length === 0) {
+    throw new Error('No se recibió ningún empleado para importar.');
+  }
+
+  // Obtenemos la conexión promesada
+  const conn = conexion.promise();
+
   try {
-    const resultadoCorreo = await correrQuery(
-      CONSULTAS_USUARIOS.VALIDAR_CORREO,
-      [datos.correoElectronico]
+    // Iniciamos la transacción
+    await conn.beginTransaction();
+
+    // 1) Validar correos duplicados en bloque
+    const correos = empleados.map(elemento => elemento.correoElectronico);
+    const [correosExistentes] = await conn.query(
+      'SELECT correoElectronico FROM usuario WHERE correoElectronico IN (?)',
+      [correos]
     );
-    
-    if (resultadoCorreo.length > 0) {
-      throw new Error(`El correo ${datos.correoElectronico} ya está registrado`);
+    if (correosExistentes.length > 0) {
+      const lista = correosExistentes.map(fila => fila.correoElectronico).join(', ');
+      throw new Error(`Correos ya registrados: ${lista}`);
     }
-    
-    // 2. Validar número de teléfono duplicado
-    const resultadoTelefono = await correrQuery(
-      CONSULTAS_USUARIOS.VALIDAR_TELEFONO,
-      [datos.numeroTelefono]
+
+    // 2) Validar teléfonos duplicados en bloque
+    const telefonos = empleados.map(elemento => elemento.numeroTelefono);
+    const [telefonosExistentes] = await conn.query(
+      'SELECT numeroTelefono FROM usuario WHERE numeroTelefono IN (?)',
+      [telefonos]
     );
-    
-    if (resultadoTelefono.length > 0) {
-      throw new Error(`El número de teléfono ${datos.numeroTelefono} ya está registrado`);
+    if (telefonosExistentes.length > 0) {
+      const lista = telefonosExistentes.map(fila => fila.numeroTelefono).join(', ');
+      throw new Error(`Teléfonos ya registrados: ${lista}`);
     }
-    
-    // 1. Crear usuario con el repositorio de crearUsuario
-    const { idUsuario } = await crearUsuario.crearUsuarioConAsociaciones(
-      datos.nombreCompleto,
-      datos.correoElectronico,
-      datos.contrasena,
-      datos.numeroTelefono,
-      datos.direccion,
-      datos.fechaNacimiento,
-      datos.genero,
-      datos.estatus,
-      datos.idRol,
-      datos.idCliente
+
+    // 3) Bulk‐insert de usuarios
+    const usuariosValues = empleados.map(elemento => [
+      elemento.nombreCompleto,
+      elemento.correoElectronico,
+      elemento.contrasena,
+      elemento.numeroTelefono,
+      elemento.direccion,
+      elemento.fechaNacimiento,
+      elemento.genero,
+      elemento.estatus
+    ]);
+    await conn.query(
+      `INSERT INTO usuario
+         (nombreCompleto, correoElectronico, contrasenia, numeroTelefono, direccion, fechaNacimiento, genero, estatus)
+       VALUES ?`,
+      [usuariosValues]
     );
 
-    // 2. Insertar empleado
-    await new Promise((resolve, reject) => {
-      conexion.query(
-        CONSULTAS_EMPLEADOS.INSERTAR_EMPLEADO,
-        [
-          idUsuario,
-          datos.idCliente,
-          datos.numeroEmergencia,
-          datos.areaTrabajo,
-          datos.posicion,
-          parseFloat(datos.cantidadPuntos),
-          datos.antiguedad
-        ],
-        (err) => {
-          if (err) return reject(err);
-          resolve();
-        }
-      );
+    // 4) Recuperar los IDs generados
+    const [rowsUsuarios] = await conn.query(
+      'SELECT idUsuario, correoElectronico FROM usuario WHERE correoElectronico IN (?)',
+      [correos]
+    );
+    const idMap = rowsUsuarios.reduce((map, row) => {
+      map[row.correoElectronico] = row.idUsuario;
+      return map;
+    }, {});
+
+    // 5) Bulk‐insert de roles
+    const rolValues = empleados.map(elemento => [
+      idMap[elemento.correoElectronico],
+      elemento.idRol
+    ]);
+    await conn.query(
+      'INSERT INTO usuario_rol (idUsuario, idRol) VALUES ?',
+      [rolValues]
+    );
+
+    // 6) Bulk‐insert de asociaciones usuario‐cliente
+    const clienteValues = [];
+    empleados.forEach(elemento => {
+      const idU = idMap[elemento.correoElectronico];
+      const listaClientes = Array.isArray(elemento.idCliente) ? elemento.idCliente : [elemento.idCliente];
+      listaClientes.forEach(idCli => clienteValues.push([idU, idCli]));
     });
+    await conn.query(
+      'INSERT INTO usuario_cliente (idUsuario, idCliente) VALUES ?',
+      [clienteValues]
+    );
 
-  } catch (error) {
-    throw new Error(`Error al importar empleado: ${error.message}`);
+    // 7) Bulk‐insert de empleados
+    const empValues = empleados.map(elemento => [
+      idMap[elemento.correoElectronico],
+      elemento.idCliente,
+      elemento.numeroEmergencia,
+      elemento.areaTrabajo,
+      elemento.posicion,
+      parseFloat(elemento.cantidadPuntos),
+      elemento.antiguedad
+    ]);
+    await conn.query(
+      `INSERT INTO empleado
+         (idUsuario, idCliente, numeroEmergencia, areaTrabajo, posicion, cantidadPuntos, antiguedad)
+       VALUES ?`,
+      [empValues]
+    );
+
+    // 8) Commit
+    await conn.commit();
+  } catch (err) {
+    // rollback y propagar
+    await conn.rollback();
+    throw new Error(`Error en importación masiva: ${err.message}`);
   }
 };

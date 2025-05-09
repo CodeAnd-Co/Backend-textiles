@@ -43,64 +43,92 @@ const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
 exports.importarEmpleados = async (req, res) => {
   const empleados = req.body;
 
+  // 1️⃣ Validar que llegó un array no vacío
   if (!Array.isArray(empleados) || empleados.length === 0) {
     return res.status(400).json({ mensaje: 'No se recibieron empleados.' });
   }
 
   const errores = [];
+  const listaParaImportar = [];
 
+  // 2️⃣ Validaciones de esquema y formateo
   for (const [index, datos] of empleados.entries()) {
+    const fila = index + 1;
+    const {
+      nombreCompleto,
+      correoElectronico,
+      contrasena,
+      numeroTelefono
+    } = datos;
+
+    // Campos requeridos
+    if (
+      !nombreCompleto
+      || !correoElectronico
+      || !contrasena 
+      || !numeroTelefono 
+      || !datos.idRol 
+      || datos.idCliente === undefined
+    ) {
+      errores.push({ fila, error: 'Faltan campos requeridos' });
+      continue;
+    }
+
+    // Correo válido
+    const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!correoValido.test(correoElectronico)) {
+      errores.push({ fila, error: MENSAJES_USUARIOS.CORREO_INVALIDO.mensaje });
+      continue;
+    }
+
+    // Contraseña fuerte
+    const tieneCaracterEspecial = /[!@#$%^&*(),.?":{}|<>]/;
+    const tieneMayuscula = /[A-Z]/;
+    if (
+      contrasena.length < 8 
+      || !tieneCaracterEspecial.test(contrasena)
+      || !tieneMayuscula.test(contrasena)
+    ) {
+      errores.push({ fila, error: MENSAJES_USUARIOS.CONTRASENA_DEBIL.mensaje });
+      continue;
+    }
+
+    // Teléfono válido
+    const telefonoValido = /^\d{10}$/;
+    if (!telefonoValido.test(numeroTelefono)) {
+      errores.push({ fila, error: MENSAJES_USUARIOS.TELEFONO_INVALIDO.mensaje });
+      continue;
+    }
+
+    // Hashear contraseña y agregar al array final
     try {
-      const {
-        nombreCompleto,
-        correoElectronico,
-        contrasena,
-        numeroTelefono
-      } = datos;
-
-      if (
-        !nombreCompleto || !correoElectronico || !contrasena 
-        || !numeroTelefono || !datos.idRol || datos.idCliente === undefined
-      ) {
-        errores.push({ fila: index + 1, error: 'Faltan campos requeridos' });
-        continue;
-      }
-
-      const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!correoValido.test(correoElectronico)) {
-        errores.push({ fila: index + 1, error: MENSAJES_USUARIOS.CORREO_INVALIDO.mensaje });
-        continue;
-      }
-
-      const tieneCaracterEspecial = /[!@#$%^&*(),.?":{}|<>]/;
-      const tieneMayuscula = /[A-Z]/;
-      if (contrasena.length < 8 
-          || !tieneCaracterEspecial.test(contrasena) 
-          || !tieneMayuscula.test(contrasena)) {
-        errores.push({ fila: index + 1, error: MENSAJES_USUARIOS.CONTRASENA_DEBIL.mensaje });
-        continue;
-      }
-
-      const telefonoValido = /^\d{10}$/;
-      if (!telefonoValido.test(numeroTelefono)) {
-        errores.push({ fila: index + 1, error: MENSAJES_USUARIOS.TELEFONO_INVALIDO.mensaje });
-        continue;
-      }
-
-      datos.contrasena = await bcrypt.hash(contrasena, 10);
-
-      await repositorio.importarEmpleadoConUsuario(datos);
-    } catch (error) {
-      errores.push({ fila: index + 1, error: error.message });
+      const hash = await bcrypt.hash(contrasena, 10);
+      listaParaImportar.push({
+        ...datos,
+        contrasena: hash
+      });
+    } catch (err) {
+      errores.push({ fila, error: `Error al procesar contraseña: ${err.message}` });
     }
   }
 
+  // 3️⃣ Si hubo errores de validación, retornamos 207 con detalles
   if (errores.length > 0) {
     return res.status(207).json({
-      mensaje: 'Importación con errores.',
+      mensaje: 'Importación parcial con errores.',
       errores
     });
   }
 
-  return res.status(200).json({ mensaje: 'Todos los empleados importados correctamente.' });
+  // 4️⃣ Llamada única al repositorio batch
+  try {
+    await repositorio.importarEmpleadosMasivo(listaParaImportar);
+    return res.status(200).json({ mensaje: 'Todos los empleados importados correctamente.' });
+  } catch (error) {
+    console.error('Error en importación masiva:', error);
+    return res.status(500).json({
+      mensaje: 'Ocurrió un error al importar los empleados.',
+      detalle: error.message
+    });
+  }
 };
