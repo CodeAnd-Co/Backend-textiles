@@ -12,7 +12,7 @@ const revisarPermisos = require('@altertex/util/inter/verificarPermisos');
 /**
  * @swagger
  * /api/roles/eliminar-rol:
- *   post:
+ *   delete:
  *     tags:
  *       - Roles
  *     summary: Eliminar uno o varios roles
