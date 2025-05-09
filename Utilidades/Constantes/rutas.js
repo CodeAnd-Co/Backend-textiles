@@ -77,5 +77,10 @@ module.exports = {
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_PEDIDO: '/eliminar',
   },
+  PAGOS: {
+    BASE: '/pagos',
+    CONSULTAR_LISTA: '/consultar-lista',
+    ACTUALIZAR: '/actualizar',
+  },
   API_DOCS: '/api-docs',
 };
