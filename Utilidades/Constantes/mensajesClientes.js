@@ -1,3 +1,5 @@
+const { ERROR_CREACION } = require("./mensajesCuotas");
+
 module.exports = {
   // 200 - OK
   CONSULTA_EXITOSA: {
@@ -85,21 +87,26 @@ module.exports = {
 
 
   // Crear cliente
-  ERROR_CREAR_CLIENTE: {
-    codigo: 500,
-    mensaje: "Ocurrió un error al obtener la información del cliente.",
+  CAMPO_OBLIGATORIO: {
+    codigo: 400,
+    mensaje: "Este campo es obligatorio",
   },
-  ERROR_CONSULTAR_SISTEMA: {
-    codigo: 500,
+  CLIENTE_COMERCIAL_EXISTENTE: {
+    codigo: 400,
     mensaje:
-      "Ocurrió un error al obtener la información del sistema del cliente.",
+      "Ya existe un cliente con el mismo nombre comercial.",
   },
-  ERROR_CONSULTAR_LISTA_CLIENTES: {
-    codigo: 500,
-    mensaje: "Ocurrió un error al obtener la lista de clientes.",
+  CLIENTE_FISCAL_EXISTENTE: {
+    codigo: 400,
+    mensaje:
+      "Ya existe ese cliente.",
   },
-  ERROR_ELIMINAR_CLIENTE: {
+  CLIENTE_CREADO: {
+    codigo: 201,
+    mensaje: 'Cliente creado con éxito.',
+  },
+  ERROR_CREACION: {
     codigo: 500,
-    mensaje: 'Ocurrió un error al eliminar el cliente.',
+    mensaje: 'Error al crear cliente.',
   },
 };

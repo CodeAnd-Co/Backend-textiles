@@ -1,3 +1,5 @@
+const { CREAR_CATEGORIAS } = require("./consultasCategorias");
+
 module.exports = {
   OBTENER_CLIENTE: `
         SELECT * 
@@ -15,5 +17,14 @@ module.exports = {
   ELIMINAR_CLIENTE: `
         DELETE FROM cliente
         WHERE idCliente = ?;
-  `,
+    `,
+  VERIFICAR_NOMBRE_COMERCIAL: `
+  SELECT IF(EXISTS(SELECT nombreComercial FROM cliente WHERE nombreComercial = ?), 1, 0)`,
+
+  VERIFICAR_NOMBRE_FISCAL: `
+  SELECT IF(EXISTS(SELECT nombreFiscal FROM cliente WHERE nombreFiscal = ?), 1, 0)`,
+
+  CREAR_CLIENTE:  `
+    INSERT INTO cliente (nombreComercial, nombreFiscal)
+    VALUES (?, ?)`,
 };

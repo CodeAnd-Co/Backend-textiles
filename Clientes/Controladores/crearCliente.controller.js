@@ -1,15 +1,16 @@
 const repositorio = require('@altertex/cli/repos/repositorioCrearCliente');
-const MENSAJES = require('@altertex/util/const/mensajesRoles');
+const MENSAJES = require('@altertex/util/const/mensajesClientes');
 
 /**
- * Controlador para crear un nuevo rol.
+ * Controlador para crear un nuevo cliente.
  *
  * Este controlador realiza las siguientes validaciones y operaciones:
- * - Verifica que el nombre del rol sea válido.
- * - Verifica que los permisos sean un arreglo no vacío.
- * - Valida que el nombre del rol no esté duplicado en la base de datos.
- * - Valida que todos los IDs de permisos proporcionados existan en la base de datos.
- * - Inserta el rol y asocia los permisos si todas las validaciones son exitosas.
+ * - Verifica que el nombre comercial del cliente sea válido.
+ * - Verifica que el nombre fiscal del cliente sea válido.
+ * - Verifica que la imagen del cliente sea válida.
+ * - Valida que el nombre comercial del cliente no esté duplicado en la base de datos.
+ * - Valida que el nombre fiscal del cliente no esté duplicado en la base de datos.
+ * - Inserta el cliente si todas las validaciones son exitosas.
  *
  * @async
  * @function crearRol
@@ -23,43 +24,47 @@ const MENSAJES = require('@altertex/util/const/mensajesRoles');
 exports.crearCliente = async (req, res) => {
   const { nombreComercial, nombreFiscal, imagen } = req.body;
 
-  // Validación del nombre del cliente
-  if (!nombreComercial || typeof nombreComercial !== "string") {
-    return res.status(400).json({ mensaje: MENSAJES.NOMBRE_OBLIGATORIO });
+  console.log("Body: ", req.body)
+  console.log(nombreComercial, nombreFiscal, imagen)
+  
+  const ubiImagen = "/";
+
+  // Validación del nombre comercial del cliente
+  if (!nombreComercial || typeof nombreComercial !== 'string') {
+    console.log("nombre comercial faltante")
+    return res.status(400).json({ mensaje: MENSAJES.CAMPO_OBLIGATORIO });
   }
 
-  // Validación de los permisos
-  if (!Array.isArray(permisos) || permisos.length === 0) {
-    return res.status(400).json({ mensaje: MENSAJES.PERMISOS_OBLIGATORIOS });
+  // Validación del nombre fiscal del cliente
+  if (!nombreFiscal || typeof nombreFiscal !== 'string') {
+    return res.status(400).json({ mensaje: MENSAJES.CAMPO_OBLIGATORIO });
   }
 
   try {
-    // Verificar si el nombre del rol ya existe
-    const existe = await repositorio.verificarNombreRol(nombre);
-    if (existe) {
-      return res.status(400).json({ mensaje: MENSAJES.ROL_EXISTENTE });
+    // Verificar si ya existe un cliente con ese nombre comercial
+    const existeComercial = await repositorio.verificarNombreComercial(nombreComercial);
+    console.log("Existe comercial: ", existeComercial);
+    if (existeComercial) {
+      return res.status(400).json({ mensaje: MENSAJES.CLIENTE_COMERCIAL_EXISTENTE });
     }
 
-    // Verificar que todos los permisos sean válidos
-    for (const idPermiso of permisos) {
-      const valido = await repositorio.verificarPermiso(idPermiso);
-      if (!valido) {
-        return res
-          .status(400)
-          .json({ mensaje: MENSAJES.PERMISO_INVALIDO(idPermiso) });
-      }
+    // Verificar si ya existe un cliente con ese nombre comercial
+    const existeFiscal = await repositorio.verificarNombreFiscal(nombreFiscal);
+    console.log("Existe fiscal: ", existeFiscal);
+    if (existeFiscal) {
+      return res.status(400).json({ mensaje: MENSAJES.CLIENTE_FISCAL_EXISTENTE });
     }
 
-    // Crear el rol y asociar los permisos
-    const resultado = await repositorio.crearRol(nombre, descripcion);
+    // Crear el cliente
+    const resultado = await repositorio.crearCliente(nombreComercial, nombreFiscal, imagen);
+    console.log("resultado: ", resultado)
     if (resultado.insertId) {
-      await repositorio.asociarPermisosARol(resultado.insertId, permisos);
-      return res.status(201).json({ mensaje: MENSAJES.ROL_CREADO });
+      return res.status(201).json({ mensaje: MENSAJES.CLIENTE_CREADO });
     } else {
-      return res.status(400).json({ mensaje: MENSAJES.ERROR_CREACION });
+      return res.status(500).json({ mensaje: MENSAJES.ERROR_CREACION });
     }
   } catch (error) {
-    console.error("Error en crearRol:", error);
+    console.error('Error en crearCliente:', error);
     return res.status(500).json({ mensaje: MENSAJES.ERROR_CREACION });
   }
 };

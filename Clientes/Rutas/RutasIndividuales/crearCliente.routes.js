@@ -12,15 +12,15 @@
  *       - ApiKeyAuth: []
  *       - BearerAuth: []
  *     parameters:
- *       - in: path
- *         name: idCliente
+ *       - in: body
+ *         name: nombreComercial
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID del cliente que se desea eliminar
+ *         description: Nombre comercial del cliente que se quiere crear.
  *     responses:
- *       200:
- *         description: Cliente eliminado exitosamente
+ *       201:
+ *         description: Cliente creado exitosamente
  *         content:
  *           application/json:
  *             schema:
@@ -28,15 +28,15 @@
  *               properties:
  *                 mensaje:
  *                   type: string
- *                   example: Cliente eliminado
+ *                   example: Cliente creado.
  *       400:
- *         description: No se puede eliminar el cliente debido a restricciones (ej. registros asociados)
+ *         description: Error al validar los datos.
  *       401:
  *         description: No autorizado, token o API key inválida
  *       403:
- *         description: No tiene permisos para eliminar clientes
+ *         description: No tiene permisos para crear clientes
  *       500:
- *         description: Error interno al eliminar el cliente
+ *         description: Error interno al crear el cliente
  */
 
 const express = require("express");
@@ -46,7 +46,7 @@ const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
 const autorizarToken = require("@altertex/util/inter/autorizarToken");
 const verificarPermisos = require("@altertex/util/inter/verificarPermisos");
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
-// const validarYSanitizarImagen = require();
+const validarYSanitizarImagen = require('@altertex/util/inter/validarYSanitizarImagen');
 
 const PERMISOS = require("@altertex/util/const/permisos");
 const RUTAS = require("@altertex/util/const/rutas");
@@ -54,7 +54,7 @@ const RUTAS = require("@altertex/util/const/rutas");
 ruteador.post(
   RUTAS.CLIENTES.CREAR_CLIENTE,
   validarYSanitizar,
-  //validarYSanitizarImagen,
+  validarYSanitizarImagen({ campoImagen: 'imagen' }),
   revisarApiKey(),
   autorizarToken,
   verificarPermisos(PERMISOS.CREAR_CLIENTE),
