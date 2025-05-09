@@ -26,12 +26,12 @@ module.exports = {
     LEER: '/consultar-usuario',
   },
   EVENTOS: {
-    BASE: "/eventos",
-    CREAR: "/crear",
-    ELIMINAR: "/eliminar",
-    EDITAR: "/editar",
-    CONSULTAR_LISTA_EVENTOS: "/consultar-lista-eventos",
-    CONSULTAR_EVENTO: "/consultar-evento",
+    BASE: '/eventos',
+    CREAR: '/crear',
+    ELIMINAR: '/eliminar',
+    EDITAR: '/editar',
+    CONSULTAR_LISTA_EVENTOS: '/consultar-lista-eventos',
+    CONSULTAR_EVENTO: '/consultar-evento',
   },
   PRODUCTOS: {
     BASE: '/productos',
@@ -49,6 +49,7 @@ module.exports = {
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_CLIENTE: '/eliminar',
     CREAR_CLIENTE: '/crear',
+    LEER: '/consultar-cliente',
   },
   EMPLEADOS: {
     BASE: '/empleados',
@@ -62,6 +63,7 @@ module.exports = {
     AGREGAR: '/crear-cuota',
     OPCIONES: '/obtener-opciones',
     CONSULTAR_LISTA: '/consultar-lista',
+    ELIMINAR_SET_CUOTAS: '/eliminar-set-cuotas',
   },
   ROLES: {
     BASE: '/roles',
@@ -75,6 +77,11 @@ module.exports = {
     BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_PEDIDO: '/eliminar',
+  },
+  PAGOS: {
+    BASE: '/pagos',
+    CONSULTAR_LISTA: '/consultar-lista',
+    ACTUALIZAR: '/actualizar',
   },
   API_DOCS: '/api-docs',
 };

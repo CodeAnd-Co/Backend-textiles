@@ -1,3 +1,5 @@
+const rutas = require('@altertex/config/rutasSwagger');
+
 const opcionesSwagger = {
   definition: {
     openapi: '3.0.0',
@@ -19,6 +21,7 @@ const opcionesSwagger = {
     './Clientes/Rutas/RutasIndividuales/eliminarCliente.routes.js',
     './Clientes/Rutas/RutasIndividuales/crearCliente.routes.js',
   ],
+  apis: rutas,
 };
 
 module.exports = opcionesSwagger;

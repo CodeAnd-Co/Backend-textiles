@@ -54,7 +54,7 @@ module.exports = {
 
   // Evento
   CREAR_EVENTO: 'Crear Evento',
-  CONSULTAR_EVENTOS: 'Consultar Lista de Eventos',
+  CONSULTAR_EVENTO: 'Consultar Lista de Eventos',
   LEER_EVENTO: 'Leer Evento',
   ACTUALIZAR_EVENTO: 'Actualizar Evento',
   ELIMINAR_EVENTO: 'Eliminar Evento',

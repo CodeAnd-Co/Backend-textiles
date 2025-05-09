@@ -21,7 +21,7 @@ const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * @swagger
- * /admin/usuarios/roles/consultar-lista:
+ * /api/roles/consultar-lista:
  *   post:
  *     summary: Consulta la lista de roles disponibles en el sistema.
  *     tags:
@@ -52,7 +52,7 @@ ruteador.post(
   revisarApiKey(),
   autorizarToken,
   verificarPermisos(PERMISOS.CONSULTAR_ROLES),
-  controlador.consultarLista,
+  controlador.consultarLista
 );
 
 // Exporta el enrutador configurado para que pueda ser usado por el enrutador principal de la aplicación.
