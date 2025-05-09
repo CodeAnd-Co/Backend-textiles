@@ -2,6 +2,8 @@ const MENSAJES = require('@altertex/util/const/mensajesPagos');
 const CONSULTAS = require('@altertex/util/const/consultasPagos');
 const correrQuery = require('@altertex/util/ser/correrQuery');
 
+//RF[52] Consulta Lista de Pago - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF52]
+
 /**
  * Repositorio para consultar la lista de métodos de pago habilitados para un cliente.
  *

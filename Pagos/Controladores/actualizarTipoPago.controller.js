@@ -1,7 +1,7 @@
 const MENSAJES = require('@altertex/util/const/mensajesPagos');
 const repositorio = require('@altertex/pago/repos/repositorioActualizarTipoPago');
 
-//RF[52] Consulta Lista de Pago - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF52]
+//RF[54] Actualizar lista de pago - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF54]
 
 /**
  * Controlador para actualizar los tipos de pago disponibles.

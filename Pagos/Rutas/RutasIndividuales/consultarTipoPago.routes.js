@@ -8,6 +8,8 @@ const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const revisarPermisos = require('@altertex/util/inter/verificarPermisos');
 
+//RF[52] Consulta Lista de Pago - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF52]
+
 /**
  * @swagger
  * /api/pagos/consultar-lista:
