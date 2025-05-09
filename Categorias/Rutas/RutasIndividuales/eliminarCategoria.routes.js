@@ -13,7 +13,7 @@ const RUTAS = require('@altertex/util/const/rutas');
 /**
  * @swagger
  * /api/categorias/eliminar-categoria:
- *   post:
+ *   delete:
  *     summary: Eliminar categorías de productos.
  *     description: Elimina una o varias categorías de productos de la base de datos. Requiere autenticación y permisos específicos.
  *     tags:
