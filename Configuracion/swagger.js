@@ -1,3 +1,5 @@
+const rutas = require('@altertex/config/rutasSwagger');
+
 const opcionesSwagger = {
   definition: {
     openapi: '3.0.0',
@@ -12,14 +14,7 @@ const opcionesSwagger = {
       },
     ],
   },
-  apis: [
-    './Autenticacion/Rutas/RutasIndividuales/inicioSesion.routes.js',
-    './Clientes/Rutas/RutasIndividuales/consultarSistema.routes.js',
-    './Pedidos/Rutas/RutasIndividuales/obtenerPedidos.routes.js',
-    './Clientes/Rutas/RutasIndividuales/eliminarCliente.routes.js',
-    './Pagos/Rutas/RutasIndividuales/actualizarTipoPago.routes.js',
-    './Pagos/Rutas/RutasIndividuales/consultarTipoPago.routes.js',
-  ],
+  apis: rutas,
 };
 
 module.exports = opcionesSwagger;

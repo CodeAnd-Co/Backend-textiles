@@ -1,20 +1,20 @@
 //RF[27] Consulta Lista de Productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27]
-const express = require("express");
+const express = require('express');
 const ruteador = express.Router();
-const controlador = require("@altertex/pro/ctrl/consultarProductos.controller");
-const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
-const autorizarToken = require("@altertex/util/inter/autorizarToken");
-const verificarPermisos = require("@altertex/util/inter/verificarPermisos");
+const controlador = require('@altertex/pro/ctrl/consultarProductos.controller');
+const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
+const autorizarToken = require('@altertex/util/inter/autorizarToken');
+const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 
-const PERMISOS = require("@altertex/util/const/permisos");
-const RUTAS = require("@altertex/util/const/rutas");
+const PERMISOS = require('@altertex/util/const/permisos');
+const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * @swagger
- * /:
+ * /api/productos/consultar-lista:
  *   post:
  *     summary: Consultar productos
- *     tags: [Autenticación]
+ *     tags: [Productos]
  *     security:
  *       - ApiKeyAuth: []
  *     requestBody:
