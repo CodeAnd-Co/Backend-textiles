@@ -13,7 +13,7 @@ const RUTAS = require('@altertex/util/const/rutas');
 /**
  * @swagger
  * /api/pedidos/eliminar:
- *   post:
+ *   delete:
  *     summary: Eliminar pedidos.
  *     description: Elimina uno o varios pedidos de la base de datos. Requiere autenticación y permisos específicos.
  *     tags:

@@ -2,6 +2,8 @@ const CONSULTA = require('@altertex/util/const/consultasCategorias');
 const db = require('@altertex/util/bd/db');
 const MENSAJES = require('@altertex/util/const/mensajesCategorias');
 
+// RF[46] Crear categoria - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF46]
+
 /**
  * Crea una nueva categoría en la base de datos con sus productos asociados.
  *
