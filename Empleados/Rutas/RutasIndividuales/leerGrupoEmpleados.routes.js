@@ -1,3 +1,14 @@
+const express = require('express');
+const ruteador = express.Router();
+const controlador = require('@altertex/emp/ctrl/leerGrupoEmpleados.controller');
+const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
+const autorizarToken = require('@altertex/util/inter/autorizarToken');
+const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
+const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+
+const PERMISOS = require('@altertex/util/const/permisos');
+const RUTAS = require('@altertex/util/const/rutas');
+
 /**
  * RF[23] Lee grupo de empleados -https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF23
  */
@@ -7,24 +18,11 @@
  * /api/empleados/leer-grupo:
  *   post:
  *     summary: Leer grupo de empleados.
- *     description: Obtiene información sobre un grupo de empleados basado en los parámetros proporcionados. Requiere autenticación y permisos específicos.
- *     tags:
- *       - Empleados
+ *     description: |
+ *         Obtiene información sobre un grupo de empleados basado en los parámetros proporcionados. Requiere autenticación y permisos específicos.
+ *     tags: [Empleados]
  *     security:
  *       - ApiKeyAuth: []
- *       - BearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               idGrupo:
- *                 type: integer
- *                 example: 123
- *             required:
- *               - idGrupo
  *     responses:
  *       200:
  *         description: Información del grupo de empleados obtenida exitosamente.
@@ -104,17 +102,6 @@
  *                   type: string
  *                   example: Error al obtener el grupo de empleados.
  */
-const express = require('express');
-const ruteador = express.Router();
-const controlador = require('@altertex/emp/ctrl/leerGrupoEmpleados.controller');
-const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
-const autorizarToken = require('@altertex/util/inter/autorizarToken');
-const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
-const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
-
-const PERMISOS = require('@altertex/util/const/permisos');
-const RUTAS = require('@altertex/util/const/rutas');
-
 ruteador.post(
   RUTAS.EMPLEADOS.LEER_GRUPO,
   validarYSanitizar,
