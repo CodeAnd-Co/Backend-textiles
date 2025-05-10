@@ -14,7 +14,7 @@ const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * @swagger
- * /sets-productos/consultar-lista:
+ * /api/sets-productos/consultar-lista:
  *   post:
  *     summary: Consulta la lista de sets de productos disponibles.
  *     description: Permite a un Super Administrador o Cliente consultar la lista de sets de productos registrados.

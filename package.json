@@ -129,6 +129,11 @@
     "@altertex/eve/datos": "Eventos/Datos/",
     "@altertex/eve/repos": "Eventos/Datos/Repositorios",
     "@altertex/eve/rutas": "Eventos/Rutas/",
-    "@altertex/eve/rutasInd": "Eventos/Rutas/RutasIndividuales"
+    "@altertex/eve/rutasInd": "Eventos/Rutas/RutasIndividuales",
+    "@altertex/pago/ctrl": "Pagos/Controladores/",
+    "@altertex/pago/datos": "Pagos/Datos",
+    "@altertex/pago/repos": "Pagos/Datos/Repositorios/",
+    "@altertex/pago/rutas": "Pagos/Rutas/",
+    "@altertex/pago/rutas/rutasInd": "Pagos/Rutas/RutasIndividuales"
   }
 }

@@ -1,4 +1,4 @@
-// RF[46] Consulta Lista de Productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF46]
+// RF[46] Crear categoria - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF46]
 
 const MENSAJES = require('@altertex/util/const/mensajesCategorias');
 const repositorio = require('@altertex/cat/repos/repositorioCrearCategoria');

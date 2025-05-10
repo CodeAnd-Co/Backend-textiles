@@ -11,10 +11,10 @@ const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * @swagger
- * /:
+ * /api/productos/consultar-lista:
  *   post:
  *     summary: Consultar productos
- *     tags: [Autenticación]
+ *     tags: [Productos]
  *     security:
  *       - ApiKeyAuth: []
  *     requestBody:

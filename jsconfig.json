@@ -85,7 +85,12 @@
       "@altertex/pedidos/datos/*": ["Pedidos/Datos/*"],
       "@altertex/pedidos/repos/*": ["Pedidos/Datos/Repositorios/*"],
       "@altertex/pedidos/rutas/*": ["Pedidos/Rutas/*"],
-      "@altertex/pedidos/rutasInd/*": ["Pedidos/Rutas/RutasIndividuales/*"]
+      "@altertex/pedidos/rutasInd/*": ["Pedidos/Rutas/RutasIndividuales/*"],
+      "@altertex/pago/ctrl/*": ["Pagos/Controladores/*"],
+      "@altertex/pago/datos/*": ["Pagos/Datos/*"],
+      "@altertex/pago/repos/*": ["Pagos/Datos/Repositorios/*"],
+      "@altertex/pago/rutas/*": ["Pagos/Rutas/*"],
+      "@altertex/pago/rutas/rutasInd/*": ["Pagos/Rutas/RutasIndividuales/*"]
     }
   },
   "include": ["**/*.js"]
