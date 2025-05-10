@@ -63,16 +63,25 @@ exports.crearProducto = [
     const imagenProducto = req.files.imagenProducto ? req.files.imagenProducto[0] : null;
     const imagenesVariante = req.files.imagenesVariante || [];
 
+    // prettier-ignore
+    if (
+      !idCliente 
+      || !mapaImagenes 
+      || !producto 
+      || !Array.isArray(variantes) 
+      || variantes.length === 0 
+      || !imagenProducto 
+      || !imagenesVariante
+    ) {
+      return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
+        mensaje: MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.mensaje,
+      });
+    }
+
     const errorProducto = validarProducto(producto);
     if (errorProducto) {
       return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
         mensaje: errorProducto.error,
-      });
-    }
-
-    if (!idCliente || !mapaImagenes) {
-      return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
-        mensaje: MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.mensaje,
       });
     }
 
@@ -129,14 +138,14 @@ exports.crearProducto = [
           })
         : Promise.resolve(null);
 
+      // prettier-ignore
       const urlImagenVariantePromises = imagenesVariante.map((imagenVariante) =>
         enviarS3({
           Bucket: process.env.AWS_BUCKET_NAME,
           Key: `productos/${imagenVariante.originalname}`,
           Body: imagenVariante.buffer,
           ContentType: imagenVariante.mimetype,
-        })
-      );
+      }));
 
       const [urlImagenProducto, ...urlImagenVariantes] = await Promise.all([
         urlImagenProductoPromise,
