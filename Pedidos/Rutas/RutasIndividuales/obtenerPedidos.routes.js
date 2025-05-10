@@ -9,6 +9,7 @@ const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 
 /**
+ * RF60 - Consulta Lista de Pedidos - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF60
  * @swagger
  * /api/pedidos/consultar-lista:
  *   get:

@@ -12,7 +12,7 @@ const RUTAS = require('@altertex/util/const/rutas');
 /**
  * @swagger
  * /api/sets-productos/eliminar-set:
- *   post:
+ *   delete:
  *     summary: Eliminar sets de productos.
  *     description: Elimina uno o varios sets de productos de la base de datos. Requiere autenticación y permisos específicos.
  *     tags:
