@@ -55,6 +55,14 @@ module.exports = {
     "^@altertex/util/bd/(.*)$": "<rootDir>/Utilidades/BaseDeDatos/$1",
     "^@altertex/util/(.*)$": "<rootDir>/Utilidades/$1",
 
+    // GrupoEmpleados module mappings
+    "^@altertex/emp/ctrl/(.*)$": "<rootDir>/Empleados/Controladores/$1",
+    "^@altertex/emp/repos/(.*)$": "<rootDir>/Empleados/Datos/Repositorios/$1",
+    "^@altertex/emp/rutasInd/(.*)$": "<rootDir>/Empleados/Rutas/RutasIndividuales/$1",
+    "^@altertex/emp/rutas/(.*)$": "<rootDir>/Empleados/Rutas/$1",
+    "^@altertex/emp/datos/(.*)$": "<rootDir>/Empleados/Datos/$1",
+    "^@altertex/emp/(.*)$": "<rootDir>/Empleados/$1",
+
     // Generic mapping as fallback
     "^@altertex/(.*)$": "<rootDir>/$1",
   },

@@ -22,7 +22,7 @@ const MENSAJES = require('@altertex/util/const/mensajesEmpleados');
  * @param {object} req.body - Cuerpo de la solicitud con los datos requeridos.
  * @param {string} req.body.nombreGrupo - Nombre del nuevo grupo.
  * @param {string} req.body.descripcion - Descripción del grupo.
- * @param {number} req.body.idCliente - ID del cliente que crea el grupo.
+ * @param {number} req.user.clienteSeleccionado - ID del cliente que crea el grupo.
  * @param {Array<number>} req.body.listaEmpleados - IDs de los empleados a asignar al grupo.
  * @param {object} res - Objeto de respuesta HTTP (Response).
  * @returns {Promise<void>} Envía la respuesta HTTP con el resultado de la operación.
@@ -35,7 +35,7 @@ exports.crearGrupoEmpleados = async (req, res) => {
   const {
     nombreGrupo,
     descripcion,
-    idCliente,
+    idCliente = parseInt(req.user.clienteSeleccionado),
     listaEmpleados,
   } = req.body;
 
