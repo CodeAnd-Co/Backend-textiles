@@ -24,7 +24,7 @@ module.exports = {
 
   GRUPO_NO_ENCONTRADO: {
     codigo: 400,
-    mensaje: 'No se encontró un usuario con el ID proporcionado.',
+    mensaje: 'No se encontró un grupo con el ID proporcionado.',
   },
 
   // 403 - Forbidden

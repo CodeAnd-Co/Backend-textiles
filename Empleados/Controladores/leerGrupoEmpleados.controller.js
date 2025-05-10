@@ -11,7 +11,7 @@ const MENSAJES_GRUPO_EMPLEADOS = require('@altertex/util/const/mensajesGrupoEmpl
  * @param {Express.Response} res - La respuesta HTTP para enviar el resultado al cliente.
  * @returns {Promise<void>} Responde con el grupo de empleados encontrado o un mensaje de error.
  *
- * @see RF[23] Lee grupo de empleados -https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF23
+ * @see RF[23] Lee grupo de empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF23
  */
 exports.leerGrupoEmpleados = async (req, res) => {
   const idGrupo = parseInt(req.body.idGrupo);
@@ -21,7 +21,6 @@ exports.leerGrupoEmpleados = async (req, res) => {
       .status(MENSAJES_GRUPO_EMPLEADOS.PARAMETROS_INVALIDOS.codigo)
       .json({ mensaje: MENSAJES_GRUPO_EMPLEADOS.PARAMETROS_INVALIDOS.mensaje });
   }
-
   try {
     const grupoEmpleados = await repositorio.obtenerGrupoEmpleadosPorId(idGrupo);
 

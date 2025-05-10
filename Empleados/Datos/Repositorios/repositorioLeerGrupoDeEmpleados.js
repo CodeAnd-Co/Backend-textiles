@@ -12,10 +12,8 @@ const CONSULTAS_GRUPOS_EMPLEADOS = require('@altertex/util/const/consultasGrupoE
  *
  * @see RF[23] Lee grupo de empleados -https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF23
  */
-
 exports.obtenerGrupoEmpleadosPorId = async (idGrupo) => {
   const query = CONSULTAS_GRUPOS_EMPLEADOS.LEER_GRUPO;
-
   try {
     const resultado = await correrQuery(query, [idGrupo]);
 
@@ -26,9 +24,8 @@ exports.obtenerGrupoEmpleadosPorId = async (idGrupo) => {
       nombre: resultado[0].nombre,
       descripcion: resultado[0].descripcion,
       setsProductos: resultado[0].setsProductos ? resultado[0].setsProductos.split(', ') : [],
-      empleados: resultado[0].empleados ? resultado[0].empleados.split(', ') : [],
+      empleados: resultado[0].infoEmpleados ? resultado[0].infoEmpleados.split(' || ') : [],
     };
-
     return grupoEmpleados;
   } catch (error) {
     console.error('Error al obtener el grupo de empleados con id:', error);

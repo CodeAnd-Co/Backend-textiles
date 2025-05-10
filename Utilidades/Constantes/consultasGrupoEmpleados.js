@@ -21,20 +21,24 @@ module.exports = {
       DELETE FROM empleado_grupo WHERE idGrupo = ?;
     `,
   LEER_GRUPO: `
-    SELECT 
-      ge.idGrupo, 
-      ge.nombre AS geNombre, 
-      ge.descripcion,
-      GROUP_CONCAT(DISTINCT sp.nombre SEPARATOR ', ') AS setsProductos,    
-      GROUP_CONCAT(DISTINCT u.nombreCompleto SEPARATOR ', ') AS empleados
-    FROM empleado e
-    JOIN usuario u ON e.idUsuario = u.idUsuario
-    JOIN empleado_grupo eg ON e.idEmpleado = eg.idEmpleado
-    JOIN grupo_empleado ge ON eg.idGrupo = ge.idGrupo
-    JOIN set_producto_grupo_empleado spge ON ge.idGrupo = spge.idGrupo
-    JOIN set_producto sp ON spge.idSetProducto = sp.idSetProducto
-    WHERE ge.idGrupo = ?
-    GROUP BY ge.idGrupo
-    ORDER BY ge.idGrupo;
+      SELECT
+          ge.idGrupo,
+          ge.nombre AS nombre,
+          ge.descripcion AS descripcion,
+          GROUP_CONCAT(DISTINCT sp.nombre SEPARATOR ', ') AS setsProductos,
+          GROUP_CONCAT(DISTINCT CONCAT(
+              u.nombreCompleto, ' | ',
+              u.correoElectronico, ' | ',
+              e.areaTrabajo
+          ) SEPARATOR ' || ') AS infoEmpleados
+      FROM empleado e
+      JOIN usuario u ON e.idUsuario = u.idUsuario
+      JOIN empleado_grupo eg ON e.idEmpleado = eg.idEmpleado
+      JOIN grupo_empleado ge ON eg.idGrupo = ge.idGrupo
+      JOIN set_producto_grupo_empleado spge ON ge.idGrupo = spge.idGrupo
+      JOIN set_producto sp ON spge.idSetProducto = sp.idSetProducto
+      WHERE ge.idGrupo = ?
+      GROUP BY ge.idGrupo
+      ORDER BY ge.idGrupo;
     `,
 };
