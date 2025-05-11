@@ -1,3 +1,5 @@
+const { ACTUALIZAR_EMPLEADO } = require('./permisos');
+
 module.exports = {
   RAIZ: '/',
   API: '/api',
@@ -56,6 +58,7 @@ module.exports = {
     CONSULTAR_GRUPO: '/consultar-grupo',
     ELIMINAR_GRUPO: '/eliminar-grupo',
     ELIMINAR_EMPLEADO: '/eliminar',
+    ACTUALIZAR: '/actualizar',
   },
   CUOTAS: {
     BASE: '/cuotas',

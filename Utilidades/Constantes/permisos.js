@@ -36,6 +36,7 @@ module.exports = {
   CONSULTAR_GRUPOS_EMPLEADOS: 'Consultar Lista de Grupos de Empleados',
   LEER_GRUPO_EMPLEADOS: 'Leer Grupo de Empleados',
   ACTUALIZAR_GRUPO_EMPLEADOS: 'Actualizar Grupo de Empleados',
+  ACTUALIZAR_EMPLEADO: 'Actualizar empleado',
   ELIMINAR_GRUPO_EMPLEADOS: 'Eliminar Grupo de Empleados',
 
   // Producto

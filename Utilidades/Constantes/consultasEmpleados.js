@@ -1,3 +1,5 @@
+const { ACTUALIZAR } = require('./consultasPagos');
+
 module.exports = {
   OBTENER_LISTA: `
         SELECT u.nombreCompleto, u.correoElectronico, e.*
@@ -11,5 +13,10 @@ module.exports = {
   ELIMINAR_EMPLEADO: `
         DELETE FROM empleado
         WHERE idEmpleado = ?;
-    `,  
+    `,
+  ACTUALIZAR: `
+        UPDATE empleado SET idEmpleado = ?, idUsuario = ?, 
+        numeroEmergencia = ?, areaTrabajo = ?, posicion = ?, 
+        cantidadPuntos = ?, antiguedad = ? WHERE idEmpleado = ?;
+  `,
 };
