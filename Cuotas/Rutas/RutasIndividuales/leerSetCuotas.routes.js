@@ -60,7 +60,7 @@ ruteador.post(
   validarYSanitizar,
   revisarApiKey(),
   autorizarToken,
-  verificarPermisos([PERMISOS.LEER_SET_CUOTAS]),
+  verificarPermisos(PERMISOS.LEER_SET_CUOTAS),
   controlador.leerSetCuotas
 );
 

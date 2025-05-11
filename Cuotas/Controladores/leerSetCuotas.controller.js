@@ -4,16 +4,15 @@ const MENSAJES_CUOTAS = require('@altertex/util/const/mensajesCuotas');
 /**
  * Lee un conjunto de cuotas desde la base de datos utilizando su ID.
  *
- * Valida el parámetro `idCuota` y obtiene la información de las cuotas a través del repositorio.
- * Si las cuotas no son encontradas o el parámetro es inválido, retorna un error.
+ * Valida el parámetro `idSetCuota` y obtiene la información del set de cuotas a través del repositorio.
+ * Si el set de cuotas no es encontrado o el parámetro es inválido, retorna un error.
  *
- * @param {Express.Request} req - La solicitud HTTP que contiene el `idCuota` en el cuerpo.
+ * @param {Express.Request} req - La solicitud HTTP que contiene el `idSetCuota` en el cuerpo.
  * @param {Express.Response} res - La respuesta HTTP para enviar el resultado al cliente.
- * @returns {Promise<void>} Responde con las cuotas encontradas o un mensaje de error.
+ * @returns {Promise<void>} Responde con el set de cuotas encontrado o un mensaje de error.
  *
- * @see [RF33 Leer set cuotas](https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF38)
+ * @see [RF33 Leer set cuotas](https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF33)
  */
-
 exports.leerSetCuotas = async (req, res) => {
   const idSetCuota = parseInt(req.body.idSetCuota);
 
@@ -24,22 +23,22 @@ exports.leerSetCuotas = async (req, res) => {
   }
 
   try {
-    const setCuota = await repositorio.obtenerCuotasPorId(idSetCuota);
+    const setCuota = await repositorio.obtenerSetCuotaPorId(idSetCuota);
 
     if (!setCuota) {
       return res
-        .status(MENSAJES_CUOTAS.CUOTAS_NO_ENCONTRADAS.codigo)
-        .json({ mensaje: MENSAJES_CUOTAS.CUOTAS_NO_ENCONTRADAS.mensaje });
+        .status(MENSAJES_CUOTAS.SET_CUOTA_NO_ENCONTRADO.codigo)
+        .json({ mensaje: MENSAJES_CUOTAS.SET_CUOTA_NO_ENCONTRADO.mensaje });
     }
 
-    return res.status(MENSAJES_CUOTAS.CUOTAS_OBTENIDAS.codigo).json({
-      mensaje: MENSAJES_CUOTAS.CUOTAS_OBTENIDAS.mensaje,
+    return res.status(MENSAJES_CUOTAS.CONSULTA_EXITOSA.codigo).json({
+      mensaje: MENSAJES_CUOTAS.CONSULTA_EXITOSA.mensaje,
       setCuota,
     });
   } catch (error) {
     console.error('Error al consultar Set cuotas:', error);
     return res
-      .status(MENSAJES_CUOTAS.ERROR_OBTENER_CUOTAS.codigo)
-      .json({ mensaje: MENSAJES_CUOTAS.ERROR_OBTENER_CUOTAS.mensaje });
+      .status(MENSAJES_CUOTAS.ERROR_OBTENER_SET_CUOTA.codigo)
+      .json({ mensaje: MENSAJES_CUOTAS.ERROR_OBTENER_SET_CUOTA.mensaje });
   }
 };

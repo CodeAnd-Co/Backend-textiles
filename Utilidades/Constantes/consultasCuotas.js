@@ -47,7 +47,7 @@ module.exports = {
   cs.descripcion,
   cs.periodoRenovacion,
   cs.renovacionHabilitada,
-  cs.ultimaActualizacion,
+  cs.ultimaActualizacion
   FROM cuota_set cs
   WHERE cs.idCuotaSet = ?;
   `,

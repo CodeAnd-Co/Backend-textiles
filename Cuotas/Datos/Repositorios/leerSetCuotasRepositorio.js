@@ -6,13 +6,10 @@ const CONSULTAS_CUOTAS = require('@altertex/util/const/consultasCuotas');
  *
  * Ejecuta una consulta SQL y retorna el primer conjunto de cuotas encontrado o `null` si no existe.
  *
- * @param {number|string} idSetCuota de cuota a buscar.
+ * @param {number} idSetCuota - ID del set de cuotas a buscar.
  * @returns {Promise<object|null>} El conjunto de cuotas encontrado o `null` si no existe.
  * @throws {Error} Si ocurre un error al ejecutar la consulta.
- *
- * @see [RF33 Leer conjunto de cuotas](https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF38)
  */
-
 exports.obtenerSetCuotaPorId = async (idSetCuota) => {
   const query = CONSULTAS_CUOTAS.LEER_CUOTA_SET;
 
@@ -21,13 +18,12 @@ exports.obtenerSetCuotaPorId = async (idSetCuota) => {
   if (resultado.length === 0) return null;
 
   const setCuota = {
-    idSetCuota: resultado[0].idSetCuota,
+    idSetCuota: resultado[0].idCuotaSet,
     nombre: resultado[0].nombre,
     descripcion: resultado[0].descripcion,
-    puntos: resultado[0].puntos,
-    multiplicador: resultado[0].multiplicador,
     periodoRenovacion: resultado[0].periodoRenovacion,
-    renovacion: resultado[0].renovacion,
+    renovacionHabilitada: resultado[0].renovacionHabilitada,
+    ultimaActualizacion: resultado[0].ultimaActualizacion,
   };
 
   return setCuota;
