@@ -52,7 +52,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 exports.crearProducto = [
   upload.fields([
     { name: 'imagenProducto', maxCount: 1 },
-    { name: 'imagenesVariante', maxCount: 10 },
+    { name: 'imagenesVariante', maxCount: 50 },
   ]),
 
   async (req, res) => {
