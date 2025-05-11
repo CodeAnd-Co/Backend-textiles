@@ -1,3 +1,4 @@
+//RF26 Crea Producto - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF26
 /**
  * Valida los campos de un producto.
  *
@@ -43,6 +44,7 @@
  * const resultado = validarProducto(producto);
  * console.log(resultado); // null si todo está bien, o un objeto de error si algo es inválido
  */
+// prettier-ignore
 module.exports = (producto) => {
   if (
     producto.idProveedor !== null 

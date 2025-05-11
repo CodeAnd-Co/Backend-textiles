@@ -1,3 +1,4 @@
+//RF26 Crea Producto - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF26
 /**
  * Valida un conjunto de opciones para un producto.
  *
@@ -33,6 +34,7 @@
  */
 module.exports = (opciones) => {
   for (const opcion of opciones) {
+    // prettier-ignore
     if (
       typeof opcion.cantidad !== 'number' 
       || opcion.cantidad < 0 
@@ -41,6 +43,7 @@ module.exports = (opciones) => {
       return { error: 'cantidad de la opción debe ser un número entero positivo o cero.' };
     }
 
+    // prettier-ignore
     if (
       !opcion.valorOpcion 
       || typeof opcion.valorOpcion !== 'string' 
@@ -51,12 +54,14 @@ module.exports = (opciones) => {
       };
     }
 
+    // prettier-ignore
     if (
       opcion.SKUautomatico 
       && (typeof opcion.SKUautomatico !== 'string' || opcion.SKUautomatico.length > 50)
     ) {
       return { error: 'SKUautomatico debe ser una cadena de texto de máximo 50 caracteres.' };
     }
+    // prettier-ignore
     if (
       opcion.SKUcomercial 
       && (typeof opcion.SKUcomercial !== 'string' || opcion.SKUcomercial.length > 50)

@@ -1,10 +1,9 @@
+//RF26 Crea Producto - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF26
 const repositorio = require('@altertex/prove/repos/repositorioConsultarProveedores');
 const MENSAJES_PROVEEDORES = require('@altertex/util/const/mensajesProveedores');
 
 /**
  * Controlador para la consulta de la lista de proveedores de un cliente.
- *
- * RF26 Crea Producto - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF26
  *
  * @async
  * @function consultarLista

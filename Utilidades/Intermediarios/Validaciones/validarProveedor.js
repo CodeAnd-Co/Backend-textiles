@@ -1,8 +1,9 @@
+//RF26 Crea Producto - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF26
 /**
  * Valida los campos de un proveedor.
  *
- * Esta función verifica que los campos del objeto `proveedor` cumplan con los requisitos de tipo, longitud y formato. 
- * Si algún campo no es válido, devuelve un objeto con un mensaje de error específico. 
+ * Esta función verifica que los campos del objeto `proveedor` cumplan con los requisitos de tipo, longitud y formato.
+ * Si algún campo no es válido, devuelve un objeto con un mensaje de error específico.
  * Si todos los campos son válidos, retorna `null`.
  *
  * @param {object} proveedor - Objeto que representa al proveedor a validar.
@@ -14,11 +15,10 @@
  * @param {string} [proveedor.codigoPostal] - Código postal (opcional, máximo 20 caracteres).
  * @param {string} [proveedor.pais] - País del proveedor (opcional, máximo 50 caracteres).
  * @param {number} proveedor.estado - Estado del proveedor: 1 (activo) o 0 (inactivo).
- * 
+ *
  * @returns {{ error: string } | null} Retorna un objeto con la propiedad `error` si hay un error de validación, o `null` si todo es válido.
  */
 module.exports = (proveedor) => {
-  
   /**
    * Verifica si un texto es válido (tipo string, no vacío, dentro del límite de caracteres).
    *
@@ -26,6 +26,7 @@ module.exports = (proveedor) => {
    * @param {number} max - Longitud máxima permitida.
    * @returns {boolean} `true` si es válido, `false` en caso contrario.
    */
+  // prettier-ignore
   const esTextoValido = (valor, max) => typeof valor === 'string' && valor.trim().length > 0 && valor.trim().length <= max;
 
   if (!esTextoValido(proveedor.nombre, 100)) {
@@ -46,6 +47,7 @@ module.exports = (proveedor) => {
     };
   }
 
+  // prettier-ignore
   if (proveedor.correoContacto != null) {
     const correo = proveedor.correoContacto.trim();
     const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

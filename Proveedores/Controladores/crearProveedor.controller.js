@@ -1,3 +1,4 @@
+//RF26 Crea Producto - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF26
 const validarProveedor = require('@altertex/util/vali/validarProveedor');
 const repositorioCrearProveedor = require('@altertex/prove/repos/repositorioCrearProvedor');
 const MENSAJES_PROVEEDORES = require('@altertex/util/const/mensajesProveedores');
@@ -20,7 +21,7 @@ exports.crearProveedor = async (req, res) => {
   const proveedor = req.body;
   const idCliente = parseInt(req.user.clienteSeleccionado);
 
-  console.log(req.body)
+  console.log(req.body);
 
   const errorProveedor = validarProveedor(proveedor);
   if (errorProveedor) {
