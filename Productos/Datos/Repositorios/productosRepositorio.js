@@ -2,6 +2,7 @@
 const correrQuery = require('@altertex/util/ser/correrQuery');
 const { ELIMINAR_PRODUCTOS } = require('@altertex/util/const/consultasProductos');
 const extraerNombreArchivoS3 = require('@altertex/util/ser/extraerNombreArchivoS3');
+const eliminarImagenS3 = require('@altertex/util/ser/eliminarImagenS3');
 
 
 /**
@@ -31,7 +32,7 @@ const eliminarProductos = async (ids) => {
     // 2. Borrar las imágenes en S3
     for (const img of imagenes) {
       const nombreReal = extraerNombreArchivoS3(img.urlImagen);
-      deleteImage('productos/', nombreReal);
+      eliminarImagenS3('productos/', nombreReal);
     }
 
     // 3. Eliminar productos en base de datos
