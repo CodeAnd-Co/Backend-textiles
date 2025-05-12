@@ -11,6 +11,7 @@ module.exports = [
   './Clientes/Rutas/RutasIndividuales/consultarSistema.routes.js',
   './Clientes/Rutas/RutasIndividuales/eliminarCliente.routes.js',
   './Clientes/Rutas/RutasIndividuales/leerCliente.routes.js',
+  './Clientes/Rutas/RutasIndividuales/actualizarClientes.routes.js',
 
   './Cuotas/Rutas/RutasIndividuales/consultarCuotas.routes.js',
   './Cuotas/Rutas/RutasIndividuales/crearCuota.routes.js',
@@ -21,6 +22,7 @@ module.exports = [
   './Empleados/Rutas/RutasIndividuales/consultarListaGrupos.routes.js',
   './Empleados/Rutas/RutasIndividuales/eliminarEmpleado.routes.js',
   './Empleados/Rutas/RutasIndividuales/eliminarGrupoEmpleados.routes.js',
+  './Empleados/Rutas/RutasIndividuales/leerGrupoEmpleado.routes.js',
 
   './Eventos/Rutas/RutasIndividuales/consultarEvento.routes.js',
   './Eventos/Rutas/RutasIndividuales/consultarListaEventos.routes.js',

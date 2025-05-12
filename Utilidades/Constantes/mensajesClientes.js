@@ -10,7 +10,7 @@ module.exports = {
   },
   CLIENTE_ELIMINADO: {
     codigo: 200,
-    mensaje: "Cliente eliminado exitosamente.",
+    mensaje: 'Cliente eliminado exitosamente.',
   },
 
   // 204 - No Content
@@ -42,9 +42,8 @@ module.exports = {
   },
   CLIENTE_INVALIDO: {
     codigo: 400,
-    mensaje: "El ID del cliente debe ser un número entero válido.",
+    mensaje: 'El ID del cliente debe ser un número entero válido.',
   },
-  
 
   // 403 - Forbidden
   ACCESO_NO_AUTORIZADO: {
@@ -78,5 +77,13 @@ module.exports = {
   ERROR_ELIMINAR_CLIENTE: {
     codigo: 500,
     mensaje: 'Ocurrió un error al eliminar el cliente.',
+  },
+  CLIENTE_ACTUALIZADO: {
+    codigo: 200,
+    mensaje: 'Cliente actualizado correctamente.',
+  },
+  ERROR_CLIENTE_ACTUALIZADO: {
+    codigo: 400,
+    mensaje: 'Error actualizando cliente.',
   },
 };
