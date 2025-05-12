@@ -23,7 +23,6 @@ const enviarS3 = require('@altertex/util/ser/enviarS3');
 exports.actualizarCliente = async (datosActualizacion, imagenActualizacion) => {
   const { idCliente, nombreLegal, nombreComercial } = datosActualizacion;
 
-  console.log(imagenActualizacion.mimetype);
   try {
     // Si se proporcionó una imagen, se sube al bucket de S3
     if (imagenActualizacion) {
@@ -46,7 +45,6 @@ exports.actualizarCliente = async (datosActualizacion, imagenActualizacion) => {
 
     // Si se proporcionan ambos nombres, se actualizan en la base de datos
     if (nombreLegal && nombreComercial) {
-      console.log('Ambos nombres');
       await correrQuery(CONSULTAS.ACTUALIZAR_AMBOS_NOMBRES, [
         nombreComercial,
         nombreLegal,
@@ -54,19 +52,16 @@ exports.actualizarCliente = async (datosActualizacion, imagenActualizacion) => {
       ]);
     } else if (nombreLegal) {
       // Si solo se proporciona el nombre legal, se actualiza en la base de datos
-      console.log('Solo nombre legal');
       await correrQuery(CONSULTAS.ACTUALIZAR_NOMBRE_FISCAL, [nombreLegal, idCliente]);
     } else if (nombreComercial) {
       // Si solo se proporciona el nombre comercial, se actualiza en la base de datos
-      console.log('Solo nombre comercial');
       await correrQuery(CONSULTAS.ACTUALIZAR_NOMBRE_COMERCIAL, [nombreComercial, idCliente]);
     }
 
     // Retorna el mensaje de éxito después de la actualización
     return MENSAJES.CLIENTE_ACTUALIZADO.mensaje;
-  } catch (error) {
+  } catch {
     // Si ocurre un error, se captura y se lanza un nuevo error
-    console.log(error);
     throw new Error(MENSAJES.ERROR_CLIENTE_ACTUALIZADO.mensaje);
   }
 };
