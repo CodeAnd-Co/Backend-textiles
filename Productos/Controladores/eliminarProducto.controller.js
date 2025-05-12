@@ -1,6 +1,6 @@
 // Importación de la función que elimina productos en el repositorio de datos.
 const { eliminarProductos } = require('@altertex/pro/repos/productosRepositorio');
-const eliminarImagenS3 = require('@altertex/util/ser/eliminarImagenS3');
+const eliminarImagenS3 = require('@altertex/util/ser/eliminarImagenS3').default;
 
 
 // Importación de las constantes de mensajes utilizados para respuestas del módulo de productos.
