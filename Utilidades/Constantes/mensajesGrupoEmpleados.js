@@ -5,6 +5,11 @@ module.exports = {
     mensaje: 'Lista de grupos de empleados obtenida exitosamente.',
   },
 
+  GRUPO_OBTENIDO: {
+    codigo: 200,
+    mensaje: 'Información del grupo de empleados obtenida exitosamente.',
+  },
+
   // 204 - No Content
   SIN_RESULTADOS: {
     codigo: 204,
@@ -15,6 +20,11 @@ module.exports = {
   PARAMETROS_INVALIDOS: {
     codigo: 400,
     mensaje: 'Los parámetros proporcionados no son válidos o están incompletos.',
+  },
+
+  GRUPO_NO_ENCONTRADO: {
+    codigo: 400,
+    mensaje: 'No se encontró un grupo con el ID proporcionado.',
   },
 
   // 403 - Forbidden
@@ -36,5 +46,9 @@ module.exports = {
   ELIMINAR_GRUPO_ERROR: {
     codigo: 500,
     mensaje: 'Ocurrió un error al eliminar el grupo de empleados.',
+  },
+  ERROR_OBTENER_GRUPO: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error al obtener los datos del grupo de empleados.',
   },
 };

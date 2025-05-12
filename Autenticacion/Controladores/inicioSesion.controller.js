@@ -63,7 +63,12 @@ exports.inicioSesion = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { correo: usuario.correoElectronico, permisos, clientesAsociados },
+      {
+        correo: usuario.correoElectronico,
+        permisos,
+        clientesAsociados,
+        nombre: usuario.nombreCompleto,
+      },
       process.env.JWT_SECRET,
       {
         expiresIn: '8h',
