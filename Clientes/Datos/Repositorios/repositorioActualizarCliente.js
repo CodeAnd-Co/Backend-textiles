@@ -7,8 +7,19 @@ exports.actualizarCliente = async (datosActualizacion, imagenActualizacion) => {
   //if dependiendo de lo que se mando
   const { idCliente, nombreLegal, nombreComercial } = datosActualizacion;
 
+  console.log(imagenActualizacion.mimetype);
   try {
     if (imagenActualizacion) {
+      const [nombreImagen] = await correrQuery(CONSULTAS.OBTENER_NOMBRE_IMAGEN, [idCliente]);
+
+      const parametros = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: `clientes/${nombreImagen.urlImagen}`,
+        Body: imagenActualizacion.buffer,
+        ContentType: imagenActualizacion.mimetype,
+      };
+
+      await enviarS3(parametros);
     }
 
     if (!nombreLegal && !nombreComercial) {
@@ -30,7 +41,8 @@ exports.actualizarCliente = async (datosActualizacion, imagenActualizacion) => {
       await correrQuery(CONSULTAS.ACTUALIZAR_NOMBRE_COMERCIAL, [nombreComercial, idCliente]);
     }
     return MENSAJES.CLIENTE_ACTUALIZADO.mensaje;
-  } catch {
+  } catch (error) {
+    console.log(error);
     throw new Error(MENSAJES.ERROR_CLIENTE_ACTUALIZADO.mensaje);
   }
 };
