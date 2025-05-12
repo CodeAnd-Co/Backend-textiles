@@ -1,5 +1,7 @@
 // Importación de la función que elimina productos en el repositorio de datos.
-const { eliminarProductos } = require('../Datos/Repositorios/productosRepositorio');
+const { eliminarProductos } = require('@altertex/pro/repos/productosRepositorio');
+const eliminarImagenS3 = require('@altertex/util/ser/eliminarImagenS3');
+
 
 // Importación de las constantes de mensajes utilizados para respuestas del módulo de productos.
 const {
@@ -29,7 +31,7 @@ const {
  */
 const eliminarProductoController = async (req, res) => {
   try {
-    const { ids } = req.body;
+    const { ids, imagenes } = req.body;
 
     // Validación de los IDs recibidos.
     if (!Array.isArray(ids) || ids.length === 0) {
@@ -39,6 +41,14 @@ const eliminarProductoController = async (req, res) => {
       });
     }
 
+    // Validación de las imágenes recibidas.
+    if (Array.isArray(imagenes)) {
+      imagenes.forEach((url) => {
+        const parts = url.split('/');
+        const filename = parts[parts.length - 1];
+        eliminarImagenS3 ('productos/', filename);
+      })
+    }
     // Se realiza la eliminación de los productos.
     const resultado = await eliminarProductos(ids);
 
