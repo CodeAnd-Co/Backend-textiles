@@ -50,7 +50,7 @@ const eliminarProductoController = async (req, res) => {
       })
     }
     // Se realiza la eliminación de los productos.
-    const resultado = await eliminarProductos(ids);
+    const resultado = await eliminarProductos(ids, imagenes);
 
     // Se responde dependiendo del éxito o fallo de la operación.
     if (resultado) {

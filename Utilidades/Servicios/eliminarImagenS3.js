@@ -16,7 +16,7 @@ const s3 = new AWS.S3();
  */
 const eliminarImagenS3 = (folder, filename) => {
   const params = {
-    Bucket: process.env.AWS_BUCKET,
+    Bucket: process.env.AWS_BUCKET_NAME,
     Key: `${folder}${filename}`,
   };
 
