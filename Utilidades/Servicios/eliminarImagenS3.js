@@ -22,9 +22,9 @@ const eliminarImagenS3 = (folder, filename) => {
 
   s3.deleteObject(params, (err) => {
     if (err) {
-      // console.error("Error al eliminar la imagen:", err);
+      // console.error("Error eliminando imagen de S3:", err);
     } else {
-      // console.log(`Imagen ${filename} eliminada de S3.`);      
+      // console.log("Imagen eliminada de S3:", filename);
     }
   });
 };

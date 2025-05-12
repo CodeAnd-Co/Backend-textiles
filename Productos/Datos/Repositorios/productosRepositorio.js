@@ -2,7 +2,7 @@
 const correrQuery = require('@altertex/util/ser/correrQuery');
 const { ELIMINAR_PRODUCTOS } = require('@altertex/util/const/consultasProductos');
 const extraerNombreArchivoS3 = require('@altertex/util/ser/extraerNombreArchivoS3');
-const eliminarImagenS3 = require('@altertex/util/ser/eliminarImagenS3').default;
+const eliminarImagenS3 = require('@altertex/util/ser/eliminarImagenS3');
 
 
 /**
