@@ -42,8 +42,7 @@ const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
  */
 exports.importarEmpleados = async (req, res) => {
   const empleados = req.body;
-
-  // 1️⃣ Validar que llegó un array no vacío
+  
   if (!Array.isArray(empleados) || empleados.length === 0) {
     return res.status(400).json({ mensaje: 'No se recibieron empleados.' });
   }
@@ -51,7 +50,6 @@ exports.importarEmpleados = async (req, res) => {
   const errores = [];
   const listaParaImportar = [];
 
-  // 2️⃣ Validaciones de esquema y formateo
   for (const [index, datos] of empleados.entries()) {
     const fila = index + 1;
     const {
@@ -60,17 +58,72 @@ exports.importarEmpleados = async (req, res) => {
       contrasena,
       numeroTelefono
     } = datos;
-
-    // Campos requeridos
+    
     if (
-      !nombreCompleto
-      || !correoElectronico
-      || !contrasena 
-      || !numeroTelefono 
-      || !datos.idRol 
-      || datos.idCliente === undefined
+      !numeroTelefono
+      || !datos.direccion
+      || !datos.fechaNacimiento
+      || !datos.genero 
+      || !datos.numeroEmergencia
+      || !datos.areaTrabajo
+      || !datos.posicion
+      || datos.cantidadPuntos === null
+      || !datos.antiguedad
     ) {
       errores.push({ fila, error: 'Faltan campos requeridos' });
+      continue;
+    }
+
+    if (nombreCompleto.length > 75) {
+      errores.push({ fila, error: 'El nombre es demasiado largo' });
+      continue;
+    } if (!nombreCompleto){
+      errores.push({ fila, error: 'El nombre es requerido' });
+      continue;
+    }
+
+    if (correoElectronico.length > 75) {
+      errores.push({ fila, error: 'El correo es demasiado largo' });
+      continue;
+    } if (!correoElectronico) {
+      errores.push({ fila, error: 'El correo es requerido' });
+      continue;
+    }
+
+    if (contrasena.length > 75) {
+      errores.push({ fila, error: 'La contraseña es demasiado larga' });
+      continue;
+    }
+    if (!contrasena) {
+      errores.push({ fila, error: 'La contraseña es requerida' });
+      continue;
+    }
+
+    if (!datos.idCliente) {
+      errores.push({ fila, error: 'El cliente es requerido' });
+      continue;
+    }
+
+    if (datos.direccion.length > 150) {
+      errores.push({ fila, error: 'La dirección es demasiado larga' });
+      continue;
+    }
+
+    if (datos.estatus == null) {
+      errores.push({ fila, error: 'Estatus inválido: debe ser 0 o 1' });
+      continue;
+    }
+
+    if (datos.posicion.length > 75) {
+      errores.push({ fila, error: 'La posición es demasiado larga' });
+      continue;
+    }
+    if(datos.areaTrabajo.length > 75) {
+      errores.push({ fila, error: 'El área de trabajo es demasiado larga' });
+      continue;
+    }
+    if (datos.genero.length > 20) {
+      errores.push({ fila, error: 'El género es demasiado largo' });
       continue;
     }
 
@@ -100,7 +153,6 @@ exports.importarEmpleados = async (req, res) => {
       continue;
     }
 
-    // Hashear contraseña y agregar al array final
     try {
       const hash = await bcrypt.hash(contrasena, 10);
       listaParaImportar.push({
@@ -112,7 +164,6 @@ exports.importarEmpleados = async (req, res) => {
     }
   }
 
-  // 3️⃣ Si hubo errores de validación, retornamos 207 con detalles
   if (errores.length > 0) {
     return res.status(207).json({
       mensaje: 'Importación parcial con errores.',
@@ -120,15 +171,23 @@ exports.importarEmpleados = async (req, res) => {
     });
   }
 
-  // 4️⃣ Llamada única al repositorio batch
   try {
-    await repositorio.importarEmpleadosMasivo(listaParaImportar);
-    return res.status(200).json({ mensaje: 'Todos los empleados importados correctamente.' });
+    await repositorio.importarEmpleadosMasivo(empleados);
   } catch (error) {
-    console.error('Error en importación masiva:', error);
-    return res.status(500).json({
-      mensaje: 'Ocurrió un error al importar los empleados.',
-      detalle: error.message
+    errores.push({
+      fila: "N/A",
+      error: error.message
     });
   }
+
+  if (errores.length > 0) {
+    return res.status(207).json({
+      mensaje: 'Importación parcial con errores.',
+      errores
+    });
+  }
+
+  return res.status(200).json({
+    mensaje: 'Todos los empleados importados correctamente.'
+  });
 };

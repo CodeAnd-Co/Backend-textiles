@@ -1,13 +1,31 @@
-// src/emp/repos/repositorioImportarEmpleado.js
 const conexion = require('@altertex/util/bd/db');
-
+const DEFAULT_ROLE_ID = 3; 
+const CONSULTAS_IMPORTAR_EMPLEADOS = require('@altertex/util/const/consultasImportarEmpleados');
 /**
- * Importación masiva de empleados con creación de usuario, asignación de rol y cliente.
+ * Importa en bloque múltiples empleados, creando sus usuarios, asignando rol y vinculación con clientes.
  *
  * @async
  * @function importarEmpleadosMasivo
- * @param {object[]} empleados Array de objetos con datos de usuario y empleado.
- * @throws {Error} Si no hay datos o si ocurre un fallo en la transacción.
+ * @param {Array} empleados - Lista de objetos con los datos de usuario y empleado.
+ * @param {string} empleados[].nombreCompleto      - Nombre completo del usuario.
+ * @param {string} empleados[].correoElectronico   - Correo electrónico único del usuario.
+ * @param {string} empleados[].contrasena           - Contraseña en texto plano (ya hasheada previo a la llamada).
+ * @param {string} empleados[].numeroTelefono       - Teléfono del usuario (exactamente 10 dígitos).
+ * @param {string} empleados[].direccion            - Dirección del usuario.
+ * @param {string} empleados[].fechaNacimiento      - Fecha de nacimiento (YYYY-MM-DD).
+ * @param {string} empleados[].genero               - Género del usuario.
+ * @param {boolean} empleados[].estatus             - Estatus del usuario (true = activo, false = inactivo).
+ * @param {number|Array<number>} empleados[].idCliente - Uno o varios IDs de cliente asociados.
+ * @param {string} empleados[].numeroEmergencia     - Teléfono de emergencia.
+ * @param {string} empleados[].areaTrabajo          - Área de trabajo del empleado.
+ * @param {string} empleados[].posicion             - Puesto o cargo del empleado.
+ * @param {number} empleados[].cantidadPuntos       - Puntos acumulados del empleado.
+ * @param {string} empleados[].antiguedad           - Fecha de antigüedad/ingreso (YYYY-MM-DD).
+ * @throws {Error} Si el parámetro "empleados" no es un array válido o está vacío.
+ * @throws {Error} Si se detectan correos o teléfonos duplicados en la base de datos.
+ * @throws {Error} Si ocurre cualquier fallo durante la inserción en la transacción.
+ *
+ * @returns {Promise<void>} Resuelve sin valor si la importación fue exitosa.
  */
 exports.importarEmpleadosMasivo = async (empleados) => {
   if (!Array.isArray(empleados) || empleados.length === 0) {
@@ -24,7 +42,7 @@ exports.importarEmpleadosMasivo = async (empleados) => {
     // 1) Validar correos duplicados en bloque
     const correos = empleados.map(elemento => elemento.correoElectronico);
     const [correosExistentes] = await conn.query(
-      'SELECT correoElectronico FROM usuario WHERE correoElectronico IN (?)',
+      CONSULTAS_IMPORTAR_EMPLEADOS.VALIDAR_CORREOS_DUPLICADOS,
       [correos]
     );
     if (correosExistentes.length > 0) {
@@ -35,7 +53,7 @@ exports.importarEmpleadosMasivo = async (empleados) => {
     // 2) Validar teléfonos duplicados en bloque
     const telefonos = empleados.map(elemento => elemento.numeroTelefono);
     const [telefonosExistentes] = await conn.query(
-      'SELECT numeroTelefono FROM usuario WHERE numeroTelefono IN (?)',
+      CONSULTAS_IMPORTAR_EMPLEADOS.VALIDAR_TELEFONO_DUPLICADO,
       [telefonos]
     );
     if (telefonosExistentes.length > 0) {
@@ -55,15 +73,13 @@ exports.importarEmpleadosMasivo = async (empleados) => {
       elemento.estatus
     ]);
     await conn.query(
-      `INSERT INTO usuario
-         (nombreCompleto, correoElectronico, contrasenia, numeroTelefono, direccion, fechaNacimiento, genero, estatus)
-       VALUES ?`,
+      CONSULTAS_IMPORTAR_EMPLEADOS.BULK_INSERT_USUARIOS,
       [usuariosValues]
     );
 
     // 4) Recuperar los IDs generados
     const [rowsUsuarios] = await conn.query(
-      'SELECT idUsuario, correoElectronico FROM usuario WHERE correoElectronico IN (?)',
+      CONSULTAS_IMPORTAR_EMPLEADOS.OBTENER_ID_GENERADOS,
       [correos]
     );
     const idMap = rowsUsuarios.reduce((map, row) => {
@@ -74,10 +90,10 @@ exports.importarEmpleadosMasivo = async (empleados) => {
     // 5) Bulk‐insert de roles
     const rolValues = empleados.map(elemento => [
       idMap[elemento.correoElectronico],
-      elemento.idRol
+      DEFAULT_ROLE_ID
     ]);
     await conn.query(
-      'INSERT INTO usuario_rol (idUsuario, idRol) VALUES ?',
+      CONSULTAS_IMPORTAR_EMPLEADOS.BULK_INSERET_ROLES,
       [rolValues]
     );
 
@@ -89,7 +105,7 @@ exports.importarEmpleadosMasivo = async (empleados) => {
       listaClientes.forEach(idCli => clienteValues.push([idU, idCli]));
     });
     await conn.query(
-      'INSERT INTO usuario_cliente (idUsuario, idCliente) VALUES ?',
+      CONSULTAS_IMPORTAR_EMPLEADOS.BULK_INSERT_USUARIO_CLIENTE,
       [clienteValues]
     );
 
@@ -104,16 +120,12 @@ exports.importarEmpleadosMasivo = async (empleados) => {
       elemento.antiguedad
     ]);
     await conn.query(
-      `INSERT INTO empleado
-         (idUsuario, idCliente, numeroEmergencia, areaTrabajo, posicion, cantidadPuntos, antiguedad)
-       VALUES ?`,
+      CONSULTAS_IMPORTAR_EMPLEADOS.BULK_INSERT_EMPLEADOS,
       [empValues]
     );
 
-    // 8) Commit
     await conn.commit();
   } catch (err) {
-    // rollback y propagar
     await conn.rollback();
     throw new Error(`Error en importación masiva: ${err.message}`);
   }
