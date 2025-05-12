@@ -1,8 +1,6 @@
-const { ACTUALIZAR } = require('./consultasPagos');
-
 module.exports = {
   OBTENER_LISTA: `
-        SELECT u.nombreCompleto, u.correoElectronico, e.*
+        SELECT u.idUsuario, u.nombreCompleto, u.correoElectronico, e.*
         FROM empleado e
         JOIN usuario u ON e.idUsuario = u.idUsuario
         WHERE e.idCliente = ?;
@@ -15,8 +13,8 @@ module.exports = {
         WHERE idEmpleado = ?;
     `,
   ACTUALIZAR: `
-        UPDATE empleado SET idEmpleado = ?, idUsuario = ?, 
-        numeroEmergencia = ?, areaTrabajo = ?, posicion = ?, 
-        cantidadPuntos = ?, antiguedad = ? WHERE idEmpleado = ?;
+        UPDATE empleado SET numeroEmergencia = ?, areaTrabajo = ?, 
+        posicion = ?, cantidadPuntos = ?, antiguedad = ? 
+        WHERE idEmpleado = ?;
   `,
 };

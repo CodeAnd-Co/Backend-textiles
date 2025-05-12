@@ -1,5 +1,3 @@
-const { ACTUALIZAR_EMPLEADO } = require('./permisos');
-
 module.exports = {
   RAIZ: '/',
   API: '/api',

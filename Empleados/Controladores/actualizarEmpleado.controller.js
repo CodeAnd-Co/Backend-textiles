@@ -10,18 +10,30 @@ const repositorio = require('@altertex/emp/repos/repositorioActualizarEmpleado')
  * sobre un empleado y usa su repositorio para hacer el cambio en la
  * base de datos.
  *
- * @function ACTUALIZAR_EMPLEADO
+ * @function actualizarEmpleado
  * @async
  * @param {Express.Request} req - Objeto de solicitud HTTP de Express.
  * @param {object} req.body - Cuerpo de la solicitud.
- * @param {Array<Object>} req.body.cambios - Lista de información a alterar.
+ * @param {object|Array<object>} req.body.cambios - Información del empleado a actualizar.
  * @param {Express.Response} res - Objecto de respuesta HTTP de Express.
  * @returns {Promise<void>} Retorna una respuesta JSON indicando éxito o un error.
  */
 exports.actualizarEmpleado = async (req, res) => {
-  const datos = req.body.cambios;
+  let datos;
 
-  if (!datos) {
+  // Si no hay cambios
+  if (req.body.id || req.body.idEmpleado) {
+    datos = [req.body];
+  } else if (req.body.cambios) {
+    // Si la información viene en el formato esperado (hay cambios)
+    datos = Array.isArray(req.body.cambios) ? req.body.cambios : [req.body.cambios]; // Asegurar que sea un array
+  } else {
+    return res
+      .status(MENSAJES.ERROR_ACTUALIZAR.codigo)
+      .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR.mensaje });
+  }
+
+  if (!datos || datos.length === 0) {
     return res
       .status(MENSAJES.ERROR_ACTUALIZAR.codigo)
       .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR.mensaje });
@@ -32,7 +44,8 @@ exports.actualizarEmpleado = async (req, res) => {
     return res
       .status(MENSAJES.EXITO_ACTUALIZAR.codigo)
       .json({ mensaje: MENSAJES.EXITO_ACTUALIZAR.mensaje, datos });
-  } catch {
+  } catch (error) {
+    console.error('Error al actualizar empleado:', error);
     return res
       .status(MENSAJES.ERROR_ACTUALIZAR.codigo)
       .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR.mensaje });
