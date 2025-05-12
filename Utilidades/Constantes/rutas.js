@@ -26,12 +26,12 @@ module.exports = {
     LEER: '/consultar-usuario',
   },
   EVENTOS: {
-    BASE: "/eventos",
-    CREAR: "/crear",
-    ELIMINAR: "/eliminar",
-    EDITAR: "/editar",
-    CONSULTAR_LISTA_EVENTOS: "/consultar-lista-eventos",
-    CONSULTAR_EVENTO: "/consultar-evento",
+    BASE: '/eventos',
+    CREAR: '/crear',
+    ELIMINAR: '/eliminar',
+    EDITAR: '/editar',
+    CONSULTAR_LISTA_EVENTOS: '/consultar-lista-eventos',
+    CONSULTAR_EVENTO: '/consultar-evento',
   },
   PRODUCTOS: {
     BASE: '/productos',
@@ -48,6 +48,8 @@ module.exports = {
     CONSULTAR_SISTEMA: '/consultar-sistema',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_CLIENTE: '/eliminar',
+    LEER: '/consultar-cliente',
+    ACTUALIZAR: `/actualizar-cliente`,
   },
   EMPLEADOS: {
     BASE: '/empleados',
@@ -55,6 +57,7 @@ module.exports = {
     CONSULTAR_GRUPO: '/consultar-grupo',
     ELIMINAR_GRUPO: '/eliminar-grupo',
     ELIMINAR_EMPLEADO: '/eliminar',
+    LEER_GRUPO: '/leer-grupo',
     CREAR_GRUPO: '/crear-grupo',
   },
   CUOTAS: {
@@ -76,6 +79,11 @@ module.exports = {
     BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_PEDIDO: '/eliminar',
+  },
+  PAGOS: {
+    BASE: '/pagos',
+    CONSULTAR_LISTA: '/consultar-lista',
+    ACTUALIZAR: '/actualizar',
   },
   API_DOCS: '/api-docs',
 };

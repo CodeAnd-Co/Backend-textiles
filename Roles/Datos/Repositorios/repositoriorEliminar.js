@@ -2,6 +2,8 @@ const correrQuery = require('@altertex/util/ser/correrQuery');
 const CONSULTAS = require('@altertex/util/const/consultasRoles');
 const MENSAJES = require('@altertex/util/const/mensajesRoles');
 
+// RF10 - Eliminar rol - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF10
+
 /**
  * Elimina uno o varios roles de la base de datos según los IDs proporcionados.
  *

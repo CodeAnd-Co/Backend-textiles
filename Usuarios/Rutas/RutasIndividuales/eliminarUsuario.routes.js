@@ -13,51 +13,53 @@ const RUTAS = require('@altertex/util/const/rutas');
 /**
  * @swagger
  * /api/usuarios/eliminar-usuarios:
- *  post:
- *    summary: Eliminar usuarios
- *   description: Elimina uno o varios usuarios de la base de datos. Requiere autenticación y permisos específicos.
- *   tags:
- *     - Usuarios
- *  security:
- *    - ApiKeyAuth: []
- *   - BearerAuth: []
- *  requestBody:
- *   required: true
- *  content:
- *   application/json:
- *    schema:
- *     type: object
- *    properties:
- *     idsUsuario:
- *      type: array
- *     items:
- *      type: integer
- *     example: [1, 2, 3]
- *  responses:
- *   204:
- *    description: Usuarios eliminados exitosamente.
- *  404:
- *   description: Usuarios no encontrados.
- *  content:
- *   application/json:
- *    schema:
- *     type: object
- *    properties:
- *   mensaje:
- *    type: string
- *   example: No se encontraron los usuarios especificados.
- *  500:
- *   description: Error interno al eliminar los usuarios.
- *  content:
- *  application/json:
- *   schema:
- *    type: object
- *  properties:
- *   mensaje:
- *    type: string
- *  example: Error al eliminar los usuarios.
+ *   delete:
+ *     summary: Eliminar usuarios
+ *     description: Elimina uno o varios usuarios de la base de datos. Requiere autenticación y permisos específicos.
+ *     tags:
+ *       - Usuarios
+ *     security:
+ *       - ApiKeyAuth: []
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               idsUsuario:
+ *                 type: array
+ *                 items:
+ *                   type: integer
+ *             example:
+ *               idsUsuario: [1, 2, 3]
+ *     responses:
+ *       204:
+ *         description: Usuarios eliminados exitosamente.
+ *       404:
+ *         description: Usuarios no encontrados.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *             example:
+ *               mensaje: No se encontraron los usuarios especificados.
+ *       500:
+ *         description: Error interno al eliminar los usuarios.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *             example:
+ *               mensaje: Error al eliminar los usuarios.
  */
-
 ruteador.post(
   RUTAS.USUARIOS.ELIMINAR_USUARIOS,
   revisarApiKey(),
