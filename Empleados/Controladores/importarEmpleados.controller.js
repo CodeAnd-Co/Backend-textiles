@@ -126,6 +126,10 @@ exports.importarEmpleados = async (req, res) => {
       errores.push({ fila, error: 'El género es demasiado largo' });
       continue;
     }
+    if (isNaN(datos.numeroEmergencia)) {
+      errores.push({ fila, error: 'El número de emergencia No es valido' });
+      continue;
+    }
 
     // Correo válido
     const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
