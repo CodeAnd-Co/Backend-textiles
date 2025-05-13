@@ -23,7 +23,6 @@ const CONSULTAS_EMPLEADOS = require('@altertex/util/const/consultasEmpleados');
  * @returns {Promise<void>} Promesa que se resuelve cuando todas las actualizaciones han sido ejecutadas.
  */
 exports.actualizarEmpleado = async (datos) => {
-  console.log('Datos a actualizar:', datos);
   if (!Array.isArray(datos) || datos.length === 0) {
     throw new Error('Sin datos para actualizar.');
   }
@@ -43,7 +42,6 @@ exports.actualizarEmpleado = async (datos) => {
       )
     );
   } catch (error) {
-    console.error('Error al actualizar empleado y usuario:', error.message);
     throw new Error(MENSAJES.ERROR_ACTUALIZAR.mensaje);
   }
 };

@@ -26,7 +26,7 @@ exports.actualizarEmpleado = async (req, res) => {
     datos = [req.body];
   } else if (req.body.cambios) {
     // Si la información viene en el formato esperado (hay cambios)
-    datos = Array.isArray(req.body.cambios) ? req.body.cambios : [req.body.cambios]; // Asegurar que sea un array
+    datos = Array.isArray(req.body.cambios) ? req.body.cambios : [req.body.cambios];
   } else {
     return res
       .status(MENSAJES.ERROR_ACTUALIZAR.codigo)
@@ -45,7 +45,6 @@ exports.actualizarEmpleado = async (req, res) => {
       .status(MENSAJES.EXITO_ACTUALIZAR.codigo)
       .json({ mensaje: MENSAJES.EXITO_ACTUALIZAR.mensaje, datos });
   } catch (error) {
-    console.error('Error al actualizar empleado:', error);
     return res
       .status(MENSAJES.ERROR_ACTUALIZAR.codigo)
       .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR.mensaje });
