@@ -73,7 +73,7 @@ exports.importarEmpleadosMasivo = async (empleados) => {
       elemento.estatus
     ]);
     await conn.query(
-      CONSULTAS_IMPORTAR_EMPLEADOS.BULK_INSERT_USUARIOS,
+      CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_USUARIO_EN_VOLUMEN,
       [usuariosValues]
     );
 
@@ -93,7 +93,7 @@ exports.importarEmpleadosMasivo = async (empleados) => {
       DEFAULT_ROLE_ID
     ]);
     await conn.query(
-      CONSULTAS_IMPORTAR_EMPLEADOS.BULK_INSERET_ROLES,
+      CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_ROLES_EN_VOLUMEN,
       [rolValues]
     );
 
@@ -105,7 +105,7 @@ exports.importarEmpleadosMasivo = async (empleados) => {
       listaClientes.forEach(idCli => clienteValues.push([idU, idCli]));
     });
     await conn.query(
-      CONSULTAS_IMPORTAR_EMPLEADOS.BULK_INSERT_USUARIO_CLIENTE,
+      CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_USUARIO_CLIENTE_EN_VOLUMEN,
       [clienteValues]
     );
 
@@ -120,7 +120,7 @@ exports.importarEmpleadosMasivo = async (empleados) => {
       elemento.antiguedad
     ]);
     await conn.query(
-      CONSULTAS_IMPORTAR_EMPLEADOS.BULK_INSERT_EMPLEADOS,
+      CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_EMPLEADOS_EN_VOLUMEN,
       [empValues]
     );
 

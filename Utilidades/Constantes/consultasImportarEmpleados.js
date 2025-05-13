@@ -6,7 +6,7 @@ module.exports = {
     VALIDAR_TELEFONO_DUPLICADO: `
         SELECT numeroTelefono FROM usuario WHERE numeroTelefono IN (?)
     `,
-    BULK_INSERT_USUARIOS:`
+    INSERTAR_USUARIO_EN_VOLUMEN:`
         INSERT INTO usuario
          (nombreCompleto, correoElectronico, contrasenia, numeroTelefono, direccion, fechaNacimiento, genero, estatus)
         VALUES ?
@@ -14,13 +14,13 @@ module.exports = {
     OBTENER_ID_GENERADOS: `
         SELECT idUsuario, correoElectronico FROM usuario WHERE correoElectronico IN (?)
     `,
-    BULK_INSERET_ROLES:`
+    INSERTAR_ROLES_EN_VOLUMEN:`
        INSERT INTO usuario_rol (idUsuario, idRol) VALUES ?
     `,
-    BULK_INSERT_USUARIO_CLIENTE:`
+    INSERTAR_USUARIO_CLIENTE_EN_VOLUMEN:`
         INSERT INTO usuario_cliente (idUsuario, idCliente) VALUES ?
     `,
-    BULK_INSERT_EMPLEADOS:`
+    INSERTAR_EMPLEADOS_EN_VOLUMEN:`
         INSERT INTO empleado
          (idUsuario, idCliente, numeroEmergencia, areaTrabajo, posicion, cantidadPuntos, antiguedad)
         VALUES ?
