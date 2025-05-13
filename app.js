@@ -55,8 +55,13 @@ app.use(RUTAS.API, rutasPedidos);
 app.use(RUTAS.API, rutasEventos);
 app.use(RUTAS.API, rutasPagos);
 
+app.get('/', async (req, res) => {
+  return res.status(200).json({ mensaje: 'Ruta por default Proyecto Text&Lines' });
+});
+
 //Configuracion de swaggerUI
 const swaggerSpec = swaggerJSDoc(opcionesSwagger);
 app.use(RUTAS.API_DOCS, swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.listen(puerto, () =>
-  console.log(`Servidor corriendo en puerto ${puerto} [${process.env.NODE_ENV}]`));
+  console.log(`Servidor corriendo en puerto ${puerto} [${process.env.NODE_ENV}]`)
+);
