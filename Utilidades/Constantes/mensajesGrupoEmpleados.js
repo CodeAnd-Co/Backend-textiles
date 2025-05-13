@@ -67,4 +67,8 @@ module.exports = {
     codigo: 400,
     mensaje: 'Algunos empleados no pertenecen al mismo cliente que el grupo.',
   },
+  ERROR_VERIFICACION_CLIENTE_SET: {
+    codigo: 400,
+    mensaje: 'Algunos sets de productos no pertenecen al cliente de este grupo.',
+  },
 };

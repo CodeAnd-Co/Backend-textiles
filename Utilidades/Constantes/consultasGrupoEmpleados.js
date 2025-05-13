@@ -62,4 +62,22 @@ module.exports = {
     WHERE e.idEmpleado IN (__EMPLEADOS__)
       AND e.idCliente = g.idCliente
   `,
+  VERIFICAR_SETS_CLIENTE: `
+  SELECT COUNT(*) AS validos
+  FROM set_producto s
+  JOIN grupo_empleado g ON g.idGrupo = ?
+  WHERE s.idSetProducto IN (__SETS__)
+    AND s.idCliente = g.idCliente
+`,
+
+  ELIMINAR_SETS_DE_GRUPO_BASE: `
+  DELETE FROM set_producto_grupo_empleado
+  WHERE idGrupo = __ID__
+    AND idSetProducto NOT IN (__SETS__);
+`,
+
+  AGREGAR_SETS_NUEVOS_BASE: `
+  INSERT IGNORE INTO set_producto_grupo_empleado (idSetProducto, idGrupo)
+  VALUES __VALORES__;
+`,
 };
