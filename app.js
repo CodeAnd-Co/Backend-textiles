@@ -56,7 +56,9 @@ app.use(RUTAS.API, rutasEventos);
 app.use(RUTAS.API, rutasPagos);
 
 app.get('/', async (req, res) => {
-  return res.status(200).json({ mensaje: 'Ruta por default Proyecto Text&Lines' });
+  return res
+    .status(200)
+    .json({ mensaje: `Ruta por default Proyecto Text&Lines en ambiente: ${process.env.NODE_ENV}` });
 });
 
 //Configuracion de swaggerUI
