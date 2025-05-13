@@ -40,4 +40,26 @@ module.exports = {
       GROUP BY ge.idGrupo
       ORDER BY ge.idGrupo;
     `,
+  ACTUALIZAR_GRUPO_EMPLEADOS_NOMBRE_DESCRIPCION: `
+    UPDATE grupo_empleado
+    SET nombre = ?, descripcion = ?
+    WHERE idGrupo = ?
+      AND (nombre != ? OR descripcion != ?);
+    `,
+  ELIMINAR_EMPLEADOS_DE_GRUPO_BASE: `
+    DELETE FROM empleado_grupo
+    WHERE idGrupo = __ID__
+      AND idEmpleado NOT IN (__EMPLEADOS__);
+  `,
+  AGREGAR_EMPLEADOS_NUEVOS_BASE: `
+    INSERT IGNORE INTO empleado_grupo (idEmpleado, idGrupo)
+    VALUES __VALORES__;
+  `,
+  VERIFICAR_EMPLEADOS_CLIENTE: `
+    SELECT COUNT(*) AS validos
+    FROM empleado e
+    JOIN grupo_empleado g ON g.idGrupo = ?
+    WHERE e.idEmpleado IN (__EMPLEADOS__)
+      AND e.idCliente = g.idCliente
+  `,
 };
