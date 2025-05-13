@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.751.0",
-    "@aws-sdk/client-s3": "^3.787.0",
+    "@aws-sdk/client-s3": "^3.808.0",
     "@aws-sdk/lib-dynamodb": "^3.751.0",
     "@aws-sdk/s3-request-presigner": "^3.787.0",
     "@aws-sdk/types": "^3.775.0",
@@ -122,6 +122,11 @@
     "@altertex/eve/datos": "Eventos/Datos/",
     "@altertex/eve/repos": "Eventos/Datos/Repositorios",
     "@altertex/eve/rutas": "Eventos/Rutas/",
-    "@altertex/eve/rutasInd": "Eventos/Rutas/RutasIndividuales"
+    "@altertex/eve/rutasInd": "Eventos/Rutas/RutasIndividuales",
+    "@altertex/pago/ctrl": "Pagos/Controladores/",
+    "@altertex/pago/datos": "Pagos/Datos",
+    "@altertex/pago/repos": "Pagos/Datos/Repositorios/",
+    "@altertex/pago/rutas": "Pagos/Rutas/",
+    "@altertex/pago/rutas/rutasInd": "Pagos/Rutas/RutasIndividuales"
   }
 }

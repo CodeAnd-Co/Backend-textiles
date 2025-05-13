@@ -1,5 +1,6 @@
 const MENSAJES = require('@altertex/util/const/mensajesRoles');
 const repositorio = require('@altertex/rol/repos/repositoriorEliminar');
+// RF10 - Eliminar rol - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF10
 
 /**
  * Controlador para eliminar un rol existente.
