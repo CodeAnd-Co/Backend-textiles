@@ -41,7 +41,7 @@ exports.actualizarEmpleado = async (datos) => {
         }
       )
     );
-  } catch (error) {
+  } catch {
     throw new Error(MENSAJES.ERROR_ACTUALIZAR.mensaje);
   }
 };

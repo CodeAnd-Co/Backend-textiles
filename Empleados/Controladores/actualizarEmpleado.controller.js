@@ -1,6 +1,5 @@
 const MENSAJES = require('@altertex/util/const/mensajesEmpleados');
 const repositorio = require('@altertex/emp/repos/repositorioActualizarEmpleado');
-
 //RF[19] Actualizar empleado - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF19]
 
 /**
@@ -44,7 +43,7 @@ exports.actualizarEmpleado = async (req, res) => {
     return res
       .status(MENSAJES.EXITO_ACTUALIZAR.codigo)
       .json({ mensaje: MENSAJES.EXITO_ACTUALIZAR.mensaje, datos });
-  } catch (error) {
+  } catch {
     return res
       .status(MENSAJES.ERROR_ACTUALIZAR.codigo)
       .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR.mensaje });
