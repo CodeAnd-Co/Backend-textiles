@@ -13,8 +13,8 @@ module.exports = {
         WHERE idEmpleado = ?;
     `,
   ACTUALIZAR: `
-        UPDATE empleado SET numeroEmergencia = ?, areaTrabajo = ?, 
-        posicion = ?, cantidadPuntos = ?, antiguedad = ? 
-        WHERE idEmpleado = ?;
+        UPDATE empleado SET 
+        numeroEmergencia = ?, areaTrabajo = ?, posicion = ?, 
+        cantidadPuntos = ?, antiguedad = ? WHERE idEmpleado = ?;
   `,
 };
