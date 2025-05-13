@@ -28,6 +28,16 @@ module.exports = {
     INSERT INTO cliente (nombreComercial, nombreFiscal)
     VALUES (?, ?)`,
 
+  CREAR_IMAGEN_CLIENTE: `
+    INSERT INTO imagen (urlImagen, tipoImagen, textoAlternativo)
+    VALUES (?, 'Logo', ?)
+  `,
+
+  VINCULAR_IMAGEN_CLIENTE: `
+  INSERT INTO imagen_cliente (idImagen, idCliente)
+  VALUES (?, ?)
+`,
+
   LEER_CLIENTE: `
         SELECT 
             c.idCliente,

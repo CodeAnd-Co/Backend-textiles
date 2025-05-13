@@ -1,5 +1,6 @@
 const repositorio = require('@altertex/cli/repos/repositorioCrearCliente');
 const MENSAJES = require('@altertex/util/const/mensajesClientes');
+const subirImagen = require('@altertex/util/ser/subirImagen')
 
 /**
  * Controlador para crear un nuevo cliente.
@@ -22,12 +23,10 @@ const MENSAJES = require('@altertex/util/const/mensajesClientes');
  * @returns {Promise<void>} - Respuesta JSON con el estado de la creación del rol.
  */
 exports.crearCliente = async (req, res) => {
-  const { nombreComercial, nombreFiscal, imagen } = req.body;
+  const { nombreComercial, nombreFiscal } = req.body;
 
   console.log("Body: ", req.body)
-  console.log(nombreComercial, nombreFiscal, imagen)
-  
-  const ubiImagen = "/";
+  console.log(nombreComercial, nombreFiscal)
 
   // Validación del nombre comercial del cliente
   if (!nombreComercial || typeof nombreComercial !== 'string') {
@@ -43,28 +42,40 @@ exports.crearCliente = async (req, res) => {
   try {
     // Verificar si ya existe un cliente con ese nombre comercial
     const existeComercial = await repositorio.verificarNombreComercial(nombreComercial);
-    console.log("Existe comercial: ", existeComercial);
     if (existeComercial) {
       return res.status(400).json({ mensaje: MENSAJES.CLIENTE_COMERCIAL_EXISTENTE });
     }
 
     // Verificar si ya existe un cliente con ese nombre comercial
     const existeFiscal = await repositorio.verificarNombreFiscal(nombreFiscal);
-    console.log("Existe fiscal: ", existeFiscal);
     if (existeFiscal) {
       return res.status(400).json({ mensaje: MENSAJES.CLIENTE_FISCAL_EXISTENTE });
     }
 
+    //Subir Imagen
+    console.log('subiendo imagen: ', req.file)
+    imagen = await subirImagen(req.file, 'clientes')
+    console.log("imagen: ", imagen)
+
+
     // Crear el cliente
-    const resultado = await repositorio.crearCliente(nombreComercial, nombreFiscal, imagen);
-    console.log("resultado: ", resultado)
-    if (resultado.insertId) {
+    const resultadoCliente = await repositorio.crearCliente(nombreComercial, nombreFiscal);
+    const resultadoImagen = await repositorio.crearImagenCliente(nombreComercial, imagen.split('/')[1]);
+    const resultado = await repositorio.vincularImagenCliente(resultadoImagen.insertId, resultadoCliente.insertId);
+
+    console.log("resultado de todo:", resultado);
+
+    if (resultadoCliente.insertId && resultadoImagen.insertId && resultado.affectedRows == 1) {
       return res.status(201).json({ mensaje: MENSAJES.CLIENTE_CREADO });
     } else {
       return res.status(500).json({ mensaje: MENSAJES.ERROR_CREACION });
     }
+
   } catch (error) {
     console.error('Error en crearCliente:', error);
     return res.status(500).json({ mensaje: MENSAJES.ERROR_CREACION });
   }
+
+    
+
 };

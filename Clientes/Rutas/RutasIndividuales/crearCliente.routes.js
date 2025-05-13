@@ -47,18 +47,25 @@ const autorizarToken = require("@altertex/util/inter/autorizarToken");
 const verificarPermisos = require("@altertex/util/inter/verificarPermisos");
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const validarYSanitizarImagen = require('@altertex/util/inter/validarYSanitizarImagen');
+// const subirImagen = require('../../../Utilidades/Servicios/subirImagen2')
 
-const PERMISOS = require("@altertex/util/const/permisos");
-const RUTAS = require("@altertex/util/const/rutas");
+const PERMISOS = require('@altertex/util/const/permisos');
+const RUTAS = require('@altertex/util/const/rutas');
+const multer = require('multer');
+
+const upload = multer();
+
 
 ruteador.post(
   RUTAS.CLIENTES.CREAR_CLIENTE,
+  upload.single('imagen'),
   validarYSanitizar,
-  validarYSanitizarImagen({ campoImagen: 'imagen' }),
+  validarYSanitizarImagen(),
   revisarApiKey(),
   autorizarToken,
   verificarPermisos(PERMISOS.CREAR_CLIENTE),
-  controlador.crearCliente
+  // subirImagen,
+  controlador.crearCliente,
 );
 
 module.exports = ruteador;
