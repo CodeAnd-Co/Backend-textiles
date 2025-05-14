@@ -34,7 +34,7 @@ jobs:
             git checkout main &&
             git pull origin main &&
             npm install &&
-            pm2 reload ecosystem.config.js --only $PM2_PROCESS
+            pm2 reload ecosystem-production.config.js --only $PM2_PROCESS
           "
 
   deploy-staging:
@@ -64,5 +64,5 @@ jobs:
             git checkout staging &&
             git pull origin staging &&
             npm install &&
-            pm2 reload ecosystem.config.js --only $PM2_PROCESS
+            pm2 reload ecosystem-staging.config.js --only $PM2_PROCESS
           "
