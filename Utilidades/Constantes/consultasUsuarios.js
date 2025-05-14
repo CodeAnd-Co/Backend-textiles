@@ -87,6 +87,15 @@ module.exports = {
     DELETE FROM usuario
     WHERE idUsuario = (?);
   `,
+  VALIDAR_CORREO: `
+    SELECT idUsuario
+    FROM usuario
+    WHERE correoElectronico = ?;
+  `,
+  VALIDAR_TELEFONO: `
+    SELECT idUsuario
+    FROM usuario
+    WHERE numeroTelefono = ?;`,
 
   OBTENER_EMPLEADOS_POR_USUARIOS: `
     SELECT idEmpleado
