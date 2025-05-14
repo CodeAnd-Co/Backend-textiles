@@ -1,32 +1,32 @@
-const AWS = require("aws-sdk");
+// Importaciones específicas del AWS SDK v3
+const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 
-AWS.config.update({
-  signatureVersion: "v4",
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+// Crear una instancia del cliente de S3
+const s3 = new S3Client({
   region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
 });
-
-const s3 = new AWS.S3();
 
 /**
  * Elimina una imagen de Amazon S3.
  * @param {string} folder - Carpeta dentro del bucket (ej. "productos/").
  * @param {string} filename - Nombre del archivo a eliminar.
  */
-const eliminarImagenS3 = (folder, filename) => {
+const eliminarImagenS3 = async (folder, filename) => {
   const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
     Key: `${folder}${filename}`,
   };
 
-  s3.deleteObject(params, (err) => {
-    if (err) {
-      // console.error("Error eliminando imagen de S3:", err);
-    } else {
-      // console.log("Imagen eliminada de S3:", filename);
-    }
-  });
+  try {
+    await s3.send(new DeleteObjectCommand(params));
+    // Imagen eliminada exitosamente (sin logs para consola limpia)
+  } catch (error) {
+    // Error al eliminar imagen (sin logs para consola limpia)
+  }
 };
 
 module.exports = eliminarImagenS3;
