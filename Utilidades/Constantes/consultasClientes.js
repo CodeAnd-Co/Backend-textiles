@@ -16,4 +16,55 @@ module.exports = {
         DELETE FROM cliente
         WHERE idCliente = ?;
   `,
+  LEER_CLIENTE: `
+        SELECT 
+            c.idCliente,
+            c.nombreComercial,
+            c.nombreFiscal,
+            (
+                SELECT COUNT(*) 
+                FROM empleado e 
+                WHERE e.idCliente = c.idCliente
+            ) AS numeroEmpleados,
+            (
+                SELECT COUNT(*) 
+                FROM usuario_cliente uc 
+                WHERE uc.idCliente = c.idCliente
+            ) AS usuariosAsignados,
+            i.urlImagen  
+        FROM 
+            cliente c
+        LEFT JOIN 
+            imagen_cliente ic ON c.idCliente = ic.idCliente
+        LEFT JOIN 
+            imagen i ON ic.idImagen = i.idImagen AND i.tipoImagen = "Logo"
+        WHERE 
+            c.idCliente = ?;
+    `,
+
+  // QUERIES ACTUALIZAR
+  ACTUALIZAR_NOMBRE_FISCAL: `
+        UPDATE cliente
+        SET nombreFiscal = ?
+        WHERE idCliente = ?;
+    `,
+  ACTUALIZAR_NOMBRE_COMERCIAL: `
+        UPDATE cliente
+        SET nombreComercial = ?
+        WHERE idCliente = ?;
+    `,
+  ACTUALIZAR_AMBOS_NOMBRES: `
+        UPDATE cliente
+        SET nombreComercial = ?,
+            nombreFiscal = ?
+        WHERE idCliente = ?;
+    `,
+
+  // OBTENER EL NOMBRE DE LA IMAGEN
+  OBTENER_NOMBRE_IMAGEN: `
+        SELECT i.urlImagen
+        FROM imagen i
+        JOIN imagen_cliente ic ON i.idImagen = ic.idImagen
+        WHERE ic.idCliente = ?;
+    `,
 };

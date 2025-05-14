@@ -1,9 +1,9 @@
-const express = require("express");
+const express = require('express');
 const ruteador = express.Router();
-const controlador = require("@altertex/aut/ctrl/cerrarSesion.controller");
-const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
+const controlador = require('@altertex/aut/ctrl/cerrarSesion.controller');
+const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 
-const RUTAS = require("@altertex/util/const/rutas");
+const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * RF78 - Iniciar Sesion - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF78
@@ -11,7 +11,7 @@ const RUTAS = require("@altertex/util/const/rutas");
 
 /**
  * @swagger
- * /autenticacion/cerrar-sesion:
+ * /api/autenticacion/cerrar-sesion:
  *   post:
  *     summary: Cierra la sesión del usuario actual eliminando la cookie con el token.
  *     tags:
@@ -51,10 +51,6 @@ const RUTAS = require("@altertex/util/const/rutas");
  *                   example: Error en el servidor al cerrar sesión.
  */
 
-ruteador.post(
-  RUTAS.AUTENTICACION.CERRAR_SESION,
-  revisarApiKey(),
-  controlador.cerrarSesion
-);
+ruteador.post(RUTAS.AUTENTICACION.CERRAR_SESION, revisarApiKey(), controlador.cerrarSesion);
 
 module.exports = ruteador;

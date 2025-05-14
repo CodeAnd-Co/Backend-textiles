@@ -12,7 +12,7 @@ const RUTAS = require('@altertex/util/const/rutas');
 /**
  * @swagger
  * /api/eventos/eliminar:
- *   post:
+ *   delete:
  *     summary: Eliminar un evento
  *     tags: [Eventos]
  *     security:

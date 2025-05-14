@@ -14,7 +14,7 @@ const RUTAS = require('@altertex/util/const/rutas');
 /**
  * @swagger
  * /api/cuotas/eliminar-set-cuotas:
- *   post:
+ *   delete:
  *     summary: Elimina uno o varios sets de cuotas
  *     description: Este endpoint permite eliminar múltiples sets de cuotas dados sus IDs.
  *     tags: [Cuotas]

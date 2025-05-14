@@ -1,13 +1,13 @@
-const express = require("express");
+const express = require('express');
 const ruteador = express.Router();
-const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
-const autorizarToken = require("@altertex/util/inter/autorizarToken");
+const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
+const autorizarToken = require('@altertex/util/inter/autorizarToken');
 
-const RUTAS = require("@altertex/util/const/rutas");
+const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * @swagger
- * /autenticacion/usuario-autenticado:
+ * /api/autenticacion/usuario-autenticado:
  *   get:
  *     summary: Obtiene los datos del usuario autenticado mediante un token JWT.
  *     tags:
