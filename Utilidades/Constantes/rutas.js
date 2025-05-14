@@ -57,6 +57,7 @@ module.exports = {
     CONSULTAR_GRUPO: '/consultar-grupo',
     ELIMINAR_GRUPO: '/eliminar-grupo',
     ELIMINAR_EMPLEADO: '/eliminar',
+    IMPORTAR_EMPLEADOS: '/importar-empleados',
     LEER_GRUPO: '/leer-grupo',
     ACTUALIZAR: '/actualizar',
   },
