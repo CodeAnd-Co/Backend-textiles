@@ -40,7 +40,9 @@ exports.eliminarCliente = async (req, res) => {
       if (resultadoImagen.length > 0 && resultadoImagen[0].urlImagen) {
         nombreImagen = extraerNombreArchivoS3(resultadoImagen[0].urlImagen);
       }
-    } catch (_) {}
+    } catch {
+      // console.error('Error al obtener nombre de imagen:', error);
+    }
 
     // Eliminar cliente
     const resultado = await repositorio.eliminarClientePorId(idCliente);
