@@ -18,11 +18,10 @@ module.exports = {
         areaTrabajo, posicion, cantidadPuntos, antiguedad
       )
       VALUES (?, ?, ?, ?, ?, ?, ?)
-     
     `,
   ACTUALIZAR: `
         UPDATE empleado SET 
         numeroEmergencia = ?, areaTrabajo = ?, posicion = ?, 
         cantidadPuntos = ?, antiguedad = ? WHERE idEmpleado = ?;
-  `,
+    `,
 };
