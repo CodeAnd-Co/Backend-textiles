@@ -23,9 +23,11 @@ const eliminarImagenS3 = async (folder, filename) => {
 
   try {
     await s3.send(new DeleteObjectCommand(params));
-    // Imagen eliminada exitosamente (sin logs para consola limpia)
-  } catch (error) {
-    // Error al eliminar imagen (sin logs para consola limpia)
+    // console.log(`Imagen eliminada: ${folder}${filename}`);
+    // Imagen eliminada exitosamente 
+  } catch {
+    // console.error(`Error al eliminar la imagen: ${folder}${filename}`);
+    // Error al eliminar imagen 
   }
 };
 
