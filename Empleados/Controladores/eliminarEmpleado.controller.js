@@ -34,8 +34,8 @@ exports.eliminarEmpleado = async (req, res) => {
           if (resultado.affectedRows === 0) {
             // console.log(`Empleado con ID ${id} eliminado`);
           }
-        } catch (error) {
-          console.error(`Error al eliminar empleado con ID ${id}:`, error.message);
+        } catch {
+          // console.error(`Error al eliminar empleado con ID ${id}:`, error.message);
         }
       })
     );
