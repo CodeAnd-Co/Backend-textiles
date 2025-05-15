@@ -23,14 +23,11 @@ const subirImagen = require('@altertex/util/ser/subirImagen');
  * @returns {Promise<void>} - Respuesta JSON con el estado de la creación del rol.
  */
 exports.crearCliente = async (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
   const { nombreComercial, nombreFiscal } = req.body;
   const imagen = req.file;
 
   // Validación del nombre comercial del cliente
   if (!nombreComercial || typeof nombreComercial !== 'string') {
-    console.log('nombre comercial faltante');
     return res.status(400).json({ mensaje: MENSAJES.CAMPO_OBLIGATORIO });
   }
 
@@ -53,12 +50,9 @@ exports.crearCliente = async (req, res) => {
     }
 
     //Subir Imagen
-    console.log('imagen');
-    console.log('imagen: ', req.file);
+
     if (req.file) {
-      console.log('subiendo imagen: ', req.file);
       imagen = await subirImagen(req.file, 'clientes');
-      console.log('imagen: ', imagen);
     }
 
     // Crear el cliente

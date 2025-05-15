@@ -1,4 +1,3 @@
-const db = require('@altertex/util/bd/db');
 const QUERY = require('@altertex/util/const/consultasClientes');
 const correrQuery = require('@altertex/util/ser/correrQuery');
 

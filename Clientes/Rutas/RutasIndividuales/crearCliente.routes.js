@@ -54,12 +54,7 @@ const RUTAS = require('@altertex/util/const/rutas');
 
 // Configuración de multer para manejar archivos en memoria
 const storage = multer.memoryStorage();
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 5 * 1024 * 1024, // límite de 5MB
-  },
-});
+const upload = multer({ storage });
 
 ruteador.post(
   RUTAS.CLIENTES.CREAR_CLIENTE,
