@@ -17,6 +17,7 @@ const rutasAutenticacion = require('@altertex/aut/rutas/indexAutenticacion.route
 const rutasUsuarios = require('@altertex/usu/rutas/indexUsuarios.routes');
 const rutasCategorias = require('@altertex/cat/rutas/indexCategorias.routes');
 const rutasProductos = require('@altertex/pro/rutas/indexProductos.routes');
+const rutasProveedores = require('@altertex/prove/rutas/indexProveedores.routes');
 const rutasSetsProductos = require('@altertex/setspro/rutas/indexSetsProductos.routes');
 const rutasEmpleados = require('@altertex/emp/rutas/indexEmpleados.routes');
 const rutasClientes = require('@altertex/cli/rutas/indexClientes.routes');
@@ -45,6 +46,7 @@ cronCuotas.start();
 app.use(RUTAS.API, rutasAutenticacion);
 app.use(RUTAS.API, rutasUsuarios);
 app.use(RUTAS.API, rutasProductos);
+app.use(RUTAS.API, rutasProveedores);
 app.use(RUTAS.API, rutasSetsProductos);
 app.use(RUTAS.API, rutasEmpleados);
 app.use(RUTAS.API, rutasClientes);

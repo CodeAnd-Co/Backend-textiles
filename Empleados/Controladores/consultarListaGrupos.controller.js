@@ -33,12 +33,6 @@ exports.consultarLista = async (req, res) => {
   try {
     const resultados = await repositorio.obtenerGrupoDeEmpleados(idCliente);
 
-    if (!resultados || resultados.length === 0) {
-      return res
-        .status(MENSAJES_GRUPO_EMPLEADOS.SIN_RESULTADOS.codigo)
-        .json({ mensaje: MENSAJES_GRUPO_EMPLEADOS.SIN_RESULTADOS.mensaje });
-    }
-
     return res.status(MENSAJES_GRUPO_EMPLEADOS.CONSULTA_EXITOSA.codigo).json({
       mensaje: MENSAJES_GRUPO_EMPLEADOS.CONSULTA_EXITOSA.mensaje,
       grupoEmpleados: resultados,
