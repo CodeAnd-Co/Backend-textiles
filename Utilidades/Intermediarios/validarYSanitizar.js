@@ -14,18 +14,30 @@ const patronSQL = /(\b(SELECT|INSERT|DELETE|UPDATE|DROP|UNION|--|;|'|"|`)\b|\bOR
  *
  * @returns {void}
  */
+
+function contieneInyeccionSQL(obj) {
+  if (typeof obj === 'string'){
+    return patronSQL.test(obj);
+  } else if (Array.isArray(obj)) {
+    return obj.some(contieneInyeccionSQL);
+  } else if (typeof obj === 'object' && obj !== null) {
+    return Object.values(obj).some(contieneInyeccionSQL);
+  }
+  return false;
+}
+
+
 function validarInyeccionSQL(req, res, next) {
   const cuerpo = req.body;
+  console.log('validando y sanitizando');
 
-  for (const valor of Object.values(cuerpo)) {
-    if (typeof valor === 'string' && patronSQL.test(valor)) {
+    if (contieneInyeccionSQL(cuerpo)) {
       return res.status(400).json({
         mensaje: 'Entrada sospechosa detectada, por favor intente de nuevo.',
       });
     }
-  }
-
   next();
 }
 
 module.exports = validarInyeccionSQL;
+

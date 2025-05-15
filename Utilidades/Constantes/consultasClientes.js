@@ -32,6 +32,12 @@ module.exports = {
     INSERT INTO imagen (urlImagen, tipoImagen, textoAlternativo)
     VALUES (?, 'Logo', ?)
   `,
+  VINCULAR_USUARIO_CLIENTE: `
+    INSERT INTO usuario_cliente (idUsuario, idCliente)
+    SELECT idUsuario, ?
+    FROM usuario_rol
+    WHERE idRol = 1;
+  `,
 
   VINCULAR_IMAGEN_CLIENTE: `
   INSERT INTO imagen_cliente (idImagen, idCliente)
