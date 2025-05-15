@@ -30,11 +30,11 @@ exports.crearGrupoEmpleados = async (req, res) => {
 
   // Validación de campos requeridos
   if (
-    !nombreGrupo ||
-    !descripcion ||
-    !idCliente ||
-    !Array.isArray(listaEmpleados) ||
-    listaEmpleados.length === 0
+    !nombreGrupo
+    || !descripcion
+    || !idCliente
+    || !Array.isArray(listaEmpleados)
+    || listaEmpleados.length === 0
   ) {
     return res.status(400).json({
       mensaje: MENSAJES.DATOS_INCOMPLETOS.mensaje,
