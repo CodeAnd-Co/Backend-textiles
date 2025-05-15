@@ -1,5 +1,5 @@
-const db = require("@altertex/util/bd/db");
-const QUERY = require("@altertex/util/const/consultasRoles");
+const db = require('@altertex/util/bd/db');
+const QUERY = require('@altertex/util/const/consultasRoles');
 
 /**
  * Verifica si un rol con el nombre especificado ya existe en la base de datos.
@@ -68,6 +68,6 @@ exports.asociarPermisosARol = async (idRol, permisos) => {
     await conexion.commit();
   } catch {
     await conexion.rollback();
-    throw new Error("Error asociando permisos al rol");
+    throw new Error('Error asociando permisos al rol');
   }
 };
