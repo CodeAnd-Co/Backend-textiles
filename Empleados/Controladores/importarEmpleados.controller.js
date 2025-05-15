@@ -175,13 +175,13 @@ exports.importarEmpleados = async (req, res) => {
       errores
     });
   }
-  
-  for (const empleado of empleados) {
+
+  for (const empleado of listaParaImportar) {
     empleado.idCliente = idCliente;
   }
 
   try {
-    await repositorio.importarEmpleadosMasivo(empleados);
+    await repositorio.importarEmpleadosMasivo(listaParaImportar);
   } catch (error) {
     errores.push({
       fila: "N/A",
