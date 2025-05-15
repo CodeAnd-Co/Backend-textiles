@@ -21,10 +21,6 @@ exports.obtenerGrupoDeEmpleados = async (idCliente) => {
   try {
     const gruposDeEmpleados = await correrQuery(query, [idCliente]);
 
-    if (!gruposDeEmpleados || gruposDeEmpleados.length === 0) {
-      throw new Error('No hay grupos de empleados');
-    }
-
     return gruposDeEmpleados;
   } catch (error) {
     console.error('Error al obtener el grupo de empleados:', error);
