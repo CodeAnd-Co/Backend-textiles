@@ -36,11 +36,19 @@ module.exports = {
   PRODUCTOS: {
     BASE: '/productos',
     CONSULTAR_LISTA: '/consultar-lista',
+    CREAR: '/crear',
     ELIMINAR_PRODUCTO: '/eliminar',
+  },
+  PROVEEDORES: {
+    BASE: '/proveedores',
+    CONSULTAR_LISTA: '/consultar-lista',
+    CREAR: '/crear',
   },
   SETS_PRODUCTOS: {
     BASE: '/sets-productos',
     CONSULTAR_LISTA: '/consultar-lista',
+    CREAR: '/crear',
+    SUBIR_IMAGEN: '/subir-imagen',
     ELIMINAR_SET_PRODUCTOS: '/eliminar',
   },
   CLIENTES: {
@@ -57,6 +65,7 @@ module.exports = {
     CONSULTAR_GRUPO: '/consultar-grupo',
     ELIMINAR_GRUPO: '/eliminar-grupo',
     ELIMINAR_EMPLEADO: '/eliminar',
+    IMPORTAR_EMPLEADOS: '/importar-empleados',
     LEER_GRUPO: '/leer-grupo',
   },
   CUOTAS: {

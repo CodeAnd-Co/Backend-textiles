@@ -11,5 +11,12 @@ module.exports = {
   ELIMINAR_EMPLEADO: `
         DELETE FROM empleado
         WHERE idEmpleado = ?;
-    `,  
+    `,
+  INSERTAR_EMPLEADO:`
+      INSERT INTO empleado (
+        idUsuario, idCliente, numeroEmergencia,
+        areaTrabajo, posicion, cantidadPuntos, antiguedad
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `  
 };
