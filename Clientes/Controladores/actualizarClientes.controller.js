@@ -25,6 +25,7 @@ const repositorio = require('@altertex/cli/repos/repositorioActualizarCliente');
 exports.actualizarClientes = async (req, res) => {
   const datosActualizacion = req.body;
   const imagenActualizacion = req.file;
+  console.log('datosActualizacion: ', imagenActualizacion);
 
   if (!datosActualizacion.idCliente) {
     return res

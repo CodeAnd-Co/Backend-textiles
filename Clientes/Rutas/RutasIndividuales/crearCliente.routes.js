@@ -39,22 +39,27 @@
  *         description: Error interno al crear el cliente
  */
 
-const express = require("express");
+const express = require('express');
 const ruteador = express.Router();
-const controlador = require("@altertex/cli/ctrl/crearCliente.controller");
-const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
-const autorizarToken = require("@altertex/util/inter/autorizarToken");
-const verificarPermisos = require("@altertex/util/inter/verificarPermisos");
+const multer = require('multer');
+const controlador = require('@altertex/cli/ctrl/crearCliente.controller');
+const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
+const autorizarToken = require('@altertex/util/inter/autorizarToken');
+const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const validarYSanitizarImagen = require('@altertex/util/inter/validarYSanitizarImagen');
-// const subirImagen = require('../../../Utilidades/Servicios/subirImagen2')
 
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
-const multer = require('multer');
 
-const upload = multer();
-
+// Configuración de multer para manejar archivos en memoria
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // límite de 5MB
+  },
+});
 
 ruteador.post(
   RUTAS.CLIENTES.CREAR_CLIENTE,
@@ -64,8 +69,7 @@ ruteador.post(
   revisarApiKey(),
   autorizarToken,
   verificarPermisos(PERMISOS.CREAR_CLIENTE),
-  // subirImagen,
-  controlador.crearCliente,
+  controlador.crearCliente
 );
 
 module.exports = ruteador;
