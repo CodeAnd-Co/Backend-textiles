@@ -8,6 +8,7 @@ const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
+const validarYSanitizar = require("@altertex/util/inter/validarYSanitizar");
 
 /**
  * @swagger
@@ -159,6 +160,7 @@ ruteador.post(
   RUTAS.EMPLEADOS.IMPORTAR_EMPLEADOS,
   revisarApiKey(),
   autorizarToken,
+  validarYSanitizar,
   verificarPermisos(PERMISOS.IMPORTAR_EMPLEADOS),
   controlador.importarEmpleados
 );

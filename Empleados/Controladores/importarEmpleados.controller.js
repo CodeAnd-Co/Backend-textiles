@@ -41,6 +41,7 @@ const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
  *
  */
 exports.importarEmpleados = async (req, res) => {
+  const idCliente = parseInt(req.user.clienteSeleccionado);
   const empleados = req.body;
   
   if (!Array.isArray(empleados) || empleados.length === 0) {
@@ -99,8 +100,8 @@ exports.importarEmpleados = async (req, res) => {
       continue;
     }
 
-    if (!datos.idCliente) {
-      errores.push({ fila, error: 'El cliente es requerido' });
+    if (typeof datos.idCliente !== 'undefined' && datos.idCliente !== '' && datos.idCliente !== null) {
+      errores.push({ fila, error: 'El cliente no debe ser incluido en el archivo' });
       continue;
     }
 
@@ -175,8 +176,12 @@ exports.importarEmpleados = async (req, res) => {
     });
   }
 
+  for (const empleado of listaParaImportar) {
+    empleado.idCliente = idCliente;
+  }
+
   try {
-    await repositorio.importarEmpleadosMasivo(empleados);
+    await repositorio.importarEmpleadosMasivo(listaParaImportar);
   } catch (error) {
     errores.push({
       fila: "N/A",
