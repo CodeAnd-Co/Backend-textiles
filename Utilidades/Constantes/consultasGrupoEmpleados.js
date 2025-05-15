@@ -1,15 +1,14 @@
 module.exports = {
   OBTENER_LISTA: `
-      SELECT ge.idGrupo, ge.nombre AS geNombre, ge.descripcion,
-      sp.idSetProducto, sp.nombre AS spNombre, 
-      COUNT(e.idEmpleado) as totalEmpleados
-      FROM empleado e
-      JOIN empleado_grupo eg ON e.idEmpleado = eg.idEmpleado
-      JOIN grupo_empleado ge ON eg.idGrupo = ge.idGrupo
-      JOIN set_producto_grupo_empleado spge ON ge.idGrupo = spge.idGrupo
-      JOIN set_producto sp ON spge.idSetProducto = sp.idSetProducto
+      SELECT 
+        ge.idGrupo, 
+        ge.nombre AS geNombre, 
+        ge.descripcion,
+        COUNT(eg.idEmpleado) AS totalEmpleados
+      FROM grupo_empleado ge
+      LEFT JOIN empleado_grupo eg ON ge.idGrupo = eg.idGrupo
       WHERE ge.idCliente = ?
-      GROUP BY ge.idGrupo, sp.idSetProducto;
+      GROUP BY ge.idGrupo;
     `,
   ELIMINAR_SET_PRODUCTO_GRUPO: `
     DELETE FROM set_producto_grupo_empleado WHERE idGrupo = ?;
@@ -25,18 +24,18 @@ module.exports = {
           ge.idGrupo,
           ge.nombre AS nombre,
           ge.descripcion AS descripcion,
-          GROUP_CONCAT(DISTINCT sp.nombre SEPARATOR ', ') AS setsProductos,
-          GROUP_CONCAT(DISTINCT CONCAT(
+          IFNULL(GROUP_CONCAT(DISTINCT sp.nombre SEPARATOR ', '), 'Sin sets de productos asociados') AS setsProductos,
+          IFNULL(GROUP_CONCAT(DISTINCT CONCAT(
               u.nombreCompleto, ' | ',
               u.correoElectronico, ' | ',
               e.areaTrabajo
-          ) SEPARATOR ' || ') AS infoEmpleados
-      FROM empleado e
-      JOIN usuario u ON e.idUsuario = u.idUsuario
-      JOIN empleado_grupo eg ON e.idEmpleado = eg.idEmpleado
-      JOIN grupo_empleado ge ON eg.idGrupo = ge.idGrupo
-      JOIN set_producto_grupo_empleado spge ON ge.idGrupo = spge.idGrupo
-      JOIN set_producto sp ON spge.idSetProducto = sp.idSetProducto
+          ) SEPARATOR ' || '), 'Sin empleados asociados') AS infoEmpleados
+      FROM grupo_empleado ge
+      LEFT JOIN empleado_grupo eg ON ge.idGrupo = eg.idGrupo
+      LEFT JOIN empleado e ON eg.idEmpleado = e.idEmpleado
+      LEFT JOIN usuario u ON e.idUsuario = u.idUsuario
+      LEFT JOIN set_producto_grupo_empleado spge ON ge.idGrupo = spge.idGrupo
+      LEFT JOIN set_producto sp ON spge.idSetProducto = sp.idSetProducto
       WHERE ge.idGrupo = ?
       GROUP BY ge.idGrupo
       ORDER BY ge.idGrupo;
