@@ -45,7 +45,7 @@ module.exports = {
     SELECT 1 FROM grupo_empleado 
     WHERE idCliente = ? AND nombre = ? LIMIT 1
   `,
-    CREAR_GRUPO: `
+  CREAR_GRUPO: `
     INSERT INTO grupo_empleado (idCliente, nombre, descripcion) VALUES (?, ?, ?);
   `,
   ASIGNAR_EMPLEADO_A_GRUPO: `

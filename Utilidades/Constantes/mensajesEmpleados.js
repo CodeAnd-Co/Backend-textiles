@@ -67,7 +67,7 @@ module.exports = {
   },
 
   GRUPO_NOMBRE_REPETIDO: {
-  codigo: 'GRUPO_NOMBRE_REPETIDO',
-  mensaje: 'Ya existe un grupo con ese nombre.',
+    codigo: 'GRUPO_NOMBRE_REPETIDO',
+    mensaje: 'Ya existe un grupo con ese nombre.',
   },
 };

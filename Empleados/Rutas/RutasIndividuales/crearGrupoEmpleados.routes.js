@@ -1,5 +1,4 @@
-// RF21 - Crear Grupo de Empleados
-// https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF21
+// RF21 - Crear Grupo de Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF21
 
 /**
  * @file crearGrupoEmpleados.routes.js
@@ -8,12 +7,9 @@
  * Aplica middlewares de validación, autenticación y autorización antes de delegar al controlador.
  */
 
-// Importaciones
 const express = require('express');
 const ruteador = express.Router();
-
 const controlador = require('@altertex/emp/ctrl/crearGrupoEmpleados.controller');
-
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');

@@ -1,6 +1,4 @@
-//RF21 - Crear Grupo de Empleados
-// https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF21
-
+//RF21 - Crear Grupo de Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF21
 /**
  * @file crearGrupoEmpleados.controller.js
  * @description
@@ -63,7 +61,6 @@ exports.crearGrupoEmpleados = async (req, res) => {
       idGrupo: resultado.idGrupo,
     });
   } catch (error) {
-    console.error('Error al crear grupo de empleados:', error);
     return res.status(500).json({
       mensaje: MENSAJES.ERROR_CREAR_GRUPO.mensaje,
     });

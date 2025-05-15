@@ -1,7 +1,4 @@
-// RF21 - Crear Grupo de Empleados
-// Documentación del requerimiento funcional:
-// https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF21
-
+// RF21 - Crear Grupo de Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF21
 /**
  * @file crearGrupoEmpleados.repositorio.js
  * @description
