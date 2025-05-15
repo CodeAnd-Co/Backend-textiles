@@ -40,12 +40,10 @@ exports.eliminarSetCuotas = async (idSetCuotas) => {
       resultadoProductosSetCuotas,
       resultadoSetCuotas,
     };
-  } catch (error) {
+  } catch {
     if (conexion) await conexion.rollback();
-    console.error('Error durante la transacción de eliminarSetCuotas:', error.message);
     throw new Error('Error eliminando set de cuotas');
   }
 };
-
 
 //Errores Npm Run Lint

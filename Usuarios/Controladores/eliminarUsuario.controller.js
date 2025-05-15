@@ -44,8 +44,7 @@ exports.eliminarUsuario = async (req, res) => {
     return res.status(200).json({
       mensaje: 'Usuarios eliminados correctamente.',
     });
-  } catch (error) {
-    console.error('Error al eliminar usuario(s):', error); // Ahora se usa 'error'
+  } catch {
     return res.status(MENSAJES_USUARIOS.ERROR_ELIMINAR_USUARIO.codigo).json({
       mensaje: MENSAJES_USUARIOS.ERROR_ELIMINAR_USUARIO.mensaje,
     });

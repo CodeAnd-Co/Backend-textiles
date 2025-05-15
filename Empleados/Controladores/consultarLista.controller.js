@@ -43,8 +43,7 @@ exports.consultarLista = async (req, res) => {
       mensaje: MENSAJES_EMPLEADOS.CONSULTA_EXITOSA.mensaje,
       empleados: resultados,
     });
-  } catch (error) {
-    console.error('Error al consultar grupo de empleados:', error);
+  } catch {
     return res.status(MENSAJES_EMPLEADOS.ERROR_CONSULTAR_EMPLEADOS.codigo).json({
       mensaje: MENSAJES_EMPLEADOS.ERROR_CONSULTAR_EMPLEADOS.mensaje,
     });

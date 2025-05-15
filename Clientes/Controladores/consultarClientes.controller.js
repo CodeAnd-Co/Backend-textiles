@@ -72,7 +72,6 @@ exports.consultarLista = async (req, res) => {
       clientes: listaClientesConImagen,
     });
   } catch (error) {
-    console.error('Error al consultar lista de clientes:', error);
     return res.status(MENSAJES_CLIENTES.ERROR_CONSULTAR_LISTA_CLIENTES.codigo).json({
       mensaje: MENSAJES_CLIENTES.ERROR_CONSULTAR_LISTA_CLIENTES.mensaje,
       error: error.message,

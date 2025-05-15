@@ -26,8 +26,7 @@ exports.obtenerGrupoDeEmpleados = async (idCliente) => {
     }
 
     return gruposDeEmpleados;
-  } catch (error) {
-    console.error('Error al obtener el grupo de empleados:', error);
+  } catch {
     return [];
   }
 };

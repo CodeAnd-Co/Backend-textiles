@@ -44,8 +44,7 @@ exports.consultarLista = async (req, res) => {
       mensaje: MENSAJES_SETS_PRODUCTOS.CONSULTA_EXITOSA.mensaje,
       setsProductos: resultados,
     });
-  } catch (error) {
-    console.error('Error al consultar sets de productos:', error);
+  } catch {
     return res
       .status(MENSAJES_SETS_PRODUCTOS.ERROR_CONSULTAR_SETS_PRODUCTOS.codigo)
       .json({ mensaje: MENSAJES_SETS_PRODUCTOS.ERROR_CONSULTAR_SETS_PRODUCTOS.mensaje });

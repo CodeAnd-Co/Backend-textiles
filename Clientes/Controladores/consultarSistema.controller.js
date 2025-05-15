@@ -71,8 +71,7 @@ exports.consultarSistema = async (req, res) => {
     return res.status(MENSAJES_CLIENTES.CONSULTA_EXITOSA.codigo).json({
       mensaje: MENSAJES_CLIENTES.CONSULTA_EXITOSA.mensaje,
     });
-  } catch (error) {
-    console.error('Error al consultar sistema:', error);
+  } catch {
     return res
       .status(MENSAJES_CLIENTES.ERROR_CONSULTAR_SISTEMA.codigo)
       .json({ mensaje: MENSAJES_CLIENTES.ERROR_CONSULTAR_SISTEMA.mensaje });

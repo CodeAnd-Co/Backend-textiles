@@ -15,9 +15,8 @@ exports.eliminarProductoCategoria = async (idCategoria) => {
   try {
     const resultado = await correrQuery(query, [idCategoria]);
     return resultado;
-  } catch (error) {
-    console.error('Error al eliminar categoría:', error);
-    throw error;
+  } catch {
+    throw new Error('Error eliminando el producto enlazado a la categoria');
   }
 };
 
@@ -35,8 +34,7 @@ exports.eliminarCategoria = async (idCategoria) => {
   try {
     const resultado = await correrQuery(query, [idCategoria]);
     return resultado;
-  } catch (error) {
-    console.error('Error al eliminar categoría:', error);
-    throw error;
+  } catch {
+    throw new Error('Error eliminando categorias.');
   }
 };

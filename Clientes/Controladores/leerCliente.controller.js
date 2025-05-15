@@ -46,8 +46,7 @@ exports.leerCliente = async (req, res) => {
         imagenCliente,
       },
     });
-  } catch (error) {
-    console.error('Error al consultar cliente:', error);
+  } catch {
     return res
       .status(MENSAJES_CLIENTES.ERROR_CONSULTAR_CLIENTE.codigo)
       .json({ mensaje: MENSAJES_CLIENTES.ERROR_CONSULTAR_CLIENTE.mensaje });

@@ -47,9 +47,8 @@ exports.eliminarPedido = async (idPedido) => {
       resultadoEmpleados,
       resultadoPedido,
     };
-  } catch (error) {
+  } catch {
     if (conexion) await conexion.rollback();
-    console.error('Transaccion fallida:', error);
     throw new Error('Error eliminando pedido');
   }
 };

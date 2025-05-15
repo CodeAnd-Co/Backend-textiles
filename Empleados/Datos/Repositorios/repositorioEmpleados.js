@@ -26,8 +26,7 @@ exports.obtenerEmpleados = async (idCliente) => {
     }
 
     return empleados;
-  } catch (error) {
-    console.error('Error al obtener los empleados:', error);
+  } catch {
     return [];
   }
 };

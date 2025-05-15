@@ -34,8 +34,7 @@ exports.leerGrupoEmpleados = async (req, res) => {
       mensaje: MENSAJES_GRUPO_EMPLEADOS.GRUPO_OBTENIDO.mensaje,
       grupoEmpleados,
     });
-  } catch (error) {
-    console.error('Error al consultar grupo de empleados:', error);
+  } catch {
     return res
       .status(MENSAJES_GRUPO_EMPLEADOS.ERROR_OBTENER_GRUPO.codigo)
       .json({ mensaje: MENSAJES_GRUPO_EMPLEADOS.ERROR_OBTENER_GRUPO.mensaje });

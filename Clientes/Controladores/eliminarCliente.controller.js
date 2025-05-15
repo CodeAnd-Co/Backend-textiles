@@ -39,9 +39,7 @@ exports.eliminarCliente = async (req, res) => {
     return res
       .status(MENSAJES_CLIENTES.CLIENTE_ELIMINADO.codigo)
       .json({ mensaje: MENSAJES_CLIENTES.CLIENTE_ELIMINADO.mensaje });
-
-  } catch (error) {
-    console.error('Error al eliminar cliente:', error);
+  } catch {
     return res
       .status(MENSAJES_CLIENTES.ERROR_ELIMINAR_CLIENTE.codigo)
       .json({ mensaje: MENSAJES_CLIENTES.ERROR_ELIMINAR_CLIENTE.mensaje });
