@@ -80,7 +80,13 @@ module.exports = {
     LEFT JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
     LEFT JOIN rol r ON ur.idRol = r.idRol
     LEFT JOIN usuario_cliente uc ON u.idUsuario = uc.idUsuario
-    LEFT JOIN cliente c ON uc.idCliente = c.idCliente;
+    LEFT JOIN cliente c ON uc.idCliente = c.idCliente
+    WHERE u.idUsuario NOT IN (
+        SELECT ur2.idUsuario
+        FROM usuario_rol ur2
+        WHERE ur2.idRol = 3
+    );
+
   `,
 
   ELIMINAR_USUARIOS: `
