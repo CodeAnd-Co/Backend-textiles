@@ -64,5 +64,10 @@ module.exports = {
   ERROR_CREAR_GRUPO: {
     codigo: 500,
     mensaje: 'Ocurrió un error al crear el grupo de empleados.',
-  }
+  },
+
+  GRUPO_NOMBRE_REPETIDO: {
+  codigo: 'GRUPO_NOMBRE_REPETIDO',
+  mensaje: 'Ya existe un grupo con ese nombre.',
+  },
 };

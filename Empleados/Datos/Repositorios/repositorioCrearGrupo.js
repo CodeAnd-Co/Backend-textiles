@@ -11,7 +11,8 @@
 const conexion = require('@altertex/util/bd/db');
 
 // Importación de las consultas SQL relacionadas con empleados.
-const CONSULTAS = require('@altertex/util/const/consultasEmpleados');
+const CONSULTAS = require('@altertex/util/const/consultasGrupoEmpleados');
+
 
 /**
  * Crea un grupo de empleados y asigna una lista de empleados al grupo creado.
@@ -75,5 +76,26 @@ exports.crearGrupoYAsignarEmpleados = (nombreGrupo, descripcion, idCliente, list
         },
       );
     });
+  });
+};
+
+/**
+ * Verifica si ya existe un grupo con el mismo nombre para el cliente.
+ *
+ * @function existeGrupoConNombre
+ * @param {string} nombreGrupo - Nombre del grupo a verificar.
+ * @param {number} idCliente - ID del cliente.
+ * @returns {Promise<boolean>} Verdadero si existe, falso si no.
+ */
+exports.existeGrupoConNombre = (nombreGrupo, idCliente) => {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      CONSULTAS.VALIDAR_NOMBRE_REPETIDO,
+      [idCliente, nombreGrupo.trim()],
+      (error, resultados) => {
+        if (error) return reject(error);
+        resolve(resultados.length > 0);
+      }
+    );
   });
 };

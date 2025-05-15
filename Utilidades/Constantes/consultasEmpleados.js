@@ -19,10 +19,4 @@ module.exports = {
       )
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `,
-  CREAR_GRUPO: `
-    INSERT INTO grupo_empleado (idCliente, nombre, descripcion) VALUES (?, ?, ?);
-  `,
-  ASIGNAR_EMPLEADO_A_GRUPO: `
-    INSERT INTO empleado_grupo (idEmpleado, idGrupo) VALUES (?, ?);
-  `
 };

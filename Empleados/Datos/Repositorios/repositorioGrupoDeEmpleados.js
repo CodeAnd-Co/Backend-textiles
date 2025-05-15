@@ -18,6 +18,16 @@ const CONSULTAS_GRUPO_EMPLEADOS = require('@altertex/util/const/consultasGrupoEm
 exports.obtenerGrupoDeEmpleados = async (idCliente) => {
   const query = CONSULTAS_GRUPO_EMPLEADOS.OBTENER_LISTA;
 
+
+  exports.existeGrupoConNombre = (nombreGrupo, idCliente) => {
+  return new Promise((resolve, reject) => {
+    conexion.query(CONSULTAS_GRUPO_EMPLEADOS.VALIDAR_NOMBRE_REPETIDO, [nombreGrupo, idCliente], (err, resultados) => {
+      if (err) return reject(err);
+      resolve(resultados.length > 0);
+    });
+  });
+};
+
   try {
     const gruposDeEmpleados = await correrQuery(query, [idCliente]);
 
