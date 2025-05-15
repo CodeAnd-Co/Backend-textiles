@@ -12,9 +12,11 @@ const s3 = new S3Client({
 
 /**
  * Elimina una imagen de Amazon S3.
+ *
  * @param {string} folder - Carpeta dentro del bucket (ej. "productos/").
  * @param {string} filename - Nombre del archivo a eliminar.
  * @returns {Promise<void>} Lanza un error si la eliminación falla.
+ * @throws {Error} Si ocurre un problema al eliminar el archivo de S3.
  */
 const eliminarImagenS3 = async (folder, filename) => {
   const params = {
@@ -24,11 +26,8 @@ const eliminarImagenS3 = async (folder, filename) => {
 
   try {
     await s3.send(new DeleteObjectCommand(params));
-    // console.log(`Imagen eliminada: ${folder}${filename}`);
-    // Imagen eliminada exitosamente
-  } catch {
-    // console.error(`Error al eliminar la imagen: ${folder}${filename}`);
-    // Error al eliminar imagen
+  } catch (error) {
+    throw new Error(`Error al eliminar la imagen "${folder}${filename}" de S3: ${error.message}`);
   }
 };
 
