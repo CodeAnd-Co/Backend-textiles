@@ -59,8 +59,7 @@ exports.consultarLista = async (req, res) => {
     let listaClientesConImagen;
     try {
       listaClientesConImagen = await obtenerImagenFolder(req, folder);
-    } catch (errImg) {
-      console.warn('Error obteniendo imágenes, se usarán por defecto:', errImg);
+    } catch {
       listaClientesConImagen = listaClientes.map((cliente) => ({
         ...cliente,
         urlImagen: '/placeholder.png',
