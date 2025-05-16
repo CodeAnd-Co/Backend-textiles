@@ -30,7 +30,11 @@ exports.crearCuota = async (req, res) => {
       return res.status(400).json({ error: MENSAJES.NOMBRE_OBLIGATORIO });
     }
 
-    validarCuotaSet(cuotaSetModelo.nombre, cuotaSetModelo.productosYLimite, res);
+    // Cambia aquí: recibe el error de la validación
+    const errorValidacion = validarCuotaSet(cuotaSetModelo.nombre, cuotaSetModelo.productosYLimite);
+    if (errorValidacion) {
+      return res.status(400).json({ error: errorValidacion });
+    }
 
     const hoy = new Date();
     const fechaFormateada = hoy.toISOString().split('T')[0];
