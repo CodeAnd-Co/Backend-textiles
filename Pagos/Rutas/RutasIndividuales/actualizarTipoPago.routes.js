@@ -9,7 +9,7 @@ const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const revisarPermisos = require('@altertex/util/inter/verificarPermisos');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 
-//RF[54] Actualizat Lista de Pago - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF54]
+//RF[54] Actualizar Lista de Pago - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF54]
 
 /**
  * @swagger
