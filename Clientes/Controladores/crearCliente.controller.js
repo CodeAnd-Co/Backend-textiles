@@ -53,24 +53,29 @@ exports.crearCliente = async (req, res) => {
     const resultadoCliente = await repositorio.crearCliente(nombreComercial, nombreFiscal);
     const resultadoVincular = await repositorio.vincularUsuarioCliente(resultadoCliente.insertId);
 
-    console.log(imagen);
     if (imagen) {
-      const nombreImagen = await subirImagen(imagen, 'clientes');
+      const nombreImagen = await subirImagen(imagen, 'clientes', nombreComercial);
+
       const resultadoImagen = await repositorio.crearImagenCliente(
         nombreComercial,
         nombreImagen.split('/')[1]
       );
+
       const resultado = await repositorio.vincularImagenCliente(
         resultadoImagen.insertId,
         resultadoCliente.insertId
       );
-
       if (
         resultadoCliente.insertId &&
         resultadoVincular.affectedRows &&
         resultadoImagen.insertId &&
         resultado.affectedRows === 1
       ) {
+        return res.status(201).json({ mensaje: MENSAJES.CLIENTE_CREADO.mensaje });
+      }
+    } else {
+      // ✅ manejar caso sin imagen
+      if (resultadoCliente.insertId && resultadoVincular.affectedRows === 1) {
         return res.status(201).json({ mensaje: MENSAJES.CLIENTE_CREADO.mensaje });
       } else {
         return res.status(500).json({ mensaje: MENSAJES.ERROR_CREACION.mensaje });
