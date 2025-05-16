@@ -44,8 +44,8 @@ function validarCuotaSet(nombre, productosYLimite) {
 
     // Rechazar strings numéricos con ceros a la izquierda
     if (
-      (typeof limite === 'string' && /^0[0-9]+$/.test(limite)) ||
-      (typeof limiteActual === 'string' && /^0[0-9]+$/.test(limiteActual))
+      (typeof limite === 'string' && /^0[0-9]+$/.test(limite))
+      || (typeof limiteActual === 'string' && /^0[0-9]+$/.test(limiteActual))
     ) {
       return 'No se permiten ceros a la izquierda en los valores de cuota.';
     }
@@ -55,10 +55,10 @@ function validarCuotaSet(nombre, productosYLimite) {
     }
 
     if (
-      typeof limiteActual !== 'number' ||
-      isNaN(limiteActual) ||
-      !Number.isInteger(limiteActual) ||
-      limiteActual <= 0
+      typeof limiteActual !== 'number'
+      || isNaN(limiteActual)
+      || !Number.isInteger(limiteActual)
+      || limiteActual <= 0
     ) {
       return MENSAJES.LIMITE_ACTUAL_INVALIDO(idProducto);
     }

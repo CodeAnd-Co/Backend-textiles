@@ -39,15 +39,15 @@ exports.crearCuota = async (data) => {
 
   // Validaciones de parámetros obligatorios
   if (
-    !data ||
-    typeof data !== 'object' ||
-    typeof data.idCliente !== 'number' ||
-    typeof data.nombre !== 'string' ||
-    typeof data.descripcion !== 'string' ||
-    typeof data.periodoRenovacion !== 'number' ||
-    typeof data.renovacionHabilitada !== 'boolean' ||
-    !Array.isArray(data.productosYLimite) ||
-    typeof data.ultimaActualizacion !== 'string'
+    !data
+    || typeof data !== 'object'
+    || typeof data.idCliente !== 'number'
+    || typeof data.nombre !== 'string'
+    || typeof data.descripcion !== 'string'
+    || typeof data.periodoRenovacion !== 'number'
+    || typeof data.renovacionHabilitada !== 'boolean'
+    || !Array.isArray(data.productosYLimite)
+    || typeof data.ultimaActualizacion !== 'string'
   ) {
     throw new Error('Datos inválidos o incompletos para crear la cuota.');
   }
@@ -56,20 +56,20 @@ exports.crearCuota = async (data) => {
   for (const item of data.productosYLimite) {
     // Verifica si el valor original es string y tiene ceros a la izquierda
     if (
-      (typeof item.limite === 'string' && /^0[0-9]+$/.test(item.limite)) ||
-      (typeof item.limiteActual === 'string' && /^0[0-9]+$/.test(item.limiteActual))
+      (typeof item.limite === 'string' && /^0[0-9]+$/.test(item.limite))
+      || (typeof item.limiteActual === 'string' && /^0[0-9]+$/.test(item.limiteActual))
     ) {
       throw new Error('No se permiten ceros a la izquierda en los valores de cuota.');
     }
     if (
-      !item ||
-      (typeof item.idProducto !== 'string' && typeof item.idProducto !== 'number') ||
-      typeof item.limite !== 'number' ||
-      !Number.isInteger(item.limite) ||
-      item.limite <= 0 ||
-      typeof item.limiteActual !== 'number' ||
-      !Number.isInteger(item.limiteActual) ||
-      item.limiteActual <= 0
+      !item
+      || (typeof item.idProducto !== 'string' && typeof item.idProducto !== 'number')
+      || typeof item.limite !== 'number'
+      || !Number.isInteger(item.limite)
+      || item.limite <= 0
+      || typeof item.limiteActual !== 'number'
+      || !Number.isInteger(item.limiteActual)
+      || item.limiteActual <= 0
     ) {
       throw new Error(
         'Cada producto debe tener un idProducto (string o number), limite (entero > 0) y limiteActual (entero > 0).'
