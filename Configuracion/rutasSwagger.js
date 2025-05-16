@@ -12,6 +12,7 @@ module.exports = [
   './Clientes/Rutas/RutasIndividuales/eliminarCliente.routes.js',
   './Clientes/Rutas/RutasIndividuales/leerCliente.routes.js',
   './Clientes/Rutas/RutasIndividuales/actualizarClientes.routes.js',
+  './Clientes/Rutas/RutasIndividuales/crearCliente.routes.js',
 
   './Cuotas/Rutas/RutasIndividuales/consultarCuotas.routes.js',
   './Cuotas/Rutas/RutasIndividuales/crearCuota.routes.js',

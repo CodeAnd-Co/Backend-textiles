@@ -1,5 +1,3 @@
-const { CREAR_CATEGORIAS } = require("./consultasCategorias");
-
 module.exports = {
   OBTENER_CLIENTE: `
         SELECT * 
@@ -24,7 +22,7 @@ module.exports = {
   VERIFICAR_NOMBRE_FISCAL: `
   SELECT IF(EXISTS(SELECT nombreFiscal FROM cliente WHERE nombreFiscal = ?), 1, 0)`,
 
-  CREAR_CLIENTE:  `
+  CREAR_CLIENTE: `
     INSERT INTO cliente (nombreComercial, nombreFiscal)
     VALUES (?, ?)`,
 

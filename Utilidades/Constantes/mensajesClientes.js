@@ -1,5 +1,3 @@
-const { ERROR_CREACION } = require("./mensajesCuotas");
-
 module.exports = {
   // 200 - OK
   CONSULTA_EXITOSA: {
@@ -81,21 +79,18 @@ module.exports = {
     mensaje: 'Ocurrió un error al eliminar el cliente.',
   },
 
-
   // Crear cliente
   CAMPO_OBLIGATORIO: {
     codigo: 400,
-    mensaje: "Este campo es obligatorio",
+    mensaje: 'Este campo es obligatorio',
   },
   CLIENTE_COMERCIAL_EXISTENTE: {
     codigo: 400,
-    mensaje:
-      "Ya existe un cliente con el mismo nombre comercial.",
+    mensaje: 'Ya existe un cliente con el mismo nombre comercial.',
   },
   CLIENTE_FISCAL_EXISTENTE: {
     codigo: 400,
-    mensaje:
-      "Ya existe ese cliente.",
+    mensaje: 'Ya existe ese cliente.',
   },
   CLIENTE_CREADO: {
     codigo: 201,

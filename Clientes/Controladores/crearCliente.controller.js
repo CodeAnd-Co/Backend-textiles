@@ -65,10 +65,10 @@ exports.crearCliente = async (req, res) => {
       );
 
       if (
-        resultadoCliente.insertId &&
-        resultadoVincular.affectedRows &&
-        resultadoImagen.insertId &&
-        resultado.affectedRows === 1
+        resultadoCliente.insertId
+        && resultadoVincular.affectedRows
+        && resultadoImagen.insertId
+        && resultado.affectedRows === 1
       ) {
         return res.status(201).json({ mensaje: MENSAJES.CLIENTE_CREADO.mensaje });
       } else {
