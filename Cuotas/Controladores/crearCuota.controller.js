@@ -30,11 +30,11 @@ exports.crearCuota = async (req, res) => {
       return res.status(400).json({ error: MENSAJES.NOMBRE_OBLIGATORIO });
     }
 
-    let errorValidacion;
+    let errorValidacion = null;
     try {
       errorValidacion = validarCuotaSet(cuotaSetModelo.nombre, cuotaSetModelo.productosYLimite);
     } catch (validationError) {
-      // Captura errores inesperados de la función de validación
+      // Si validarCuotaSet lanza, responde con un error controlado
       console.error('Error inesperado en validarCuotaSet:', validationError);
       return res.status(400).json({
         error: 'Error de validación inesperado. Por favor revisa los datos enviados.',
@@ -43,7 +43,6 @@ exports.crearCuota = async (req, res) => {
     }
 
     if (errorValidacion) {
-      // Proporciona contexto adicional en la respuesta
       return res.status(400).json({
         error: errorValidacion,
         contexto: 'Error al validar los datos del set de cuotas. Verifica los campos enviados.',
@@ -61,7 +60,6 @@ exports.crearCuota = async (req, res) => {
     return res.status(201).json({ exito: MENSAJES.CREACION_EXITOSA });
   } catch (error) {
     console.error('Error en crearCuota:', error);
-    // Fallback: mensaje genérico y detalle opcional
     return res.status(400).json({
       error: MENSAJES.ERROR_CREACION,
       detalle: error.message || error,
