@@ -109,7 +109,6 @@ exports.crearCuota = async (data) => {
         const [rows] = await conexion.execute(QUERY.SELECCIONAR_PRODUCTO, [idProducto]);
 
         if (rows.length === 0) {
-          console.warn(`Producto no encontrado: ${idProducto}`);
           continue;
         }
 

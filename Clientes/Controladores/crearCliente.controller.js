@@ -36,6 +36,10 @@ exports.crearCliente = async (req, res) => {
     return res.status(400).json({ mensaje: MENSAJES.CAMPO_OBLIGATORIO.mensaje });
   }
 
+  if (!imagen) {
+    return res.status(400).json({ mensaje: MENSAJES.CAMPO_OBLIGATORIO.mensaje });
+  }
+
   try {
     // Verificar si ya existe un cliente con ese nombre comercial
     const existeComercial = await repositorio.verificarNombreComercial(nombreComercial);
