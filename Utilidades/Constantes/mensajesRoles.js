@@ -87,4 +87,5 @@ module.exports = {
   FALTA_ID_CLIENTE: 'Falta el ID del cliente',
   OPCIONES_OBTENIDAS: 'Permisos obtenidos correctamente',
   ERROR_OBTENIENDO_OPCIONES: 'Error al obtener permisos',
+  ERROR_OBTENIENDO_PERMISOS: 'Error al obtener la lista de permisos.',
 };

@@ -56,6 +56,7 @@ module.exports = {
     CONSULTAR_SISTEMA: '/consultar-sistema',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_CLIENTE: '/eliminar',
+    CREAR_CLIENTE: '/crear-cliente',
     LEER: '/consultar-cliente',
     ACTUALIZAR: `/actualizar-cliente`,
   },
@@ -67,6 +68,7 @@ module.exports = {
     ELIMINAR_EMPLEADO: '/eliminar',
     IMPORTAR_EMPLEADOS: '/importar-empleados',
     LEER_GRUPO: '/leer-grupo',
+    CREAR_GRUPO: '/crear-grupo',
     ACTUALIZAR: '/actualizar',
   },
   CUOTAS: {

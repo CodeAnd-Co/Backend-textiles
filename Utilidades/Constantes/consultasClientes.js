@@ -15,7 +15,33 @@ module.exports = {
   ELIMINAR_CLIENTE: `
         DELETE FROM cliente
         WHERE idCliente = ?;
+    `,
+  VERIFICAR_NOMBRE_COMERCIAL: `
+  SELECT IF(EXISTS(SELECT nombreComercial FROM cliente WHERE nombreComercial = ?), 1, 0)`,
+
+  VERIFICAR_NOMBRE_FISCAL: `
+  SELECT IF(EXISTS(SELECT nombreFiscal FROM cliente WHERE nombreFiscal = ?), 1, 0)`,
+
+  CREAR_CLIENTE: `
+    INSERT INTO cliente (nombreComercial, nombreFiscal)
+    VALUES (?, ?)`,
+
+  CREAR_IMAGEN_CLIENTE: `
+    INSERT INTO imagen (urlImagen, tipoImagen, textoAlternativo)
+    VALUES (?, 'Logo', ?)
   `,
+  VINCULAR_USUARIO_CLIENTE: `
+    INSERT INTO usuario_cliente (idUsuario, idCliente)
+    SELECT idUsuario, ?
+    FROM usuario_rol
+    WHERE idRol = 1;
+  `,
+
+  VINCULAR_IMAGEN_CLIENTE: `
+  INSERT INTO imagen_cliente (idImagen, idCliente)
+  VALUES (?, ?)
+`,
+
   LEER_CLIENTE: `
         SELECT 
             c.idCliente,
