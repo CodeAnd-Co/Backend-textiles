@@ -31,9 +31,6 @@ exports.consultarSistema = async (req, res) => {
   const idCliente = req.body.idCliente;
   const { correo, permisos, clientesAsociados } = req.user;
 
-  console.log(idCliente);
-  console.log(typeof idCliente);
-
   // if (isNaN(idCliente)) {
   //   return res
   //     .status(MENSAJES_CLIENTES.FORMATO_ID_CLIENTE_INVALIDO.codigo)
