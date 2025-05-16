@@ -36,10 +36,15 @@ exports.crearCuota = async (req, res) => {
     } catch (validationError) {
       console.error('Error inesperado en validarCuotaSet:', validationError);
 
-      // Return the expected error response
+      // Mejor manejo de errores: respuesta robusta y consistente
       return res.status(400).json({
-        error: 'Error creando cuota set', // Match the expected test case error
-        detalle: validationError.message || validationError,
+        error: 'Error creando cuota set',
+        detalle:
+          validationError && validationError.message
+            ? validationError.message
+            : 'Error de validación desconocido',
+        contexto:
+          'Ocurrió un error inesperado durante la validación de los datos del set de cuotas. Por favor revisa los campos enviados o contacta a soporte.',
       });
     }
 
