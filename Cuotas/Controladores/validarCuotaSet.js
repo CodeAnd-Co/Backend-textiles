@@ -35,7 +35,7 @@ function validarCuotaSet(nombre, productosYLimite) {
     return MENSAJES.PRODUCTOS_REQUERIDOS;
   }
 
-  for (let iterador = 0; iterador < productosYLimite.length; iterador = iterador + 1) {
+  for (let iterador = 0; iterador < productosYLimite.length; iterador += 1) {
     const { idProducto, limite, limiteActual } = productosYLimite[iterador];
 
     if (!idProducto || typeof idProducto !== 'string' || idProducto.trim() === '') {
