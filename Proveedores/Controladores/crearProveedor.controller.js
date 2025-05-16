@@ -21,8 +21,6 @@ exports.crearProveedor = async (req, res) => {
   const proveedor = req.body;
   const idCliente = parseInt(req.user.clienteSeleccionado);
 
-  console.log(req.body);
-
   const errorProveedor = validarProveedor(proveedor);
   if (errorProveedor) {
     return res.status(MENSAJES_PROVEEDORES.DATOS_PROVEEDOR_INVALIDOS.codigo).json({

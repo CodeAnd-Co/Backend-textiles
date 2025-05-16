@@ -30,7 +30,7 @@ module.exports = {
   },
   FORMATO_ID_CLIENTE_INVALIDO: {
     codigo: 400,
-    mensaje: 'El ID del cliente debe ser un número entero válido.',
+    mensaje: 'El formato del ID del cliente debe ser un número entero válido.',
   },
   LISTA_CLIENTES_INVALIDA: {
     codigo: 400,
@@ -77,6 +77,28 @@ module.exports = {
   ERROR_ELIMINAR_CLIENTE: {
     codigo: 500,
     mensaje: 'Ocurrió un error al eliminar el cliente.',
+  },
+
+  // Crear cliente
+  CAMPO_OBLIGATORIO: {
+    codigo: 400,
+    mensaje: 'Este campo es obligatorio',
+  },
+  CLIENTE_COMERCIAL_EXISTENTE: {
+    codigo: 400,
+    mensaje: 'Ya existe un cliente con el mismo nombre comercial.',
+  },
+  CLIENTE_FISCAL_EXISTENTE: {
+    codigo: 400,
+    mensaje: 'Ya existe ese cliente.',
+  },
+  CLIENTE_CREADO: {
+    codigo: 201,
+    mensaje: 'Cliente creado con éxito.',
+  },
+  ERROR_CREACION: {
+    codigo: 500,
+    mensaje: 'Error al crear cliente.',
   },
   CLIENTE_ACTUALIZADO: {
     codigo: 200,
