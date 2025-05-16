@@ -48,4 +48,26 @@ module.exports = {
     codigo: 500,
     mensaje: 'Error al eliminar los empleados.',
   },
+  // 201 - OK
+  GRUPO_CREADO: {
+    codigo: 201,
+    mensaje: 'Grupo de empleados creado correctamente.',
+  },
+
+  // 400 - Bad Request
+  DATOS_INCOMPLETOS: {
+    codigo: 400,
+    mensaje: 'Faltan datos requeridos: nombre del grupo o lista de empleados.',
+  },
+
+  // 500 - Internal Server Error
+  ERROR_CREAR_GRUPO: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error al crear el grupo de empleados.',
+  },
+
+  GRUPO_NOMBRE_REPETIDO: {
+    codigo: 'GRUPO_NOMBRE_REPETIDO',
+    mensaje: 'Ya existe un grupo con ese nombre.',
+  },
 };

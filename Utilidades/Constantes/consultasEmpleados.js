@@ -18,5 +18,5 @@ module.exports = {
         areaTrabajo, posicion, cantidadPuntos, antiguedad
       )
       VALUES (?, ?, ?, ?, ?, ?, ?)
-    `  
+    `,
 };
