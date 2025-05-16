@@ -1,4 +1,4 @@
-//RF[27] Consulta Lista de Productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27]
+//RF27 Consulta Lista de Productos - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27
 const express = require('express');
 const ruteador = express.Router();
 const controlador = require('@altertex/pro/ctrl/consultarProductos.controller');
