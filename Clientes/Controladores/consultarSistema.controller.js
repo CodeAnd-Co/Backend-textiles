@@ -28,14 +28,17 @@ const MENSAJES_CLIENTES = require('@altertex/util/const/mensajesClientes');
  * @throws {Error} Si ocurre un error inesperado durante la operación.
  */
 exports.consultarSistema = async (req, res) => {
-  const idCliente = parseInt(req.body.idCliente);
+  const idCliente = req.body.idCliente;
   const { correo, permisos, clientesAsociados } = req.user;
 
-  if (isNaN(idCliente)) {
-    return res
-      .status(MENSAJES_CLIENTES.FORMATO_ID_CLIENTE_INVALIDO.codigo)
-      .json({ mensaje: MENSAJES_CLIENTES.FORMATO_ID_CLIENTE_INVALIDO.mensaje });
-  }
+  console.log(idCliente);
+  console.log(typeof idCliente);
+
+  // if (isNaN(idCliente)) {
+  //   return res
+  //     .status(MENSAJES_CLIENTES.FORMATO_ID_CLIENTE_INVALIDO.codigo)
+  //     .json({ mensaje: MENSAJES_CLIENTES.FORMATO_ID_CLIENTE_INVALIDO.mensaje });
+  // }
 
   if (!clientesAsociados.includes(idCliente)) {
     return res

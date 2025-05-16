@@ -30,7 +30,7 @@ module.exports = {
   },
   FORMATO_ID_CLIENTE_INVALIDO: {
     codigo: 400,
-    mensaje: 'El ID del cliente debe ser un número entero válido.',
+    mensaje: 'El formato del ID del cliente debe ser un número entero válido.',
   },
   LISTA_CLIENTES_INVALIDA: {
     codigo: 400,
