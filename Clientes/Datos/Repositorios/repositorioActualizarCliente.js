@@ -23,45 +23,87 @@ const enviarS3 = require('@altertex/util/ser/enviarS3');
 exports.actualizarCliente = async (datosActualizacion, imagenActualizacion) => {
   const { idCliente, nombreLegal, nombreComercial } = datosActualizacion;
 
-  try {
-    // Si se proporcionó una imagen, se sube al bucket de S3
-    if (imagenActualizacion) {
-      const [nombreImagen] = await correrQuery(CONSULTAS.OBTENER_NOMBRE_IMAGEN, [idCliente]);
-
-      const parametros = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: `clientes/${nombreImagen.urlImagen}`,
-        Body: imagenActualizacion.buffer,
-        ContentType: imagenActualizacion.mimetype,
-      };
-
-      await enviarS3(parametros);
-    }
-
-    // Si no se proporcionaron nombres legales ni comerciales, retorna un mensaje de éxito
-    if (!nombreLegal && !nombreComercial) {
-      return MENSAJES.CLIENTE_ACTUALIZADO.mensaje;
-    }
-
-    // Si se proporcionan ambos nombres, se actualizan en la base de datos
-    if (nombreLegal && nombreComercial) {
-      await correrQuery(CONSULTAS.ACTUALIZAR_AMBOS_NOMBRES, [
-        nombreComercial,
-        nombreLegal,
-        idCliente,
-      ]);
-    } else if (nombreLegal) {
-      // Si solo se proporciona el nombre legal, se actualiza en la base de datos
-      await correrQuery(CONSULTAS.ACTUALIZAR_NOMBRE_FISCAL, [nombreLegal, idCliente]);
-    } else if (nombreComercial) {
-      // Si solo se proporciona el nombre comercial, se actualiza en la base de datos
-      await correrQuery(CONSULTAS.ACTUALIZAR_NOMBRE_COMERCIAL, [nombreComercial, idCliente]);
-    }
-
-    // Retorna el mensaje de éxito después de la actualización
-    return MENSAJES.CLIENTE_ACTUALIZADO.mensaje;
-  } catch {
-    // Si ocurre un error, se captura y se lanza un nuevo error
-    throw new Error(MENSAJES.ERROR_CLIENTE_ACTUALIZADO.mensaje);
+  const resultadoCliente = await correrQuery(CONSULTAS.OBTENER_CLIENTE, [idCliente]);
+  if (!resultadoCliente || resultadoCliente.length === 0) {
+    throw new Error(MENSAJES.CLIENTE_NO_ENCONTRADO.mensaje);
   }
+
+  if (nombreComercial) {
+    const [resultadoNombreComercial] = await correrQuery(CONSULTAS.VERIFICAR_NOMBRE_COMERCIAL, [
+      nombreComercial,
+    ]);
+    const existeNombreComercial = Object.values(resultadoNombreComercial)[0];
+
+    if (existeNombreComercial === 1) {
+      const [clienteActual] = await correrQuery(CONSULTAS.OBTENER_CLIENTE, [idCliente]);
+      if (clienteActual && clienteActual.nombreComercial !== nombreComercial) {
+        throw new Error(MENSAJES.CLIENTE_COMERCIAL_EXISTENTE.mensaje);
+      }
+    }
+  }
+
+  if (nombreLegal) {
+    const [resultadoNombreFiscal] = await correrQuery(CONSULTAS.VERIFICAR_NOMBRE_FISCAL, [
+      nombreLegal,
+    ]);
+    const existeNombreFiscal = Object.values(resultadoNombreFiscal)[0];
+
+    if (existeNombreFiscal === 1) {
+      const [clienteActual] = await correrQuery(CONSULTAS.OBTENER_CLIENTE, [idCliente]);
+      if (clienteActual && clienteActual.nombreFiscal !== nombreLegal) {
+        throw new Error(MENSAJES.CLIENTE_FISCAL_EXISTENTE.mensaje);
+      }
+    }
+  }
+
+  if (imagenActualizacion) {
+    const resultadoImagen = await correrQuery(CONSULTAS.OBTENER_NOMBRE_IMAGEN, [idCliente]);
+    if (!resultadoImagen || resultadoImagen.length === 0 || !resultadoImagen[0].urlImagen) {
+      throw new Error('No se encontró la imagen del cliente para actualizar');
+    }
+
+    const nombreImagen = resultadoImagen[0];
+    const parametros = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: `clientes/${nombreImagen.urlImagen}`,
+      Body: imagenActualizacion.buffer,
+      ContentType: imagenActualizacion.mimetype,
+    };
+
+    await enviarS3(parametros);
+  }
+
+  if (!nombreLegal && !nombreComercial) {
+    return MENSAJES.CLIENTE_ACTUALIZADO.mensaje;
+  }
+
+  let resultadoQuery;
+  if (nombreLegal && nombreComercial) {
+    resultadoQuery = await correrQuery(CONSULTAS.ACTUALIZAR_AMBOS_NOMBRES, [
+      nombreComercial,
+      nombreLegal,
+      idCliente,
+    ]);
+    if (!resultadoQuery || resultadoQuery.affectedRows === 0) {
+      throw new Error('No se pudo actualizar los nombres del cliente');
+    }
+  } else if (nombreLegal) {
+    resultadoQuery = await correrQuery(CONSULTAS.ACTUALIZAR_NOMBRE_FISCAL, [
+      nombreLegal,
+      idCliente,
+    ]);
+    if (!resultadoQuery || resultadoQuery.affectedRows === 0) {
+      throw new Error('No se pudo actualizar el nombre fiscal del cliente');
+    }
+  } else if (nombreComercial) {
+    resultadoQuery = await correrQuery(CONSULTAS.ACTUALIZAR_NOMBRE_COMERCIAL, [
+      nombreComercial,
+      idCliente,
+    ]);
+    if (!resultadoQuery || resultadoQuery.affectedRows === 0) {
+      throw new Error('No se pudo actualizar el nombre comercial del cliente');
+    }
+  }
+
+  return MENSAJES.CLIENTE_ACTUALIZADO.mensaje;
 };
