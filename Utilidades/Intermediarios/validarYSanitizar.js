@@ -16,7 +16,7 @@ const patronSQL = /(\b(SELECT|INSERT|DELETE|UPDATE|DROP|UNION|--|;|'|"|`)\b|\bOR
  */
 
 function contieneInyeccionSQL(obj) {
-  if (typeof obj === 'string'){
+  if (typeof obj === 'string') {
     return patronSQL.test(obj);
   } else if (Array.isArray(obj)) {
     return obj.some(contieneInyeccionSQL);
@@ -26,18 +26,15 @@ function contieneInyeccionSQL(obj) {
   return false;
 }
 
-
 function validarInyeccionSQL(req, res, next) {
   const cuerpo = req.body;
-  console.log('validando y sanitizando');
 
-    if (contieneInyeccionSQL(cuerpo)) {
-      return res.status(400).json({
-        mensaje: 'Entrada sospechosa detectada, por favor intente de nuevo.',
-      });
-    }
+  if (contieneInyeccionSQL(cuerpo)) {
+    return res.status(400).json({
+      mensaje: 'Entrada sospechosa detectada, por favor intente de nuevo.',
+    });
+  }
   next();
 }
 
 module.exports = validarInyeccionSQL;
-

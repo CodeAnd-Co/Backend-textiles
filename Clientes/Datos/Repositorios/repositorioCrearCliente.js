@@ -67,12 +67,12 @@ exports.vincularUsuarioCliente = async (idCliente) => {
 
 exports.crearImagenCliente = async (nombreComercial, imagen) => {
   try {
-    const parametros = {
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Key: `clientes/${imagen}`,
-      Body: imagen.buffer,
-      ContentType: imagen.mimetype,
-    };
+    // const parametros = {
+    //   Bucket: process.env.AWS_BUCKET_NAME,
+    //   Key: `clientes/${imagen}`,
+    //   Body: imagen.buffer,
+    //   ContentType: imagen.mimetype,
+    // };
 
     const resultadoImagen = await correrQuery(QUERY.CREAR_IMAGEN_CLIENTE, [
       imagen,

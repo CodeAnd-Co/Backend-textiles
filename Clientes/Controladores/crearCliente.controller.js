@@ -28,68 +28,54 @@ exports.crearCliente = async (req, res) => {
 
   // Validación del nombre comercial del cliente
   if (!nombreComercial || typeof nombreComercial !== 'string') {
-    return res.status(400).json({ mensaje: MENSAJES.CAMPO_OBLIGATORIO });
+    return res.status(400).json({ mensaje: MENSAJES.CAMPO_OBLIGATORIO.mensaje });
   }
 
   // Validación del nombre fiscal del cliente
   if (!nombreFiscal || typeof nombreFiscal !== 'string') {
-    return res.status(400).json({ mensaje: MENSAJES.CAMPO_OBLIGATORIO });
+    return res.status(400).json({ mensaje: MENSAJES.CAMPO_OBLIGATORIO.mensaje });
   }
 
   try {
     // Verificar si ya existe un cliente con ese nombre comercial
     const existeComercial = await repositorio.verificarNombreComercial(nombreComercial);
     if (existeComercial) {
-      return res.status(400).json({ mensaje: MENSAJES.CLIENTE_COMERCIAL_EXISTENTE });
+      return res.status(400).json({ mensaje: MENSAJES.CLIENTE_COMERCIAL_EXISTENTE.mensaje });
     }
 
     // Verificar si ya existe un cliente con ese nombre comercial
     const existeFiscal = await repositorio.verificarNombreFiscal(nombreFiscal);
     if (existeFiscal) {
-      return res.status(400).json({ mensaje: MENSAJES.CLIENTE_FISCAL_EXISTENTE });
-    }
-
-    //Subir Imagen
-
-    if (req.file) {
-      imagen = await subirImagen(req.file, 'clientes');
+      return res.status(400).json({ mensaje: MENSAJES.CLIENTE_FISCAL_EXISTENTE.mensaje });
     }
 
     // Crear el cliente
     const resultadoCliente = await repositorio.crearCliente(nombreComercial, nombreFiscal);
     const resultadoVincular = await repositorio.vincularUsuarioCliente(resultadoCliente.insertId);
 
-    if (req.file) {
+    if (imagen) {
+      const nombreImagen = await subirImagen(imagen, 'clientes');
       const resultadoImagen = await repositorio.crearImagenCliente(
         nombreComercial,
-        imagen.split('/')[1]
+        nombreImagen.split('/')[1]
       );
       const resultado = await repositorio.vincularImagenCliente(
         resultadoImagen.insertId,
         resultadoCliente.insertId
       );
-    }
 
-    if (req.file) {
       if (
         resultadoCliente.insertId &&
+        resultadoVincular.affectedRows &&
         resultadoImagen.insertId &&
-        resultado.affectedRows == 1 &&
-        resultadoVincular.affectedRows == 1
+        resultado.affectedRows === 1
       ) {
-        return res.status(201).json({ mensaje: MENSAJES.CLIENTE_CREADO });
+        return res.status(201).json({ mensaje: MENSAJES.CLIENTE_CREADO.mensaje });
       } else {
-        return res.status(500).json({ mensaje: MENSAJES.ERROR_CREACION });
-      }
-    } else {
-      if (resultadoCliente.insertId && resultadoVincular.affectedRows == 1) {
-        return res.status(201).json({ mensaje: MENSAJES.CLIENTE_CREADO });
-      } else {
-        return res.status(500).json({ mensaje: MENSAJES.ERROR_CREACION });
+        return res.status(500).json({ mensaje: MENSAJES.ERROR_CREACION.mensaje });
       }
     }
-  } catch (error) {
-    console.error('Error en crearCliente:', error);
-    return res.status(500).json({ mensaje: MENSAJES.ERROR_CREACION });
+  } catch {
+    return res.status(500).json({ mensaje: MENSAJES.ERROR_CREACION.mensaje });
   }
 };
