@@ -34,8 +34,7 @@ exports.leerCliente = async (req, res) => {
     let imagenCliente;
     try {
       imagenCliente = await obtenerImagenCliente(cliente.urlImagen);
-    } catch (errImg) {
-      console.warn('Error al obtener imagen del cliente, se usará un placeholder:', errImg);
+    } catch {
       imagenCliente = '/placeholder.png'; // URL genérica de placeholder
     }
 

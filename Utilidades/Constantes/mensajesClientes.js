@@ -82,7 +82,7 @@ module.exports = {
   // Crear cliente
   CAMPO_OBLIGATORIO: {
     codigo: 400,
-    mensaje: 'Este campo es obligatorio',
+    mensaje: 'Ingresa el nombre fiscal, nombre comercial y la imagen.',
   },
   CLIENTE_COMERCIAL_EXISTENTE: {
     codigo: 400,
@@ -90,7 +90,7 @@ module.exports = {
   },
   CLIENTE_FISCAL_EXISTENTE: {
     codigo: 400,
-    mensaje: 'Ya existe ese cliente.',
+    mensaje: 'Ya existe un cliente con el mismo nombre legal.',
   },
   CLIENTE_CREADO: {
     codigo: 201,

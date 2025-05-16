@@ -33,8 +33,7 @@ exports.consultarProductos = async (req, res) => {
     let productosActualizados;
     try {
       productosActualizados = await obtenerImagenFolder(req, folder);
-    } catch (errorImagen) {
-      console.warn('Error al obtener imágenes. Se asignarán por defecto:', errorImagen);
+    } catch {
       productosActualizados = productos.map((producto) => ({
         ...producto,
         urlImagen: '/placeholder.png',
