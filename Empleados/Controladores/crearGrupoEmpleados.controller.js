@@ -60,7 +60,7 @@ exports.crearGrupoEmpleados = async (req, res) => {
       mensaje: MENSAJES.GRUPO_CREADO.mensaje,
       idGrupo: resultado.idGrupo,
     });
-  } catch (error) {
+  } catch {
     return res.status(500).json({
       mensaje: MENSAJES.ERROR_CREAR_GRUPO.mensaje,
     });

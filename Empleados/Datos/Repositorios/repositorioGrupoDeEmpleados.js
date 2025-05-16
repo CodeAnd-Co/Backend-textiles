@@ -30,7 +30,7 @@ exports.obtenerGrupoDeEmpleados = async (idCliente) => {
   try {
     const gruposDeEmpleados = await correrQuery(query, [idCliente]);
     return gruposDeEmpleados;
-  } catch (error) {
+  } catch {
     return [];
   }
 };
