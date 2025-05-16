@@ -30,10 +30,24 @@ exports.crearCuota = async (req, res) => {
       return res.status(400).json({ error: MENSAJES.NOMBRE_OBLIGATORIO });
     }
 
-    // Cambia aquí: recibe el error de la validación
-    const errorValidacion = validarCuotaSet(cuotaSetModelo.nombre, cuotaSetModelo.productosYLimite);
+    let errorValidacion;
+    try {
+      errorValidacion = validarCuotaSet(cuotaSetModelo.nombre, cuotaSetModelo.productosYLimite);
+    } catch (validationError) {
+      // Captura errores inesperados de la función de validación
+      console.error('Error inesperado en validarCuotaSet:', validationError);
+      return res.status(400).json({
+        error: 'Error de validación inesperado. Por favor revisa los datos enviados.',
+        detalle: validationError.message || validationError,
+      });
+    }
+
     if (errorValidacion) {
-      return res.status(400).json({ error: errorValidacion });
+      // Proporciona contexto adicional en la respuesta
+      return res.status(400).json({
+        error: errorValidacion,
+        contexto: 'Error al validar los datos del set de cuotas. Verifica los campos enviados.',
+      });
     }
 
     const hoy = new Date();
@@ -47,6 +61,10 @@ exports.crearCuota = async (req, res) => {
     return res.status(201).json({ exito: MENSAJES.CREACION_EXITOSA });
   } catch (error) {
     console.error('Error en crearCuota:', error);
-    return res.status(400).json({ error: MENSAJES.ERROR_CREACION });
+    // Fallback: mensaje genérico y detalle opcional
+    return res.status(400).json({
+      error: MENSAJES.ERROR_CREACION,
+      detalle: error.message || error,
+    });
   }
 };
