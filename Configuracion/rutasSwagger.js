@@ -25,6 +25,7 @@ module.exports = [
   './Empleados/Rutas/RutasIndividuales/eliminarGrupoEmpleados.routes.js',
   './Empleados/Rutas/RutasIndividuales/leerGrupoEmpleado.routes.js',
   './Empleados/Rutas/RutasIndividuales/importarEmpleados.routes.js',
+  './Empleados/Rutas/RutasIndividuales/crearGrupoEmpleados.routes.js',
 
   './Eventos/Rutas/RutasIndividuales/consultarEvento.routes.js',
   './Eventos/Rutas/RutasIndividuales/consultarListaEventos.routes.js',
@@ -48,4 +49,5 @@ module.exports = [
   './Usuarios/Rutas/RutasIndividuales/crearUsuario.routes.js',
   './Usuarios/Rutas/RutasIndividuales/eliminarUsuario.routes.js',
   './Usuarios/Rutas/RutasIndividuales/leerUsuario.routes.js',
+
 ];
