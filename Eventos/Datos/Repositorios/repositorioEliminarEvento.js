@@ -31,9 +31,8 @@ exports.eliminarEvento = async (idEvento) => {
       resultadosEventos,
       resultadosEmpleadosEventos,
     };
-  } catch (error) {
+  } catch {
     if (conexion) await conexion.rollback();
-    console.error('Transacción fallida:', error);
     throw new Error('Error eliminando evento');
   }
 };

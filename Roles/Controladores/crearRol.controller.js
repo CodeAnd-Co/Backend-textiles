@@ -1,5 +1,5 @@
 const repositorio = require('@altertex/rol/repos/repositorioCrearRol');
-const MENSAJES = require("@altertex/util/const/mensajesRoles");
+const MENSAJES = require('@altertex/util/const/mensajesRoles');
 
 /**
  * Controlador para crear un nuevo rol.
@@ -24,7 +24,7 @@ exports.crearRol = async (req, res) => {
   const { nombre, descripcion, permisos } = req.body;
 
   // Validación del nombre del rol
-  if (!nombre || typeof nombre !== "string") {
+  if (!nombre || typeof nombre !== 'string') {
     return res.status(400).json({ mensaje: MENSAJES.NOMBRE_OBLIGATORIO });
   }
 
@@ -44,9 +44,7 @@ exports.crearRol = async (req, res) => {
     for (const idPermiso of permisos) {
       const valido = await repositorio.verificarPermiso(idPermiso);
       if (!valido) {
-        return res
-          .status(400)
-          .json({ mensaje: MENSAJES.PERMISO_INVALIDO(idPermiso) });
+        return res.status(400).json({ mensaje: MENSAJES.PERMISO_INVALIDO(idPermiso) });
       }
     }
 
@@ -58,8 +56,7 @@ exports.crearRol = async (req, res) => {
     } else {
       return res.status(400).json({ mensaje: MENSAJES.ERROR_CREACION });
     }
-  } catch (error) {
-    console.error("Error en crearRol:", error);
+  } catch {
     return res.status(500).json({ mensaje: MENSAJES.ERROR_CREACION });
   }
 };

@@ -43,9 +43,7 @@ exports.eliminarPedido = async (req, res) => {
     return res.status(MENSAJES_PEDIDOS.PEDIDO_ELIMINADO.codigo).json({
       mensaje: MENSAJES_PEDIDOS.PEDIDO_ELIMINADO.mensaje,
     });
-  } catch (error) {
-    console.error('Error al eliminar pedidos:', error);
-
+  } catch {
     // Respuesta de error
     return res.status(MENSAJES_PEDIDOS.ERROR_ELIMINAR_PEDIDO.codigo).json({
       mensaje: MENSAJES_PEDIDOS.ERROR_ELIMINAR_PEDIDO.mensaje,

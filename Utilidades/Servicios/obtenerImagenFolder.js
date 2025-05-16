@@ -1,5 +1,5 @@
-const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
-const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 
 const clienteS3 = new S3Client({
   region: process.env.AWS_REGION,
@@ -30,7 +30,7 @@ async function obtenerImagenFolder(request, nombreFolder) {
   const Json = request[nombreFolder];
 
   if (!Json || !Array.isArray(Json)) {
-    throw new Error("Invalid request data");
+    throw new Error('Invalid request data');
   }
 
   try {
@@ -54,9 +54,8 @@ async function obtenerImagenFolder(request, nombreFolder) {
     );
 
     return jsonActualizado;
-  } catch (error) {
-    console.error("Error obteniendo imagen de S3:", error);
-    throw new Error("Error obteniendo imagen de S3");
+  } catch {
+    throw new Error('Error obteniendo imagen de S3');
   }
 }
 

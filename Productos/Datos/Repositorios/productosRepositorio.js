@@ -4,7 +4,6 @@ const { ELIMINAR_PRODUCTOS } = require('@altertex/util/const/consultasProductos'
 const extraerNombreArchivoS3 = require('@altertex/util/ser/extraerNombreArchivoS3');
 const eliminarImagenS3 = require('@altertex/util/ser/eliminarImagenS3');
 
-
 /**
  * Funcion para eliminar productos de la base de datos.
  *
@@ -40,8 +39,7 @@ const eliminarProductos = async (ids) => {
     const query = ELIMINAR_PRODUCTOS.replace('(?)', `(${placeholders})`);
     const resultado = await correrQuery(query, ids);
     return resultado.affectedRows > 0;
-  } catch (error) {
-    console.error('Error en eliminarProductos:', error);
+  } catch {
     return false;
   }
 };

@@ -84,8 +84,7 @@ exports.inicioSesion = async (req, res) => {
     return res.status(MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.codigo).json({
       mensaje: MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.mensaje,
     });
-  } catch (error) {
-    console.error('Error en inicio de sesión:', error);
+  } catch {
     return res
       .status(MENSAJES_AUTENTICACION.ERROR_SERVIDOR.codigo)
       .json({ mensaje: MENSAJES_AUTENTICACION.ERROR_SERVIDOR.mensaje });

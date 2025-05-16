@@ -31,8 +31,7 @@ exports.obtenerClientePorId = async (idCliente) => {
     };
 
     return cliente;
-  } catch (error) {
-    console.error('Error al obtener el cliente con id:', error);
-    throw error;
+  } catch {
+    throw new Error('Ocurrio un error obteniendo el cliente.');
   }
 };
