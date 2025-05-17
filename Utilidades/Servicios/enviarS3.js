@@ -1,0 +1,31 @@
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+
+const s3 = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
+
+/**
+ * Carga un archivo en un bucket de Amazon S3 y devuelve la URL pública del archivo cargado.
+ * Utiliza el cliente de AWS SDK para enviar el archivo al bucket S3 configurado.
+ *
+ * @async
+ * @function subirArchivoS3
+ * @param {object} parametros - Los parámetros necesarios para cargar el archivo en S3.
+ * @param {string} parametros.Bucket - El nombre del bucket S3 donde se almacenará el archivo.
+ * @param {string} parametros.Key - El nombre del archivo que se almacenará en S3.
+ * @param {Buffer|Uint8Array|Blob|string} parametros.Body - El contenido del archivo a cargar.
+ * @param {string} [parametros.ContentType] - El tipo de contenido del archivo (opcional).
+ *
+ * @returns {Promise<string>} La URL pública del archivo cargado en S3.
+ *
+ * @throws {Error} - Si ocurre un error al cargar el archivo en S3 o al obtener la URL.
+ */
+module.exports = async (parametros) => {
+  await s3.send(new PutObjectCommand(parametros));
+  const nombreArchivo = parametros.Key;
+  return nombreArchivo;
+};
