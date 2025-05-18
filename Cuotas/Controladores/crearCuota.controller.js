@@ -64,8 +64,7 @@ exports.crearCuota = async (req, res) => {
     await repositorio.crearCuota(cuotaSetModelo);
 
     return res.status(201).json({ exito: MENSAJES.CREACION_EXITOSA });
-  } catch (error) {
-    console.error('Error en crearCuota:', error);
+  } catch {
     return res.status(400).json({
       error: MENSAJES.ERROR_CREACION,
       detalle: error.message || error,

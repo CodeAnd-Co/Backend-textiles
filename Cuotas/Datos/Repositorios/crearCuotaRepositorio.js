@@ -126,9 +126,8 @@ exports.crearCuota = async (data) => {
     await conexion.commit();
 
     return cuotaSetId;
-  } catch (error) {
+  } catch {
     if (conexion) await conexion.rollback();
-    console.error('Transaccion fallida:', error);
     throw new Error('Error creando cuota set');
   }
 };

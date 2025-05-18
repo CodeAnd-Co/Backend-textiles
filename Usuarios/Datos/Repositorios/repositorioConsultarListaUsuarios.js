@@ -24,8 +24,7 @@ exports.consultarListaUsuarios = async () => {
   try {
     const listaUsuarios = await correrQuery(query);
     return listaUsuarios;
-  } catch (error) {
-    console.error('Error al obtener lista de usuarios:', error);
-    throw error;
+  } catch {
+    throw new Error('Error consultando la lista de usuarios');
   }
 };

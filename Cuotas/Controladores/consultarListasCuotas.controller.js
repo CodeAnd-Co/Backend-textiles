@@ -1,5 +1,5 @@
-const repositorio = require("@altertex/cuota/repos/cuotasRepositorio");
-const MENSAJES_CUOTAS = require("@altertex/util/const/mensajesCuotas");
+const repositorio = require('@altertex/cuota/repos/cuotasRepositorio');
+const MENSAJES_CUOTAS = require('@altertex/util/const/mensajesCuotas');
 
 /**
  * Controlador para consultar la lista de sets de cuotas.
@@ -41,8 +41,7 @@ exports.consultarLista = async (req, res) => {
       mensaje: MENSAJES_CUOTAS.CONSULTA_EXITOSA.mensaje,
       cuotas: resultados,
     });
-  } catch (error) {
-    console.error("Error al consultar cuotas:", error);
+  } catch {
     return res
       .status(MENSAJES_CUOTAS.ERROR_CONSULTAR_CUOTAS.codigo)
       .json({ mensaje: MENSAJES_CUOTAS.ERROR_CONSULTAR_CUOTAS.mensaje });

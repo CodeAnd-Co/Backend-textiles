@@ -35,9 +35,8 @@ exports.obtenerRoles = async () => {
 
     // Retorna los resultados si existen.
     return roles;
-  } catch (error) {
+  } catch {
     // Imprime en consola el error para fines de depuración.
-    console.error('Error al obtener roles:', error);
 
     // Lanza un nuevo error genérico para ser manejado por el controlador correspondiente.
     throw new Error('Error al consultar roles');

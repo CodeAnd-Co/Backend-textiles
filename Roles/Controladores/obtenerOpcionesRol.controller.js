@@ -20,8 +20,7 @@ exports.obtenerOpcionesRol = async (req, res) => {
       mensaje: MENSAJES.PERMISOS_OBTENIDOS,
       resultado,
     });
-  } catch (error) {
-    console.error('Error obteniendo permisos:', error);
+  } catch {
     return res.status(500).json({
       mensaje: MENSAJES.ERROR_OBTENIENDO_PERMISOS,
     });

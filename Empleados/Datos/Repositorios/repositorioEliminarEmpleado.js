@@ -27,8 +27,7 @@ exports.eliminarEmpleado = async (idEmpleado) => {
     const resultado = await correrQuery(CONSULTAS_EMPLEADOS.ELIMINAR_EMPLEADO, [idEmpleado]);
 
     return resultado;
-  } catch (error) {
-    console.error('Error al eliminar empleado y usuario:', error.message);
-    throw error;
+  } catch {
+    throw new Error('Ocurrio un error al eliminar un empleado');
   }
 };
