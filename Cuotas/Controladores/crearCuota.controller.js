@@ -32,16 +32,16 @@ exports.crearCuota = async (req, res) => {
 
     let errorValidacion = null;
     try {
-      // Se agrega 'res' como tercer argumento para que coincida con el test
       errorValidacion = validarCuotaSet(
         cuotaSetModelo.nombre,
         cuotaSetModelo.productosYLimite,
         res
       );
-    } catch {
-      // Para pasar el test, solo se responde con el error esperado
+    } catch (err) {
+      // Para pasar el test, responde con el error y el detalle
       return res.status(400).json({
         error: 'Error creando cuota set',
+        detalle: err.message || err,
       });
     }
 
