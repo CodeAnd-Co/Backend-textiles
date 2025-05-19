@@ -22,7 +22,9 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
   enableKeepAlive: true,
-  keepAliveInitialDelay: 10000, // 10 segundos
+  keepAliveInitialDelay: 0, // Iniciar keepAlive inmediatamente
+  // Aumentar timeouts para mayor estabilidad
+  connectTimeout: 60000, // 60 segundos para conectar
 });
 
 // Verificar conexión inicial una vez al arrancar
@@ -35,5 +37,17 @@ const pool = mysql.createPool({
     console.error('Error conectandose a MySQL:', error.stack);
   }
 })();
+
+// Configurar un ping periódico para mantener las conexiones vivas
+const pingInterval = 30000; // 30 segundos
+setInterval(async () => {
+  try {
+    const connection = await pool.getConnection();
+    await connection.query('SELECT 1');
+    connection.release();
+  } catch (error) {
+    console.error('Error en ping a MySQL:', error.message);
+  }
+}, pingInterval);
 
 module.exports = pool;
