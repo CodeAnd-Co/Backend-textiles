@@ -24,7 +24,7 @@ const MENSAJES = require('@altertex/util/const/mensajesCategorias');
  * Si ocurre algún error, lanza una excepción con un mensaje definido en `MENSAJES`.
  */
 exports.crearCategoria = async (categoria) => {
-  const conexion = db.promise();
+  const conexion = await db.getConnection();
 
   try {
     await conexion.beginTransaction();
@@ -61,7 +61,10 @@ exports.crearCategoria = async (categoria) => {
     await conexion.commit();
 
     return categoriaId;
-  } catch {
+  } catch (error) {
+    if (conexion) await conexion.rollback();
     throw new Error(MENSAJES.ERROR_CREACION.mensaje);
+  } finally {
+    if (conexion) conexion.release();
   }
 };
