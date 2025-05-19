@@ -16,7 +16,8 @@ module.exports = async (query, params = []) => {
   try {
     const [results] = await conexion.query(query, params);
     return results;
-  } catch {
+  } catch (error) {
+    console.error('Error en correr query:', error);
     throw new Error("Ocurrio un error al correr la query");
   }
 };
