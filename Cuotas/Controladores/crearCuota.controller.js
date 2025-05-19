@@ -38,7 +38,6 @@ exports.crearCuota = async (req, res) => {
         res
       );
     } catch (err) {
-      // Para pasar el test, responde con el error y el detalle
       return res.status(400).json({
         error: 'Error creando cuota set',
         detalle: err.message || err,
