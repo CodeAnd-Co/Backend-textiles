@@ -1,5 +1,5 @@
 //RF26 Crea Producto - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF26
-const correrQuery = require('@altertex/util/ser/correrQuery');
+const db = require('@altertex/util/bd/db');
 const consultas = require('@altertex/util/const/consultasVariantes');
 
 /**
@@ -17,16 +17,21 @@ const consultas = require('@altertex/util/const/consultasVariantes');
  * @returns {number|Array} El ID de la variante recién creada en caso de éxito, o un array vacío en caso de error.
  */
 exports.crearVariante = async (idProducto, variante) => {
-  const query = consultas.CREAR;
-  const parametros = [idProducto, variante.nombreVariante, variante.descripcion];
+  const conexion = await db.getConnection();
 
   try {
-    const resultados = await correrQuery(query, parametros);
+    const [resultados] = await conexion.query(consultas.CREAR, [
+      idProducto,
+      variante.nombreVariante,
+      variante.descripcion
+    ]);
 
     const idVariante = resultados.insertId;
     return idVariante;
   } catch (error) {
     console.error('Error al crear variante:', error);
     return [];
+  } finally {
+    if (conexion) conexion.release();
   }
 };

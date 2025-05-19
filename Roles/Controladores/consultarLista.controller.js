@@ -22,6 +22,7 @@ exports.consultarLista = async (req, res) => {
     // Se consulta al repositorio de roles para obtener todos los registros.
     const resultados = await repositorio.obtenerRoles();
 
+
     // Validación: si no se encontraron resultados, se responde con el mensaje de "sin resultados".
     if (!resultados || resultados.length === 0) {
       return res

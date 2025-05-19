@@ -1,5 +1,4 @@
 const db = require('@altertex/util/bd/db');
-const correrQuery = require('@altertex/util/ser/correrQuery');
 const CONSULTAS_PEDIDOS = require('@altertex/util/const/consultasPedidos');
 
 /**
@@ -12,27 +11,27 @@ const CONSULTAS_PEDIDOS = require('@altertex/util/const/consultasPedidos');
  * @throws {Error} Si ocurre un error durante la ejecución de la transacción.
  */
 exports.eliminarPedido = async (idPedido) => {
-  const conexion = db.promise();
+  const conexion = await db.getConnection();
+
   try {
+    await conexion.beginTransaction();
+
     // Eliminar las opciones asociadas al pedido
-    const resultadoOpciones = await correrQuery(
+    const [resultadoOpciones] = await conexion.query(
       CONSULTAS_PEDIDOS.ELIMINAR_PEDIDO_OPCION,
-      [idPedido],
-      conexion
+      [idPedido]
     );
 
     // Eliminar la relación entre empleados y el pedido
-    const resultadoEmpleados = await correrQuery(
+    const [resultadoEmpleados] = await conexion.query(
       CONSULTAS_PEDIDOS.ELIMINAR_EMPLEADO_PEDIDO,
-      [idPedido],
-      conexion
+      [idPedido]
     );
 
     // Eliminar el pedido
-    const resultadoPedido = await correrQuery(
+    const [resultadoPedido] = await conexion.query(
       CONSULTAS_PEDIDOS.ELIMINAR_PEDIDO,
-      [idPedido],
-      conexion
+      [idPedido]
     );
 
     if (resultadoPedido.affectedRows === 0) {
@@ -41,6 +40,7 @@ exports.eliminarPedido = async (idPedido) => {
 
     // Confirmar la transacción
     await conexion.commit();
+
     return {
       mensaje: 'Pedido eliminado correctamente',
       resultadoOpciones,
@@ -48,7 +48,9 @@ exports.eliminarPedido = async (idPedido) => {
       resultadoPedido,
     };
   } catch {
-    if (conexion) await conexion.rollback();
+    await conexion.rollback();
     throw new Error('Error eliminando pedido');
+  } finally {
+    conexion.release();
   }
 };
