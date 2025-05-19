@@ -12,10 +12,6 @@ const QUERY = require('@altertex/util/const/consultasCuotas');
  * - Si algún producto tiene un `idProducto` no numérico, se busca en la base de datos
  * - Si ocurre algún error, la transacción se revierte automáticamente
  *
- * Validaciones:
- * - Se valida la estructura del objeto `data` y los tipos de datos requeridos
- * - Se valida cada producto en `productosYLimite` para asegurar que tengan los campos esperados
- *
  * @async
  * @function crearCuota
  * @param {object} data - Objeto que contiene la información del cuotaSet.
@@ -35,8 +31,7 @@ const QUERY = require('@altertex/util/const/consultasCuotas');
  * @throws {Error} Si faltan parámetros requeridos o falla la transacción.
  */
 exports.crearCuota = async (data) => {
-  const conexion = db.promise();
-
+  // Validaciones iniciales
   if (
     !data
     || typeof data !== 'object'
@@ -75,6 +70,8 @@ exports.crearCuota = async (data) => {
       );
     }
   }
+
+  const conexion = await db.getConnection();
 
   try {
     await conexion.beginTransaction();
@@ -124,8 +121,10 @@ exports.crearCuota = async (data) => {
     await conexion.commit();
 
     return cuotaSetId;
-  } catch {
-    if (conexion) await conexion.rollback();
+  } catch (error) {
+    await conexion.rollback();
     throw new Error('Error creando cuota set');
+  } finally {
+    if (conexion) conexion.release();
   }
 };
