@@ -16,13 +16,12 @@ const consultas = require('@altertex/util/const/consultasVariantes');
  *
  * @returns {number|Array} El ID de la variante recién creada en caso de éxito, o un array vacío en caso de error.
  */
-exports.crearVariante = async (idProducto, variante) => {
+exports.crearVariante = async (conexion, idProducto, variante) => {
   const query = consultas.CREAR;
   const parametros = [idProducto, variante.nombreVariante, variante.descripcion];
 
   try {
-    const resultados = await correrQuery(query, parametros);
-
+    const resultados = await correrQuery(query, parametros, conexion);
     const idVariante = resultados.insertId;
     return idVariante;
   } catch (error) {
