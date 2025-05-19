@@ -28,15 +28,12 @@ const CONSULTAS_CUOTAS = require('@altertex/util/const/consultasCuotas');
 exports.obtenerCuotas = async (idCliente) => {
   try {
     // Ejecuta la consulta SQL con el ID del cliente como parámetro.
-    const resultado = await correrQuery(CONSULTAS_CUOTAS.OBTENER_CUOTAS, [
-      idCliente,
-    ]);
+    const resultado = await correrQuery(CONSULTAS_CUOTAS.OBTENER_CUOTAS, [idCliente]);
 
     // Retorna los resultados o un arreglo vacío si no hay datos.
     return resultado || [];
-  } catch (error) {
+  } catch {
     // Registra el error en consola para diagnóstico.
-    console.error('Error al obtener cuotas:', error);
 
     // Devuelve un array vacío en caso de error para evitar ruptura del flujo.
     return [];

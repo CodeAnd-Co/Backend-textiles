@@ -98,7 +98,6 @@ exports.crearCuota = async (data) => {
         const [rows] = await conexion.execute(QUERY.SELECCIONAR_PRODUCTO, [idProducto]);
 
         if (rows.length === 0) {
-          console.warn(`Producto no encontrado: ${idProducto}`);
           continue;
         }
 
@@ -116,9 +115,8 @@ exports.crearCuota = async (data) => {
     await conexion.commit();
 
     return cuotaSetId;
-  } catch (error) {
+  } catch {
     if (conexion) await conexion.rollback();
-    console.error('Transaccion fallida:', error);
     throw new Error('Error creando cuota set');
   }
 };

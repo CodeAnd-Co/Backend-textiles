@@ -1,4 +1,4 @@
-const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticacion");
+const MENSAJES_AUTENTICACION = require('@altertex/util/const/mensajesAutenticacion');
 
 /**
  * Controlador para el cierre de sesión de un usuario.
@@ -29,18 +29,16 @@ exports.cerrarSesion = async (req, res) => {
         .json({ mensaje: MENSAJES_AUTENTICACION.SESION_NO_EXISTENTE.mensaje });
     }
 
-    res.clearCookie("token", {
+    res.clearCookie('token', {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+      sameSite: 'None',
     });
 
     return res
       .status(MENSAJES_AUTENTICACION.CIERRE_SESION_EXITOSO.codigo)
       .json({ mensaje: MENSAJES_AUTENTICACION.CIERRE_SESION_EXITOSO.mensaje });
-  } catch (error) {
-    console.error("Error al cerrar sesión:", error);
-
+  } catch {
     return res
       .status(MENSAJES_AUTENTICACION.ERROR_CIERRE_SESION.codigo)
       .json({ mensaje: MENSAJES_AUTENTICACION.ERROR_CIERRE_SESION.mensaje });

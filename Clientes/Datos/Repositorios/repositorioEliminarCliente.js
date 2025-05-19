@@ -16,8 +16,7 @@ exports.eliminarClientePorId = async (idCliente) => {
   try {
     const resultado = await correrQuery(query, [idCliente]);
     return resultado;
-  } catch (error) {
-    console.error('Error al eliminar cliente:', error);
-    throw error;
+  } catch {
+    throw new Error('Ocurrio un error eliminando al cliente.');
   }
 };

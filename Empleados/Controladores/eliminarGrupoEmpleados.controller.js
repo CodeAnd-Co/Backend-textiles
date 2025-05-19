@@ -40,8 +40,7 @@ exports.eliminarGrupoEmpleados = async (req, res) => {
     return res.status(MENSAJES_EMPLEADOS.ELIMINAR_GRUPO_EXITOSO.codigo).json({
       mensaje: MENSAJES_EMPLEADOS.ELIMINAR_GRUPO_EXITOSO.mensaje,
     });
-  } catch (error) {
-    console.error('Error al eliminar grupo de empleados:', error);
+  } catch {
     return res.status(MENSAJES_EMPLEADOS.ELIMINAR_GRUPO_ERROR.codigo).json({
       mensaje: MENSAJES_EMPLEADOS.ELIMINAR_GRUPO_ERROR.mensaje,
     });
