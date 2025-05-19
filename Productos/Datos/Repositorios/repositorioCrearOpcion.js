@@ -1,5 +1,5 @@
 //RF26 Crea Producto - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF26
-const correrQuery = require('@altertex/util/ser/correrQuery');
+const db = require('@altertex/util/bd/db');
 const consultas = require('@altertex/util/const/consultasOpciones');
 
 /**
@@ -12,22 +12,32 @@ const consultas = require('@altertex/util/const/consultasOpciones');
  * @returns {Promise<void>} - Una promesa que se resuelve cuando todas las opciones se crean exitosamente.
  */
 exports.crearOpcion = async (idVariante, opciones) => {
-  const query = consultas.CREAR;
+  const conexion = await db.getConnection();
 
-  const promises = opciones.map(async (opcion) => {
-    const params = [
-      idVariante,
-      opcion.cantidad,
-      opcion.valorOpcion,
-      opcion.SKUautomatico,
-      opcion.SKUcomercial,
-      opcion.costoAdicional,
-      opcion.descuento,
-      opcion.estado,
-    ];
+  try {
+    await conexion.beginTransaction();
 
-    await correrQuery(query, params);
-  });
+    for (const opcion of opciones) {
+      const params = [
+        idVariante,
+        opcion.cantidad,
+        opcion.valorOpcion,
+        opcion.SKUautomatico,
+        opcion.SKUcomercial,
+        opcion.costoAdicional,
+        opcion.descuento,
+        opcion.estado,
+      ];
 
-  await Promise.all(promises);
+      await conexion.query(consultas.CREAR, params);
+    }
+
+    await conexion.commit();
+  } catch (error) {
+    await conexion.rollback();
+    console.error('Error al crear opciones:', error);
+    throw error;
+  } finally {
+    if (conexion) conexion.release();
+  }
 };
