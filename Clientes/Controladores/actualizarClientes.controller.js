@@ -26,21 +26,53 @@ exports.actualizarClientes = async (req, res) => {
   const datosActualizacion = req.body;
   const imagenActualizacion = req.file;
 
+  // Validación básica de la solicitud
   if (!datosActualizacion.idCliente) {
     return res
       .status(MENSAJES.FORMATO_ID_CLIENTE_INVALIDO.codigo)
       .json({ mensaje: MENSAJES.FORMATO_ID_CLIENTE_INVALIDO.mensaje });
   }
 
-  try {
-    await repositorio.actualizarCliente(datosActualizacion, imagenActualizacion);
+  // Validación de que al menos un dato para actualizar esté presente
+  if (
+    !datosActualizacion.nombreLegal
+    && !datosActualizacion.nombreComercial
+    && !imagenActualizacion
+  ) {
+    return res.status(MENSAJES.PARAMETROS_INVALIDOS.codigo).json({
+      mensaje:
+        'Se debe proporcionar al menos un dato para actualizar (nombre legal, nombre comercial o imagen)',
+    });
+  }
 
-    return res
-      .status(MENSAJES.CLIENTE_ACTUALIZADO.codigo)
-      .json({ mensaje: MENSAJES.CLIENTE_ACTUALIZADO.mensaje });
-  } catch {
-    return res
-      .status(MENSAJES.ERROR_CLIENTE_ACTUALIZADO.codigo)
-      .json({ mensaje: MENSAJES.ERROR_CLIENTE_ACTUALIZADO.mensaje });
+  try {
+    const mensaje = await repositorio.actualizarCliente(datosActualizacion, imagenActualizacion);
+
+    return res.status(MENSAJES.CLIENTE_ACTUALIZADO.codigo).json({ mensaje });
+  } catch (error) {
+    // Determinar el código de error adecuado basado en el mensaje de error
+    let codigoError = MENSAJES.ERROR_CLIENTE_ACTUALIZADO.codigo;
+    const mensajeError = error.message || MENSAJES.ERROR_CLIENTE_ACTUALIZADO.mensaje;
+
+    // Asignar códigos de error específicos según el tipo de error
+    if (error.message === MENSAJES.CLIENTE_NO_ENCONTRADO.mensaje) {
+      codigoError = MENSAJES.CLIENTE_NO_ENCONTRADO.codigo;
+    } else if (error.message === MENSAJES.CLIENTE_COMERCIAL_EXISTENTE.mensaje) {
+      codigoError = MENSAJES.CLIENTE_COMERCIAL_EXISTENTE.codigo;
+    } else if (error.message === MENSAJES.CLIENTE_FISCAL_EXISTENTE.mensaje) {
+      codigoError = MENSAJES.CLIENTE_FISCAL_EXISTENTE.codigo;
+    } else if (error.message.includes('No se encontró la imagen')) {
+      codigoError = 404;
+    } else if (error.message.includes('Error al actualizar la imagen')) {
+      codigoError = 500;
+    } else if (error.message.includes('Error al actualizar los datos')) {
+      codigoError = 500;
+    } else if (error.message.includes('No se pudo actualizar')) {
+      codigoError = 400;
+    }
+
+    console.error(`[ERROR] ActualizarClientes: ${error.message}`);
+
+    return res.status(codigoError).json({ mensaje: mensajeError });
   }
 };

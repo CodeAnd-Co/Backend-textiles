@@ -52,7 +52,8 @@ exports.crearUsuario = async (req, res) => {
     || !genero
     || estatus === undefined
     || !idRol
-    || idCliente === undefined || (Array.isArray(idCliente) && idCliente.length === 0)
+    || idCliente === undefined
+    || (Array.isArray(idCliente) && idCliente.length === 0)
   ) {
     return res.status(400).json({ mensaje: 'Faltan campos requeridos' });
   }
@@ -79,11 +80,9 @@ exports.crearUsuario = async (req, res) => {
   }
 
   if (!tieneMayuscula.test(contrasenia)) {
-    return res
-      .status(MENSAJES_USUARIOS.CONTRASENA_DEBIL.codigo)
-      .json({
-        mensaje: 'La contraseña debe contener al menos una letra mayúscula.',
-      });
+    return res.status(MENSAJES_USUARIOS.CONTRASENA_DEBIL.codigo).json({
+      mensaje: 'La contraseña debe contener al menos una letra mayúscula.',
+    });
   }
 
   const telefonoValido = /^\d{10}$/;
@@ -109,15 +108,11 @@ exports.crearUsuario = async (req, res) => {
       idCliente
     );
 
-    return res
-      .status(MENSAJES_USUARIOS.USUARIO_CREADO.codigo)
-      .json({
-        mensaje: MENSAJES_USUARIOS.USUARIO_CREADO.mensaje,
-        idUsuario: resultado.idUsuario
-      });
-
-  } catch (error) {
-    console.error('Error en el controlador:', error);
+    return res.status(MENSAJES_USUARIOS.USUARIO_CREADO.codigo).json({
+      mensaje: MENSAJES_USUARIOS.USUARIO_CREADO.mensaje,
+      idUsuario: resultado.idUsuario,
+    });
+  } catch {
     return res
       .status(MENSAJES_USUARIOS.ERROR_CREAR_USUARIO.codigo)
       .json({ mensaje: MENSAJES_USUARIOS.ERROR_CREAR_USUARIO.mensaje });

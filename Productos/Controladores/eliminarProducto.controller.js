@@ -2,7 +2,6 @@
 const { eliminarProductos } = require('@altertex/pro/repos/productosRepositorio');
 const eliminarImagenS3 = require('@altertex/util/ser/eliminarImagenS3');
 
-
 // Importación de las constantes de mensajes utilizados para respuestas del módulo de productos.
 const {
   RESPUESTA_ELIMINAR_PRODUCTO_EXITOSA,
@@ -46,8 +45,8 @@ const eliminarProductoController = async (req, res) => {
       imagenes.forEach((url) => {
         const parts = url.split('/');
         const filename = parts[parts.length - 1];
-        eliminarImagenS3 ('productos/', filename);
-      })
+        eliminarImagenS3('productos/', filename);
+      });
     }
     // Se realiza la eliminación de los productos.
     const resultado = await eliminarProductos(ids, imagenes);
@@ -58,8 +57,7 @@ const eliminarProductoController = async (req, res) => {
     } else {
       return res.status(400).json(RESPUESTA_ERROR_GENERAL);
     }
-  } catch (error) {
-    console.error('Error en eliminarProductoController:', error);
+  } catch {
     return res.status(500).json(RESPUESTA_ERROR_GENERAL);
   }
 };

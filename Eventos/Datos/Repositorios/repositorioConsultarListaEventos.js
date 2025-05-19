@@ -14,8 +14,7 @@ exports.consultarListaEventos = async (clienteSeleccionado) => {
   try {
     const listaEventos = await correrQuery(query, [clienteSeleccionado]);
     return listaEventos;
-  } catch (error) {
-    console.error('Error al obtener lista de eventos:', error);
-    throw error;
+  } catch {
+    throw new Error('Error obteniendo la lista de eventos.');
   }
 };

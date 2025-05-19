@@ -41,8 +41,7 @@ async function obtenerImagenCliente(nombreImagen) {
     });
 
     return imagenUrl;
-  } catch (error) {
-    console.error('Error fetching user image from S3:', error);
+  } catch {
     throw new Error('Error fetching user image from S3');
   }
 }

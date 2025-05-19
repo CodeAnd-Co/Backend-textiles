@@ -59,8 +59,7 @@ exports.consultarLista = async (req, res) => {
     let listaClientesConImagen;
     try {
       listaClientesConImagen = await obtenerImagenFolder(req, folder);
-    } catch (errImg) {
-      console.warn('Error obteniendo imágenes, se usarán por defecto:', errImg);
+    } catch {
       listaClientesConImagen = listaClientes.map((cliente) => ({
         ...cliente,
         urlImagen: '/placeholder.png',
@@ -72,7 +71,6 @@ exports.consultarLista = async (req, res) => {
       clientes: listaClientesConImagen,
     });
   } catch (error) {
-    console.error('Error al consultar lista de clientes:', error);
     return res.status(MENSAJES_CLIENTES.ERROR_CONSULTAR_LISTA_CLIENTES.codigo).json({
       mensaje: MENSAJES_CLIENTES.ERROR_CONSULTAR_LISTA_CLIENTES.mensaje,
       error: error.message,

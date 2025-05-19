@@ -16,8 +16,7 @@ exports.obtenerProductos = async (clienteSeleccionado) => {
   try {
     const resultados = await correrQuery(query, [clienteSeleccionado]);
     return resultados;
-  } catch (error) {
-    console.error('Error al obtener los productos:', error);
+  } catch {
     return [];
   }
 };

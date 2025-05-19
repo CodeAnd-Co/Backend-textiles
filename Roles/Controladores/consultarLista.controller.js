@@ -34,9 +34,8 @@ exports.consultarLista = async (req, res) => {
       mensaje: MENSAJES_ROLES.CONSULTA_EXITOSA.mensaje,
       roles: resultados,
     });
-  } catch (error) {
+  } catch {
     // Manejo de errores inesperados, con log en consola para facilitar el diagnóstico.
-    console.error('Error inesperado al consultar roles:', error.message || error);
 
     // Se responde con un error 500 y un mensaje genérico para el cliente.
     return res.status(500).json({ mensaje: 'Error al consultar roles' });

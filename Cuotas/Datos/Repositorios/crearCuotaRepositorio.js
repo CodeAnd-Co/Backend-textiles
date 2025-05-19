@@ -37,7 +37,6 @@ const QUERY = require('@altertex/util/const/consultasCuotas');
 exports.crearCuota = async (data) => {
   const conexion = db.promise();
 
-  // Validaciones de parámetros obligatorios
   if (
     !data
     || typeof data !== 'object'
@@ -54,14 +53,25 @@ exports.crearCuota = async (data) => {
 
   // Validar estructura de cada producto
   for (const item of data.productosYLimite) {
+    // Verifica si el valor original es string y tiene ceros a la izquierda
+    if (
+      (typeof item.limite === 'string' && /^0[0-9]+$/.test(item.limite))
+      || (typeof item.limiteActual === 'string' && /^0[0-9]+$/.test(item.limiteActual))
+    ) {
+      throw new Error('No se permiten ceros a la izquierda en los valores de cuota.');
+    }
     if (
       !item
       || (typeof item.idProducto !== 'string' && typeof item.idProducto !== 'number')
       || typeof item.limite !== 'number'
+      || !Number.isInteger(item.limite)
+      || item.limite <= 0
       || typeof item.limiteActual !== 'number'
+      || !Number.isInteger(item.limiteActual)
+      || item.limiteActual <= 0
     ) {
       throw new Error(
-        'Cada producto debe tener un idProducto (string o number), limite (number) y limiteActual (number).'
+        'Cada producto debe tener un idProducto (string o number), limite (entero > 0) y limiteActual (entero > 0).'
       );
     }
   }
@@ -93,12 +103,10 @@ exports.crearCuota = async (data) => {
     for (const item of productosYLimite) {
       let idProducto = item.idProducto;
 
-      // Si no es numérico, buscar ID real del producto
       if (isNaN(idProducto)) {
         const [rows] = await conexion.execute(QUERY.SELECCIONAR_PRODUCTO, [idProducto]);
 
         if (rows.length === 0) {
-          console.warn(`Producto no encontrado: ${idProducto}`);
           continue;
         }
 
@@ -116,9 +124,8 @@ exports.crearCuota = async (data) => {
     await conexion.commit();
 
     return cuotaSetId;
-  } catch (error) {
+  } catch {
     if (conexion) await conexion.rollback();
-    console.error('Transaccion fallida:', error);
     throw new Error('Error creando cuota set');
   }
 };
