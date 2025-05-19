@@ -28,6 +28,8 @@ const MENSAJES_AUTENTICACION = require('@altertex/util/const/mensajesAutenticaci
 exports.inicioSesion = async (req, res) => {
   const { correo, contrasenia } = req.body;
 
+  const tiempoExpiracion = 8 * 60 * 60 * 1000;
+
   if (!correo || !contrasenia) {
     return res
       .status(MENSAJES_AUTENTICACION.CAMPOS_OBLIGATORIOS.codigo)
@@ -79,6 +81,13 @@ exports.inicioSesion = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: 'None',
+    });
+
+    res.cookie('nombreUsuario', usuario.nombreCompleto, {
+      httpOnly: false,
+      secure: true,
+      sameSite: 'None',
+      maxAge: tiempoExpiracion,
     });
 
     return res.status(MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.codigo).json({
