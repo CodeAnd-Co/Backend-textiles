@@ -47,7 +47,7 @@ exports.eliminarPedido = async (idPedido) => {
       resultadoEmpleados,
       resultadoPedido,
     };
-  } catch (error) {
+  } catch {
     await conexion.rollback();
     throw new Error('Error eliminando pedido');
   } finally {

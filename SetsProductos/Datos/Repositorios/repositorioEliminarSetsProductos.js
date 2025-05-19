@@ -44,7 +44,7 @@ exports.eliminarSetProducto = async (idSetProducto) => {
       resultadoProductosSetProductos,
       resultadoSetProductos,
     };
-  } catch (error) {
+  } catch  {
     await conexion.rollback();
     throw new Error('Error eliminando set de productos');
   } finally {

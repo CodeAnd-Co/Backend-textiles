@@ -63,7 +63,7 @@ exports.asociarPermisosARol = async (idRol, permisos) => {
     }
 
     await conexion.commit();
-  } catch (error) {
+  } catch {
     await conexion.rollback();
     throw new Error('Error asociando permisos al rol');
   } finally {

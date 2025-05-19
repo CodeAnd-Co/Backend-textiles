@@ -31,7 +31,7 @@ exports.eliminarEvento = async (idEvento) => {
       resultadosEventos,
       resultadosEmpleadosEventos,
     };
-  } catch (error) {
+  } catch {
     await conexion.rollback();
     throw new Error('Error eliminando evento');
   } finally {

@@ -37,7 +37,7 @@ exports.eliminarSetCuotas = async (idSetCuotas) => {
       resultadoProductosSetCuotas,
       resultadoSetCuotas,
     };
-  } catch (error) {
+  } catch {
     await conexion.rollback();
     throw new Error('Error eliminando set de cuotas');
   } finally {

@@ -61,7 +61,7 @@ exports.crearCategoria = async (categoria) => {
     await conexion.commit();
 
     return categoriaId;
-  } catch (error) {
+  } catch {
     if (conexion) await conexion.rollback();
     throw new Error(MENSAJES.ERROR_CREACION.mensaje);
   } finally {

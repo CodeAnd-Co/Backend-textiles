@@ -121,7 +121,7 @@ exports.crearCuota = async (data) => {
     await conexion.commit();
 
     return cuotaSetId;
-  } catch (error) {
+  } catch  {
     await conexion.rollback();
     throw new Error('Error creando cuota set');
   } finally {

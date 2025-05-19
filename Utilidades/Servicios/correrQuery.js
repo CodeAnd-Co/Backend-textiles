@@ -17,6 +17,7 @@ module.exports = async (query, params = []) => {
     const [results] = await conexion.query(query, params);
     return results;
   } catch (err) {
+    console.error('Error al ejecutar la consulta:', err);
     throw err;
   }
 };
