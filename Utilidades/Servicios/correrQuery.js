@@ -14,10 +14,11 @@ const conexion = require('@altertex/util/bd/db');
  */
 module.exports = async (query, params = []) => {
   try {
+    console.log('Query: ', query)
+    console.log("Parametros: ", params)
     const [results] = await conexion.query(query, params);
     return results;
   } catch (error) {
-    console.error('Error en correr query:', error);
     throw new Error("Ocurrio un error al correr la query");
   }
 };
