@@ -27,28 +27,30 @@ const QUERY = require('@altertex/util/const/consultasCuotas');
  * @throws {Error} Si ocurre un fallo en la transacción de base de datos.
  */
 exports.obtenerCuota = async () => {
-  const conexion = db.promise();
+  const conexion = await db.getConnection();
 
   try {
     await conexion.beginTransaction();
 
-    const [resultadoReseteo] = await conexion.execute(QUERY.RESETEAR_LIMITES);
+    const [resultadoReseteo] = await conexion.query(QUERY.RESETEAR_LIMITES);
 
     if (resultadoReseteo.changedRows === 0) {
       await conexion.rollback();
       return {
-        error: 'Ninguna columna se actualizo.No se actualizara la fecha.',
+        error: 'Ninguna columna se actualizó. No se actualizará la fecha.',
       };
     }
 
-    await conexion.execute(QUERY.ACTUALIZAR_FECHAS);
+    await conexion.query(QUERY.ACTUALIZAR_FECHAS);
 
     await conexion.commit();
 
-    return { exito: 'Actualizacion exitosa' };
+    return { exito: 'Actualización exitosa' };
   } catch (error) {
-    if (conexion) await conexion.rollback();
+    await conexion.rollback();
     console.error('Transacción fallida: ', error);
     throw new Error('Error actualizando cuota sets');
+  } finally {
+    conexion.release();
   }
 };

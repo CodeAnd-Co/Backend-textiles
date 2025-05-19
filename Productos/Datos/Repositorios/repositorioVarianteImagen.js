@@ -1,6 +1,4 @@
-//RF26 Crea Producto - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF26
-const conexion = require('@altertex/util/bd/db').promise();
-const correrQuery = require('@altertex/util/ser/correrQuery');
+const db = require('@altertex/util/bd/db');
 const consultasVariantes = require('@altertex/util/const/consultasVariantes');
 const consultasImagenes = require('@altertex/util/const/consultasImagenes');
 
@@ -18,6 +16,8 @@ const consultasImagenes = require('@altertex/util/const/consultasImagenes');
  * @returns {Promise<object|Array>} El resultado de la inserción de la imagen (incluyendo `insertId`) si es exitoso, o un arreglo vacío en caso de error.
  */
 exports.crearImagen = async (idVariante, urlImagenVariante, nombreComun) => {
+  const conexion = await db.getConnection(); // obtener conexión del pool
+
   const queryImagen = consultasImagenes.CREAR;
   const queryRelacionImagenVariante = consultasVariantes.CREAR_IMAGEN_VARIANTE;
   const parametrosImagen = [urlImagenVariante, 'Imagen Variante', nombreComun];
@@ -25,11 +25,13 @@ exports.crearImagen = async (idVariante, urlImagenVariante, nombreComun) => {
   try {
     await conexion.beginTransaction();
 
-    const resultadoImagen = await correrQuery(queryImagen, parametrosImagen);
+    // Ejecutar query para insertar imagen
+    const [resultadoImagen] = await conexion.query(queryImagen, parametrosImagen);
     const idImagen = resultadoImagen.insertId;
 
     const parametrosRelacion = [idImagen, idVariante];
-    await correrQuery(queryRelacionImagenVariante, parametrosRelacion);
+    // Ejecutar query para relacionar imagen y variante
+    await conexion.query(queryRelacionImagenVariante, parametrosRelacion);
 
     await conexion.commit();
 
@@ -38,5 +40,7 @@ exports.crearImagen = async (idVariante, urlImagenVariante, nombreComun) => {
     console.error('Error al crear o asociar la imagen:', error);
     await conexion.rollback();
     return [];
+  } finally {
+    conexion.release(); // liberar conexión al pool
   }
 };

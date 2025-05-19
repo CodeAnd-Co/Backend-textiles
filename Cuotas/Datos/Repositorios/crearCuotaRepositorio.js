@@ -6,16 +6,6 @@ const QUERY = require('@altertex/util/const/consultasCuotas');
  *
  * Crea un nuevo conjunto de cuotas (cuotaSet) en la base de datos.
  *
- * Esta función realiza una transacción que:
- * - Inserta un nuevo registro en la tabla de cuotas (cuotaSet)
- * - Asocia los productos con sus respectivos límites
- * - Si algún producto tiene un `idProducto` no numérico, se busca en la base de datos
- * - Si ocurre algún error, la transacción se revierte automáticamente
- *
- * Validaciones:
- * - Se valida la estructura del objeto `data` y los tipos de datos requeridos
- * - Se valida cada producto en `productosYLimite` para asegurar que tengan los campos esperados
- *
  * @async
  * @function crearCuota
  * @param {object} data - Objeto que contiene la información del cuotaSet.
@@ -35,9 +25,8 @@ const QUERY = require('@altertex/util/const/consultasCuotas');
  * @throws {Error} Si faltan parámetros requeridos o falla la transacción.
  */
 exports.crearCuota = async (data) => {
-  const conexion = db.promise();
+  const conexion = await db.getConnection();
 
-  // Validaciones de parámetros obligatorios
   if (
     !data
     || typeof data !== 'object'
@@ -52,7 +41,6 @@ exports.crearCuota = async (data) => {
     throw new Error('Datos inválidos o incompletos para crear la cuota.');
   }
 
-  // Validar estructura de cada producto
   for (const item of data.productosYLimite) {
     if (
       !item
@@ -79,7 +67,7 @@ exports.crearCuota = async (data) => {
       idCliente,
     } = data;
 
-    const [resultado] = await conexion.execute(QUERY.INSERTAR_CUOTA, [
+    const [resultado] = await conexion.query(QUERY.INSERTAR_CUOTA, [
       idCliente,
       nombre,
       descripcion,
@@ -93,9 +81,8 @@ exports.crearCuota = async (data) => {
     for (const item of productosYLimite) {
       let idProducto = item.idProducto;
 
-      // Si no es numérico, buscar ID real del producto
       if (isNaN(idProducto)) {
-        const [rows] = await conexion.execute(QUERY.SELECCIONAR_PRODUCTO, [idProducto]);
+        const [rows] = await conexion.query(QUERY.SELECCIONAR_PRODUCTO, [idProducto]);
 
         if (rows.length === 0) {
           continue;
@@ -104,7 +91,7 @@ exports.crearCuota = async (data) => {
         idProducto = rows[0].idProducto;
       }
 
-      await conexion.execute(QUERY.INSERTAR_CUOTA_PRODUCTO, [
+      await conexion.query(QUERY.INSERTAR_CUOTA_PRODUCTO, [
         cuotaSetId,
         idProducto,
         item.limite,
@@ -115,8 +102,10 @@ exports.crearCuota = async (data) => {
     await conexion.commit();
 
     return cuotaSetId;
-  } catch {
+  } catch  {
     if (conexion) await conexion.rollback();
     throw new Error('Error creando cuota set');
+  } finally {
+    conexion.release();
   }
 };

@@ -2,7 +2,7 @@ const CONSULTA = require('@altertex/util/const/consultasCategorias');
 const db = require('@altertex/util/bd/db');
 const MENSAJES = require('@altertex/util/const/mensajesCategorias');
 
-// RF[46] Crear categoria - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF46]
+// RF[46] Crear categoría - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF46
 
 /**
  * Crea una nueva categoría en la base de datos con sus productos asociados.
@@ -17,14 +17,9 @@ const MENSAJES = require('@altertex/util/const/mensajesCategorias');
  * @returns {Promise<number>} ID de la categoría recién creada.
  *
  * @throws {Error} Si los datos son inválidos o ocurre un error durante la transacción.
- *
- * @description
- * Valida los datos de la categoría, ejecuta una transacción para insertar la nueva categoría
- * y luego inserta las relaciones con productos en la tabla correspondiente.
- * Si ocurre algún error, lanza una excepción con un mensaje definido en `MENSAJES`.
  */
 exports.crearCategoria = async (categoria) => {
-  const conexion = db.promise();
+  const conexion = await db.getConnection();
 
   try {
     await conexion.beginTransaction();
@@ -39,15 +34,11 @@ exports.crearCategoria = async (categoria) => {
       throw new Error(MENSAJES.NOMBRE_CATEGORIA_INVALIDO.mensaje);
     }
 
-    if (!productos || typeof productos !== 'object') {
+    if (!Array.isArray(productos) || productos.length === 0) {
       throw new Error(MENSAJES.PARAMETROS_INVALIDOS.mensaje);
     }
 
-    if (productos.length === 0) {
-      throw new Error(MENSAJES.PARAMETROS_INVALIDOS.mensaje);
-    }
-
-    const [resultado] = await conexion.execute(CONSULTA.CREAR_CATEGORIAS, [
+    const [resultado] = await conexion.query(CONSULTA.CREAR_CATEGORIAS, [
       nombreCategoria,
       descripcion,
     ]);
@@ -55,13 +46,16 @@ exports.crearCategoria = async (categoria) => {
     const categoriaId = resultado.insertId;
 
     for (const item of productos) {
-      await conexion.execute(CONSULTA.CREAR_CATEGORIA_PRODUCTOS, [categoriaId, item.idProducto]);
+      await conexion.query(CONSULTA.CREAR_CATEGORIA_PRODUCTOS, [categoriaId, item.idProducto]);
     }
 
     await conexion.commit();
 
     return categoriaId;
   } catch {
+    await conexion.rollback();
     throw new Error(MENSAJES.ERROR_CREACION.mensaje);
+  } finally {
+    conexion.release();
   }
 };

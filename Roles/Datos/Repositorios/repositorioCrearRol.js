@@ -10,8 +10,7 @@ const QUERY = require('@altertex/util/const/consultasRoles');
  * @returns {Promise<boolean>} Retorna `true` si el rol existe, `false` en caso contrario.
  */
 exports.verificarNombreRol = async (nombre) => {
-  const conexion = db.promise();
-  const [rows] = await conexion.execute(QUERY.VERIFICAR_NOMBRE_ROL, [nombre]);
+  const [rows] = await db.query(QUERY.VERIFICAR_NOMBRE_ROL, [nombre]);
   return rows.length > 0;
 };
 
@@ -24,8 +23,7 @@ exports.verificarNombreRol = async (nombre) => {
  * @returns {Promise<boolean>} Retorna `true` si el permiso existe, `false` en caso contrario.
  */
 exports.verificarPermiso = async (idPermiso) => {
-  const conexion = db.promise();
-  const [rows] = await conexion.execute(QUERY.VERIFICAR_PERMISO, [idPermiso]);
+  const [rows] = await db.query(QUERY.VERIFICAR_PERMISO, [idPermiso]);
   return rows.length > 0;
 };
 
@@ -39,8 +37,7 @@ exports.verificarPermiso = async (idPermiso) => {
  * @returns {Promise<object>} Retorna el resultado de la operación de inserción, incluyendo el ID del nuevo rol.
  */
 exports.crearRol = async (nombre, descripcion) => {
-  const conexion = db.promise();
-  const [resultado] = await conexion.execute(QUERY.INSERTAR_ROL, [nombre, descripcion]);
+  const [resultado] = await db.query(QUERY.INSERTAR_ROL, [nombre, descripcion]);
   return resultado;
 };
 
@@ -56,18 +53,19 @@ exports.crearRol = async (nombre, descripcion) => {
  * @returns {Promise<void>}
  */
 exports.asociarPermisosARol = async (idRol, permisos) => {
-  const conexion = db.promise();
-
+  const conexion = await db.getConnection();
   try {
     await conexion.beginTransaction();
 
     for (const idPermiso of permisos) {
-      await conexion.execute(QUERY.INSERTAR_ROL_PERMISO, [idRol, idPermiso]);
+      await conexion.query(QUERY.INSERTAR_ROL_PERMISO, [idRol, idPermiso]);
     }
 
     await conexion.commit();
   } catch {
     await conexion.rollback();
     throw new Error('Error asociando permisos al rol');
+  } finally {
+    conexion.release();
   }
 };

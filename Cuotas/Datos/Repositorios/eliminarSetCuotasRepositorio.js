@@ -1,5 +1,4 @@
 const db = require('@altertex/util/bd/db');
-const correrQuery = require('@altertex/util/ser/correrQuery');
 const CONSULTAS_CUOTAS = require('@altertex/util/const/consultasCuotas');
 
 /**
@@ -12,21 +11,18 @@ const CONSULTAS_CUOTAS = require('@altertex/util/const/consultasCuotas');
  * @throws {Error} Si ocurre un error durante la transacción.
  */
 exports.eliminarSetCuotas = async (idSetCuotas) => {
-  const conexion = db.promise();
-
+  const conexion = await db.getConnection(); // obtener conexión del pool
   try {
     await conexion.beginTransaction();
 
-    const resultadoProductosSetCuotas = await correrQuery(
+    const [resultadoProductosSetCuotas] = await conexion.query(
       CONSULTAS_CUOTAS.ELIMINAR_CUOTA_SET_PRODUCTO,
-      [idSetCuotas],
-      conexion
+      [idSetCuotas]
     );
 
-    const resultadoSetCuotas = await correrQuery(
+    const [resultadoSetCuotas] = await conexion.query(
       CONSULTAS_CUOTAS.ELIMINAR_CUOTA_SET,
-      [idSetCuotas],
-      conexion
+      [idSetCuotas]
     );
 
     if (resultadoSetCuotas.affectedRows === 0) {
@@ -40,10 +36,10 @@ exports.eliminarSetCuotas = async (idSetCuotas) => {
       resultadoProductosSetCuotas,
       resultadoSetCuotas,
     };
-  } catch {
-    if (conexion) await conexion.rollback();
-    throw new Error('Error eliminando set de cuotas');
+  } catch (error) {
+    await conexion.rollback();
+    throw error;
+  } finally {
+    conexion.release();
   }
 };
-
-//Errores Npm Run Lint
