@@ -12,8 +12,6 @@ const pool = require('@altertex/util/bd/db');
  */
 module.exports = async (query, params = [], conexion = null) => {
   try {
-    console.log('Query:', query);
-    console.log('Parámetros:', params);
 
     const conn = conexion || pool;
     const [results] = await conn.query(query, params);
