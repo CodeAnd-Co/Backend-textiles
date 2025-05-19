@@ -92,7 +92,7 @@ exports.crearProducto = [
           throw new Error(errorOpciones.error);
         }
 
-        await repositorioCrearOpcion.crearOpcion(idVariante, variante.opciones);
+        await repositorioCrearOpcion.crearOpcion(conexion, idVariante, variante.opciones);
       }
 
       // Subida imágenes a S3

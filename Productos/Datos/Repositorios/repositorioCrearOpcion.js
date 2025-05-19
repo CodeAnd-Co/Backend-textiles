@@ -11,7 +11,7 @@ const consultas = require('@altertex/util/const/consultasOpciones');
  * @param {Array} opciones - Un arreglo con los objetos de opciones que se desean agregar.
  * @returns {Promise<void>} - Una promesa que se resuelve cuando todas las opciones se crean exitosamente.
  */
-exports.crearOpcion = async (idVariante, opciones) => {
+exports.crearOpcion = async (conexion, idVariante, opciones) => {
   const query = consultas.CREAR;
 
   const promises = opciones.map(async (opcion) => {
@@ -26,7 +26,7 @@ exports.crearOpcion = async (idVariante, opciones) => {
       opcion.estado,
     ];
 
-    await correrQuery(query, params);
+    await correrQuery(query, params, conexion);
   });
 
   await Promise.all(promises);
