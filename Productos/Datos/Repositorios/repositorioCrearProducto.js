@@ -9,6 +9,7 @@ const consultas = require('@altertex/util/const/consultasProductos');
  * utilizando los parámetros proporcionados. Devuelve el ID del producto recién creado
  * en caso de éxito, o un array vacío si ocurre algún error durante la operación.
  *
+ * @param conexion
  * @param {number} clienteSeleccionado - ID del cliente para el cual se está creando el producto.
  * @param {object} producto - Objeto que contiene la información del producto.
  * @param {number} producto.idProveedor - ID del proveedor asociado al producto.
@@ -29,7 +30,7 @@ const consultas = require('@altertex/util/const/consultasProductos');
  *
  * @returns {number|Array} El ID del producto recién creado en caso de éxito, o un array vacío en caso de error.
  */
-exports.crearProducto = async (clienteSeleccionado, producto) => {
+exports.crearProducto = async (conexion, clienteSeleccionado, producto) => {
   const query = consultas.CREAR;
   const parametros = [
     clienteSeleccionado,
@@ -51,7 +52,7 @@ exports.crearProducto = async (clienteSeleccionado, producto) => {
   ];
 
   try {
-    const resultados = await correrQuery(query, parametros);
+    const resultados = await correrQuery(query, parametros, conexion);
 
     const idProducto = resultados.insertId;
     return idProducto;
