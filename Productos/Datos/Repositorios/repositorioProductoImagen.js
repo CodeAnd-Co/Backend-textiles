@@ -16,28 +16,22 @@ const consultasImagenes = require('@altertex/util/const/consultasImagenes');
  *
  * @returns {Promise<object|Array>} El resultado de la inserción de la imagen (incluyendo `insertId`) si es exitoso, o un arreglo vacío en caso de error.
  */
-exports.crearImagen = async (idProducto, urlImagenProducto, nombreComun) => {
+exports.crearImagen = async (conexion, idProducto, urlImagenProducto, nombreComun) => {
   const queryImagen = consultasImagenes.CREAR;
   const queryRelacionImagenProducto = consultasProductos.CREAR_IMAGEN_PRODUCTO;
   const parametrosImagen = [urlImagenProducto, 'Imagen Producto', nombreComun];
 
-  const conexion = require('@altertex/util/bd/db').promise();
-
   try {
-    await conexion.beginTransaction();
-
-    const resultadoImagen = await correrQuery(queryImagen, parametrosImagen);
+    // Use the connection passed as parameter, which is already within a transaction
+    const resultadoImagen = await correrQuery(queryImagen, parametrosImagen, conexion);
     const idImagen = resultadoImagen.insertId;
 
     const parametrosRelacion = [idImagen, idProducto];
-    await correrQuery(queryRelacionImagenProducto, parametrosRelacion);
-
-    await conexion.commit();
+    await correrQuery(queryRelacionImagenProducto, parametrosRelacion, conexion);
 
     return resultadoImagen;
   } catch (error) {
     console.error('Error al crear o asociar la imagen:', error);
-    await conexion.rollback();
-    return [];
+    throw error; // Let the caller handle the error and rollback
   }
 };
