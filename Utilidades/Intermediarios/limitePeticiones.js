@@ -1,53 +1,52 @@
 const redis = require('@altertex/config/clienteRedis');
 
 /**
- * Genera una llave única para rastrear las peticiones diarias de un usuario.
+ * Genera una llave única para rastrear las peticiones diarias de un usuario por correo.
  *
- * @param {string|number} idUsuario - ID del usuario autenticado.
- * @returns {string} Llave única en formato `quota:usuario:<idUsuario>:<fecha>`.
+ * @param {string} correo - Correo electrónico del usuario autenticado.
+ * @returns {string} Llave única en formato `quota:usuario:<correo>:<fecha>`.
  */
-const obtenerLlave = (idUsuario) => {
+const obtenerLlave = (correo) => {
   const fecha = new Date().toISOString().split('T')[0];
-  return `quota:usuario:${idUsuario}:${fecha}`;
+  return `quota:usuario:${correo}:${fecha}`;
 };
 
 const PETICIONES_MAXIMAS_DIARIAS = 1500;
 
 /**
- * Middleware que limita la cantidad de peticiones diarias que un usuario puede hacer.
- * Utiliza Redis para llevar el conteo por usuario por día.
+ * Middleware que limita la cantidad de peticiones diarias que un usuario puede hacer,
+ * usando su correo electrónico como identificador.
  *
- * Este middleware asume que `req.user.idUsuario` ha sido definido previamente,
- * por ejemplo mediante otro middleware de autenticación con JWT.
+ * Este middleware asume que `req.user.correo` ha sido definido previamente,
+ * por ejemplo mediante un middleware de autenticación con JWT.
  *
- * @param {Express.Request} req - Objeto de solicitud HTTP.
- * @param {Express.Response} res - Objeto de respuesta HTTP.
- * @param {Express.NextFunction} next - Función para pasar al siguiente middleware.
- * @returns {void}
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @param {Express.NextFunction} next
  */
 const limitePeticionesDiarias = async (req, res, next) => {
   try {
-    const idUsuario = req.user?.idUsuario;
-    if (!idUsuario) {
-      return res.status(401).json({ mensaje: 'ID del usuario no encontrado.' });
+    const correo = req.user?.correo;
+    if (!correo) {
+      return res.status(401).json({ mensaje: 'Correo del usuario no encontrado.' });
     }
 
-    const llave = obtenerLlave(idUsuario);
+    const llave = obtenerLlave(correo);
     const contador = await redis.incr(llave);
 
     if (contador === 1) {
-      await redis.expire(llave, 86400);
+      await redis.expire(llave, 86400); // 24 horas
     }
 
     if (contador > PETICIONES_MAXIMAS_DIARIAS) {
-      return res.status(429).json({ mensaje: 'Limite diario de peticiones excedido para el usuario.' });
+      return res.status(429).json({ mensaje: 'Límite diario de peticiones excedido para el usuario.' });
     }
+
     next();
   } catch (error) {
-    console.error('Error en middleware de limite de peticiones', error);
-    res.status(500).json({ mensaje: 'Error en el servidor' });
+    console.error('Error en middleware de límite de peticiones:', error);
+    res.status(500).json({ mensaje: 'Error en el servidor.' });
   }
 };
 
 module.exports = limitePeticionesDiarias;
-
