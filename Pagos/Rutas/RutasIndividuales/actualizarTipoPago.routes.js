@@ -16,7 +16,6 @@ const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
  * /api/pagos/actualizar:
  *   put:
  *     summary: Actualiza el estado de métodos de pago habilitados.
- *     description: Actualiza la configuración de los tipos de pago habilitados o deshabilitados.
  *     tags:
  *       - Pagos
  *     security:

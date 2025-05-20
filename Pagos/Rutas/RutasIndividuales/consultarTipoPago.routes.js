@@ -15,7 +15,6 @@ const revisarPermisos = require('@altertex/util/inter/verificarPermisos');
  * /api/pagos/consultar-lista:
  *   get:
  *     summary: Consulta los tipos de pago disponibles para el cliente autenticado.
- *     description: Retorna una lista de métodos de pago habilitados según el cliente seleccionado en el token.
  *     tags:
  *       - Pagos
  *     security:

@@ -14,7 +14,6 @@ const RUTAS = require('@altertex/util/const/rutas');
  * /api/productos/crear:
  *   post:
  *     summary: Crear un nuevo producto
- *     description: Crea un producto con sus variantes e imágenes asociadas
  *     tags: [Productos]
  *     security:
  *       - ApiKeyAuth: []

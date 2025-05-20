@@ -32,10 +32,14 @@ module.exports = [
   './Eventos/Rutas/RutasIndividuales/consultarEvento.routes.js',
   './Eventos/Rutas/RutasIndividuales/eliminarEvento.routes.js',
 
+  './Pagos/Rutas/RutasIndividuales/consultarTipoPago.routes.js',
+  './Pagos/Rutas/RutasIndividuales/actualizarTipoPago.routes.js',
+
   './Pedidos/Rutas/RutasIndividuales/eliminarPedidos.routes.js',
   './Pedidos/Rutas/RutasIndividuales/obtenerPedidos.routes.js',
 
   './Productos/Rutas/RutasIndividuales/consultarProductos.routes.js',
+  './Productos/Rutas/RutasIndividuales/crearProducto.routes.js',
   './Productos/Rutas/RutasIndividuales/eliminarProducto.routes.js',
 
   './Roles/Rutas/RutasIndividuales/consultarLista.routes.js',
