@@ -23,12 +23,13 @@ module.exports = [
   './Empleados/Rutas/RutasIndividuales/consultarListaGrupos.routes.js',
   './Empleados/Rutas/RutasIndividuales/eliminarEmpleado.routes.js',
   './Empleados/Rutas/RutasIndividuales/eliminarGrupoEmpleados.routes.js',
-  './Empleados/Rutas/RutasIndividuales/leerGrupoEmpleado.routes.js',
+  './Empleados/Rutas/RutasIndividuales/leerGrupoEmpleados.routes.js',
   './Empleados/Rutas/RutasIndividuales/importarEmpleados.routes.js',
   './Empleados/Rutas/RutasIndividuales/crearGrupoEmpleados.routes.js',
+  './Empleados/Rutas/RutasIndividuales/actualizarEmpleado.routes.js',
 
-  './Eventos/Rutas/RutasIndividuales/consultarEvento.routes.js',
   './Eventos/Rutas/RutasIndividuales/consultarListaEventos.routes.js',
+  './Eventos/Rutas/RutasIndividuales/consultarEvento.routes.js',
   './Eventos/Rutas/RutasIndividuales/eliminarEvento.routes.js',
 
   './Pedidos/Rutas/RutasIndividuales/eliminarPedidos.routes.js',
@@ -49,5 +50,4 @@ module.exports = [
   './Usuarios/Rutas/RutasIndividuales/crearUsuario.routes.js',
   './Usuarios/Rutas/RutasIndividuales/eliminarUsuario.routes.js',
   './Usuarios/Rutas/RutasIndividuales/leerUsuario.routes.js',
-
 ];
