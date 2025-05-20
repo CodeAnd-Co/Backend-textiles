@@ -63,12 +63,33 @@ module.exports = {
   // 200 - OK
   RESPUESTA_ELIMINAR_PRODUCTO_EXITOSA: {
     codigo: 200,
-    mensaje: "Producto eliminado exitosamente.",
+    mensaje: 'Producto eliminado exitosamente.',
   },
-  
+
   // 500 - Internal Server Error
   RESPUESTA_ERROR_GENERAL: {
     codigo: 500,
-    mensaje: "Ocurrió un error al procesar la solicitud.",
+    mensaje: 'Ocurrió un error al procesar la solicitud.',
+  },
+  //LEER PRODUCTO
+  ERROR_LEER_PRODUCTO: {
+    codigo: 400,
+    mensaje: 'Ocurrió un error al obtener la informacion del producto.',
+  },
+  LEER_PRODUCTO_EXITO: {
+    codigo: 200,
+    mensaje: 'Lista de productos consultada exitosamente.',
+  },
+  ID_INVALIDO: {
+    codigo: 400,
+    mensaje: 'No se proporciono el id del producto.',
+  },
+  ERROR_OBTENIENDO_INFORMACION: {
+    codigo: 400,
+    mensaje: 'Error obteniendo informacion del producto.',
+  },
+  PRODUCTO_NO_ENCONTRADO: {
+    codigo: 400,
+    mensaje: 'El producto solicitado no existe.',
   },
 };
