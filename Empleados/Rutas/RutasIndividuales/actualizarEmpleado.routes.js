@@ -8,6 +8,8 @@ const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const revisarPermisos = require('@altertex/util/inter/verificarPermisos');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 
 //RF[19] Actualizar Empleado - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF19]
 
@@ -177,6 +179,7 @@ ruteador.put(
   revisarApiKey(),
   validarYSanitizar,
   autorizarToken,
+  limitePeticionesDiarias,
   revisarPermisos(PERMISOS.ACTUALIZAR_EMPLEADO),
   controlador.actualizarEmpleado
 );

@@ -3,6 +3,8 @@ const ruteador = express.Router();
 const controlador = require("@altertex/aut/ctrl/inicioSesion.controller");
 const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
 const validarYSanitizar = require("@altertex/util/inter/validarYSanitizar");
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 
 const RUTAS = require("@altertex/util/const/rutas");
 
@@ -82,6 +84,7 @@ ruteador.post(
   RUTAS.AUTENTICACION.INICIO_SESION,
   validarYSanitizar,
   revisarApiKey(),
+  limitePeticionesDiarias,
   controlador.inicioSesion
 );
 
