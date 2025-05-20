@@ -20,9 +20,11 @@ const PETICIONES_MAXIMAS_DIARIAS = 1500;
  * Este middleware asume que `req.user.correo` ha sido definido previamente,
  * por ejemplo mediante un middleware de autenticación con JWT.
  *
- * @param {Express.Request} req
- * @param {Express.Response} res
- * @param {Express.NextFunction} next
+ * @param {Express.Request} req - Objeto de solicitud de Express.
+ * @param {Express.Response} res - Objeto de respuesta de Express.
+ * @param {Express.NextFunction} next - Función para pasar al siguiente middleware.
+ * @returns {Promise<void>} Retorna una promesa que se resuelve al continuar la cadena de middlewares,
+ * o responde con un error si se excede el límite o ocurre un fallo.
  */
 const limitePeticionesDiarias = async (req, res, next) => {
   try {
