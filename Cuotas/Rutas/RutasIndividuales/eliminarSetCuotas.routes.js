@@ -6,6 +6,8 @@ const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 
 /**
  * RF35 - Elimina Set de Cuotas - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF35
@@ -70,6 +72,7 @@ ruteador.post(
   RUTAS.CUOTAS.ELIMINAR_SET_CUOTAS,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.ELIMINAR_SET_CUOTAS),
   controlador.eliminarSetCuotas
 );

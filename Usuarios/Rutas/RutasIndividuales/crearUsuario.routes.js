@@ -7,6 +7,8 @@ const verificarPermisos = require("@altertex/util/inter/verificarPermisos");
 const validarYSanitizar = require("@altertex/util/inter/validarYSanitizar");
 const PERMISOS = require("@altertex/util/const/permisos");
 const RUTAS = require("@altertex/util/const/rutas");
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 /**
  * RF1 - Crear Usuario - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF1
  */
@@ -113,6 +115,7 @@ ruteador.post(
   validarYSanitizar,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.CREAR_USUARIO),
   controlador.crearUsuario
 );
