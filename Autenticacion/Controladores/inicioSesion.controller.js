@@ -66,6 +66,7 @@ exports.inicioSesion = async (req, res) => {
 
     const token = jwt.sign(
       {
+        idUsuario: usuario.idUsuario,
         correo: usuario.correoElectronico,
         permisos,
         clientesAsociados,
@@ -74,7 +75,7 @@ exports.inicioSesion = async (req, res) => {
       process.env.JWT_SECRET,
       {
         expiresIn: '8h',
-      }
+      },
     );
 
     res.cookie('token', token, {

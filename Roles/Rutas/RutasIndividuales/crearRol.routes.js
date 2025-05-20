@@ -6,6 +6,8 @@ const RUTAS = require("@altertex/util/const/rutas");
 const validarYSanitizar = require("@altertex/util/inter/validarYSanitizar");
 const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
 const autorizarToken = require("@altertex/util/inter/autorizarToken");
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 
 /**
  * @file crearRol.routes.js
@@ -38,6 +40,7 @@ ruteador.post(
     validarYSanitizar,
     revisarApiKey(),
     autorizarToken,
+    limitePeticionesDiarias,
     controlador.crearRol
 );
 

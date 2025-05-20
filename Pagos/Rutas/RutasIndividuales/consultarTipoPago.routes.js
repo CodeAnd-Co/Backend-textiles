@@ -7,6 +7,8 @@ const RUTAS = require('@altertex/util/const/rutas');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const revisarPermisos = require('@altertex/util/inter/verificarPermisos');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 
 //RF[52] Consulta Lista de Pago - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF52]
 
@@ -71,6 +73,7 @@ ruteador.get(
   RUTAS.PAGOS.CONSULTAR_LISTA,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   revisarPermisos(PERMISOS.CONSULTAR_TIPOS_PAGO),
   controlador.consultarTipoPago
 );
