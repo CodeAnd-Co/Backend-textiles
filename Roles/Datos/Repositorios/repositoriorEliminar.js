@@ -23,9 +23,16 @@ exports.eliminarRol = async (ids) => {
   try {
     if (!Array.isArray(ids) || ids.length === 0) return;
 
+    const placeholdersValidar = ids.map(() => '?').join(', ');
+    const queryValidar = CONSULTAS.VALIDAR_ROL_SIN_USUARIOS.replace('__IDS__', placeholdersValidar);
+    const resultadoValidacion = await correrQuery(queryValidar, ids);
+
+    if (resultadoValidacion[0].cantidad > 0) {
+      throw new Error(MENSAJES.ELIMINAR_ROL_ERROR.mensaje_rol_asignado);
+    }
+
     const placeholders = ids.map(() => '?').join(', ');
     const query = CONSULTAS.ELIMINAR_ROL.replace('__IDS__', placeholders);
-
     const resultado = await correrQuery(query, ids);
 
     if (resultado.affectedRows === 0) {
@@ -33,7 +40,7 @@ exports.eliminarRol = async (ids) => {
     }
 
     return;
-  } catch {
-    throw new Error(MENSAJES.ELIMINAR_ROL_ERROR.mensaje);
+  } catch (error) {
+    throw new Error(error.message || MENSAJES.ELIMINAR_ROL_ERROR.mensaje);
   }
 };

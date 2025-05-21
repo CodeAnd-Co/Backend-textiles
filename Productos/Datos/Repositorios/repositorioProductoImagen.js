@@ -1,5 +1,5 @@
 //RF26 Crea Producto - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF26
-const correrQuery = require('@altertex/util/ser/correrQuery');
+const db = require('@altertex/util/bd/db');
 const consultasProductos = require('@altertex/util/const/consultasProductos');
 const consultasImagenes = require('@altertex/util/const/consultasImagenes');
 
@@ -17,27 +17,32 @@ const consultasImagenes = require('@altertex/util/const/consultasImagenes');
  * @returns {Promise<object|Array>} El resultado de la inserción de la imagen (incluyendo `insertId`) si es exitoso, o un arreglo vacío en caso de error.
  */
 exports.crearImagen = async (idProducto, urlImagenProducto, nombreComun) => {
-  const queryImagen = consultasImagenes.CREAR;
-  const queryRelacionImagenProducto = consultasProductos.CREAR_IMAGEN_PRODUCTO;
   const parametrosImagen = [urlImagenProducto, 'Imagen Producto', nombreComun];
-
-  const conexion = require('@altertex/util/bd/db').promise();
+  const conexion = await db.getConnection();
 
   try {
     await conexion.beginTransaction();
 
-    const resultadoImagen = await correrQuery(queryImagen, parametrosImagen);
+    const [resultadoImagen] = await conexion.query(
+      consultasImagenes.CREAR,
+      parametrosImagen
+    );
+
     const idImagen = resultadoImagen.insertId;
 
     const parametrosRelacion = [idImagen, idProducto];
-    await correrQuery(queryRelacionImagenProducto, parametrosRelacion);
+    await conexion.query(
+      consultasProductos.CREAR_IMAGEN_PRODUCTO,
+      parametrosRelacion
+    );
 
     await conexion.commit();
-
     return resultadoImagen;
   } catch (error) {
     console.error('Error al crear o asociar la imagen:', error);
     await conexion.rollback();
     return [];
+  } finally {
+    if (conexion) conexion.release();
   }
 };

@@ -7,7 +7,7 @@ const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * @swagger
- * /api/autenticacion/usuario-autenticado:
+ * /api/autenticacion/autenticar:
  *   get:
  *     summary: Obtiene los datos del usuario autenticado mediante un token JWT.
  *     tags:

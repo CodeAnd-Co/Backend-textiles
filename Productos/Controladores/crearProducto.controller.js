@@ -10,45 +10,12 @@ const repositorioProductoImagen = require('@altertex/pro/repos/repositorioProduc
 const repositorioCrearVariante = require('@altertex/pro/repos/repositorioCrearVariante');
 const repositorioVarianteImagen = require('@altertex/pro/repos/repositorioVarianteImagen');
 const repositorioCrearOpcion = require('@altertex/pro/repos/repositorioCrearOpcion');
-const conexion = require('@altertex/util/bd/db').promise();
+// Updated to use the connection pool correctly
+const db = require('@altertex/util/bd/db');
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-/**
- * Controlador para crear un producto.
- *
- * Este controlador maneja la creación de un producto, incluyendo la validación de datos y el manejo de archivos de imagen.
- * Realiza la creación del proveedor, producto, variantes y las imágenes asociadas, almacenándolas en un servicio S3.
- * Si ocurre algún error en cualquier parte del proceso, se realiza un rollback de la transacción.
- *
- * @param {object} req - El objeto de solicitud.
- * @param {object} req.user - El usuario autenticado.
- * @param {string} req.user.clienteSeleccionado - El ID del cliente seleccionado por el usuario.
- * @param {string} req.body.proveedor - EL ID del proveedor seleccionado por el usuario.
- * @param {object} req.body - El cuerpo de la solicitud.
- * @param {string} req.body.producto - Información del producto en formato JSON.
- * @param {string} req.body.variantes - Información de las variantes del producto en formato JSON.
- * @param {string} req.body.mapaImagenes - Información del mapa de imagenes de las variantes en formato JSON.
- * @param {object} req.files - Archivos enviados en la solicitud.
- * @param {Array} req.files.imagenProducto - La imagen principal del producto.
- * @param {Array} req.files.imagenesVariante - Las imágenes asociadas a las variantes del producto.
- *
- * @param {object} res - El objeto de respuesta.
- * @param {Function} res.status - Método para establecer el código de estado HTTP en la respuesta.
- * @param {Function} res.json - Método para enviar una respuesta JSON.
- *
- * @returns {object} Retorna un mensaje de éxito si el producto se crea correctamente, o un mensaje de error si falla alguna validación o proceso.
- *
- * @example
- * // Ejemplo de cómo usar el controlador
- * // Se hace una solicitud POST a /crear-producto con el cuerpo de la solicitud que contiene el proveedor, producto, variantes y archivos de imagen.
- *
- * // Respuesta exitosa:
- * res.status(200).json({ mensaje: 'Producto creado correctamente' });
- *
- * // Respuesta de error:
- * res.status(400).json({ mensaje: 'Error al crear producto', error: 'Error específico' });
- */
+// Controller code remains the same but with updated transaction handling
 exports.crearProducto = [
   upload.fields([
     { name: 'imagenProducto', maxCount: 1 },
@@ -62,15 +29,16 @@ exports.crearProducto = [
     const mapaImagenes = JSON.parse(req.body.mapaImagenes);
     const imagenProducto = req.files.imagenProducto ? req.files.imagenProducto[0] : null;
     const imagenesVariante = req.files.imagenesVariante || [];
+    let conexion = null;
 
     // prettier-ignore
     if (
-      !idCliente 
-      || !mapaImagenes 
-      || !producto 
-      || !Array.isArray(variantes) 
-      || variantes.length === 0 
-      || !imagenProducto 
+      !idCliente
+      || !mapaImagenes
+      || !producto
+      || !Array.isArray(variantes)
+      || variantes.length === 0
+      || !imagenProducto
       || !imagenesVariante
     ) {
       return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
@@ -92,6 +60,8 @@ exports.crearProducto = [
     }
 
     try {
+      // Get connection from the pool
+      conexion = await db.getConnection();
       await conexion.beginTransaction();
 
       const idProducto = await repositorioCrearProducto.crearProducto(idCliente, producto);
@@ -109,6 +79,7 @@ exports.crearProducto = [
           throw new Error(errorVariante.error);
         }
 
+        // Update repositorioCrearVariante if not already updated
         const idVariante = await repositorioCrearVariante.crearVariante(idProducto, variante);
         if (!idVariante) {
           throw new Error('Error al crear variante');
@@ -129,13 +100,14 @@ exports.crearProducto = [
 
       await Promise.all(variantesPromises);
 
+      // Upload image processing remains unchanged
       const urlImagenProductoPromise = imagenProducto
         ? enviarS3({
-            Bucket: process.env.AWS_BUCKET_NAME,
-            Key: `productos/${imagenProducto.originalname}`,
-            Body: imagenProducto.buffer,
-            ContentType: imagenProducto.mimetype,
-          })
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: `productos/${imagenProducto.originalname}`,
+          Body: imagenProducto.buffer,
+          ContentType: imagenProducto.mimetype,
+        })
         : Promise.resolve(null);
 
       // prettier-ignore
@@ -145,7 +117,7 @@ exports.crearProducto = [
           Key: `productos/${imagenVariante.originalname}`,
           Body: imagenVariante.buffer,
           ContentType: imagenVariante.mimetype,
-      }));
+        }));
 
       const [urlImagenProducto, ...urlImagenVariantes] = await Promise.all([
         urlImagenProductoPromise,
@@ -184,7 +156,7 @@ exports.crearProducto = [
       await conexion.commit();
       return res.status(200).json({ mensaje: 'Producto creado correctamente' });
     } catch (error) {
-      await conexion.rollback();
+      if (conexion) await conexion.rollback();
 
       let errorMensaje = MENSAJES_PRODUCTOS.ERROR_CREAR_PRODUCTO;
 
@@ -200,6 +172,8 @@ exports.crearProducto = [
         mensaje: errorMensaje.mensaje,
         error: error.message,
       });
+    } finally {
+      if (conexion) conexion.release();
     }
   },
 ];

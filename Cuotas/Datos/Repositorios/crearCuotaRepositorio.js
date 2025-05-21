@@ -12,10 +12,6 @@ const QUERY = require('@altertex/util/const/consultasCuotas');
  * - Si algún producto tiene un `idProducto` no numérico, se busca en la base de datos
  * - Si ocurre algún error, la transacción se revierte automáticamente
  *
- * Validaciones:
- * - Se valida la estructura del objeto `data` y los tipos de datos requeridos
- * - Se valida cada producto en `productosYLimite` para asegurar que tengan los campos esperados
- *
  * @async
  * @function crearCuota
  * @param {object} data - Objeto que contiene la información del cuotaSet.
@@ -35,9 +31,7 @@ const QUERY = require('@altertex/util/const/consultasCuotas');
  * @throws {Error} Si faltan parámetros requeridos o falla la transacción.
  */
 exports.crearCuota = async (data) => {
-  const conexion = db.promise();
-
-  // Validaciones de parámetros obligatorios
+  // Validaciones iniciales
   if (
     !data
     || typeof data !== 'object'
@@ -54,17 +48,30 @@ exports.crearCuota = async (data) => {
 
   // Validar estructura de cada producto
   for (const item of data.productosYLimite) {
+    // Verifica si el valor original es string y tiene ceros a la izquierda
+    if (
+      (typeof item.limite === 'string' && /^0[0-9]+$/.test(item.limite))
+      || (typeof item.limiteActual === 'string' && /^0[0-9]+$/.test(item.limiteActual))
+    ) {
+      throw new Error('No se permiten ceros a la izquierda en los valores de cuota.');
+    }
     if (
       !item
       || (typeof item.idProducto !== 'string' && typeof item.idProducto !== 'number')
       || typeof item.limite !== 'number'
+      || !Number.isInteger(item.limite)
+      || item.limite <= 0
       || typeof item.limiteActual !== 'number'
+      || !Number.isInteger(item.limiteActual)
+      || item.limiteActual <= 0
     ) {
       throw new Error(
-        'Cada producto debe tener un idProducto (string o number), limite (number) y limiteActual (number).'
+        'Cada producto debe tener un idProducto (string o number), limite (entero > 0) y limiteActual (entero > 0).'
       );
     }
   }
+
+  const conexion = await db.getConnection();
 
   try {
     await conexion.beginTransaction();
@@ -93,7 +100,6 @@ exports.crearCuota = async (data) => {
     for (const item of productosYLimite) {
       let idProducto = item.idProducto;
 
-      // Si no es numérico, buscar ID real del producto
       if (isNaN(idProducto)) {
         const [rows] = await conexion.execute(QUERY.SELECCIONAR_PRODUCTO, [idProducto]);
 
@@ -115,8 +121,10 @@ exports.crearCuota = async (data) => {
     await conexion.commit();
 
     return cuotaSetId;
-  } catch {
-    if (conexion) await conexion.rollback();
+  } catch  {
+    await conexion.rollback();
     throw new Error('Error creando cuota set');
+  } finally {
+    if (conexion) conexion.release();
   }
 };

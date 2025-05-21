@@ -13,6 +13,7 @@ const MENSAJES_CLIENTES = require('@altertex/util/const/mensajesClientes');
  * @param {string} req.user.correo - Correo electrónico del usuario autenticado.
  * @param {Array<string>} req.user.permisos - Permisos del usuario.
  * @param {Array<number>} req.user.clientesAsociados - Lista de IDs de clientes a los que el usuario tiene acceso.
+ * @param {string} req.user.nombreCompleto - Nombre completo del usuario autenticado.
  * @param {object} req.body - Cuerpo de la solicitud.
  * @param {string|number} req.body.idCliente - ID del cliente que se desea consultar.
  *
@@ -29,7 +30,9 @@ const MENSAJES_CLIENTES = require('@altertex/util/const/mensajesClientes');
  */
 exports.consultarSistema = async (req, res) => {
   const idCliente = req.body.idCliente;
-  const { correo, permisos, clientesAsociados } = req.user;
+  const { correo, permisos, clientesAsociados, nombreCompleto } = req.user;
+
+  const tiempoExpiracion = 8 * 60 * 60 * 1000;
 
   // if (isNaN(idCliente)) {
   //   return res
@@ -66,6 +69,13 @@ exports.consultarSistema = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: 'None',
+    });
+
+    res.cookie('nombreUsuario', nombreCompleto, {
+      httpOnly: false,
+      secure: true,
+      sameSite: 'None',
+      maxAge: tiempoExpiracion,
     });
 
     return res.status(MENSAJES_CLIENTES.CONSULTA_EXITOSA.codigo).json({

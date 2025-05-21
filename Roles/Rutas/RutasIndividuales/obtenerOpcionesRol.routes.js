@@ -2,6 +2,8 @@ const express = require('express');
 const ruteador = express.Router();
 const controlador = require('@altertex/rol/ctrl/obtenerOpcionesRol.controller');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 
 /**
  * @file obtenerOpcionesRol.routes.js
@@ -23,6 +25,7 @@ const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 ruteador.post(
   '/obtener-opciones',
   revisarApiKey(),
+  limitePeticionesDiarias,
   controlador.obtenerOpcionesRol
 );
 

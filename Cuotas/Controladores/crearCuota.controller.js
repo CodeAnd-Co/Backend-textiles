@@ -30,7 +30,26 @@ exports.crearCuota = async (req, res) => {
       return res.status(400).json({ error: MENSAJES.NOMBRE_OBLIGATORIO });
     }
 
-    validarCuotaSet(cuotaSetModelo.nombre, cuotaSetModelo.productosYLimite, res);
+    let errorValidacion = null;
+    try {
+      errorValidacion = validarCuotaSet(
+        cuotaSetModelo.nombre,
+        cuotaSetModelo.productosYLimite,
+        res
+      );
+    } catch (err) {
+      return res.status(400).json({
+        error: 'Error creando cuota set',
+        detalle: err.message || err,
+      });
+    }
+
+    if (errorValidacion) {
+      return res.status(400).json({
+        error: errorValidacion,
+        contexto: 'Error al validar los datos del set de cuotas. Verifica los campos enviados.',
+      });
+    }
 
     const hoy = new Date();
     const fechaFormateada = hoy.toISOString().split('T')[0];
@@ -41,7 +60,10 @@ exports.crearCuota = async (req, res) => {
     await repositorio.crearCuota(cuotaSetModelo);
 
     return res.status(201).json({ exito: MENSAJES.CREACION_EXITOSA });
-  } catch {
-    return res.status(400).json({ error: MENSAJES.ERROR_CREACION });
+  } catch (error) {
+    return res.status(400).json({
+      error: MENSAJES.ERROR_CREACION,
+      detalle: error.message || error,
+    });
   }
 };

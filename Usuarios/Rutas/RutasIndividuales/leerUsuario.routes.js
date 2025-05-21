@@ -7,8 +7,6 @@
  * /api/usuarios/consultar-usuario:
  *   post:
  *     summary: Consulta la información de un usuario específico.
- *     description: |
- *       Este endpoint permite consultar los datos de un usuario por su ID. 
  *     tags: [Usuarios]
  *     security:
  *       - ApiKeyAuth: []
@@ -24,7 +22,7 @@
  *                 example: 123
  *             required:
  *               - idUsuario
-  *     responses:
+ *     responses:
  *       200:
  *         description: Usuario encontrado exitosamente.
  *         content:
@@ -99,22 +97,24 @@
  *                   example: "Ocurrió un error al obtener los datos del usuario."
  */
 
-const express = require("express");
+const express = require('express');
 const ruteador = express.Router();
-const controlador = require("@altertex/usu/ctrl/leerUsuario.controller");
-const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
-const autorizarToken = require("@altertex/util/inter/autorizarToken");
+const controlador = require('@altertex/usu/ctrl/leerUsuario.controller');
+const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
+const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
-const verificarPermisos = require("@altertex/util/inter/verificarPermisos");
+const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 
-const PERMISOS = require("@altertex/util/const/permisos");
-const RUTAS = require("@altertex/util/const/rutas");
+const PERMISOS = require('@altertex/util/const/permisos');
+const RUTAS = require('@altertex/util/const/rutas');
 
 ruteador.post(
   RUTAS.USUARIOS.LEER,
   validarYSanitizar,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.LEER_USUARIO),
   controlador.leerUsuario
 );

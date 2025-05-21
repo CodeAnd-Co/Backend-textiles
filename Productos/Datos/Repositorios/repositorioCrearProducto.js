@@ -1,5 +1,5 @@
 //RF26 Crea Producto - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF26
-const correrQuery = require('@altertex/util/ser/correrQuery');
+const db = require('@altertex/util/bd/db');
 const consultas = require('@altertex/util/const/consultasProductos');
 
 /**
@@ -30,33 +30,34 @@ const consultas = require('@altertex/util/const/consultasProductos');
  * @returns {number|Array} El ID del producto recién creado en caso de éxito, o un array vacío en caso de error.
  */
 exports.crearProducto = async (clienteSeleccionado, producto) => {
-  const query = consultas.CREAR;
-  const parametros = [
-    clienteSeleccionado,
-    producto.idProveedor,
-    producto.nombreComun,
-    producto.nombreComercial,
-    producto.descripcion,
-    producto.marca,
-    producto.modelo,
-    producto.tipoProducto,
-    producto.precioPuntos,
-    producto.precioCliente,
-    producto.precioVenta,
-    producto.costo,
-    producto.impuesto,
-    producto.descuento,
-    producto.estado,
-    producto.envio,
-  ];
+  const conexion = await db.getConnection();
 
   try {
-    const resultados = await correrQuery(query, parametros);
+    const [resultados] = await conexion.query(consultas.CREAR, [
+      clienteSeleccionado,
+      producto.idProveedor,
+      producto.nombreComun,
+      producto.nombreComercial,
+      producto.descripcion,
+      producto.marca,
+      producto.modelo,
+      producto.tipoProducto,
+      producto.precioPuntos,
+      producto.precioCliente,
+      producto.precioVenta,
+      producto.costo,
+      producto.impuesto,
+      producto.descuento,
+      producto.estado,
+      producto.envio,
+    ]);
 
     const idProducto = resultados.insertId;
     return idProducto;
   } catch (error) {
     console.error('Error al crear producto:', error);
     return [];
+  } finally {
+    if (conexion) conexion.release();
   }
 };
