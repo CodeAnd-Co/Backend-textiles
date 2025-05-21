@@ -18,7 +18,6 @@ const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones')
  * /api/empleados/actualizar:
  *   put:
  *     summary: Actualiza la información de un empleado.
- *     description: Actualiza los datos de un empleado específico en el sistema.
  *     tags:
  *       - Empleados
  *     security:
@@ -174,6 +173,7 @@ const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones')
  *           -H "Content-Type: application/json" \
  *           -d '{"id":50,"idUsuario":30,"nombreCompleto":"Angel Romero","correoElectronico":"aromero@google.com","numeroEmergencia":"9876543214","areaTrabajo":"Ventas","posicion":"Auxiliar","cantidadPuntos":2,"antiguedad":"2000-02-10","idEmpleado":50}'
  */
+
 ruteador.put(
   RUTAS.EMPLEADOS.ACTUALIZAR,
   revisarApiKey(),
