@@ -10,7 +10,7 @@ const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones')
 
 /**
  * @swagger
- * /api/roles/crear:
+ * /api/roles/crear-rol:
  *   post:
  *     summary: Crear un nuevo rol en el sistema
  *     description: Crea un nuevo rol con sus permisos asociados. Solo usuarios autorizados pueden crear roles.
