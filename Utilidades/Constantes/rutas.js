@@ -7,6 +7,8 @@ module.exports = {
     REGISTRO: '/registro',
     CERRAR_SESION: '/cerrar-sesion',
     USUARIO_AUTENTICADO: '/autenticar',
+    ACTIVAR_2FA: '/activar-2fa',
+    VERIFICAR_2FA: '/verificar-2fa'
   },
   USUARIOS: {
     BASE: '/usuarios',
