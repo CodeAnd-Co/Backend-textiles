@@ -24,9 +24,10 @@ const { verificarCodigo2FA } = require('@altertex/util/ser/verificarCodigo2FA.se
  */
 exports.eliminarUsuario = async (req, res) => {
   try {
+
     let idsUsuarios = req.body.ids;
     const codigo2FA = req.body.codigo2FA;
-    const idSolicitante = req.usuario?.idUsuario;
+    const idSolicitante = req.user?.idUsuario;
 
     // Validación: Se requiere al menos un ID
     if (!idsUsuarios || (Array.isArray(idsUsuarios) && idsUsuarios.length === 0)) {
@@ -74,7 +75,9 @@ exports.eliminarUsuario = async (req, res) => {
     }
 
     await repositorio.eliminarUsuarios(idsNumericos);
-  } catch {
+
+    return res.status(200).json({ mensaje: 'Usuarios eliminados correctamente' });
+  } catch (error) {
     return res.status(MENSAJES_USUARIOS.ERROR_ELIMINAR_USUARIO.codigo).json({
       mensaje: MENSAJES_USUARIOS.ERROR_ELIMINAR_USUARIO.mensaje,
     });
