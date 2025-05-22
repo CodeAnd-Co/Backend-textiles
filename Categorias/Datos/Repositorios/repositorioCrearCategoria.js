@@ -59,13 +59,13 @@ exports.crearCategoria = async (categoria) => {
       throw new Error(`Ya existe una categoría con ese nombre.`);
     }
 
-    const idsProductos = productos.map(p => p.idProducto);
+    const idsProductos = productos.map(producto => producto.idProducto);
     const [productosValidos] = await conexion.query(
       CONSULTA.PRODUCTOS_EXISTENTES_POR_IDS,
       [idsProductos],
     );
 
-    const idsValidos = productosValidos.map(p => p.idProducto);
+    const idsValidos = productosValidos.map(producto => producto.idProducto);
     const idsInvalidos = idsProductos.filter(id => !idsValidos.includes(id));
 
     if (idsInvalidos.length > 0) {
