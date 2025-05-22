@@ -7,13 +7,12 @@ const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 
-
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * @swagger
- * /api/sets-productos/eliminar-set:
+ * /api/sets-productos/eliminar:
  *   delete:
  *     summary: Eliminar sets de productos.
  *     description: Elimina uno o varios sets de productos de la base de datos. Requiere autenticación y permisos específicos.
