@@ -24,6 +24,7 @@ const MENSAJES_EMPLEADOS = require('@altertex/util/const/mensajesEmpleados');
  */
 exports.eliminarEmpleado = async (req, res) => {
   const idsEmpleado = req.body.idsEmpleado;
+  console.log('IDs de empleados a eliminar:', idsEmpleado);
 
   // Validación de entrada
   if (!Array.isArray(idsEmpleado) || idsEmpleado.length === 0) {
