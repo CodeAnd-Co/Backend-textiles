@@ -6,6 +6,8 @@ const controlador = require('@altertex/emp/ctrl/eliminarGrupoEmpleados.controlle
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
@@ -77,6 +79,7 @@ ruteador.post(
   RUTAS.EMPLEADOS.ELIMINAR_GRUPO,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.ELIMINAR_GRUPO_EMPLEADOS),
   controlador.eliminarGrupoEmpleados
 );

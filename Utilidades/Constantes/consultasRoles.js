@@ -54,5 +54,12 @@ module.exports = {
   ELIMINAR_ROL: `
     DELETE FROM rol
     WHERE idRol IN (__IDS__);
-`,
+  `,
+  VALIDAR_ROL_SIN_USUARIOS: `
+    SELECT COUNT(*) AS cantidad
+    FROM usuario_rol
+    WHERE idRol IN (__IDS__);
+  `,
+
+
 };

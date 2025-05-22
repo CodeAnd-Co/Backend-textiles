@@ -43,30 +43,36 @@ module.exports = {
 `,
 
   LEER_CLIENTE: `
-        SELECT 
-            c.idCliente,
-            c.nombreComercial,
-            c.nombreFiscal,
-            (
-                SELECT COUNT(*) 
-                FROM empleado e 
-                WHERE e.idCliente = c.idCliente
-            ) AS numeroEmpleados,
-            (
-                SELECT COUNT(*) 
-                FROM usuario_cliente uc 
-                WHERE uc.idCliente = c.idCliente
-            ) AS usuariosAsignados,
-            i.urlImagen  
-        FROM 
-            cliente c
-        LEFT JOIN 
-            imagen_cliente ic ON c.idCliente = ic.idCliente
-        LEFT JOIN 
-            imagen i ON ic.idImagen = i.idImagen AND i.tipoImagen = "Logo"
-        WHERE 
-            c.idCliente = ?;
-    `,
+    SELECT 
+        c.idCliente,
+        c.nombreComercial,
+        c.nombreFiscal,
+        (
+            SELECT COUNT(*) 
+            FROM empleado e 
+            WHERE e.idCliente = c.idCliente
+        ) AS numeroEmpleados,
+        (
+            SELECT COUNT(DISTINCT uc.idUsuario)
+            FROM usuario_cliente uc
+            WHERE uc.idCliente = c.idCliente
+              AND uc.idUsuario NOT IN (
+                  SELECT ur.idUsuario
+                  FROM usuario_rol ur
+                  JOIN rol r ON ur.idRol = r.idRol
+                  WHERE r.nombre = 'Empleado'
+              )
+        ) AS usuariosAsignados,
+        i.urlImagen  
+    FROM 
+        cliente c
+    LEFT JOIN 
+        imagen_cliente ic ON c.idCliente = ic.idCliente
+    LEFT JOIN 
+        imagen i ON ic.idImagen = i.idImagen AND i.tipoImagen = "Logo"
+    WHERE 
+        c.idCliente = ?;
+`,
 
   // QUERIES ACTUALIZAR
   ACTUALIZAR_NOMBRE_FISCAL: `

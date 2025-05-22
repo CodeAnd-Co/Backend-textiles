@@ -5,6 +5,8 @@ const controlador = require('@altertex/pro/ctrl/crearProducto.controller');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
@@ -14,7 +16,6 @@ const RUTAS = require('@altertex/util/const/rutas');
  * /api/productos/crear:
  *   post:
  *     summary: Crear un nuevo producto
- *     description: Crea un producto con sus variantes e imágenes asociadas
  *     tags: [Productos]
  *     security:
  *       - ApiKeyAuth: []
@@ -109,6 +110,7 @@ ruteador.post(
   RUTAS.PRODUCTOS.CREAR,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.CREAR_PRODUCTO),
   controlador.crearProducto
 );

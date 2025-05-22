@@ -8,6 +8,8 @@ const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const revisarPermisos = require('@altertex/util/inter/verificarPermisos');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 
 //RF[19] Actualizar Empleado - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF19]
 
@@ -16,7 +18,6 @@ const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
  * /api/empleados/actualizar:
  *   put:
  *     summary: Actualiza la información de un empleado.
- *     description: Actualiza los datos de un empleado específico en el sistema.
  *     tags:
  *       - Empleados
  *     security:
@@ -172,11 +173,13 @@ const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
  *           -H "Content-Type: application/json" \
  *           -d '{"id":50,"idUsuario":30,"nombreCompleto":"Angel Romero","correoElectronico":"aromero@google.com","numeroEmergencia":"9876543214","areaTrabajo":"Ventas","posicion":"Auxiliar","cantidadPuntos":2,"antiguedad":"2000-02-10","idEmpleado":50}'
  */
+
 ruteador.put(
   RUTAS.EMPLEADOS.ACTUALIZAR,
   revisarApiKey(),
   validarYSanitizar,
   autorizarToken,
+  limitePeticionesDiarias,
   revisarPermisos(PERMISOS.ACTUALIZAR_EMPLEADO),
   controlador.actualizarEmpleado
 );

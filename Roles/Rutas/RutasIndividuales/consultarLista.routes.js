@@ -14,6 +14,8 @@ const controlador = require('@altertex/rol/ctrl/consultarLista.controller');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 
 // Importación de constantes que definen los permisos y las rutas de la aplicación.
 const PERMISOS = require('@altertex/util/const/permisos');
@@ -51,6 +53,7 @@ ruteador.post(
   RUTAS.ROLES.CONSULTAR_LISTA,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.CONSULTAR_ROLES),
   controlador.consultarLista
 );

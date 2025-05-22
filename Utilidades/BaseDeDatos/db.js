@@ -1,39 +1,53 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
 /**
- * Establece una conexión con una base de datos MySQL utilizando las credenciales definidas
- * en las variables de entorno. La conexión se realiza con soporte para caracteres UTF-8 multibyte.
+ * Establece un pool de conexiones con una base de datos MySQL utilizando las credenciales definidas
+ * en las variables de entorno. Incluye verificación inicial de conexión y soporte para UTF-8 multibyte.
  *
  * @module conexionMySQL
- * @requires mysql2
+ * @requires mysql2/promise
  *
- * @constant {object} conexion - Objeto de conexión MySQL activo.
- * @property {Function} connect - Método para establecer la conexión con la base de datos.
- *
- * @example
- * const conexion = require('./conexion');
- * conexion.query('SELECT * FROM usuarios', (err, results) => {
- *   if (err) throw err;
- *   console.log(results);
- * });
- *
- * @throws {Error} Si ocurre un error al conectar a la base de datos.
+ * @constant {object} pool - Pool de conexiones MySQL.
+ * @property {Function} query - Método para realizar consultas a la base de datos.
  */
-const conexion = mysql.createConnection({
+
+const pool = mysql.createPool({
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
+  port: process.env.DB_PORT || 3306,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  database: process.env.DB_NAME, // elimina espacios accidentales
   charset: 'utf8mb4',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 0, // Iniciar keepAlive inmediatamente
+  // Aumentar timeouts para mayor estabilidad
+  connectTimeout: 60000, // 60 segundos para conectar
 });
 
-conexion.connect((error) => {
-  if (error) {
-    console.error('Error connecting to MySQL:', error.stack);
-    return;
+// Verificar conexión inicial una vez al arrancar
+(async () => {
+  try {
+    const connection = await pool.getConnection();
+    console.log(`Conectado a MySQL con id ${connection.threadId}`);
+    connection.release(); // libera la conexión al pool
+  } catch (error) {
+    console.error('Error conectandose a MySQL:', error.stack);
   }
-  console.log(`Connected to MySQL as id ${conexion.threadId}`);
-});
+})();
 
-module.exports = conexion;
+// Configurar un ping periódico para mantener las conexiones vivas
+const pingInterval = 30000; // 30 segundos
+setInterval(async () => {
+  try {
+    const connection = await pool.getConnection();
+    await connection.query('SELECT 1');
+    connection.release();
+  } catch (error) {
+    console.error('Error en ping a MySQL:', error.message);
+  }
+}, pingInterval);
+
+module.exports = pool;
