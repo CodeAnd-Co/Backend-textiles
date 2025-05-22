@@ -8,13 +8,12 @@ const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
-const validarYSanitizar = require("@altertex/util/inter/validarYSanitizar");
+const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
-
 
 /**
  * @swagger
- * /api/empleados/importar:
+ * /api/empleados/importar-empleados:
  *   post:
  *     summary: Importa múltiples empleados desde un JSON derivado de CSV.
  *     tags:

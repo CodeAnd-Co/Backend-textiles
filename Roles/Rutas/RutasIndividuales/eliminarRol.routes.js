@@ -13,7 +13,7 @@ const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones')
 
 /**
  * @swagger
- * /api/roles/eliminar-rol:
+ * /api/roles/eliminar:
  *   delete:
  *     tags:
  *       - Roles
