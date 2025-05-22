@@ -35,7 +35,7 @@ const RUTAS = require('@altertex/util/const/rutas');
  *                 items:
  *                   type: integer
  *             example:
- *               idsUsuario: [1, 2, 3]
+ *               ids: [1, 2, 3]
  *     responses:
  *       204:
  *         description: Usuarios eliminados exitosamente.
