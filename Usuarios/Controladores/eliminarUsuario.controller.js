@@ -77,7 +77,7 @@ exports.eliminarUsuario = async (req, res) => {
     await repositorio.eliminarUsuarios(idsNumericos);
 
     return res.status(200).json({ mensaje: 'Usuarios eliminados correctamente' });
-  } catch (error) {
+  } catch {
     return res.status(MENSAJES_USUARIOS.ERROR_ELIMINAR_USUARIO.codigo).json({
       mensaje: MENSAJES_USUARIOS.ERROR_ELIMINAR_USUARIO.mensaje,
     });
