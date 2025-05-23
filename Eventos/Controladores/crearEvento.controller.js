@@ -2,7 +2,6 @@
 
 const repositorio = require('@altertex/eve/repos/repositorioCrearEvento');
 const MENSAJES_EVENTOS = require('@altertex/util/const/mensajesEventos');
-const { parse } = require('dotenv');
 
 /**
  * Controlador para crear un nuevo evento.
@@ -22,8 +21,7 @@ const { parse } = require('dotenv');
  */
 exports.crearEvento = async (req, res) => {
   try {
-    const { idCliente, nombre, descripcion, puntos, multiplicador, periodoRenovacion, renovacion } =
-      req.body;
+    const { idCliente, nombre, descripcion, puntos, multiplicador, periodoRenovacion, renovacion } = req.body;
 
     // Validar los datos de entrada
     const nuevoEvento = {
