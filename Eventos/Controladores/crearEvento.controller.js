@@ -20,10 +20,10 @@ const { parse } = require('dotenv');
  *
  * @returns {object} - Respuesta JSON con el resultado de la operación.
  */
-exports.crearEvento = (req, res) => {
+exports.crearEvento = async (req, res) => {
   try {
-
-    const { idCliente, nombre, descripcion, puntos, multiplicador, periodoRenovacion, renovacion } = req.body;
+    const { idCliente, nombre, descripcion, puntos, multiplicador, periodoRenovacion, renovacion } =
+      req.body;
 
     // Validar los datos de entrada
     const nuevoEvento = {
@@ -33,19 +33,21 @@ exports.crearEvento = (req, res) => {
       puntos: parseFloat(puntos),
       multiplicador: parseFloat(multiplicador),
       periodoRenovacion,
-      renovacion: parseInt(renovacion, 10),
+      renovacion: renovacion ? 1 : 0,
     };
 
-    // Validación de datos
-    if (repositorio.crearEvento(nuevoEvento)) {
-      return res.status(201).json({
-        codigo: MENSAJES_EVENTOS.EVENTO_CREADO.codigo,
-        mensaje: MENSAJES_EVENTOS.EVENTO_CREADO.mensaje,
-      });
-    }
+    const resultado = await repositorio.crearEvento(nuevoEvento);
+
+    // Verificar si el evento fue creado exitosamente
+    return res.status(MENSAJES_EVENTOS.EVENTO_CREADO.codigo).json({
+      codigo: MENSAJES_EVENTOS.EVENTO_CREADO.codigo,
+      mensaje: MENSAJES_EVENTOS.EVENTO_CREADO.mensaje,
+      evento: resultado.evento,
+    });
 
   } catch {
     return res.status(MENSAJES_EVENTOS.ERROR_CREAR_EVENTO.codigo).json({
+      codigo: MENSAJES_EVENTOS.ERROR_CREAR_EVENTO.codigo,
       mensaje: MENSAJES_EVENTOS.ERROR_CREAR_EVENTO.mensaje,
     });
   }

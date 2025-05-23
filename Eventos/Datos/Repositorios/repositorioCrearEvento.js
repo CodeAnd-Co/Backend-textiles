@@ -25,24 +25,17 @@ exports.crearEvento = async ({
   periodoRenovacion,
   renovacion,
 }) => {
-  try {
-    
-    const query = CONSULTAS_EVENTOS.CREAR_EVENTO;
-    
-    const resultado = await correrQuery(query, [
-      idCliente,
-      nombre,
-      descripcion,
-      puntos,
-      multiplicador,
-      periodoRenovacion,
-      renovacion,
-    ]);
+  const query = CONSULTAS_EVENTOS.CREAR_EVENTO;
 
-    return resultado;
+  const resultado = await correrQuery(query, [
+    idCliente,
+    nombre,
+    descripcion,
+    puntos,
+    multiplicador,
+    periodoRenovacion,
+    renovacion,
+  ]);
 
-  } catch (error) {
-    console.error('Error al crear evento:', error);
-    throw error;
-  }
+  return resultado;
 };
