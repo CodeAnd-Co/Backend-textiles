@@ -1,6 +1,6 @@
 // RF36 - Crear Evento - [https://codeandco-wiki.netlify.app/docs/next/proyectos/textiles/documentacion/requisitos/RF36]
 
-const db = require('@altertex/util/bd/db');
+const correrQuery = require('@altertex/util/ser/correrQuery');
 const CONSULTAS_EVENTOS = require('@altertex/util/const/consultasEventos');
 
 /**
@@ -25,5 +25,24 @@ exports.crearEvento = async ({
   periodoRenovacion,
   renovacion,
 }) => {
-  return true;
+  try {
+    
+    const query = CONSULTAS_EVENTOS.CREAR_EVENTO;
+    
+    const resultado = await correrQuery(query, [
+      idCliente,
+      nombre,
+      descripcion,
+      puntos,
+      multiplicador,
+      periodoRenovacion,
+      renovacion,
+    ]);
+
+    return resultado;
+
+  } catch (error) {
+    console.error('Error al crear evento:', error);
+    throw error;
+  }
 };
