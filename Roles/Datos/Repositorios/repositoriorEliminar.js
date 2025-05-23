@@ -37,8 +37,8 @@ exports.eliminarRol = async (ids) => {
   } catch (error) {
     // Si el error es uno de los definidos (mensaje de MENSAJES), lo relanzamos tal cual
     if (
-      error.message === MENSAJES.ELIMINAR_ROL_ERROR.mensaje_rol_asignado ||
-      error.message === MENSAJES.ELIMINAR_ROL_ERROR.mensaje_no_existe
+      error.message === MENSAJES.ELIMINAR_ROL_ERROR.mensaje_rol_asignado
+      || error.message === MENSAJES.ELIMINAR_ROL_ERROR.mensaje_no_existe
     ) {
       throw error;
     }
