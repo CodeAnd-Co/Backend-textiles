@@ -35,6 +35,6 @@ exports.crearCategoria = async (req, res) => {
   } catch (errorRepo) {
     return res
       .status(MENSAJES.ERROR_CREAR_CATEGORIA.codigo)
-      .json({ error: MENSAJES.ERROR_CREAR_CATEGORIA.mensaje, errorRepo });
+      .json({ error: errorRepo.message });
   }
 };

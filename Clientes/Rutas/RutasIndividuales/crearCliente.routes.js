@@ -4,7 +4,7 @@
 
 /**
  * @swagger
- * /api/clientes/crear:
+ * /api/clientes/crear-cliente:
  *   post:
  *     summary: Crear un nuevo cliente
  *     tags: [Clientes]
@@ -49,7 +49,6 @@ const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const validarYSanitizarImagen = require('@altertex/util/inter/validarYSanitizarImagen');
 const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
-
 
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');

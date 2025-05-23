@@ -8,11 +8,18 @@
  *   post:
  *     summary: Consulta la lista de categorías de productos asociadas a un cliente.
  *     description: |
- *       Este endpoint permite consultar las categorías de productos disponibles para el 
- *       cliente autenticado.
+ *       Este endpoint permite consultar las categorías de productos disponibles para el
+ *       cliente autenticado. El ID del cliente se obtiene automáticamente del token de autenticación.
  *     tags: [Categorías]
  *     security:
  *       - ApiKeyAuth: []
+ *     requestBody:
+ *       description: No requiere body. El ID del cliente se obtiene del token de autenticación.
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties: {}
  *     responses:
  *       200:
  *         description: Consulta exitosa. Se devuelve la lista de categorías.
@@ -64,6 +71,16 @@
  *                 mensaje:
  *                   type: string
  *                   example: "No se encontraron categorías registradas."
+ *       401:
+ *         description: No autorizado - Token inválido o faltante
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: "No autorizado"
  *       500:
  *         description: Error en el servidor al intentar obtener la lista de categorías.
  *         content:
@@ -74,19 +91,18 @@
  *                 mensaje:
  *                   type: string
  *                   example: "Ocurrió un error al obtener la lista de categorías."
- * 
  */
 
-const express = require("express");
+const express = require('express');
 const ruteador = express.Router();
-const controlador = require("@altertex/cat/ctrl/consultarListaCategorias.controller");
-const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
-const autorizarToken = require("@altertex/util/inter/autorizarToken");
-const verificarPermisos = require("@altertex/util/inter/verificarPermisos");
+const controlador = require('@altertex/cat/ctrl/consultarListaCategorias.controller');
+const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
+const autorizarToken = require('@altertex/util/inter/autorizarToken');
+const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 
-const PERMISOS = require("@altertex/util/const/permisos");
-const RUTAS = require("@altertex/util/const/rutas");
+const PERMISOS = require('@altertex/util/const/permisos');
+const RUTAS = require('@altertex/util/const/rutas');
 
 ruteador.post(
   RUTAS.CATEGORIAS.CONSULTAR_LISTA_CATEGORIAS,
