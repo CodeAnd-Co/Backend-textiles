@@ -16,13 +16,12 @@ const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 
-
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * @swagger
- * /empleados/crearGrupo:
+ * /api/empleados/crear-grupo:
  *   post:
  *     summary: Crear un grupo de empleados.
  *     description: Crea un nuevo grupo de empleados y asigna empleados a ese grupo.

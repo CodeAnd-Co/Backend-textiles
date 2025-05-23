@@ -14,7 +14,7 @@ const RUTAS = require('@altertex/util/const/rutas');
 /**
  * @swagger
  * /api/pedidos/eliminar:
- *   delete:
+ *   post:
  *     summary: Eliminar pedidos.
  *     description: Elimina uno o varios pedidos de la base de datos. Requiere autenticación y permisos específicos.
  *     tags:
@@ -73,7 +73,7 @@ ruteador.post(
   autorizarToken,
   limitePeticionesDiarias,
   verificarPermisos(PERMISOS.ELIMINAR_PEDIDO),
-  controlador.eliminarPedido,
+  controlador.eliminarPedido
 );
 
 module.exports = ruteador;

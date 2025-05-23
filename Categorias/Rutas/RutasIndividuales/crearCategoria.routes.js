@@ -11,7 +11,6 @@ const verificarPermiso = require('@altertex/util/inter/verificarPermisos');
 const PERMISOS = require('@altertex/util/const/permisos');
 const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 
-
 /**
  * @swagger
  * /api/categorias/crear-categoria:
