@@ -35,8 +35,8 @@ const puerto = process.env.PORT || 5000;
 
 //Configuracion de aplicacion express
 const app = express();
-app.use(express.json({ limit: '3mb' }));
-app.use(express.urlencoded({ limit: '3mb', extended: true }));
+app.use(express.json({ limit: '5mb' }));
+app.use(express.urlencoded({ limit: '5mb', extended: true }));
 app.use(cookieParser());
 app.use(cors(corsOptions));
 
