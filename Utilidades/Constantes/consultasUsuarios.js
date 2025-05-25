@@ -169,4 +169,13 @@ module.exports = {
     DELETE FROM usuario
     WHERE idUsuario IN (?);
   `,
+
+  CONSULTAR_USUARIOS_PROTEGIDOS: `
+    SELECT idUsuario 
+    FROM usuarios_2fa 
+    WHERE idUsuario IN (?) 
+      AND puedeActivar2FA = true;
+  `,
+
+  
 };
