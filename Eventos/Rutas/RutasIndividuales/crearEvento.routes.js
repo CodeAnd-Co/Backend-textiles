@@ -4,6 +4,7 @@ const ruteador = express.Router();
 const controlador = require('@altertex/eve/ctrl/crearEvento.controller');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 
@@ -76,6 +77,7 @@ ruteador.post(
   validarYSanitizar,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.CREAR_EVENTO),
   controlador.crearEvento
 );
