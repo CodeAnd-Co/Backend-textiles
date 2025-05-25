@@ -54,6 +54,12 @@ module.exports = {
     codigo: 400,
     mensaje: 'Ya existe un evento con ese nombre.',
   },
+  // 400 - Error de cliente
+  ERROR_CLIENTE_NO_EXISTE: {
+    codigo: 400,
+    mensaje: 'El cliente especificado no existe en el sistema.',
+  },
+  
   // 404 - No encontrado
   EVENTO_NO_ENCONTRADO: {
     codigo: 404,
@@ -80,5 +86,13 @@ module.exports = {
   ERROR_INTERNO: {
     codigo: 500,
     mensaje: 'Ocurrió un error interno en el servidor.',
+  },
+  ERROR_DB_CONEXION: {
+    codigo: 500,
+    mensaje: 'Error de conexión con la base de datos.',
+  },
+  ERROR_INESPERADO: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error inesperado al crear el evento.',
   },
 };

@@ -23,14 +23,35 @@ exports.crearEvento = async (req, res) => {
   try {
     const { idCliente, nombre, descripcion, puntos, multiplicador, periodoRenovacion, renovacion } = req.body;
 
+    // Validaciones básicas de campos requeridos (descripcion y periodoRenovacion son opcionales)
+    if (!idCliente || !nombre || !puntos || !multiplicador) {
+      
+      return res.status(MENSAJES_EVENTOS.PARAMETROS_INVALIDOS.codigo).json({
+        codigo: MENSAJES_EVENTOS.PARAMETROS_INVALIDOS.codigo,
+        mensaje: MENSAJES_EVENTOS.PARAMETROS_INVALIDOS.mensaje,
+      });
+    }
+
     // Validar los datos de entrada
+    const idClienteNum = parseInt(idCliente, 10);
+    const puntosNum = parseFloat(puntos);
+    const multiplicadorNum = parseFloat(multiplicador);
+
+    // Validaciones de formato
+    if (isNaN(idClienteNum) || idClienteNum <= 0) {
+      return res.status(MENSAJES_EVENTOS.PARAMETROS_INVALIDOS.codigo).json({
+        codigo: MENSAJES_EVENTOS.PARAMETROS_INVALIDOS.codigo,
+        mensaje: 'El ID del cliente debe ser un número válido mayor a 0.',
+      });
+    }
+
     const nuevoEvento = {
-      idCliente: parseInt(idCliente, 10),
+      idCliente: idClienteNum,
       nombre,
-      descripcion,
-      puntos: parseFloat(puntos),
-      multiplicador: parseFloat(multiplicador),
-      periodoRenovacion,
+      descripcion: descripcion && descripcion.trim() !== '' ? descripcion : null,
+      puntos: puntosNum,
+      multiplicador: multiplicadorNum,
+      periodoRenovacion: periodoRenovacion && periodoRenovacion.trim() !== '' ? periodoRenovacion : null,
       renovacion: renovacion ? 1 : 0,
     };
 
@@ -40,13 +61,14 @@ exports.crearEvento = async (req, res) => {
     return res.status(MENSAJES_EVENTOS.EVENTO_CREADO.codigo).json({
       codigo: MENSAJES_EVENTOS.EVENTO_CREADO.codigo,
       mensaje: MENSAJES_EVENTOS.EVENTO_CREADO.mensaje,
-      evento: resultado.evento,
+      evento: resultado?.evento || resultado,
     });
 
-  } catch {
+  } catch (error) {
+    // Usar el mensaje personalizado del error en la respuesta
     return res.status(MENSAJES_EVENTOS.ERROR_CREAR_EVENTO.codigo).json({
       codigo: MENSAJES_EVENTOS.ERROR_CREAR_EVENTO.codigo,
-      mensaje: MENSAJES_EVENTOS.ERROR_CREAR_EVENTO.mensaje,
+      mensaje: error.message || MENSAJES_EVENTOS.ERROR_CREAR_EVENTO.mensaje,
     });
   }
 };
