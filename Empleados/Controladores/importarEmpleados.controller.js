@@ -52,7 +52,7 @@ exports.importarEmpleados = async (req, res) => {
   const listaParaImportar = [];
 
   for (const [index, datos] of empleados.entries()) {
-    const fila = index + 1;
+    const fila = `Fila ${index + 1}`;
     const {
       nombreCompleto,
       correoElectronico,
@@ -184,7 +184,7 @@ exports.importarEmpleados = async (req, res) => {
     await repositorio.importarEmpleadosMasivo(listaParaImportar);
   } catch (error) {
     errores.push({
-      fila: "N/A",
+      fila: "",
       error: error.message
     });
   }

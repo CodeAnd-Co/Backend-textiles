@@ -140,7 +140,7 @@ exports.importarEmpleadosMasivo = async (empleados) => {
     if (campo.includes('correoElectronico')) campoTraducido = 'correo electrónico';
     else if (campo.includes('telefono')) campoTraducido = 'número de teléfono';
 
-    throw new Error(`Entrada ${campoTraducido} "${valorDuplicado}" duplicada`);
+    throw new Error(`La entrada ${campoTraducido} "${valorDuplicado}" esta duplicada`);
   }
 
   throw new Error(`Error en importación masiva: ${mensajeOriginal}`);
