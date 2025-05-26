@@ -3,6 +3,7 @@ const ruteador = express.Router();
 const rutaConsultarLista = require('@altertex/pro/rutasInd/consultarProductos.routes');
 const rutaEliminar = require("@altertex/pro/rutasInd/eliminarProducto.routes");
 const rutaCrearProducto = require('@altertex/pro/rutasInd/crearProducto.routes');
+const rutaImportarProductos = require('@altertex/pro/rutasInd/importarProductos.routes');
 
 const RUTAS = require('@altertex/util/const/rutas');
 
@@ -12,5 +13,7 @@ ruteador.use(RUTAS.PRODUCTOS.BASE, rutaConsultarLista);
 ruteador.use(RUTAS.PRODUCTOS.BASE, rutaCrearProducto);
 // RF[30] Eliminar Producto - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF30]    
 ruteador.use(RUTAS.PRODUCTOS.BASE, rutaEliminar);
+
+ruteador.use(RUTAS.PRODUCTOS.BASE, rutaImportarProductos);
 
 module.exports = ruteador;
