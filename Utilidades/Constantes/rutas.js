@@ -7,6 +7,8 @@ module.exports = {
     REGISTRO: '/registro',
     CERRAR_SESION: '/cerrar-sesion',
     USUARIO_AUTENTICADO: '/autenticar',
+    ACTIVAR_2FA: '/activar-2fa',
+    VERIFICAR_2FA: '/verificar-2fa',
   },
   USUARIOS: {
     BASE: '/usuarios',
@@ -36,11 +38,19 @@ module.exports = {
   PRODUCTOS: {
     BASE: '/productos',
     CONSULTAR_LISTA: '/consultar-lista',
+    CREAR: '/crear',
     ELIMINAR_PRODUCTO: '/eliminar',
+  },
+  PROVEEDORES: {
+    BASE: '/proveedores',
+    CONSULTAR_LISTA: '/consultar-lista',
+    CREAR: '/crear',
   },
   SETS_PRODUCTOS: {
     BASE: '/sets-productos',
     CONSULTAR_LISTA: '/consultar-lista',
+    CREAR: '/crear',
+    SUBIR_IMAGEN: '/subir-imagen',
     ELIMINAR_SET_PRODUCTOS: '/eliminar',
   },
   CLIENTES: {
@@ -48,6 +58,7 @@ module.exports = {
     CONSULTAR_SISTEMA: '/consultar-sistema',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_CLIENTE: '/eliminar',
+    CREAR_CLIENTE: '/crear-cliente',
     LEER: '/consultar-cliente',
     ACTUALIZAR: `/actualizar-cliente`,
   },
@@ -57,6 +68,7 @@ module.exports = {
     CONSULTAR_GRUPO: '/consultar-grupo',
     ELIMINAR_GRUPO: '/eliminar-grupo',
     ELIMINAR_EMPLEADO: '/eliminar',
+    IMPORTAR_EMPLEADOS: '/importar-empleados',
     LEER_GRUPO: '/leer-grupo',
     CREAR_GRUPO: '/crear-grupo',
     ACTUALIZAR_GRUPO_EMPLEADO: '/actualizar-grupo',

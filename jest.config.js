@@ -38,11 +38,6 @@ module.exports = {
     '^@altertex/cuota/datos/(.*)$': '<rootDir>/Cuotas/Datos/$1',
     '^@altertex/cuota/(.*)$': '<rootDir>/Cuotas/$1',
 
-    // Empleados module mappings (added)
-    '^@altertex/emp/ctrl/(.*)$': '<rootDir>/Empleados/Controladores/$1',
-    '^@altertex/emp/repos/(.*)$': '<rootDir>/Empleados/Datos/Repositorios/$1',
-    '^@altertex/emp/rutasInd/(.*)$': '<rootDir>/Empleados/Rutas/RutasIndividuales/$1',
-
     // CRON jobs module mappings (added)
     '^@altertex/CRON/ctrl/(.*)$': '<rootDir>/CRON_JOBS/Controladores/$1',
     '^@altertex/CRON/datos/(.*)$': '<rootDir>/CRON_JOBS/Datos/$1',

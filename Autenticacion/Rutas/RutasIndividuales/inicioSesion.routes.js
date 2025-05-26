@@ -1,10 +1,11 @@
-const express = require("express");
+const express = require('express');
 const ruteador = express.Router();
-const controlador = require("@altertex/aut/ctrl/inicioSesion.controller");
-const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
-const validarYSanitizar = require("@altertex/util/inter/validarYSanitizar");
+const controlador = require('@altertex/aut/ctrl/inicioSesion.controller');
+const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
+const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 
-const RUTAS = require("@altertex/util/const/rutas");
+
+const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * RF78 - Iniciar Sesion - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF78
@@ -82,7 +83,7 @@ ruteador.post(
   RUTAS.AUTENTICACION.INICIO_SESION,
   validarYSanitizar,
   revisarApiKey(),
-  controlador.inicioSesion
+  controlador.inicioSesion,
 );
 
 module.exports = ruteador;

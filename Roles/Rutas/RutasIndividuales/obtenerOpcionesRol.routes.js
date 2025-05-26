@@ -2,6 +2,8 @@ const express = require('express');
 const ruteador = express.Router();
 const controlador = require('@altertex/rol/ctrl/obtenerOpcionesRol.controller');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+const autorizarToken = require('@altertex/util/inter/autorizarToken');
 
 /**
  * @file obtenerOpcionesRol.routes.js
@@ -13,7 +15,7 @@ const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 /**
  * POST /obtener-opciones
  *
- * Obtiene los permisos disponibles para ser asignados a un rol. 
+ * Obtiene los permisos disponibles para ser asignados a un rol.
  * - Protegida con middleware que verifica que se incluya una API Key válida.
  *
  * @route {POST} /api/roles/obtener-opciones
@@ -23,7 +25,9 @@ const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 ruteador.post(
   '/obtener-opciones',
   revisarApiKey(),
-  controlador.obtenerOpcionesRol
+  autorizarToken,
+  limitePeticionesDiarias,
+  controlador.obtenerOpcionesRol,
 );
 
 module.exports = ruteador;

@@ -34,8 +34,7 @@ exports.consultarListaCategorias = async (req, res) => {
       mensaje: MENSAJES_CATEGORIAS.LISTA_CATEGORIAS_OBTENIDA.mensaje,
       listaCategoria: resultados,
     });
-  } catch (error) {
-    console.error('Error al consultar categorías:', error);
+  } catch {
     return res
       .status(MENSAJES_CATEGORIAS.ERROR_OBTENER_CATEGORIAS.codigo)
       .json({ mensaje: MENSAJES_CATEGORIAS.ERROR_OBTENER_CATEGORIAS.mensaje });

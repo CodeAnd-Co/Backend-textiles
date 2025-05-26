@@ -7,6 +7,8 @@ const controlador = require('@altertex/pedidos/ctrl/obtenerPedidos.controller');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 
 /**
  * RF60 - Consulta Lista de Pedidos - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF60
@@ -68,6 +70,7 @@ ruteador.get(
   RUTAS.PEDIDOS.CONSULTAR_LISTA,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.CONSULTAR_PEDIDOS),
   controlador.obtenerLista
 );

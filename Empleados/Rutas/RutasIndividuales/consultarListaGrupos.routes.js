@@ -1,12 +1,13 @@
-const express = require("express");
+const express = require('express');
 const ruteador = express.Router();
-const controlador = require("@altertex/emp/ctrl/consultarListaGrupos.controller");
-const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
-const autorizarToken = require("@altertex/util/inter/autorizarToken");
-const verificarPermisos = require("@altertex/util/inter/verificarPermisos");
+const controlador = require('@altertex/emp/ctrl/consultarListaGrupos.controller');
+const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
+const autorizarToken = require('@altertex/util/inter/autorizarToken');
+const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 
-const PERMISOS = require("@altertex/util/const/permisos");
-const RUTAS = require("@altertex/util/const/rutas");
+const PERMISOS = require('@altertex/util/const/permisos');
+const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * RF22 - Consulta Lista de Grupo Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF22
@@ -14,7 +15,7 @@ const RUTAS = require("@altertex/util/const/rutas");
 
 /**
  * @swagger
- * /api/empleados/consultar-lista:
+ * /api/empleados/consultar-grupo:
  *   post:
  *     summary: Consulta la lista de grupos de empleados de un cliente
  *     description: |
@@ -108,6 +109,7 @@ ruteador.post(
   RUTAS.EMPLEADOS.CONSULTAR_GRUPO,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.CONSULTAR_GRUPOS_EMPLEADOS),
   controlador.consultarLista
 );

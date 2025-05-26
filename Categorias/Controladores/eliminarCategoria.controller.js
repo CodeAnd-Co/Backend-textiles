@@ -41,8 +41,7 @@ exports.eliminarCategoria = async (req, res) => {
     return res.status(MENSAJES_CATEGORIAS.CATEGORIA_ELIMINADA.codigo).json({
       mensaje: MENSAJES_CATEGORIAS.CATEGORIA_ELIMINADA.mensaje,
     });
-  } catch (error) {
-    console.error('Error al eliminar categorías:', error);
+  } catch {
     return res.status(MENSAJES_CATEGORIAS.ERROR_ELIMINAR_CATEGORIA.codigo).json({
       mensaje: MENSAJES_CATEGORIAS.ERROR_ELIMINAR_CATEGORIA.mensaje,
     });

@@ -40,6 +40,17 @@ module.exports = {
       GROUP BY ge.idGrupo
       ORDER BY ge.idGrupo;
     `,
+
+  VALIDAR_NOMBRE_REPETIDO: `
+    SELECT 1 FROM grupo_empleado 
+    WHERE idCliente = ? AND nombre = ? LIMIT 1
+  `,
+  CREAR_GRUPO: `
+    INSERT INTO grupo_empleado (idCliente, nombre, descripcion) VALUES (?, ?, ?);
+  `,
+  ASIGNAR_EMPLEADO_A_GRUPO: `
+    INSERT INTO empleado_grupo (idEmpleado, idGrupo) VALUES (?, ?);
+  `
   ACTUALIZAR_GRUPO_EMPLEADOS_NOMBRE_DESCRIPCION: `
     UPDATE grupo_empleado
     SET nombre = ?, descripcion = ?

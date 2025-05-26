@@ -33,8 +33,7 @@ exports.consultarProductos = async (req, res) => {
     let productosActualizados;
     try {
       productosActualizados = await obtenerImagenFolder(req, folder);
-    } catch (errorImagen) {
-      console.warn('Error al obtener imágenes. Se asignarán por defecto:', errorImagen);
+    } catch {
       productosActualizados = productos.map((producto) => ({
         ...producto,
         urlImagen: '/placeholder.png',
@@ -46,8 +45,6 @@ exports.consultarProductos = async (req, res) => {
       listaProductos: productosActualizados,
     });
   } catch (error) {
-    console.error('Error al consultar productos:', error);
-
     return res.status(MENSAJES_PRODUCTOS.ERROR_CONSULTAR_PRODUCTOS.codigo).json({
       mensaje: MENSAJES_PRODUCTOS.ERROR_CONSULTAR_PRODUCTOS.mensaje,
       error: error.message,

@@ -26,28 +26,45 @@
  */
 const MENSAJES = require('@altertex/util/const/mensajesCuotas');
 
-exports.validarCuotaSet = (nombre, productosYLimite, res) => {
+function validarCuotaSet(nombre, productosYLimite) {
   if (!nombre || typeof nombre !== 'string' || nombre.trim() === '') {
-    return res.status(400).json({ error: MENSAJES.NOMBRE_REQUERIDO });
+    return MENSAJES.NOMBRE_REQUERIDO;
   }
 
   if (!Array.isArray(productosYLimite) || productosYLimite.length === 0) {
-    return res.status(400).json({ error: MENSAJES.PRODUCTOS_REQUERIDOS });
+    return MENSAJES.PRODUCTOS_REQUERIDOS;
   }
 
-  for (let iterador = 0; iterador < productosYLimite.length; iterador = iterador + 1) {
+  for (let iterador = 0; iterador < productosYLimite.length; iterador += 1) {
     const { idProducto, limite, limiteActual } = productosYLimite[iterador];
 
     if (!idProducto || typeof idProducto !== 'string' || idProducto.trim() === '') {
-      return res.status(400).json({ error: MENSAJES.ID_PRODUCTO_INVALIDO(iterador) });
+      return MENSAJES.ID_PRODUCTO_INVALIDO(iterador);
     }
 
-    if (typeof limite !== 'number' || isNaN(limite)) {
-      return res.status(400).json({ error: MENSAJES.LIMITE_INVALIDO(idProducto) });
+    // Rechazar strings numéricos con ceros a la izquierda
+    if (
+      (typeof limite === 'string' && /^0[0-9]+$/.test(limite))
+      || (typeof limiteActual === 'string' && /^0[0-9]+$/.test(limiteActual))
+    ) {
+      return 'No se permiten ceros a la izquierda en los valores de cuota.';
     }
 
-    if (typeof limiteActual !== 'number' || isNaN(limiteActual)) {
-      return res.status(400).json({ error: MENSAJES.LIMITE_ACTUAL_INVALIDO(idProducto) });
+    if (typeof limite !== 'number' || isNaN(limite) || !Number.isInteger(limite) || limite <= 0) {
+      return MENSAJES.LIMITE_INVALIDO(idProducto);
+    }
+
+    if (
+      typeof limiteActual !== 'number'
+      || isNaN(limiteActual)
+      || !Number.isInteger(limiteActual)
+      || limiteActual <= 0
+    ) {
+      return MENSAJES.LIMITE_ACTUAL_INVALIDO(idProducto);
     }
   }
-};
+
+  return null;
+}
+
+module.exports = { validarCuotaSet };

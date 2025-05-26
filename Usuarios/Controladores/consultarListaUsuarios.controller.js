@@ -30,8 +30,7 @@ exports.consultarListaUsuarios = async (req, res) => {
       mensaje: MENSAJES_USUARIOS.LISTA_USUARIOS_OBTENIDA.mensaje,
       listaUsuarios: resultados,
     });
-  } catch (error) {
-    console.error('Error al consultar usuarios:', error);
+  } catch {
     return res
       .status(MENSAJES_USUARIOS.ERROR_OBTENER_USUARIOS.codigo)
       .json({ mensaje: MENSAJES_USUARIOS.ERROR_OBTENER_USUARIOS.mensaje });

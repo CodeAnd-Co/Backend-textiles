@@ -1,6 +1,6 @@
 module.exports = {
   OBTENER_LISTA: `
-        SELECT u.nombreCompleto, u.correoElectronico, e.*
+        SELECT u.idUsuario, u.nombreCompleto, u.correoElectronico, e.*
         FROM empleado e
         JOIN usuario u ON e.idUsuario = u.idUsuario
         WHERE e.idCliente = ?;
@@ -11,11 +11,17 @@ module.exports = {
   ELIMINAR_EMPLEADO: `
         DELETE FROM empleado
         WHERE idEmpleado = ?;
-    `,  
-  CREAR_GRUPO: `
-    INSERT INTO grupo_empleado (idCliente, nombre, descripcion) VALUES (?, ?, ?);
-  `,
-  ASIGNAR_EMPLEADO_A_GRUPO: `
-    INSERT INTO empleado_grupo (idEmpleado, idGrupo) VALUES (?, ?);
-  `
+    `,
+  INSERTAR_EMPLEADO: `
+      INSERT INTO empleado (
+        idUsuario, idCliente, numeroEmergencia,
+        areaTrabajo, posicion, cantidadPuntos, antiguedad
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `,
+  ACTUALIZAR: `
+        UPDATE empleado SET 
+        numeroEmergencia = ?, areaTrabajo = ?, posicion = ?, 
+        cantidadPuntos = ?, antiguedad = ? WHERE idEmpleado = ?;
+    `,
 };

@@ -1,5 +1,4 @@
 const db = require('@altertex/util/bd/db');
-const correrQuery = require('@altertex/util/ser/correrQuery');
 const CONSULTAS_SETS_PRODUCTOS = require('@altertex/util/const/consultasSetsProductos');
 
 /**
@@ -12,38 +11,43 @@ const CONSULTAS_SETS_PRODUCTOS = require('@altertex/util/const/consultasSetsProd
  * @throws {Error} Si ocurre un error durante la ejecución del query para eliminar el set de productos.
  */
 exports.eliminarSetProducto = async (idSetProducto) => {
-  const conexion = db.promise();
+  const conexion = await db.getConnection();
+
   try {
-    const resultadoSetGrupo = await correrQuery(
+    await conexion.beginTransaction();
+
+    const [resultadoSetGrupo] = await conexion.query(
       CONSULTAS_SETS_PRODUCTOS.ELIMINAR_SET_PRODUCTOS_GRUPO_EMPLEADOS,
-      [idSetProducto],
-      conexion
+      [idSetProducto]
     );
-    const resultadoProductosSetProductos = await correrQuery(
+
+    const [resultadoProductosSetProductos] = await conexion.query(
       CONSULTAS_SETS_PRODUCTOS.ELIMINAR_PRODUCTOS_SET_PRODUCTOS,
-      [idSetProducto],
-      conexion
+      [idSetProducto]
     );
-    const resultadoSetProductos = await correrQuery(
+
+    const [resultadoSetProductos] = await conexion.query(
       CONSULTAS_SETS_PRODUCTOS.ELIMINAR_SET_PRODUCTOS,
-      [idSetProducto],
-      conexion
+      [idSetProducto]
     );
 
     if (resultadoSetProductos.affectedRows === 0) {
       throw new Error(`Set de productos con ID ${idSetProducto} no encontrado`);
     }
+
     // Confirmar la transacción
     await conexion.commit();
+
     return {
       mensaje: 'Set de productos eliminado correctamente',
       resultadoSetGrupo,
       resultadoProductosSetProductos,
       resultadoSetProductos,
     };
-  } catch (error) {
-    if (conexion) await conexion.rollback();
-    console.error('Transaccion fallida:', error);
+  } catch  {
+    await conexion.rollback();
     throw new Error('Error eliminando set de productos');
+  } finally {
+    if (conexion) conexion.release();
   }
 };

@@ -7,11 +7,13 @@ const RUTAS = require('@altertex/util/const/rutas');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const revisarPermisos = require('@altertex/util/inter/verificarPermisos');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 // RF10 - Eliminar rol - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF10
 
 /**
  * @swagger
- * /api/roles/eliminar-rol:
+ * /api/roles/eliminar:
  *   delete:
  *     tags:
  *       - Roles
@@ -68,6 +70,7 @@ ruteador.post(
   RUTAS.ROLES.ELIMINAR_ROL,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   revisarPermisos(PERMISOS.ELIMINAR_ROL),
   controlador.eliminarRol
 );

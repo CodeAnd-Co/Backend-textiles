@@ -17,6 +17,7 @@ const rutasAutenticacion = require('@altertex/aut/rutas/indexAutenticacion.route
 const rutasUsuarios = require('@altertex/usu/rutas/indexUsuarios.routes');
 const rutasCategorias = require('@altertex/cat/rutas/indexCategorias.routes');
 const rutasProductos = require('@altertex/pro/rutas/indexProductos.routes');
+const rutasProveedores = require('@altertex/prove/rutas/indexProveedores.routes');
 const rutasSetsProductos = require('@altertex/setspro/rutas/indexSetsProductos.routes');
 const rutasEmpleados = require('@altertex/emp/rutas/indexEmpleados.routes');
 const rutasClientes = require('@altertex/cli/rutas/indexClientes.routes');
@@ -34,8 +35,8 @@ const puerto = process.env.PORT || 5000;
 
 //Configuracion de aplicacion express
 const app = express();
-app.use(express.json({ limit: '3mb' }));
-app.use(express.urlencoded({ limit: '3mb', extended: true }));
+app.use(express.json({ limit: '5mb' }));
+app.use(express.urlencoded({ limit: '5mb', extended: true }));
 app.use(cookieParser());
 app.use(cors(corsOptions));
 
@@ -45,6 +46,7 @@ cronCuotas.start();
 app.use(RUTAS.API, rutasAutenticacion);
 app.use(RUTAS.API, rutasUsuarios);
 app.use(RUTAS.API, rutasProductos);
+app.use(RUTAS.API, rutasProveedores);
 app.use(RUTAS.API, rutasSetsProductos);
 app.use(RUTAS.API, rutasEmpleados);
 app.use(RUTAS.API, rutasClientes);
@@ -54,6 +56,12 @@ app.use(RUTAS.API, rutasCategorias);
 app.use(RUTAS.API, rutasPedidos);
 app.use(RUTAS.API, rutasEventos);
 app.use(RUTAS.API, rutasPagos);
+
+app.get('/', async (req, res) => {
+  return res
+    .status(200)
+    .json({ mensaje: `Ruta por default Proyecto Text&Lines en ambiente: ${process.env.NODE_ENV}` });
+});
 
 //Configuracion de swaggerUI
 const swaggerSpec = swaggerJSDoc(opcionesSwagger);

@@ -35,8 +35,7 @@ exports.consultarEvento = async (req, res) => {
       mensaje: MENSAJES_EVENTOS.EVENTO_OBTENIDO.mensaje,
       evento,
     });
-  } catch (error) {
-    console.error('Error al consultar evento:', error);
+  } catch {
     return res
       .status(MENSAJES_EVENTOS.ERROR_OBTENER_EVENTO.codigo)
       .json({ mensaje: MENSAJES_EVENTOS.ERROR_OBTENER_EVENTO.mensaje });

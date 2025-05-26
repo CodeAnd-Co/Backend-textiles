@@ -6,21 +6,21 @@ const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * @swagger
- * /api/eventos/consultar-lista:
+ * /api/eventos/consultar-evento:
  *   post:
  *     summary: Muestra la información de un evento específico.
- *     description: |
- *       Este endpoint permite consultar los datos de un evento por su ID.
- *     tags:
- *       - Eventos
+ *     description: Obtiene los detalles completos de un evento usando su ID.
+ *     tags: [Eventos]
  *     security:
  *       - ApiKeyAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -33,6 +33,7 @@ const RUTAS = require('@altertex/util/const/rutas');
  *               idEvento:
  *                 type: integer
  *                 example: 123
+ *                 description: Identificador único del evento
  *     responses:
  *       200:
  *         description: Evento encontrado exitosamente.
@@ -94,6 +95,7 @@ ruteador.post(
   validarYSanitizar,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.LEER_EVENTO),
   controlador.consultarEvento
 );

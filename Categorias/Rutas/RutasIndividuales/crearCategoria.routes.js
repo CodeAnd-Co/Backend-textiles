@@ -9,6 +9,7 @@ const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const verificarPermiso = require('@altertex/util/inter/verificarPermisos');
 const PERMISOS = require('@altertex/util/const/permisos');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 
 /**
  * @swagger
@@ -85,6 +86,7 @@ ruteador.post(
   validarYSanitizar,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermiso(PERMISOS.CREAR_CATEGORIA_PRODUCTOS),
   controlador.crearCategoria
 );

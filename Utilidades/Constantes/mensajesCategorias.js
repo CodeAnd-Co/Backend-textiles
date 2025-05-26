@@ -63,19 +63,23 @@ module.exports = {
 
   // 500 - Error del servidor
   ERROR_CREAR_CATEGORIA: {
-    codigo: 500,
+    codigo: 400,
     mensaje: 'Ocurrió un error al intentar crear la categoría.',
   },
   ERROR_OBTENER_CATEGORIAS: {
-    codigo: 500,
+    codigo: 400,
     mensaje: 'Ocurrió un error al obtener la lista de categorías.',
   },
   ERROR_OBTENER_CATEGORIA: {
-    codigo: 500,
+    codigo: 400,
     mensaje: 'Ocurrió un error al obtener los datos de la categoría.',
   },
   ERROR_ELIMINAR_CATEGORIA: {
-    codigo: 500,
+    codigo: 400,
     mensaje: 'Ocurrió un error al eliminar la categoría.',
+  },
+  PRODUCTO_NO_EXISTE: {
+    codigo: 400,
+    mensaje: 'El producto no existe en la base de datos',
   },
 };

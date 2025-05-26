@@ -40,8 +40,7 @@ exports.eliminarSetProductos = async (req, res) => {
     return res.status(MENSAJES_SETS_PRODUCTOS.SET_PRODUCTOS_ELIMINADO.codigo).json({
       mensaje: MENSAJES_SETS_PRODUCTOS.SET_PRODUCTOS_ELIMINADO.mensaje,
     });
-  } catch (error) {
-    console.error('Error al eliminar sets de productos:', error);
+  } catch {
     return res.status(MENSAJES_SETS_PRODUCTOS.ERROR_ELIMINAR_SET_PRODUCTOS.codigo).json({
       mensaje: MENSAJES_SETS_PRODUCTOS.ERROR_ELIMINAR_SET_PRODUCTOS.mensaje,
     });

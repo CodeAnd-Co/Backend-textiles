@@ -23,9 +23,8 @@ exports.eliminarRol = async (req, res) => {
     return res
       .status(MENSAJES.ELIMINAR_ROL_EXITO.codigo)
       .json({ mensaje: MENSAJES.ELIMINAR_ROL_EXITO.mensaje });
-  } catch {
-    return res
-      .status(MENSAJES.ELIMINAR_ROL_ERROR.codigo)
-      .json({ mensaje: MENSAJES.ELIMINAR_ROL_ERROR.mensaje });
+  } catch (error) {
+      const mensaje = error.message || MENSAJES.ELIMINAR_ROL_ERROR.mensaje;
+      return res.status(400).json({ mensaje });
   }
 };

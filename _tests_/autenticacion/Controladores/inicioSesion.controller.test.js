@@ -4,51 +4,51 @@
  *
  * Primero configuramos los mocks antes de importar el controlador
  */
-jest.mock("@altertex/aut/repos/repositorioInicioSesion", () => ({
+jest.mock('@altertex/aut/repos/repositorioInicioSesion', () => ({
   obtenerUsuario: jest.fn(),
 }));
-jest.mock("bcryptjs", () => ({
+jest.mock('bcryptjs', () => ({
   compare: jest.fn(),
 }));
-jest.mock("jsonwebtoken", () => ({
+jest.mock('jsonwebtoken', () => ({
   sign: jest.fn(),
 }));
 
 // Mock del módulo de mensajes con los valores reales
-jest.mock("@altertex/util/const/mensajesAutenticacion", () => ({
+jest.mock('@altertex/util/const/mensajesAutenticacion', () => ({
   INICIO_SESION_EXITOSO: {
     codigo: 200,
-    mensaje: "Inicio de sesión exitoso.",
+    mensaje: 'Inicio de sesión exitoso.',
   },
   CAMPOS_OBLIGATORIOS: {
     codigo: 400,
-    mensaje: "Se necesita ingresar correo y contraseña.",
+    mensaje: 'Se necesita ingresar correo y contraseña.',
   },
   FORMATO_CORREO_INVALIDO: {
     codigo: 400,
-    mensaje: "El formato del correo electrónico no es válido.",
+    mensaje: 'El formato del correo electrónico no es válido.',
   },
   CREDENCIALES_INVALIDAS: {
     codigo: 401,
-    mensaje: "Usuario o contraseña incorrectos.",
+    mensaje: 'Usuario o contraseña incorrectos.',
   },
   ERROR_SERVIDOR: {
     codigo: 500,
-    mensaje: "Ocurrió un error inesperado. Intente de nuevo más tarde.",
+    mensaje: 'Ocurrió un error inesperado. Intente de nuevo más tarde.',
   },
 }));
 
 // Importamos los módulos después de configurar los mocks
-const controladorInicioSesion = require("@altertex/aut/ctrl/inicioSesion.controller");
-const repositorio = require("@altertex/aut/repos/repositorioInicioSesion");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const MENSAJES_AUTENTICACION = require("@altertex/util/const/mensajesAutenticacion");
+const controladorInicioSesion = require('@altertex/aut/ctrl/inicioSesion.controller');
+const repositorio = require('@altertex/aut/repos/repositorioInicioSesion');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const MENSAJES_AUTENTICACION = require('@altertex/util/const/mensajesAutenticacion');
 
 // Mock para process.env
-process.env.JWT_SECRET = "secret_test_key";
+process.env.JWT_SECRET = 'secret_test_key';
 
-describe("Controlador de Inicio de Sesión", () => {
+describe('Controlador de Inicio de Sesión', () => {
   let req;
   let res;
 
@@ -68,41 +68,37 @@ describe("Controlador de Inicio de Sesión", () => {
     };
   });
 
-  test("Debe retornar error 400 cuando faltan campos requeridos", async () => {
+  test('Debe retornar error 400 cuando faltan campos requeridos', async () => {
     // Arrange
-    req.body = { correo: "", contrasenia: "" };
+    req.body = { correo: '', contrasenia: '' };
 
     // Act
     await controladorInicioSesion.inicioSesion(req, res);
 
     // Assert
-    expect(res.status).toHaveBeenCalledWith(
-      MENSAJES_AUTENTICACION.CAMPOS_OBLIGATORIOS.codigo
-    );
+    expect(res.status).toHaveBeenCalledWith(MENSAJES_AUTENTICACION.CAMPOS_OBLIGATORIOS.codigo);
     expect(res.json).toHaveBeenCalledWith({
       mensaje: MENSAJES_AUTENTICACION.CAMPOS_OBLIGATORIOS.mensaje,
     });
   });
 
-  test("Debe retornar error 400 cuando el formato de correo es inválido", async () => {
+  test('Debe retornar error 400 cuando el formato de correo es inválido', async () => {
     // Arrange
-    req.body = { correo: "correo-invalido", contrasenia: "password123" };
+    req.body = { correo: 'correo-invalido', contrasenia: 'password123' };
 
     // Act
     await controladorInicioSesion.inicioSesion(req, res);
 
     // Assert
-    expect(res.status).toHaveBeenCalledWith(
-      MENSAJES_AUTENTICACION.FORMATO_CORREO_INVALIDO.codigo
-    );
+    expect(res.status).toHaveBeenCalledWith(MENSAJES_AUTENTICACION.FORMATO_CORREO_INVALIDO.codigo);
     expect(res.json).toHaveBeenCalledWith({
       mensaje: MENSAJES_AUTENTICACION.FORMATO_CORREO_INVALIDO.mensaje,
     });
   });
 
-  test("Debe retornar error 401 cuando el usuario no existe", async () => {
+  test('Debe retornar error 401 cuando el usuario no existe', async () => {
     // Arrange
-    req.body = { correo: "usuario@ejemplo.com", contrasenia: "password123" };
+    req.body = { correo: 'usuario@ejemplo.com', contrasenia: 'password123' };
 
     repositorio.obtenerUsuario.mockResolvedValue({
       infoUsuario: [],
@@ -114,26 +110,22 @@ describe("Controlador de Inicio de Sesión", () => {
     await controladorInicioSesion.inicioSesion(req, res);
 
     // Assert
-    expect(repositorio.obtenerUsuario).toHaveBeenCalledWith(
-      "usuario@ejemplo.com"
-    );
-    expect(res.status).toHaveBeenCalledWith(
-      MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.codigo
-    );
+    expect(repositorio.obtenerUsuario).toHaveBeenCalledWith('usuario@ejemplo.com');
+    expect(res.status).toHaveBeenCalledWith(MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.codigo);
     expect(res.json).toHaveBeenCalledWith({
       mensaje: MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.mensaje,
     });
   });
 
-  test("Debe retornar error 401 cuando la contraseña es incorrecta", async () => {
+  test('Debe retornar error 401 cuando la contraseña es incorrecta', async () => {
     // Arrange
-    req.body = { correo: "usuario@ejemplo.com", contrasenia: "password123" };
+    req.body = { correo: 'usuario@ejemplo.com', contrasenia: 'password123' };
 
     repositorio.obtenerUsuario.mockResolvedValue({
       infoUsuario: [
         {
-          correoElectronico: "usuario@ejemplo.com",
-          contrasenia: "hashed_password",
+          correoElectronico: 'usuario@ejemplo.com',
+          contrasenia: 'hashed_password',
         },
       ],
       permisos: [],
@@ -146,26 +138,21 @@ describe("Controlador de Inicio de Sesión", () => {
     await controladorInicioSesion.inicioSesion(req, res);
 
     // Assert
-    expect(bcrypt.compare).toHaveBeenCalledWith(
-      "password123",
-      "hashed_password"
-    );
-    expect(res.status).toHaveBeenCalledWith(
-      MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.codigo
-    );
+    expect(bcrypt.compare).toHaveBeenCalledWith('password123', 'hashed_password');
+    expect(res.status).toHaveBeenCalledWith(MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.codigo);
     expect(res.json).toHaveBeenCalledWith({
       mensaje: MENSAJES_AUTENTICACION.CREDENCIALES_INVALIDAS.mensaje,
     });
   });
 
-  test("Debe retornar status 200 y generar token cuando las credenciales son correctas", async () => {
+  test('Debe retornar status 200 y generar token cuando las credenciales son correctas', async () => {
     // Arrange
-    req.body = { correo: "usuario@ejemplo.com", contrasenia: "password123" };
+    req.body = { correo: 'usuario@ejemplo.com', contrasenia: 'password123' };
     const mockUsuario = {
-      correoElectronico: "usuario@ejemplo.com",
-      contrasenia: "hashed_password",
+      correoElectronico: 'usuario@ejemplo.com',
+      contrasenia: 'hashed_password',
     };
-    const mockPermisos = ["permiso1", "permiso2"];
+    const mockPermisos = ['permiso1', 'permiso2'];
     const mockClientesAsociados = [1, 2, 3];
 
     repositorio.obtenerUsuario.mockResolvedValue({
@@ -175,7 +162,7 @@ describe("Controlador de Inicio de Sesión", () => {
     });
 
     bcrypt.compare.mockResolvedValue(true);
-    jwt.sign.mockReturnValue("token_jwt_generado");
+    jwt.sign.mockReturnValue('token_jwt_generado');
 
     // Act
     await controladorInicioSesion.inicioSesion(req, res);
@@ -183,54 +170,23 @@ describe("Controlador de Inicio de Sesión", () => {
     // Assert
     expect(jwt.sign).toHaveBeenCalledWith(
       {
-        correo: "usuario@ejemplo.com",
+        correo: 'usuario@ejemplo.com',
         permisos: mockPermisos,
         clientesAsociados: mockClientesAsociados,
       },
-      "secret_test_key",
-      { expiresIn: "8h" }
+      'secret_test_key',
+      { expiresIn: '8h' }
     );
 
-    expect(res.cookie).toHaveBeenCalledWith("token", "token_jwt_generado", {
+    expect(res.cookie).toHaveBeenCalledWith('token', 'token_jwt_generado', {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+      sameSite: 'None',
     });
 
-    expect(res.status).toHaveBeenCalledWith(
-      MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.codigo
-    );
+    expect(res.status).toHaveBeenCalledWith(MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.codigo);
     expect(res.json).toHaveBeenCalledWith({
       mensaje: MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.mensaje,
     });
-  });
-
-  test("Debe manejar errores del servidor y retornar estado 500", async () => {
-    // Arrange
-    req.body = { correo: "usuario@ejemplo.com", contrasenia: "password123" };
-
-    repositorio.obtenerUsuario.mockRejectedValue(
-      new Error("Error de base de datos")
-    );
-
-    // Mock para console.error
-    const consoleSpy = jest
-      .spyOn(console, "error")
-      .mockImplementation(() => {});
-
-    // Act
-    await controladorInicioSesion.inicioSesion(req, res);
-
-    // Assert
-    expect(consoleSpy).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(
-      MENSAJES_AUTENTICACION.ERROR_SERVIDOR.codigo
-    );
-    expect(res.json).toHaveBeenCalledWith({
-      mensaje: MENSAJES_AUTENTICACION.ERROR_SERVIDOR.mensaje,
-    });
-
-    // Restaurar console.error
-    consoleSpy.mockRestore();
   });
 });

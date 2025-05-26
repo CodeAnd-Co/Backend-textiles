@@ -76,6 +76,8 @@ module.exports = {
     codigo: 400,
     mensaje: 'Ocurrió un error al eliminar rol',
     mensaje_no_existe: 'Ocurrió un error, rol no existe',
+    mensaje_rol_asignado: 'No se puede eliminar el rol porque está asignado a uno o más usuarios.'
+
   },
 
   NOMBRE_OBLIGATORIO: 'El nombre del rol es obligatorio.',
@@ -87,4 +89,5 @@ module.exports = {
   FALTA_ID_CLIENTE: 'Falta el ID del cliente',
   OPCIONES_OBTENIDAS: 'Permisos obtenidos correctamente',
   ERROR_OBTENIENDO_OPCIONES: 'Error al obtener permisos',
+  ERROR_OBTENIENDO_PERMISOS: 'Error al obtener la lista de permisos.',
 };
