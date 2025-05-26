@@ -127,7 +127,23 @@ exports.importarEmpleadosMasivo = async (empleados) => {
     await conn.commit();
   } catch (err) {
     await conn.rollback();
-    throw new Error(`Error en importación masiva: ${err.message}`);
+    const mensajeOriginal = err.message || '';
+
+  // Detectar error por entrada duplicada
+  const entradaDuplicada = mensajeOriginal.match(/Duplicate entry '(.+)' for key '(.+)'/);
+
+  if (entradaDuplicada) {
+    const valorDuplicado = entradaDuplicada[1];
+    const campo = entradaDuplicada[2];
+
+    let campoTraducido = campo;
+    if (campo.includes('correoElectronico')) campoTraducido = 'correo electrónico';
+    else if (campo.includes('telefono')) campoTraducido = 'número de teléfono';
+
+    throw new Error(`La entrada ${campoTraducido} "${valorDuplicado}" esta duplicada`);
+  }
+
+  throw new Error(`Error en importación masiva: ${mensajeOriginal}`);
   } finally {
     if (conn) conn.release();
   }
