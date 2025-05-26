@@ -60,23 +60,6 @@ module.exports = {
     FROM usuario_rol
     WHERE idRol IN (__IDS__);
   `,
-  OBTENER_DETALLE_ROL: `
-  SELECT
-    r.idRol,
-    r.nombre AS nombreRol,
-    r.descripcion AS descripcionRol,
-    (
-      SELECT COUNT(*) 
-      FROM usuario_rol ur 
-      WHERE ur.idRol = r.idRol
-    ) AS totalUsuarios,
-    p.idPermiso,
-    p.nombre AS nombrePermiso,
-    p.descripcion AS descripcionPermiso
-  FROM rol r
-  LEFT JOIN rol_permiso rp ON r.idRol = rp.idRol
-  LEFT JOIN permiso p ON rp.idPermiso = p.idPermiso
-  WHERE r.idRol = ?;
-`,
+
 
 };
