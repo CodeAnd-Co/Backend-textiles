@@ -42,7 +42,7 @@ module.exports = {
                      'descuento', p.descuento,
                      'estado', p.estado,
                      'envio', p.envio,
-                     'nombreProveedor', pr.nombre,
+                     'nombreProveedor', pr.nombreCompania,
                      'variantes', (SELECT JSON_ARRAYAGG(
                                                   JSON_OBJECT(
                                                           'idVariante', v.idVariante,

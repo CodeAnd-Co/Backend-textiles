@@ -20,17 +20,16 @@ const repositorio = require('@altertex/pro/repos/repositorioLeerProducto');
  * @throws {Error} Lanza un error si `idProducto` no es válido o si ocurre un error al consultar el repositorio.
  */
 exports.leerProducto = async (req, res) => {
-  const idProducto = req.body.idProducto;
+  const idProducto = req.query.idProducto;
   const idCliente = req.user.clienteSeleccionado;
 
   if (!idProducto) {
-    throw new Error(MENSAJES.ID_INVALIDO.mensaje);
+    return res.status(MENSAJES.ID_INVALIDO.codigo).json({ mensaje: MENSAJES.ID_INVALIDO.mensaje });
   }
 
   try {
     const infoProducto = await repositorio.leerProducto(idProducto, idCliente);
     return res.status(MENSAJES.LEER_PRODUCTO_EXITO.codigo).json({
-      mensaje: MENSAJES.LEER_PRODUCTO_EXITO.mensaje,
       infoProducto,
     });
   } catch (error) {
