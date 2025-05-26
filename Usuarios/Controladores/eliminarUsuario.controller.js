@@ -2,6 +2,7 @@ const repositorio = require('@altertex/usu/repos/repositorioEliminarUsuario');
 const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
 const db = require('@altertex/util/bd/db');
 const { verificarCodigo2FA } = require('@altertex/util/ser/verificarCodigo2FA.servicio');
+const repoUsuariosProtegidos = require('@altertex/usu/repos/repositorioConsultarUsuariosProtegidos');
 
 /**
  * Controlador para eliminar uno o varios usuarios, con validación adicional si hay Superadmins involucrados.
@@ -72,6 +73,14 @@ exports.eliminarUsuario = async (req, res) => {
           mensaje: 'Código 2FA inválido o expirado.',
         });
       }
+    }
+
+    const usuariosProtegidos = await repoUsuariosProtegidos.consultarUsuariosProtegidos(idsNumericos);
+
+    if (usuariosProtegidos.length > 0) {
+      return res.status(403).json({
+        mensaje: 'No puedes eliminar Super administradores protegidos del sistema.',
+      });
     }
 
     await repositorio.eliminarUsuarios(idsNumericos);
