@@ -87,6 +87,7 @@ module.exports = {
     OBTENER_OPCIONES: '/obtener-opciones',
     CONFIRMAR_CREACION: '/confirmar-creacion',
     ELIMINAR_ROL: '/eliminar',
+    LEER_ROL: '/leer',
   },
   PEDIDOS: {
     BASE: '/pedidos',
