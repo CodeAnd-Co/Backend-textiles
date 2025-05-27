@@ -25,7 +25,7 @@ module.exports = {
     CONSULTAR_LISTA_USUARIOS: '/consultar-lista-usuarios',
     CREAR: '/crear',
     ELIMINAR_USUARIOS: '/eliminar-usuarios',
-    LEER: '/consultar-usuario',
+    LEER: '/leer',
   },
   EVENTOS: {
     BASE: '/eventos',
