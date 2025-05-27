@@ -36,4 +36,20 @@ module.exports = {
     codigo: 500,
     mensaje: 'Ocurrió un error al eliminar el set de productos.',
   },
+  DATOS_INVALIDOS_ERROR: {
+    codigo: 400,
+    mensaje: 'Formato de datos invalido.',
+  },
+  CLIENTE_NO_SELECCIONADO: {
+    codigo: 400,
+    mensaje: 'Cliente no seleccionado.',
+  },
+  SETS_PRODUCTOS_CREADO_EXITO: {
+    codigo: 200,
+    mensaje: 'Set de producto creado exitosamente.',
+  },
+  ERROR_NOMBRE_DUPLICADO: {
+    codigo: 400,
+    mensaje: 'Nombre o nombre visible duplicado.',
+  },
 };
