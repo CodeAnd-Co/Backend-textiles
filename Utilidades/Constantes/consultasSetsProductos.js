@@ -43,4 +43,9 @@ module.exports = {
       WHERE idCliente = ?
         AND (nombre = ? OR nombreVisible = ?);
   `,
+  CONSULTAR_PRODUCTOS_EXISTENTES: `
+      SELECT idProducto
+      FROM producto
+      WHERE idProducto IN (__IDS__);
+  `,
 };

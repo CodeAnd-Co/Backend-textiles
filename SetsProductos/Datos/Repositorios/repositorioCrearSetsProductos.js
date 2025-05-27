@@ -14,7 +14,15 @@ exports.crearSetsProductos = async (idCliente, datosSetsProducto) => {
     if (duplicados.length > 0) {
       throw new Error(MENSAJES_SETS_PRODUCTOS.ERROR_NOMBRE_DUPLICADO.mensaje);
     }
-    
+
+    const ids = datosSetsProducto.idProductos;
+    const temporal = ids.map(() => '?').join(', ');
+    const queryProductos = CONSULTAS.CONSULTAR_PRODUCTOS_EXISTENTES.replace('__IDS__', temporal);
+    const productosExistentes = await correrQuery(queryProductos, ids);
+
+    if (productosExistentes.length !== ids.length) {
+      throw new Error(MENSAJES_SETS_PRODUCTOS.ERROR_PRODUCTOS_INVALIDOS.mensaje);
+    }
 
     const resultado = await correrQuery(CONSULTAS.CREAR_SET_PRODUCTO, [idCliente, datosSetsProducto.nombre, datosSetsProducto.nombreVisible, datosSetsProducto.descripcion, datosSetsProducto.activo]);
     const idSetProducto = resultado.insertId;
