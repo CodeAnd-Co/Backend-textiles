@@ -8,7 +8,7 @@ module.exports = {
     CERRAR_SESION: '/cerrar-sesion',
     USUARIO_AUTENTICADO: '/autenticar',
     ACTIVAR_2FA: '/activar-2fa',
-    VERIFICAR_2FA: '/verificar-2fa'
+    VERIFICAR_2FA: '/verificar-2fa',
   },
   USUARIOS: {
     BASE: '/usuarios',
@@ -64,6 +64,7 @@ module.exports = {
   },
   EMPLEADOS: {
     BASE: '/empleados',
+    CREAR: '/crear',
     CONSULTAR_LISTA: '/consultar-lista',
     CONSULTAR_GRUPO: '/consultar-grupo',
     ELIMINAR_GRUPO: '/eliminar-grupo',

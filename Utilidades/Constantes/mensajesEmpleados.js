@@ -1,5 +1,9 @@
 module.exports = {
   // 200 - OK
+  EXITO_CREAR: {
+    codigo: 200,
+    mensaje: 'Empleado agregado exitosamente.',
+  },
   CONSULTA_EXITOSA: {
     codigo: 200,
     mensaje: 'Lista de empleados obtenida exitosamente.',
@@ -27,6 +31,10 @@ module.exports = {
   ERROR_ACTUALIZAR: {
     codigo: 400,
     mensaje: 'Error al actualizar',
+  },
+  ERROR_CREAR: {
+    codigo: 400,
+    mensaje: 'Error al crear',
   },
 
   // 403 - Forbidden

@@ -10,14 +10,13 @@ const revisarPermisos = require('@altertex/util/inter/verificarPermisos');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 
-
 //RF[19] Actualizar Empleado - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF19]
 
 /**
  * @swagger
  * /api/empleados/actualizar:
  *   put:
- *     summary: Actualiza la información de un empleado.
+ *     summary: Actualiza la información de uno o varios empleados.
  *     tags:
  *       - Empleados
  *     security:
@@ -28,115 +27,48 @@ const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones')
  *       content:
  *         application/json:
  *           schema:
- *             oneOf:
- *               - type: object
- *                 description: Información del empleado a actualizar directamente en el body
- *                 required:
- *                   - idEmpleado
- *                   - numeroEmergencia
- *                   - areaTrabajo
- *                   - posicion
- *                   - cantidadPuntos
- *                   - antiguedad
- *                 properties:
- *                   id:
- *                     type: integer
- *                     example: 50
- *                   idEmpleado:
- *                     type: integer
- *                     example: 50
- *                   idUsuario:
- *                     type: integer
- *                     example: 30
- *                   nombreCompleto:
- *                     type: string
- *                     example: "Angel Romero"
- *                   correoElectronico:
- *                     type: string
- *                     example: "aromero@google.com"
- *                   numeroEmergencia:
- *                     type: string
- *                     example: "9876543214"
- *                   areaTrabajo:
- *                     type: string
- *                     example: "Ventas"
- *                   posicion:
- *                     type: string
- *                     example: "Auxiliar"
- *                   cantidadPuntos:
- *                     type: integer
- *                     example: 2
- *                   antiguedad:
- *                     type: string
- *                     example: "2000-02-10"
- *               - type: object
- *                 properties:
- *                   cambios:
- *                     oneOf:
- *                       - type: object
- *                         description: Objeto único con información del empleado
- *                         required:
- *                           - idEmpleado
- *                           - numeroEmergencia
- *                           - areaTrabajo
- *                           - posicion
- *                           - cantidadPuntos
- *                           - antiguedad
- *                         properties:
- *                           idEmpleado:
- *                             type: integer
- *                             example: 50
- *                           idUsuario:
- *                             type: integer
- *                             example: 30
- *                           numeroEmergencia:
- *                             type: string
- *                             example: "9876543214"
- *                           areaTrabajo:
- *                             type: string
- *                             example: "Ventas"
- *                           posicion:
- *                             type: string
- *                             example: "Auxiliar"
- *                           cantidadPuntos:
- *                             type: integer
- *                             example: 2
- *                           antiguedad:
- *                             type: string
- *                             example: "2000-02-10"
- *                       - type: array
- *                         description: Array de objetos con información de empleados
- *                         items:
- *                           type: object
- *                           required:
- *                             - idEmpleado
- *                             - numeroEmergencia
- *                             - areaTrabajo
- *                             - posicion
- *                             - cantidadPuntos
- *                             - antiguedad
- *                           properties:
- *                             idEmpleado:
- *                               type: integer
- *                               example: 50
- *                             idUsuario:
- *                               type: integer
- *                               example: 30
- *                             numeroEmergencia:
- *                               type: string
- *                               example: "9876543214"
- *                             areaTrabajo:
- *                               type: string
- *                               example: "Ventas"
- *                             posicion:
- *                               type: string
- *                               example: "Auxiliar"
- *                             cantidadPuntos:
- *                               type: integer
- *                               example: 2
- *                             antiguedad:
- *                               type: string
- *                               example: "2000-02-10"
+ *             type: array
+ *             description: Array de objetos con información de empleados a actualizar
+ *             items:
+ *               type: object
+ *               required:
+ *                 - idEmpleado
+ *                 - numeroEmergencia
+ *                 - areaTrabajo
+ *                 - posicion
+ *                 - cantidadPuntos
+ *                 - antiguedad
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   example: 50
+ *                 idEmpleado:
+ *                   type: integer
+ *                   example: 50
+ *                 idUsuario:
+ *                   type: integer
+ *                   example: 30
+ *                 nombreCompleto:
+ *                   type: string
+ *                   example: "Angel Romero"
+ *                 correoElectronico:
+ *                   type: string
+ *                   example: "aromero@google.com"
+ *                 numeroEmergencia:
+ *                   type: string
+ *                   example: "9876543214"
+ *                 areaTrabajo:
+ *                   type: string
+ *                   example: "Ventas"
+ *                 posicion:
+ *                   type: string
+ *                   example: "Auxiliar"
+ *                 cantidadPuntos:
+ *                   type: integer
+ *                   example: 2
+ *                 antiguedad:
+ *                   type: string
+ *                   example: "2000-02-10"
  *     responses:
  *       200:
  *         description: Información del empleado actualizada correctamente.
@@ -166,12 +98,12 @@ const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones')
  *       - lang: JavaScript
  *         label: cURL
  *         source: |
- *           # Ejemplo enviando datos directamente
+ *           # Ejemplo enviando un array de empleados
  *           curl -X PUT "https://tu-api.com/api/empleados/actualizar" \
  *           -H "x-api-key: TU_API_KEY" \
  *           -H "Authorization: Bearer TU_TOKEN" \
  *           -H "Content-Type: application/json" \
- *           -d '{"id":50,"idUsuario":30,"nombreCompleto":"Angel Romero","correoElectronico":"aromero@google.com","numeroEmergencia":"9876543214","areaTrabajo":"Ventas","posicion":"Auxiliar","cantidadPuntos":2,"antiguedad":"2000-02-10","idEmpleado":50}'
+ *           -d '[{"id":50,"idUsuario":30,"nombreCompleto":"Angel Romero","correoElectronico":"aromero@google.com","numeroEmergencia":"9876543214","areaTrabajo":"Ventas","posicion":"Auxiliar","cantidadPuntos":2,"antiguedad":"2000-02-10","idEmpleado":50}]'
  */
 
 ruteador.put(
