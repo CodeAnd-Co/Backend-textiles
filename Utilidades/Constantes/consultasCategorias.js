@@ -48,7 +48,7 @@ module.exports = {
       WHERE idProducto IN (?);
   `,
 
-    LEER_DETALLE_CATEGORIA: `
+  LEER_DETALLE_CATEGORIA: `
     SELECT 
       c.idCategoria,
       c.nombreCategoria,
@@ -59,5 +59,20 @@ module.exports = {
     LEFT JOIN categoria_producto cp ON c.idCategoria = cp.idCategoria
     LEFT JOIN producto p ON cp.idProducto = p.idProducto
     WHERE c.idCategoria = ?;
+  `,
+
+  ACTUALIZAR_CATEGORIA: `
+    UPDATE categoria
+    SET nombreCategoria = ?, descripcion = ?
+    WHERE idCategoria = ?;
+  `,
+
+  ELIMINAR_PRODUCTOS_CATEGORIA: `
+    DELETE FROM categoria_producto WHERE idCategoria = ?;
+  `,
+
+  ASIGNAR_PRODUCTOS_A_CATEGORIA: `
+    INSERT INTO categoria_producto (idCategoria, idProducto)
+    VALUES ?;
   `,
 };
