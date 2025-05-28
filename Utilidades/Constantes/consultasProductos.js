@@ -25,4 +25,13 @@ module.exports = {
 
   ELIMINAR_PRODUCTOS: 
     "DELETE FROM producto WHERE idProducto IN (?)",
+    
+  OBTENER_IMAGENES_POR_IDS: `
+    SELECT p.idProducto, i.urlImagen
+    FROM producto p
+    LEFT JOIN imagen_producto ip ON p.idProducto = ip.idProducto
+    LEFT JOIN imagen i ON ip.idImagen = i.idImagen
+    WHERE p.idProducto IN (?);
+  `,
+  
 };
