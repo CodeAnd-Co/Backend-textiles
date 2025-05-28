@@ -6,6 +6,32 @@ const repositorioCrearVariante = require('@altertex/pro/repos/repositorioCrearVa
 const repositorioCrearOpcion = require('@altertex/pro/repos/repositorioCrearOpcion');
 const db = require('@altertex/util/bd/db');
 
+
+/**
+ * Importa productos y sus variantes/opciones para un cliente.
+ * 
+ * Espera en req.body un array de objetos con la forma:
+ * [
+ *   {
+ *     producto: { ... },
+ *     variantes: [
+ *       {
+ *         ...,
+ *         opciones: { ... }
+ *       }
+ *     ]
+ *   }
+ * ]
+ * 
+ * Valida cada producto, variante y opciones antes de insertar en la base de datos.
+ * Si hay errores en alguna fila, los acumula y los devuelve al finalizar.
+ * 
+ * @async
+ * @function importarProductos
+ * @param {Express.Request} req - Request de Express, requiere req.user.clienteSeleccionado y req.body.
+ * @param { Express.Response} res - Response de Express.
+ * @returns {Promise<void>} Devuelve un JSON con el resultado de la importación y los errores encontrados.
+ */
 exports.importarProductos = async (req, res) => {
   console.dir(req.body, { depth: null });
   const idCliente = parseInt(req.user.clienteSeleccionado);
@@ -22,7 +48,7 @@ exports.importarProductos = async (req, res) => {
     conexion = await db.getConnection();
     await conexion.beginTransaction();
 
-    for (let im = 0; im < productos.length; im++) {
+    for (let im = 0; im < productos.length; im = im + 1) {
       const { producto, variantes } = productos[im];
       const fila = im + 1;
 
