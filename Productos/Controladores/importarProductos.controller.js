@@ -33,7 +33,6 @@ const db = require('@altertex/util/bd/db');
  * @returns {Promise<void>} Devuelve un JSON con el resultado de la importación y los errores encontrados.
  */
 exports.importarProductos = async (req, res) => {
-  console.dir(req.body, { depth: null });
   const idCliente = parseInt(req.user.clienteSeleccionado);
   const productos = req.body; // Espera array de { producto, variantes }
 
