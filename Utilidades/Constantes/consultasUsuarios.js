@@ -93,6 +93,14 @@ module.exports = {
     DELETE FROM usuario
     WHERE idUsuario = (?);
   `,
+
+  ACTUALIZAR: `
+        UPDATE usuario SET 
+        nombreCompleto = ?, correoElectronico = ?, estatus = ?
+        , 
+        cantidadPuntos = ?, antiguedad = ? WHERE idUsuario = ?;
+    `,
+
   VALIDAR_CORREO: `
     SELECT idUsuario
     FROM usuario
@@ -176,6 +184,4 @@ module.exports = {
     WHERE idUsuario IN (?) 
       AND puedeActivar2FA = true;
   `,
-
-  
 };
