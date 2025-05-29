@@ -68,7 +68,6 @@ exports.importarEmpleados = async (req, res) => {
       || !datos.numeroEmergencia
       || !datos.areaTrabajo
       || !datos.posicion
-      || datos.cantidadPuntos === null
       || !datos.antiguedad
     ) {
       errores.push({ fila, error: 'Faltan campos requeridos' });
@@ -132,7 +131,13 @@ exports.importarEmpleados = async (req, res) => {
       continue;
     }
     if (isNaN(datos.numeroEmergencia)) {
-      errores.push({ fila, error: 'El número de emergencia No es valido' });
+      errores.push({ fila, error: 'El número de emergencia no es valido' });
+      continue;
+    }
+    if (
+    !/^\d+$/.test(String(datos.cantidadPuntos)) 
+    ||Number(datos.cantidadPuntos) < 0) {
+      errores.push({ fila, error: 'Los puntos deben ser un número entero mayor o igual a 0' });
       continue;
     }
 
@@ -162,53 +167,46 @@ exports.importarEmpleados = async (req, res) => {
       continue;
     }
   
-  const fechaRegex = /^\d{4}-\d{2}-\d{2}$/;
-  if (!fechaRegex.test(datos.fechaNacimiento) || isNaN(Date.parse(datos.fechaNacimiento))) {
-    errores.push({ fila, error: 'La fecha de nacimiento no tiene un formato válido (DD-MM-YYYY)' });
-    continue;
-  }
-  if (!fechaRegex.test(datos.antiguedad) || isNaN(Date.parse(datos.antiguedad))) {
-    errores.push({ fila, error: 'La antigüedad no tiene un formato válido (DD-MM-YYYY)' });
-    continue;
-  }
+    const fechaRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!fechaRegex.test(datos.fechaNacimiento) || isNaN(Date.parse(datos.fechaNacimiento))) {
+      errores.push({ fila, error: 'La fecha de nacimiento no tiene un formato válido (DD-MM-YYYY)' });
+      continue;
+    }
+    if (!fechaRegex.test(datos.antiguedad) || isNaN(Date.parse(datos.antiguedad))) {
+      errores.push({ fila, error: 'La antigüedad no tiene un formato válido (DD-MM-YYYY)' });
+      continue;
+    }
+  
+      try {
+        const hash = await bcrypt.hash(contrasena, 10);
+        listaParaImportar.push({
+          ...datos,
+          contrasena: hash
+        });
+      } catch (err) {
+        errores.push({ fila, error: `Error al procesar contraseña: ${err.message}` });
+      }
+    }
+  
+    if (errores.length > 0) {
+      return res.status(207).json({
+        mensaje: 'Importación parcial con errores.',
+        errores
+      });
+    }
+  
+    for (const empleado of listaParaImportar) {
+      empleado.idCliente = idCliente;
+    }
 
     try {
-      const hash = await bcrypt.hash(contrasena, 10);
-      listaParaImportar.push({
-        ...datos,
-        contrasena: hash
+      await repositorio.importarEmpleadosMasivo(listaParaImportar);
+    } catch (error) {
+      errores.push({
+        fila: "",
+        error: error.message
       });
-    } catch (err) {
-      errores.push({ fila, error: `Error al procesar contraseña: ${err.message}` });
     }
-  }
-
-  if (errores.length > 0) {
-    return res.status(207).json({
-      mensaje: 'Importación parcial con errores.',
-      errores
-    });
-  }
-
-  for (const empleado of listaParaImportar) {
-    empleado.idCliente = idCliente;
-  }
-
-  try {
-    await repositorio.importarEmpleadosMasivo(listaParaImportar);
-  } catch (error) {
-    errores.push({
-      fila: "",
-      error: error.message
-    });
-  }
-
-  if (errores.length > 0) {
-    return res.status(207).json({
-      mensaje: 'Importación parcial con errores.',
-      errores
-    });
-  }
 
   return res.status(200).json({
     mensaje: 'Todos los empleados importados correctamente.'
