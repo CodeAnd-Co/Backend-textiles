@@ -1,5 +1,5 @@
 const correrQuery = require('@altertex/util/ser/correrQuery');
-const CONSULTAS_EXPORTAR_EMPLEADOS = require('@altertex/util/const/consultasExportarEmpleados');
+const CONSULTAS_EMPLEADOS = require('@altertex/util/const/consultasEmpleados');
 
 /**
  * Consulta la lista de empleados con todos los datos necesarios para exportar en CSV.
@@ -13,6 +13,6 @@ const CONSULTAS_EXPORTAR_EMPLEADOS = require('@altertex/util/const/consultasExpo
  * @see [RF59 - Documentación de requisitos](https://codeandco-wiki.netlify.app/docs/next/proyectos/textiles/documentacion/requisitos/RF59)
  */
 exports.obtenerEmpleadosExportacion = () => {
-  const query = CONSULTAS_EXPORTAR_EMPLEADOS.OBTENER_DATOS_EXPORTACION;
+  const query = CONSULTAS_EMPLEADOS.OBTENER_DATOS_EXPORTACION;
   return correrQuery(query);
 };
