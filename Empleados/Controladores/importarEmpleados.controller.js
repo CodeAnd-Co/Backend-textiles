@@ -82,6 +82,10 @@ exports.importarEmpleados = async (req, res) => {
       errores.push({ fila, error: 'El nombre es requerido' });
       continue;
     }
+    if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(nombreCompleto)) {
+      errores.push({ fila, error: 'El nombre solo puede contener letras y espacios' });
+      continue;
+    }
 
     if (correoElectronico.length > 75) {
       errores.push({ fila, error: 'El correo es demasiado largo' });
@@ -157,6 +161,16 @@ exports.importarEmpleados = async (req, res) => {
       errores.push({ fila, error: MENSAJES_USUARIOS.TELEFONO_INVALIDO.mensaje });
       continue;
     }
+  
+  const fechaRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!fechaRegex.test(datos.fechaNacimiento) || isNaN(Date.parse(datos.fechaNacimiento))) {
+    errores.push({ fila, error: 'La fecha de nacimiento no tiene un formato válido (DD-MM-YYYY)' });
+    continue;
+  }
+  if (!fechaRegex.test(datos.antiguedad) || isNaN(Date.parse(datos.antiguedad))) {
+    errores.push({ fila, error: 'La antigüedad no tiene un formato válido (DD-MM-YYYY)' });
+    continue;
+  }
 
     try {
       const hash = await bcrypt.hash(contrasena, 10);
