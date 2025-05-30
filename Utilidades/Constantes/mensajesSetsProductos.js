@@ -8,6 +8,10 @@ module.exports = {
     codigo: 200,
     mensaje: 'Set de productos eliminado correctamente.',
   },
+  SET_PRODUCTOS_ACTUALIZADO: {
+    codigo: 200,
+    mensaje: 'Set de productos actualizado correctamente.',
+  },
 
   // 204 - No Content
   SIN_RESULTADOS: {
@@ -35,5 +39,9 @@ module.exports = {
   ERROR_ELIMINAR_SET_PRODUCTOS: {
     codigo: 500,
     mensaje: 'Ocurrió un error al eliminar el set de productos.',
+  },
+  ERROR_ACTUALIZAR_SET_PRODUCTOS: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error al actualizar el set de productos',
   },
 };

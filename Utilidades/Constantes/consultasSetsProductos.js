@@ -27,4 +27,7 @@ module.exports = {
       DELETE FROM set_producto
       WHERE idSetProducto = ?;
       `,
+  ACTUALIZAR: `
+    UPDATE set_producto SET idCliente = ?, nombre = ?, nombreVisible = ?, descripcion = ?, activo = ? WHERE idSetProducto = ?;
+    `,
 };
