@@ -84,7 +84,7 @@ const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones')
  *                   example: Error al exportar la lista de empleados.
  */
 
-ruteador.get(
+ruteador.post(
   RUTAS.EMPLEADOS.EXPORTAR_EMPLEADOS,
   revisarApiKey(),
   autorizarToken,

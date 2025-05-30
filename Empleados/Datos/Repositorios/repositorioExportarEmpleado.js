@@ -2,17 +2,17 @@ const correrQuery = require('@altertex/util/ser/correrQuery');
 const CONSULTAS_EMPLEADOS = require('@altertex/util/const/consultasEmpleados');
 
 /**
- * Consulta la lista de empleados con todos los datos necesarios para exportar en CSV.
+ * Consulta la lista de empleados seleccionados de un cliente para exportar en CSV.
  *
- * @function
- * @async
- * @returns {Promise<Array<object>>} Arreglo de empleados con sus datos combinados (usuario + empleado).
- *
- * @throws {Error} Lanza un error si ocurre un fallo al ejecutar la consulta a la base de datos.
- *
+ * @param {number} idCliente
+ * @param {number[]} idsEmpleado
+ * @returns {Promise<Array<object>>}
+ * 
  * @see [RF59 - Documentación de requisitos](https://codeandco-wiki.netlify.app/docs/next/proyectos/textiles/documentacion/requisitos/RF59)
  */
-exports.obtenerEmpleadosExportacion = () => {
-  const query = CONSULTAS_EMPLEADOS.OBTENER_DATOS_EXPORTACION;
-  return correrQuery(query);
+
+exports.obtenerEmpleadosExportacion = (idCliente, idsEmpleado) => {
+  const placeholders = idsEmpleado.map(() => '?').join(', ');
+  const query = CONSULTAS_EMPLEADOS.OBTENER_DATOS_EXPORTACION.replace('__IDS__', placeholders);
+  return correrQuery(query, [idCliente, ...idsEmpleado]);
 };
