@@ -20,25 +20,27 @@ module.exports = {
       DELETE FROM empleado_grupo WHERE idGrupo = ?;
     `,
   LEER_GRUPO: `
-      SELECT
-          ge.idGrupo,
-          ge.nombre AS nombre,
-          ge.descripcion AS descripcion,
-          IFNULL(GROUP_CONCAT(DISTINCT sp.nombre SEPARATOR ', '), 'Sin sets de productos asociados') AS setsProductos,
-          IFNULL(GROUP_CONCAT(DISTINCT CONCAT(
-              u.nombreCompleto, ' | ',
-              u.correoElectronico, ' | ',
-              e.areaTrabajo
-          ) SEPARATOR ' || '), 'Sin empleados asociados') AS infoEmpleados
-      FROM grupo_empleado ge
-      LEFT JOIN empleado_grupo eg ON ge.idGrupo = eg.idGrupo
-      LEFT JOIN empleado e ON eg.idEmpleado = e.idEmpleado
-      LEFT JOIN usuario u ON e.idUsuario = u.idUsuario
-      LEFT JOIN set_producto_grupo_empleado spge ON ge.idGrupo = spge.idGrupo
-      LEFT JOIN set_producto sp ON spge.idSetProducto = sp.idSetProducto
-      WHERE ge.idGrupo = ?
-      GROUP BY ge.idGrupo
-      ORDER BY ge.idGrupo;
+    SELECT 
+        ge.idGrupo,
+        ge.nombre AS nombre,
+        ge.descripcion AS descripcion,
+        IFNULL(GROUP_CONCAT(DISTINCT sp.nombre SEPARATOR ', '), 'Sin sets de productos asociados') AS setsProductos,
+        IFNULL(GROUP_CONCAT(DISTINCT sp.idSetProducto SEPARATOR ','), '') AS idsSetProductos,
+        IFNULL(GROUP_CONCAT(DISTINCT CONCAT(
+            u.nombreCompleto, ' | ',
+            u.correoElectronico, ' | ',
+            e.areaTrabajo
+        ) SEPARATOR ' || '), 'Sin empleados asociados') AS infoEmpleados,
+        IFNULL(GROUP_CONCAT(DISTINCT e.idEmpleado SEPARATOR ','), '') AS idsEmpleados
+    FROM grupo_empleado ge
+    LEFT JOIN empleado_grupo eg ON ge.idGrupo = eg.idGrupo
+    LEFT JOIN empleado e ON eg.idEmpleado = e.idEmpleado
+    LEFT JOIN usuario u ON e.idUsuario = u.idUsuario
+    LEFT JOIN set_producto_grupo_empleado spge ON ge.idGrupo = spge.idGrupo
+    LEFT JOIN set_producto sp ON spge.idSetProducto = sp.idSetProducto
+    WHERE ge.idGrupo = ?
+    GROUP BY ge.idGrupo
+    ORDER BY ge.idGrupo;
     `,
 
   VALIDAR_NOMBRE_REPETIDO: `
@@ -50,7 +52,7 @@ module.exports = {
   `,
   ASIGNAR_EMPLEADO_A_GRUPO: `
     INSERT INTO empleado_grupo (idEmpleado, idGrupo) VALUES (?, ?);
-  `
+  `,
   ACTUALIZAR_GRUPO_EMPLEADOS_NOMBRE_DESCRIPCION: `
     UPDATE grupo_empleado
     SET nombre = ?, descripcion = ?

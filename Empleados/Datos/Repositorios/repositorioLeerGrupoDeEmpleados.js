@@ -24,8 +24,15 @@ exports.obtenerGrupoEmpleadosPorId = async (idGrupo) => {
       nombre: resultado[0].nombre,
       descripcion: resultado[0].descripcion,
       setsProductos: resultado[0].setsProductos ? resultado[0].setsProductos.split(', ') : [],
+      idsSetProductos: resultado[0].idsSetProductos
+        ? resultado[0].idsSetProductos.split(', ').map(Number)
+        : [],
       empleados: resultado[0].infoEmpleados ? resultado[0].infoEmpleados.split(' || ') : [],
+      idsEmpleados: resultado[0].idsEmpleados
+        ? resultado[0].idsEmpleados.split(',').map(Number)
+        : [],
     };
+
     return grupoEmpleados;
   } catch (error) {
     console.error('Error al obtener el grupo de empleados con id:', error);

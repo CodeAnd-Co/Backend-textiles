@@ -26,13 +26,8 @@ ruteador.use(RUTAS.EMPLEADOS.BASE, rutasImportarEmpleados);
 ruteador.use(RUTAS.EMPLEADOS.BASE, rutasLeerGrupoEmpleados);
 //RF21 - Crear Grupo de Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF21
 ruteador.use(RUTAS.EMPLEADOS.BASE, rutasCrearGrupo);
-
 //RF19 - Actualizar Empleado - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF19
 ruteador.use(RUTAS.EMPLEADOS.BASE, rutasActualizarEmpleado);
-//RF23 Lee grupo de empleados -https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF23
-ruteador.use(RUTAS.EMPLEADOS.BASE, rutasLeerGrupoEmpleados);
-//RF21 - Crear Grupo de Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF21
-ruteador.use(RUTAS.EMPLEADOS.BASE, rutasCrearGrupo);
 // RF[24] Actualiza grupo empleado - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF24]
 ruteador.use(RUTAS.EMPLEADOS.BASE, rutasActualizarEmpleado);
 
