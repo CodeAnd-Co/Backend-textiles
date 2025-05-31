@@ -1,10 +1,10 @@
-const validarProducto = require('@altertex/util/vali/validarProducto');
 const validarVariante = require('@altertex/util/vali/validarVariante');
-const validarOpciones = require('@altertex/util/vali/validarOpciones');
+const validarOpcionesImportar = require('@altertex/util/vali/validarOpcionesImportar');
 const repositorioCrearProducto = require('@altertex/pro/repos/repositorioCrearProducto');
 const repositorioCrearVariante = require('@altertex/pro/repos/repositorioCrearVariante');
 const repositorioCrearOpcion = require('@altertex/pro/repos/repositorioCrearOpcion');
 const db = require('@altertex/util/bd/db');
+const validarProductoImportado = require('@altertex/util/vali/validarProductoImportado');
 
 
 /**
@@ -35,7 +35,6 @@ const db = require('@altertex/util/bd/db');
 exports.importarProductos = async (req, res) => {
   const idCliente = parseInt(req.user.clienteSeleccionado);
   const productos = req.body; // Espera array de { producto, variantes }
-
   if (!Array.isArray(productos) || productos.length === 0) {
     return res.status(400).json({ mensaje: 'No se recibieron productos válidos.' });
   }
@@ -51,7 +50,7 @@ exports.importarProductos = async (req, res) => {
       const { producto, variantes } = productos[im];
       const fila = im + 1;
 
-      const errorProducto = validarProducto(producto);
+      const errorProducto = validarProductoImportado(producto);
       if (errorProducto) {
         errores.push({ fila, error: errorProducto.error });
         continue;
@@ -80,8 +79,8 @@ exports.importarProductos = async (req, res) => {
           errores.push({ fila, error: 'Error al crear variante.' });
           continue;
         }
-
-        const errorOpciones = validarOpciones(variante.opciones);
+        console.log(variante.opciones)
+        const errorOpciones = validarOpcionesImportar(variante.opciones);
         if (errorOpciones) {
           errores.push({ fila, error: errorOpciones.error });
           continue;
