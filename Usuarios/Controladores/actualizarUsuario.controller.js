@@ -1,6 +1,7 @@
 const MENSAJES = require('@altertex/util/const/mensajesUsuarios');
-const repositorio = require('@altertex/emp/repos/repositorioActualizarUsuario');
+const repositorio = require('@altertex/usu/repos/repositorioActualizarUsuario');
 //RF[4] Actualizar Usuario - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF4]
+
 /**
  * Controlador para actualizar la información de un usuario.
  *
@@ -30,20 +31,20 @@ exports.actualizarUsuario = async (req, res) => {
       .status(MENSAJES.ERROR_ACTUALIZAR_USUARIO.codigo)
       .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje });
   }
-};
 
-if (!datos || datos.length === 0) {
-  return res
-    .status(MENSAJES.ERROR_ACTUALIZAR_USUARIO.codigo)
-    .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje });
-}
-try {
-  await repositorio.actualizarUsuario(datos);
-  return res
-    .status(MENSAJES.USUARIO_ACTUALIZADO.codigo)
-    .json({ mensaje: MENSAJES.USUARIO_ACTUALIZADO.mensaje, datos });
-} catch {
-  return res
-    .status(MENSAJES.ERROR_ACTUALIZAR_USUARIO.codigo)
-    .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje });
-}
+  if (!datos || datos.length === 0) {
+    return res
+      .status(MENSAJES.ERROR_ACTUALIZAR_USUARIO.codigo)
+      .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje });
+  }
+  try {
+    await repositorio.actualizarUsuario(datos);
+    return res
+      .status(MENSAJES.USUARIO_ACTUALIZADO.codigo)
+      .json({ mensaje: MENSAJES.USUARIO_ACTUALIZADO.mensaje, datos });
+  } catch {
+    return res
+      .status(MENSAJES.ERROR_ACTUALIZAR_USUARIO.codigo)
+      .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje });
+  }
+};

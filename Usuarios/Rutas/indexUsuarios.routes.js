@@ -12,5 +12,6 @@ ruteador.use(RUTAS.USUARIOS.BASE, rutasConsultarListaUsuarios);
 ruteador.use(RUTAS.USUARIOS.BASE, rutasCrearUsuario);
 ruteador.use(RUTAS.USUARIOS.BASE, rutasLeerUsuario);
 ruteador.use(RUTAS.USUARIOS.BASE, rutasEliminarUsuario);
+ruteador.use(RUTAS.USUARIOS.BASE, rutasActualizarUsuario);
 
 module.exports = ruteador;

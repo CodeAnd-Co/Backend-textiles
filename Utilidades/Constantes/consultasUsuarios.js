@@ -94,11 +94,23 @@ module.exports = {
     WHERE idUsuario = (?);
   `,
 
-  ACTUALIZAR: `
-        UPDATE usuario SET 
-        nombreCompleto = ?, correoElectronico = ?, estatus = ?
-        , 
-        cantidadPuntos = ?, antiguedad = ? WHERE idUsuario = ?;
+  ACTUALIZAR_DATOS_USUARIO: `
+UPDATE usuario SET
+  nombreCompleto = ?,
+  correoElectronico = ?,
+  contrasenia = ?,
+  numeroTelefono = ?,
+  direccion = ?,
+  fechaNacimiento = ?,
+  genero = ?,
+  estatus = ?
+WHERE idUsuario = ?;
+    `,
+
+  ACTUALIZAR_ROL_USUARIO: `
+UPDATE usuario_rol SET 
+idRol = ?
+WHERE idUsuario = ?;
     `,
 
   VALIDAR_CORREO: `

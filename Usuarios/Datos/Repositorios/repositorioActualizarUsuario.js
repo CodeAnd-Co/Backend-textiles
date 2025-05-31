@@ -3,6 +3,7 @@ const MENSAJES = require('@altertex/util/const/mensajesUsuarios');
 const CONSULTAS_USUARIOS = require('@altertex/util/const/consultasUsuarios');
 
 //RF[4] Actualizar Usuario - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF4
+
 /**
  * Repositorio para actualizar los datos de un usuario en la BD.
  *
