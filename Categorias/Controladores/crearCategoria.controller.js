@@ -23,7 +23,7 @@ exports.crearCategoria = async (req, res) => {
   if (!categoria.nombreCategoria || !categoria.productos) {
     return res
       .status(MENSAJES.NOMBRE_CATEGORIA_INVALIDO.codigo)
-      .json({ error: MENSAJES.NOMBRE_CATEGORIA_INVALIDO.mensaje });
+      .json({ mensaje: MENSAJES.NOMBRE_CATEGORIA_INVALIDO.mensaje });
   }
 
   try {
@@ -35,6 +35,6 @@ exports.crearCategoria = async (req, res) => {
   } catch (errorRepo) {
     return res
       .status(MENSAJES.ERROR_CREAR_CATEGORIA.codigo)
-      .json({ error: errorRepo.message });
+      .json({ mensaje: errorRepo.message });
   }
 };
