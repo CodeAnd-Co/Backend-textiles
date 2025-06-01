@@ -18,6 +18,13 @@ exports.obtenerGrupoEmpleadosPorId = async (idGrupo) => {
     const resultado = await correrQuery(query, [idGrupo]);
 
     if (resultado.length === 0) return null;
+    const setProductosOriginal = resultado[0].setProductosActualizar;
+    const setProductosFiltrados = Object.values(
+      setProductosOriginal.reduce((acc, obj) => {
+        acc[obj.id] = obj; // sobrescribe si ya existe ese id
+        return acc;
+      }, {})
+    );
 
     const grupoEmpleados = {
       idGrupo: resultado[0].idGrupo,
@@ -31,6 +38,8 @@ exports.obtenerGrupoEmpleadosPorId = async (idGrupo) => {
       idsEmpleados: resultado[0].idsEmpleados
         ? resultado[0].idsEmpleados.split(',').map(Number)
         : [],
+      empleadosActualizar: resultado[0].empleadosActualizar,
+      setProductosActualizar: setProductosFiltrados,
     };
 
     return grupoEmpleados;

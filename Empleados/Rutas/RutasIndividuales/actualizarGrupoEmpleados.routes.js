@@ -11,7 +11,7 @@ const controlador = require('@altertex/emp/ctrl/actualizarGrupoEmpleado.controll
 
 /**
  * @swagger
- * /api/empleados/actualizar-grupos:
+ * /api/empleados/actualizar-grupo:
  *   put:
  *     summary: Actualiza un grupo de empleados
  *     description: Actualiza el nombre, la descripción, los empleados y los sets de productos asociados a un grupo de empleados existente.

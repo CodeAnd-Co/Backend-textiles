@@ -24,14 +24,38 @@ module.exports = {
         ge.idGrupo,
         ge.nombre AS nombre,
         ge.descripcion AS descripcion,
+
         IFNULL(GROUP_CONCAT(DISTINCT sp.nombre SEPARATOR ', '), 'Sin sets de productos asociados') AS setsProductos,
         IFNULL(GROUP_CONCAT(DISTINCT sp.idSetProducto SEPARATOR ','), '') AS idsSetProductos,
+
         IFNULL(GROUP_CONCAT(DISTINCT CONCAT(
             u.nombreCompleto, ' | ',
             u.correoElectronico, ' | ',
             e.areaTrabajo
         ) SEPARATOR ' || '), 'Sin empleados asociados') AS infoEmpleados,
-        IFNULL(GROUP_CONCAT(DISTINCT e.idEmpleado SEPARATOR ','), '') AS idsEmpleados
+
+        IFNULL(GROUP_CONCAT(DISTINCT e.idEmpleado SEPARATOR ','), '') AS idsEmpleados,
+        IFNULL(
+            JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'id', e.idEmpleado,
+                    'correo', u.correoElectronico,
+                    'nombre', u.nombreCompleto,
+                    'area', e.areaTrabajo
+                )
+            ),
+            JSON_ARRAY()
+        ) AS empleadosActualizar,
+        IFNULL(
+            JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'id', sp.idSetProducto,
+                    'nombreProducto', sp.nombre,
+                    'activo', sp.activo
+                )
+            ),
+            JSON_ARRAY()
+        ) AS setProductosActualizar
     FROM grupo_empleado ge
     LEFT JOIN empleado_grupo eg ON ge.idGrupo = eg.idGrupo
     LEFT JOIN empleado e ON eg.idEmpleado = e.idEmpleado
