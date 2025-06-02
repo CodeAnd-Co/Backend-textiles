@@ -61,16 +61,17 @@ module.exports = (producto) => {
     || producto.nombreComun.length > 100
   ) {
     return {
-      error: 'nombreComun es requerido, debe ser una cadena de texto y no exceder 100 caracteres.',
+      error: 'nombreProducto es requerido, debe ser una cadena de texto y no exceder 100 caracteres.',
     };
   }
 
   if (
-    producto.nombreComercial !== null 
-    && (typeof producto.nombreComercial !== 'string' || producto.nombreComercial.length > 150)
+    !producto.nombreComercial 
+    || typeof producto.nombreComercial !== 'string' 
+    || producto.nombreComercial.length > 100
   ) {
     return {
-      error: 'nombreComercial debe ser una cadena de texto o NULL y no exceder 150 caracteres.',
+      error: 'nombreComercial es requerido, debe ser una cadena de texto y no exceder 100 caracteres.',
     };
   }
 
@@ -79,7 +80,7 @@ module.exports = (producto) => {
     && (typeof producto.descripcion !== 'string' || producto.descripcion.length > 1000)
   ) {
     return {
-      error: 'descripcion debe ser una cadena de texto o NULL y no exceder 1000 caracteres.',
+      error: 'descripcion debe ser una cadena de texto y no exceder 1000 caracteres.',
     };
   }
 
