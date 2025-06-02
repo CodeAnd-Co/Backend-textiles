@@ -39,6 +39,7 @@ module.exports = (opciones) => {
       typeof opcion.cantidad !== 'number' 
       || opcion.cantidad < 0 
       || !Number.isInteger(opcion.cantidad)
+      || opcion.cantidad % 1 !== 0
     ) {
       return { error: 'cantidad de la opción debe ser un número entero positivo o cero.' };
     }
@@ -63,7 +64,8 @@ module.exports = (opciones) => {
     return { error: 'SKUautomatico es requerido y debe ser una cadena de texto de máximo 50 caracteres.' };
   }
     // prettier-ignore
-    if (opcion.SKUcomercial == null 
+    if (!opcion.SKUcomercial
+    || opcion.SKUcomercial == null 
     || typeof opcion.SKUcomercial !== 'string' 
     || opcion.SKUcomercial.length > 50
     ) {

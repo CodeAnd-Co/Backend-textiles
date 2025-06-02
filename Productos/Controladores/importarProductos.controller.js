@@ -85,18 +85,18 @@ exports.importarProductos = async (req, res) => {
         errores,
       });
     }
-
+    
     // Si no hubo errores, insertar todos los productos
     for (let im = 0; im < productos.length; im += 1) {
       const { producto, variantes } = productos[im];
       const idProducto = await repositorioCrearProducto.crearProducto(idCliente, producto);
-
+      
       for (const variante of variantes) {
         const idVariante = await repositorioCrearVariante.crearVariante(idProducto, variante);
         await repositorioCrearOpcion.crearOpcion(idVariante, variante.opciones);
       }
     }
-
+    
     await conexion.commit();
 
     return res.status(200).json({

@@ -48,12 +48,16 @@
 module.exports = (producto) => {
   if (
     producto.idProveedor !== null 
-    && (typeof producto.idProveedor !== 'number' 
+    && (
+      typeof producto.idProveedor !== 'number' 
       || producto.idProveedor <= 0 
-      || !Number.isInteger(producto.idProveedor))
+      || producto.idProveedor % 1 !== 0
+    )
   ) {
     return { error: 'idProveedor debe ser un número entero positivo o NULL.' };
   }
+
+
 
   if (
     !producto.nombreComun 
@@ -77,7 +81,7 @@ module.exports = (producto) => {
 
   if (
     producto.descripcion !== null 
-    && (typeof producto.descripcion !== 'string' || producto.descripcion.length > 1000)
+    && (typeof producto.descripcion !== 'string' || producto.descripcion.length > 1000 || producto.descripcion.trim() === '')
   ) {
     return {
       error: 'descripcion debe ser una cadena de texto y no exceder 1000 caracteres.',
@@ -86,21 +90,21 @@ module.exports = (producto) => {
 
   if (
     producto.marca !== null 
-    && (typeof producto.marca !== 'string' || producto.marca.length > 100)
+    && (typeof producto.marca !== 'string' || producto.marca.length > 100 || producto.marca.trim() === '')
   ) {
     return { error: 'marca debe ser una cadena de texto o NULL y no exceder 100 caracteres.' };
   }
 
   if (
     producto.modelo !== null 
-    && (typeof producto.modelo !== 'string' || producto.modelo.length > 100)
+    && (typeof producto.modelo !== 'string' || producto.modelo.length > 100 || producto.modelo.trim() === '')
   ) {
     return { error: 'modelo debe ser una cadena de texto o NULL y no exceder 100 caracteres.' };
   }
 
   if (
     producto.tipoProducto !== null 
-    && (typeof producto.tipoProducto !== 'string' || producto.tipoProducto.length > 50)
+    && (typeof producto.tipoProducto !== 'string' || producto.tipoProducto.length > 50 || producto.tipoProducto.trim() === '')
   ) {
     return {
       error: 'tipoProducto debe ser una cadena de texto o NULL y no exceder 50 caracteres.',
@@ -108,16 +112,19 @@ module.exports = (producto) => {
   }
 
   if (
-    !producto.costo
-    && (typeof producto.costo !== 'number' || producto.costo < 0 || Number.isNaN(producto.costo))
+    typeof producto.costo !== 'number' 
+    || producto.costo < 0 
+    || Number.isNaN(producto.costo)
   ) {
     return { 
       error: 'costo debe ser un número mayor o igual a cero',     
     };
   }
+
   if (
-    !producto.precioVenta
-    && (typeof producto.precioVenta !== 'number' || producto.precioVenta < 0 || Number.isNaN(producto.precioVenta))
+    typeof producto.precioVenta !== 'number' 
+    || producto.precioVenta < 0 
+    || Number.isNaN(producto.precioVenta)
   ) {
     return { 
       error: 'precioVenta debe ser un número mayor o igual a cero',     
@@ -125,8 +132,9 @@ module.exports = (producto) => {
   }
 
   if (
-    !producto.precioCliente
-    && (typeof producto.precioCliente !== 'number' || producto.precioCliente < 0 || Number.isNaN(producto.precioCliente))
+    typeof producto.precioCliente !== 'number' 
+    || producto.precioCliente < 0 
+    || Number.isNaN(producto.precioCliente)
   ) {
     return { 
       error: 'precioCliente debe ser un número mayor o igual a cero',     
@@ -134,8 +142,9 @@ module.exports = (producto) => {
   }
 
   if (
-    !producto.precioPuntos
-    && (typeof producto.precioPuntos !== 'number' || producto.precioPuntos < 0 || Number.isNaN(producto.precioPuntos))
+    typeof producto.precioPuntos !== 'number' 
+    || producto.precioPuntos < 0 
+    || Number.isNaN(producto.precioPuntos)
   ) {
     return { 
       error: 'precioPuntos debe ser un número mayor o igual a cero',     
@@ -143,8 +152,9 @@ module.exports = (producto) => {
   }
 
   if (
-    !producto.impuesto
-    && (typeof producto.impuesto !== 'number' || producto.impuesto < 0 || Number.isNaN(producto.impuesto))
+    typeof producto.impuesto !== 'number' 
+    || producto.impuesto < 0 
+    || Number.isNaN(producto.impuesto)
   ) {
     return { 
       error: 'impuesto debe ser un número mayor o igual a cero',     
@@ -152,11 +162,12 @@ module.exports = (producto) => {
   }
 
   if (
-    !producto.descuento
-    && (typeof producto.descuento !== 'number' || producto.descuento < 0 || Number.isNaN(producto.descuento))
+    typeof producto.descuento !== 'number' 
+    || producto.descuento < 0 || producto.descuento > 100
+    || Number.isNaN(producto.descuento)
   ) {
     return { 
-      error: 'descuento debe ser un número mayor o igual a cero',     
+      error: 'descuento debe ser un número mayor o igual a cero y menor o igual a 100',     
     };
   }
 
