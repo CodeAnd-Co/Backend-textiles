@@ -8,7 +8,7 @@ module.exports = {
     CERRAR_SESION: '/cerrar-sesion',
     USUARIO_AUTENTICADO: '/autenticar',
     ACTIVAR_2FA: '/activar-2fa',
-    VERIFICAR_2FA: '/verificar-2fa'
+    VERIFICAR_2FA: '/verificar-2fa',
   },
   USUARIOS: {
     BASE: '/usuarios',
@@ -25,7 +25,7 @@ module.exports = {
     CONSULTAR_LISTA_USUARIOS: '/consultar-lista-usuarios',
     CREAR: '/crear',
     ELIMINAR_USUARIOS: '/eliminar-usuarios',
-    LEER: '/consultar-usuario',
+    LEER: '/leer',
   },
   EVENTOS: {
     BASE: '/eventos',
@@ -40,6 +40,7 @@ module.exports = {
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
     ELIMINAR_PRODUCTO: '/eliminar',
+    LEER: '/leer-producto'
   },
   PROVEEDORES: {
     BASE: '/proveedores',
@@ -87,6 +88,7 @@ module.exports = {
     OBTENER_OPCIONES: '/obtener-opciones',
     CONFIRMAR_CREACION: '/confirmar-creacion',
     ELIMINAR_ROL: '/eliminar',
+    LEER_ROL: '/leer',
   },
   PEDIDOS: {
     BASE: '/pedidos',
