@@ -44,8 +44,7 @@ exports.eliminarEvento = async (req, res) => {
       mensaje: MENSAJES_EVENTOS.EVENTO_ELIMINADO.mensaje,
       noEncontrados: noEncontrados.length ? noEncontrados : undefined,
     });
-  } catch (error) {
-    console.error('Error al eliminar evento:', error);
+  } catch {
     return res.status(MENSAJES_EVENTOS.ERROR_ELIMINAR_EVENTO.codigo).json({
       mensaje: MENSAJES_EVENTOS.ERROR_ELIMINAR_EVENTO.mensaje,
     });

@@ -1,12 +1,14 @@
-const express = require("express");
+const express = require('express');
 const ruteador = express.Router();
-const controlador = require("@altertex/usu/ctrl/crearUsuario.controller");
-const revisarApiKey = require("@altertex/util/inter/revisarApiKey");
-const autorizarToken = require("@altertex/util/inter/autorizarToken");
-const verificarPermisos = require("@altertex/util/inter/verificarPermisos");
-const validarYSanitizar = require("@altertex/util/inter/validarYSanitizar");
-const PERMISOS = require("@altertex/util/const/permisos");
-const RUTAS = require("@altertex/util/const/rutas");
+const controlador = require('@altertex/usu/ctrl/crearUsuario.controller');
+const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
+const autorizarToken = require('@altertex/util/inter/autorizarToken');
+const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
+const PERMISOS = require('@altertex/util/const/permisos');
+const RUTAS = require('@altertex/util/const/rutas');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 /**
  * RF1 - Crear Usuario - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF1
  */
@@ -63,8 +65,8 @@ const RUTAS = require("@altertex/util/const/rutas");
  *                 type: string
  *                 enum: [Hombre, Mujer, Otro]
  *               estatus:
- *                 type: boolean
- *                 example: true
+ *                 type: integer
+ *                 example: 1
  *               idRol:
  *                 type: integer
  *                 example: 2
@@ -113,6 +115,7 @@ ruteador.post(
   validarYSanitizar,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.CREAR_USUARIO),
   controlador.crearUsuario
 );

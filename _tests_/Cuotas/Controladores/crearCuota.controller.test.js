@@ -1,27 +1,27 @@
 /**
  * Mocks antes de importar el controlador
  */
-jest.mock("@altertex/cuota/ctrl/validarCuotaSet", () => ({
+jest.mock('@altertex/cuota/ctrl/validarCuotaSet', () => ({
   validarCuotaSet: jest.fn(),
 }));
-jest.mock("@altertex/cuota/repos/crearCuotaRepositorio", () => ({
+jest.mock('@altertex/cuota/repos/crearCuotaRepositorio', () => ({
   crearCuota: jest.fn(),
 }));
 
 // Importar después de los mocks
-const controladorCrearCuota = require("@altertex/cuota/ctrl/crearCuota.controller");
-const { validarCuotaSet } = require("@altertex/cuota/ctrl/validarCuotaSet");
-const { crearCuota } = require("@altertex/cuota/repos/crearCuotaRepositorio");
+const controladorCrearCuota = require('@altertex/cuota/ctrl/crearCuota.controller');
+const { validarCuotaSet } = require('@altertex/cuota/ctrl/validarCuotaSet');
+const { crearCuota } = require('@altertex/cuota/repos/crearCuotaRepositorio');
 
-describe("Controlador de Crear Cuota", () => {
+describe('Controlador de Crear Cuota', () => {
   let req;
   let res;
   let originalDate;
 
   const dataMock = {
-    nombre: "Plan Básico",
-    descripcion: "Plan básico para clientes nuevos",
-    periodoRenovacion: "mensual",
+    nombre: 'Plan Básico',
+    descripcion: 'Plan básico para clientes nuevos',
+    periodoRenovacion: 'mensual',
     renovacionHabilitada: true,
     productosYLimite: [
       { idProducto: 1, limite: 100, limiteActual: 100 },
@@ -37,7 +37,7 @@ describe("Controlador de Crear Cuota", () => {
     originalDate = global.Date;
 
     // Mock de fecha
-    const mockDate = new Date("2023-05-15T00:00:00Z");
+    const mockDate = new Date('2023-05-15T00:00:00Z');
     global.Date = class extends Date {
       constructor() {
         super();
@@ -63,33 +63,29 @@ describe("Controlador de Crear Cuota", () => {
     global.Date = originalDate;
   });
 
-  test("Debe crear un cuota set exitosamente", async () => {
+  test('Debe crear un cuota set exitosamente', async () => {
     const cuotaSetIdMock = 123;
     crearCuota.mockResolvedValue(cuotaSetIdMock);
 
     await controladorCrearCuota.crearCuota(req, res);
 
-    expect(validarCuotaSet).toHaveBeenCalledWith(
-      dataMock.nombre,
-      dataMock.productosYLimite,
-      res
-    );
+    expect(validarCuotaSet).toHaveBeenCalledWith(dataMock.nombre, dataMock.productosYLimite, res);
 
     expect(crearCuota).toHaveBeenCalledWith({
       ...dataMock,
-      ultimaActualizacion: "2023-05-15",
+      ultimaActualizacion: '2023-05-15',
     });
 
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith({
-      exito: "Cuota set creado exitosamente",
+      exito: 'Cuota set creado exitosamente',
     });
   });
 
-  test("Debe manejar errores de validación", async () => {
+  test('Debe manejar errores de validación', async () => {
     // Simula que validarCuotaSet lanza un error
     validarCuotaSet.mockImplementation(() => {
-      throw new Error("Error de validación");
+      throw new Error('Error de validación');
     });
 
     await controladorCrearCuota.crearCuota(req, res);
@@ -97,8 +93,11 @@ describe("Controlador de Crear Cuota", () => {
     expect(validarCuotaSet).toHaveBeenCalled();
     expect(crearCuota).not.toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({
-      error: "Error creando cuota set",
-    });
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        error: 'Error creando cuota set',
+        detalle: expect.stringContaining('Error de validación'),
+      })
+    );
   });
 });

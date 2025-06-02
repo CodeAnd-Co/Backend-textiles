@@ -62,8 +62,7 @@ exports.eliminarUsuarios = async (usuarios) => {
     const resultado = await correrQuery(CONSULTAS_USUARIOS.ELIMINAR_USUARIOS_POR_IDS, [usuarios]);
 
     return resultado.affectedRows > 0;
-  } catch (error) {
-    console.error('Error al eliminar usuario(s):', error);
-    throw error;
+  } catch {
+    throw new Error('No se pudieron eliminar los usuarios. Consulta el log para más detalles.');
   }
 };

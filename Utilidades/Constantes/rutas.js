@@ -7,6 +7,8 @@ module.exports = {
     REGISTRO: '/registro',
     CERRAR_SESION: '/cerrar-sesion',
     USUARIO_AUTENTICADO: '/autenticar',
+    ACTIVAR_2FA: '/activar-2fa',
+    VERIFICAR_2FA: '/verificar-2fa',
   },
   USUARIOS: {
     BASE: '/usuarios',
@@ -23,7 +25,7 @@ module.exports = {
     CONSULTAR_LISTA_USUARIOS: '/consultar-lista-usuarios',
     CREAR: '/crear',
     ELIMINAR_USUARIOS: '/eliminar-usuarios',
-    LEER: '/consultar-usuario',
+    LEER: '/leer',
   },
   EVENTOS: {
     BASE: '/eventos',
@@ -36,11 +38,20 @@ module.exports = {
   PRODUCTOS: {
     BASE: '/productos',
     CONSULTAR_LISTA: '/consultar-lista',
+    CREAR: '/crear',
     ELIMINAR_PRODUCTO: '/eliminar',
+    LEER: '/leer-producto'
+  },
+  PROVEEDORES: {
+    BASE: '/proveedores',
+    CONSULTAR_LISTA: '/consultar-lista',
+    CREAR: '/crear',
   },
   SETS_PRODUCTOS: {
     BASE: '/sets-productos',
     CONSULTAR_LISTA: '/consultar-lista',
+    CREAR: '/crear',
+    SUBIR_IMAGEN: '/subir-imagen',
     ELIMINAR_SET_PRODUCTOS: '/eliminar',
   },
   CLIENTES: {
@@ -48,6 +59,7 @@ module.exports = {
     CONSULTAR_SISTEMA: '/consultar-sistema',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_CLIENTE: '/eliminar',
+    CREAR_CLIENTE: '/crear-cliente',
     LEER: '/consultar-cliente',
     ACTUALIZAR: `/actualizar-cliente`,
   },
@@ -59,6 +71,8 @@ module.exports = {
     ELIMINAR_EMPLEADO: '/eliminar',
     IMPORTAR_EMPLEADOS: '/importar-empleados',
     LEER_GRUPO: '/leer-grupo',
+    CREAR_GRUPO: '/crear-grupo',
+    ACTUALIZAR: '/actualizar',
   },
   CUOTAS: {
     BASE: '/cuotas',
@@ -75,6 +89,7 @@ module.exports = {
     OBTENER_OPCIONES: '/obtener-opciones',
     CONFIRMAR_CREACION: '/confirmar-creacion',
     ELIMINAR_ROL: '/eliminar',
+    LEER_ROL: '/leer',
   },
   PEDIDOS: {
     BASE: '/pedidos',

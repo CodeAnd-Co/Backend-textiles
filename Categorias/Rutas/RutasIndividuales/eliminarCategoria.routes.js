@@ -6,14 +6,15 @@ const controlador = require('@altertex/cat/ctrl/eliminarCategoria.controller');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * @swagger
- * /api/categorias/eliminar-categoria:
- *   delete:
+ * /api/categorias/eliminar:
+ *   post:
  *     summary: Eliminar categorías de productos.
  *     description: Elimina una o varias categorías de productos de la base de datos. Requiere autenticación y permisos específicos.
  *     tags:
@@ -70,6 +71,7 @@ ruteador.post(
   RUTAS.CATEGORIAS.ELIMINAR_CATEGORIA,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.ELIMINAR_CATEGORIA_PRODUCTOS),
   controlador.eliminarCategoria
 );

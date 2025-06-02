@@ -1,10 +1,11 @@
-//RF[27] Consulta Lista de Productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27]
+//RF27 Consulta Lista de Productos - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27
 const express = require('express');
 const ruteador = express.Router();
 const controlador = require('@altertex/pro/ctrl/consultarProductos.controller');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
@@ -18,36 +19,54 @@ const RUTAS = require('@altertex/util/const/rutas');
  *     security:
  *       - ApiKeyAuth: []
  *     requestBody:
- *       required: ?????
+ *       required: false
  *       content:
  *         application/json:
  *           schema:
  *             type: object
-
+ *             properties:
+ *               filtros:
+ *                 type: object
+ *                 description: Opcional, filtros para la búsqueda
  *     responses:
  *       200:
- *         description: Consulta exitosa
+ *         description: Consulta de productos exitosa
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 message:
+ *                 mensaje:
  *                   type: string
- *                   example: Consulta de productos exitosa
- *                 token:
- *                   type: string
- *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *                   example: Lista de productos consultada correctamente
+ *                 productos:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       idProducto:
+ *                         type: integer
+ *                         example: 1
+ *                       nombreComun:
+ *                         type: string
+ *                         example: Camiseta básica
+ *                       claveProducto:
+ *                         type: string
+ *                         example: CAM-001
+ *                       activo:
+ *                         type: boolean
+ *                         example: true
  *       401:
- *         description: Credenciales inválidas, no tiene el permiso necesario
+ *         description: No autorizado - Credenciales inválidas o sin permisos
  *       500:
- *         description: Error al obtener los productos
+ *         description: Error del servidor al obtener los productos
  */
 
 ruteador.post(
   RUTAS.PRODUCTOS.CONSULTAR_LISTA,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.CONSULTAR_PRODUCTOS),
   controlador.consultarProductos
 );

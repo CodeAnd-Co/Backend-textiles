@@ -8,15 +8,16 @@ const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const revisarPermisos = require('@altertex/util/inter/verificarPermisos');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
 
-//RF[54] Actualizat Lista de Pago - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF54]
+
+//RF[54] Actualizar Lista de Pago - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF54]
 
 /**
  * @swagger
  * /api/pagos/actualizar:
  *   put:
  *     summary: Actualiza el estado de métodos de pago habilitados.
- *     description: Actualiza la configuración de los tipos de pago habilitados o deshabilitados.
  *     tags:
  *       - Pagos
  *     security:
@@ -95,6 +96,7 @@ ruteador.put(
   revisarApiKey(),
   validarYSanitizar,
   autorizarToken,
+  limitePeticionesDiarias,
   revisarPermisos(PERMISOS.ACTUALIZAR_TIPO_PAGO),
   controlador.actualizarTipoPago
 );

@@ -8,6 +8,8 @@ const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const controlador = require('@altertex/cli/ctrl/actualizarClientes.controller');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -90,6 +92,7 @@ ruteador.put(
   RUTAS.CLIENTES.ACTUALIZAR,
   revisarApiKey(),
   autorizarToken,
+  limitePeticionesDiarias,
   verificarPermisos(PERMISOS.ACTUALIZAR_CLIENTE),
   validarYSanitizar,
   upload.single('imagen'),

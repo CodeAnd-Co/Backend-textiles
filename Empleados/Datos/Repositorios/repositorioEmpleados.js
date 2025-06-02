@@ -21,13 +21,8 @@ exports.obtenerEmpleados = async (idCliente) => {
   try {
     const empleados = await correrQuery(query, [idCliente]);
 
-    if (!empleados || empleados.length === 0) {
-      throw new Error('No hay empleados');
-    }
-
     return empleados;
-  } catch (error) {
-    console.error('Error al obtener los empleados:', error);
+  } catch {
     return [];
   }
 };

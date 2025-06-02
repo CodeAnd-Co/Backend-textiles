@@ -1,6 +1,5 @@
 //RF40 Eliminar Evento - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF40]
-const bd = require('@altertex/util/bd/db');
-const correrQuery = require('@altertex/util/ser/correrQuery');
+const db = require('@altertex/util/bd/db');
 const CONSULTAS_EVENTOS = require('@altertex/util/const/consultasEventos');
 
 /**
@@ -10,30 +9,32 @@ const CONSULTAS_EVENTOS = require('@altertex/util/const/consultasEventos');
  * @returns {object} - Resultado de la operación de eliminación
  */
 exports.eliminarEvento = async (idEvento) => {
-  const conexion = bd.promise();
+  const conexion = await db.getConnection();
 
   try {
-    const resultadosEmpleadosEventos = await correrQuery(
+    await conexion.beginTransaction();
+
+    const [resultadosEmpleadosEventos] = await conexion.query(
       CONSULTAS_EVENTOS.ELIMINAR_EMPLEADO_EVENTO,
-      [idEvento],
-      conexion
-    );
-    const resultadosEventos = await correrQuery(
-      CONSULTAS_EVENTOS.ELIMINAR_EVENTO,
-      [idEvento],
-      conexion
+      [idEvento]
     );
 
-    // No lances error, solo retorna el resultado
+    const [resultadosEventos] = await conexion.query(
+      CONSULTAS_EVENTOS.ELIMINAR_EVENTO,
+      [idEvento]
+    );
+
     await conexion.commit();
+
     return {
       affectedRows: resultadosEventos.affectedRows,
       resultadosEventos,
       resultadosEmpleadosEventos,
     };
-  } catch (error) {
-    if (conexion) await conexion.rollback();
-    console.error('Transacción fallida:', error);
+  } catch {
+    await conexion.rollback();
     throw new Error('Error eliminando evento');
+  } finally {
+    if (conexion) conexion.release();
   }
 };

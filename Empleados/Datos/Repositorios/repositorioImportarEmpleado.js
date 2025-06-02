@@ -1,5 +1,5 @@
-const conexion = require('@altertex/util/bd/db');
-const DEFAULT_ROLE_ID = 3; 
+const db = require('@altertex/util/bd/db');
+const DEFAULT_ROLE_ID = 3;
 const CONSULTAS_IMPORTAR_EMPLEADOS = require('@altertex/util/const/consultasImportarEmpleados');
 /**
  * Importa en bloque múltiples empleados, creando sus usuarios, asignando rol y vinculación con clientes.
@@ -32,8 +32,8 @@ exports.importarEmpleadosMasivo = async (empleados) => {
     throw new Error('No se recibió ningún empleado para importar.');
   }
 
-  // Obtenemos la conexión promesada
-  const conn = conexion.promise();
+  // Obtenemos la conexión del pool
+  const conn = await db.getConnection();
 
   try {
     // Iniciamos la transacción
@@ -127,6 +127,24 @@ exports.importarEmpleadosMasivo = async (empleados) => {
     await conn.commit();
   } catch (err) {
     await conn.rollback();
-    throw new Error(`Error en importación masiva: ${err.message}`);
+    const mensajeOriginal = err.message || '';
+
+  // Detectar error por entrada duplicada
+  const entradaDuplicada = mensajeOriginal.match(/Duplicate entry '(.+)' for key '(.+)'/);
+
+  if (entradaDuplicada) {
+    const valorDuplicado = entradaDuplicada[1];
+    const campo = entradaDuplicada[2];
+
+    let campoTraducido = campo;
+    if (campo.includes('correoElectronico')) campoTraducido = 'correo electrónico';
+    else if (campo.includes('telefono')) campoTraducido = 'número de teléfono';
+
+    throw new Error(`La entrada ${campoTraducido} "${valorDuplicado}" esta duplicada`);
+  }
+
+  throw new Error(`Error en importación masiva: ${mensajeOriginal}`);
+  } finally {
+    if (conn) conn.release();
   }
 };

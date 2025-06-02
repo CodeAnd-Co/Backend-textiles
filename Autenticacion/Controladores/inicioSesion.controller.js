@@ -28,6 +28,8 @@ const MENSAJES_AUTENTICACION = require('@altertex/util/const/mensajesAutenticaci
 exports.inicioSesion = async (req, res) => {
   const { correo, contrasenia } = req.body;
 
+  const tiempoExpiracion = 8 * 60 * 60 * 1000;
+
   if (!correo || !contrasenia) {
     return res
       .status(MENSAJES_AUTENTICACION.CAMPOS_OBLIGATORIOS.codigo)
@@ -64,6 +66,7 @@ exports.inicioSesion = async (req, res) => {
 
     const token = jwt.sign(
       {
+        idUsuario: usuario.idUsuario,
         correo: usuario.correoElectronico,
         permisos,
         clientesAsociados,
@@ -72,7 +75,7 @@ exports.inicioSesion = async (req, res) => {
       process.env.JWT_SECRET,
       {
         expiresIn: '8h',
-      }
+      },
     );
 
     res.cookie('token', token, {
@@ -81,11 +84,17 @@ exports.inicioSesion = async (req, res) => {
       sameSite: 'None',
     });
 
+    res.cookie('nombreUsuario', usuario.nombreCompleto, {
+      httpOnly: false,
+      secure: true,
+      sameSite: 'None',
+      maxAge: tiempoExpiracion,
+    });
+
     return res.status(MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.codigo).json({
       mensaje: MENSAJES_AUTENTICACION.INICIO_SESION_EXITOSO.mensaje,
     });
-  } catch (error) {
-    console.error('Error en inicio de sesión:', error);
+  } catch {
     return res
       .status(MENSAJES_AUTENTICACION.ERROR_SERVIDOR.codigo)
       .json({ mensaje: MENSAJES_AUTENTICACION.ERROR_SERVIDOR.mensaje });

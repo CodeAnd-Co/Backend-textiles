@@ -34,8 +34,7 @@ exports.leerCliente = async (req, res) => {
     let imagenCliente;
     try {
       imagenCliente = await obtenerImagenCliente(cliente.urlImagen);
-    } catch (errImg) {
-      console.warn('Error al obtener imagen del cliente, se usará un placeholder:', errImg);
+    } catch {
       imagenCliente = '/placeholder.png'; // URL genérica de placeholder
     }
 
@@ -46,8 +45,7 @@ exports.leerCliente = async (req, res) => {
         imagenCliente,
       },
     });
-  } catch (error) {
-    console.error('Error al consultar cliente:', error);
+  } catch {
     return res
       .status(MENSAJES_CLIENTES.ERROR_CONSULTAR_CLIENTE.codigo)
       .json({ mensaje: MENSAJES_CLIENTES.ERROR_CONSULTAR_CLIENTE.mensaje });

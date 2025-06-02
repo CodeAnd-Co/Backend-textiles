@@ -28,31 +28,58 @@ module.exports = {
    * Agrupa los resultados por `idRol` para consolidar la información por rol.
    */
   OBTENER_LISTA: `
-    SELECT r.idRol, r.nombre, r.descripcion, COUNT(ur.idUsuario) AS totalUsuarios
-    FROM rol r
-    LEFT JOIN usuario_rol ur ON r.idRol = ur.idRol
-    GROUP BY r.idRol;
+      SELECT r.idRol, r.nombre, r.descripcion, COUNT(ur.idUsuario) AS totalUsuarios
+      FROM rol r
+               LEFT JOIN usuario_rol ur ON r.idRol = ur.idRol
+      GROUP BY r.idRol;
   `,
   VERIFICAR_NOMBRE_ROL: `
-    SELECT idRol FROM rol WHERE nombre = ? LIMIT 1`,
+      SELECT idRol
+      FROM rol
+      WHERE nombre = ? LIMIT 1`,
 
   VERIFICAR_PERMISO: `
-    SELECT idPermiso FROM permiso WHERE idPermiso = ? LIMIT 1`,
+      SELECT idPermiso
+      FROM permiso
+      WHERE idPermiso = ? LIMIT 1`,
 
   INSERTAR_ROL: `
-    INSERT INTO rol (nombre, descripcion)
-    VALUES (?, ?)`,
+      INSERT INTO rol (nombre, descripcion)
+      VALUES (?, ?)`,
 
   INSERTAR_ROL_PERMISO: `
-    INSERT INTO rol_permiso (idRol, idPermiso)
-    VALUES (?, ?)`,
+      INSERT INTO rol_permiso (idRol, idPermiso)
+      VALUES (?, ?)`,
 
   OBTENER_PERMISOS_POR_CLIENTE: `
-    SELECT idPermiso AS id, nombre FROM permiso;
+      SELECT idPermiso AS id, nombre
+      FROM permiso;
   `,
 
   ELIMINAR_ROL: `
-    DELETE FROM rol
-    WHERE idRol IN (__IDS__);
-`,
+      DELETE
+      FROM rol
+      WHERE idRol IN (__IDS__);
+  `,
+  VALIDAR_ROL_SIN_USUARIOS: `
+      SELECT COUNT(*) AS cantidad
+      FROM usuario_rol
+      WHERE idRol IN (__IDS__);
+  `,
+  OBTENER_DETALLE_ROL: `
+      SELECT r.idRol,
+             r.nombre                   AS nombreRol,
+             r.descripcion              AS descripcionRol,
+             (SELECT COUNT(*)
+              FROM usuario_rol ur
+              WHERE ur.idRol = r.idRol) AS totalUsuarios,
+             p.idPermiso,
+             p.nombre                   AS nombrePermiso,
+             p.descripcion              AS descripcionPermiso
+      FROM rol r
+               LEFT JOIN rol_permiso rp ON r.idRol = rp.idRol
+               LEFT JOIN permiso p ON rp.idPermiso = p.idPermiso
+      WHERE r.idRol = ?;
+  `,
+
 };
