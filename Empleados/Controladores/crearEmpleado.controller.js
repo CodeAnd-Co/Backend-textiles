@@ -35,134 +35,105 @@ const repositorio = require('@altertex/emp/repos/repositorioCrearEmpleado');
  * - 500 si ocurre un error al crear el empleado.
  */
 exports.crearEmpleado = async (req, res) => {
-  const idCliente = parseInt(req.user.clienteSeleccionado);
-  const empleado = req.body;
-
-  if (!empleado || typeof empleado !== 'object' || Array.isArray(empleado)) {
-    return res.status(400).json({ mensaje: MENSAJES.DATOS_INCOMPLETOS.mensaje });
-  }
-
-  const errores = [];
-  const {
+  const [
     nombreCompleto,
     correoElectronico,
-    contrasena,
-    numeroTelefono,
+    contrasenia,
+    numberoTelefono,
     direccion,
     fechaNacimiento,
     genero,
     estatus,
     idRol,
-    idCliente: clienteId,
+    idCliente,
     numeroEmergencia,
     areaTrabajo,
     posicion,
     cantidadPuntos,
     antiguedad,
-  } = empleado;
+  ] = req.body;
 
-  // Validaciones de campos requeridos
   if (
+    !Array.isArray(req.body) ||
+    req.body.length === 0 ||
     !nombreCompleto ||
     !correoElectronico ||
-    !contrasena ||
-    !numeroTelefono ||
+    !contrasenia ||
+    !numberoTelefono ||
     !direccion ||
     !fechaNacimiento ||
     !genero ||
     estatus === undefined ||
-    idRol === undefined ||
+    !idRol ||
+    idCliente === undefined ||
+    (Array.isArray(idCliente) && idCliente.length === 0) ||
     !numeroEmergencia ||
     !areaTrabajo ||
     !posicion ||
     cantidadPuntos === undefined ||
     !antiguedad
   ) {
-    return res.status(400).json({ mensaje: MENSAJES.DATOS_INCOMPLETOS.mensaje });
+    return res.status(400).json({ mensaje: 'Faltan campos requeridos' });
   }
-
-  // Validaciones de longitud y formato
-  if (nombreCompleto.length > 75) {
-    errores.push({ campo: 'nombreCompleto', error: 'El nombre es demasiado largo' });
-  }
-  if (correoElectronico.length > 75) {
-    errores.push({ campo: 'correoElectronico', error: 'El correo es demasiado largo' });
-  }
-  if (contrasena.length > 75) {
-    errores.push({ campo: 'contrasena', error: 'La contraseña es demasiado larga' });
-  }
-  if (direccion.length > 150) {
-    errores.push({ campo: 'direccion', error: 'La dirección es demasiado larga' });
-  }
-  if (posicion.length > 75) {
-    errores.push({ campo: 'posicion', error: 'La posición es demasiado larga' });
-  }
-  if (areaTrabajo.length > 75) {
-    errores.push({ campo: 'areaTrabajo', error: 'El área de trabajo es demasiado larga' });
-  }
-  if (genero.length > 20) {
-    errores.push({ campo: 'genero', error: 'El género es demasiado largo' });
-  }
-
-  // Validación de estatus nulo
-  if (estatus == null) {
-    errores.push({ campo: 'estatus', error: 'Estatus inválido: debe ser 0 o 1' });
-  }
-
-  // Validación de idCliente (no debe venir en el body)
-  if (typeof clienteId !== 'undefined' && clienteId !== '' && clienteId !== null) {
-    errores.push({ campo: 'idCliente', error: 'El cliente no debe ser incluido en el archivo' });
-  }
-
-  // Validación de número de emergencia (numérico)
-  if (isNaN(numeroEmergencia)) {
-    errores.push({ campo: 'numeroEmergencia', error: 'El número de emergencia no es válido' });
-  }
-
-  // Validación de correo electrónico válido
   const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!correoValido.test(correoElectronico)) {
-    errores.push({ campo: 'correoElectronico', error: 'El correo electrónico no es válido' });
+    return res
+      .status(MENSAJES.CORREO_INVALIDO.codigo)
+      .json({ mensaje: MENSAJES.CORREO_INVALIDO.mensaje });
   }
-
-  // Validación de contraseña fuerte
   const tieneCaracterEspecial = /[!@#$%^&*(),.?":{}|<>]/;
   const tieneMayuscula = /[A-Z]/;
-  if (
-    contrasena.length < 8 ||
-    !tieneCaracterEspecial.test(contrasena) ||
-    !tieneMayuscula.test(contrasena)
-  ) {
-    errores.push({
-      campo: 'contrasena',
-      error:
-        'La contraseña es débil. Debe tener al menos 8 caracteres, una mayúscula y un caracter especial.',
-    });
+  if (contrasenia.length < 8) {
+    return res
+      .status(MENSAJES.CONTRASENA_DEBIL.codigo)
+      .json({ mensaje: MENSAJES.CONTRASENA_DEBIL.mensaje });
+  }
+  if (!tieneCaracterEspecial.test(contrasenia)) {
+    return res
+      .status(MENSAJES.CONTRASENA_DEBIL.codigo)
+      .json({ mensaje: MENSAJES.CONTRASENA_DEBIL.mensaje });
+  }
+  if (!tieneMayuscula.test(contrasenia)) {
+    return res
+      .status(MENSAJES.CONTRASENA_DEBIL.codigo)
+      .json({ mensaje: MENSAJES.CONTRASENA_DEBIL.mensaje });
   }
 
-  // Validación de teléfono válido
   const telefonoValido = /^\d{10}$/;
-  if (!telefonoValido.test(numeroTelefono)) {
-    errores.push({
-      campo: 'numeroTelefono',
-      error: 'El número de teléfono debe tener 10 dígitos numéricos',
-    });
-  }
-
-  if (errores.length > 0) {
-    return res.status(400).json({ errores });
+  if (!telefonoValido.test(numberoTelefono)) {
+    return res
+      .status(MENSAJES.TELEFONO_INVALIDO.codigo)
+      .json({ mensaje: MENSAJES.TELEFONO_INVALIDO.mensaje });
   }
 
   try {
-    // Encriptar la contraseña antes de guardarla
-    const contrasenaEncriptada = await bcrypt.hash(contrasena, 10);
-    empleado.contrasena = contrasenaEncriptada;
-
-    // Crear el empleado usando el repositorio
-    const nuevoEmpleado = await repositorio.crearEmpleado(empleado, idCliente);
-    return res.status(201).json(nuevoEmpleado);
+    const contraseniaEncriptada = await bcrypt.hash(contrasenia, 10);
+    const resultado = await repositorio.crearEmpleado(
+      nombreCompleto,
+      correoElectronico,
+      contraseniaEncriptada,
+      numberoTelefono,
+      direccion,
+      fechaNacimiento,
+      genero,
+      estatus,
+      idRol,
+      idCliente,
+      numeroEmergencia,
+      areaTrabajo,
+      posicion,
+      cantidadPuntos,
+      antiguedad
+    );
+    return res.status(MENSAJES_EMPLEADOS.CREACION_EXITOSA.codigo).json({
+      mensaje: MENSAJES.CREACION_EXITOSA.mensaje,
+      datos: resultado,
+    });
   } catch (error) {
-    console.error('Error al crear el empleado:', error);
-    return res.status(500).json({ mensaje: MENSAJES.ERROR_CREAR.mensaje });
+    console.error('Error al crear empleado:', error);
+    return res.status(MENSAJES.ERROR_CREACION.codigo).json({
+      mensaje: MENSAJES.ERROR_CREACION.mensaje,
+      error: error.message,
+    });
   }
 };
