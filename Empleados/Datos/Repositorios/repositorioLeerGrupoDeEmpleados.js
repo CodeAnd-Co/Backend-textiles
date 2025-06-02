@@ -18,9 +18,15 @@ exports.obtenerGrupoEmpleadosPorId = async (idGrupo) => {
     const resultado = await correrQuery(query, [idGrupo]);
 
     if (resultado.length === 0) return null;
-    const setProductosOriginal = resultado[0].setProductosActualizar;
+
+    // ✅ Manejo seguro de setProductosActualizar cuando es null o contiene objetos con valores null
+    const setProductosOriginal = resultado[0].setProductosActualizar || [];
+
+    // Filtrar objetos que tienen id null (cuando no hay datos reales)
+    const setProductosValidos = setProductosOriginal.filter((obj) => obj.id !== null);
+
     const setProductosFiltrados = Object.values(
-      setProductosOriginal.reduce((acc, obj) => {
+      setProductosValidos.reduce((acc, obj) => {
         acc[obj.id] = obj; // sobrescribe si ya existe ese id
         return acc;
       }, {})
@@ -38,8 +44,10 @@ exports.obtenerGrupoEmpleadosPorId = async (idGrupo) => {
       idsEmpleados: resultado[0].idsEmpleados
         ? resultado[0].idsEmpleados.split(',').map(Number)
         : [],
-      empleadosActualizar: resultado[0].empleadosActualizar,
-      setProductosActualizar: setProductosFiltrados,
+      empleadosActualizar: (resultado[0].empleadosActualizar || []).filter(
+        (obj) => obj.id !== null
+      ),
+      setProductosActualizar: setProductosFiltrados, // Ya no necesita validación adicional
     };
 
     return grupoEmpleados;
