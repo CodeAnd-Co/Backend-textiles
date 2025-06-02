@@ -55,7 +55,8 @@ module.exports = (opciones) => {
     }
 
     // prettier-ignore
-    if (opcion.SKUautomatico == null 
+    if (!opcion.SKUautomatico 
+    || opcion.SKUautomatico == null 
     || typeof opcion.SKUautomatico !== 'string' 
     || opcion.SKUautomatico.length > 50
   ) {

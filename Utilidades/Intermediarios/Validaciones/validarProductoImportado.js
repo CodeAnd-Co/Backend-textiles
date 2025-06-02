@@ -106,28 +106,58 @@ module.exports = (producto) => {
     };
   }
 
-  const camposNumericos = [
-    'precioPuntos',
-    'precioCliente',
-    'precioVenta',
-    'costo',
-    'impuesto',
-    'descuento',
-  ];
-
-  for (const campo of camposNumericos) {
-  const valor = producto[campo] !== null ? Number(producto[campo]) : null;
+  if (
+    !producto.costo
+    && (typeof producto.costo !== 'number' || producto.costo < 0 || Number.isNaN(producto.costo))
+  ) {
+    return { 
+      error: 'costo debe ser un número mayor o igual a cero',     
+    };
+  }
+  if (
+    !producto.precioVenta
+    && (typeof producto.precioVenta !== 'number' || producto.precioVenta < 0 || Number.isNaN(producto.precioVenta))
+  ) {
+    return { 
+      error: 'precioVenta debe ser un número mayor o igual a cero',     
+    };
+  }
 
   if (
-    valor !== null
-    && (Number.isNaN(valor)
-      || (campo === 'precioPuntos' && !Number.isInteger(valor))
-      || (campo !== 'precioPuntos' && valor < 0))
+    !producto.precioCliente
+    && (typeof producto.precioCliente !== 'number' || producto.precioCliente < 0 || Number.isNaN(producto.precioCliente))
   ) {
-    return { error: `${campo} debe ser un número válido y mayor o igual a cero.` };
+    return { 
+      error: 'precioCliente debe ser un número mayor o igual a cero',     
+    };
   }
-}
 
+  if (
+    !producto.precioPuntos
+    && (typeof producto.precioPuntos !== 'number' || producto.precioPuntos < 0 || Number.isNaN(producto.precioPuntos))
+  ) {
+    return { 
+      error: 'precioPuntos debe ser un número mayor o igual a cero',     
+    };
+  }
+
+  if (
+    !producto.impuesto
+    && (typeof producto.impuesto !== 'number' || producto.impuesto < 0 || Number.isNaN(producto.impuesto))
+  ) {
+    return { 
+      error: 'impuesto debe ser un número mayor o igual a cero',     
+    };
+  }
+
+  if (
+    !producto.descuento
+    && (typeof producto.descuento !== 'number' || producto.descuento < 0 || Number.isNaN(producto.descuento))
+  ) {
+    return { 
+      error: 'descuento debe ser un número mayor o igual a cero',     
+    };
+  }
 
   if (producto.estado !== undefined && producto.estado !== 0 && producto.estado !== 1) {
     return { error: 'estado debe ser 0 (inactivo) o 1 (activo).' };

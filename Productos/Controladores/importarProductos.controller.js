@@ -35,6 +35,7 @@ const validarProductoImportado = require('@altertex/util/vali/validarProductoImp
 exports.importarProductos = async (req, res) => {
   const idCliente = parseInt(req.user.clienteSeleccionado);
   const productos = req.body; // Espera array de { producto, variantes }
+
   if (!Array.isArray(productos) || productos.length === 0) {
     return res.status(400).json({ mensaje: 'No se recibieron productos válidos.' });
   }
@@ -46,7 +47,8 @@ exports.importarProductos = async (req, res) => {
     conexion = await db.getConnection();
     await conexion.beginTransaction();
 
-    for (let im = 0; im < productos.length; im = im + 1) {
+    // Validación previa de todos los productos
+    for (let im = 0; im < productos.length; im += 1) {
       const { producto, variantes } = productos[im];
       const fila = im + 1;
 
@@ -61,12 +63,6 @@ exports.importarProductos = async (req, res) => {
         continue;
       }
 
-      const idProducto = await repositorioCrearProducto.crearProducto(idCliente, producto);
-      if (!idProducto) {
-        errores.push({ fila, error: 'Error al crear producto.' });
-        continue;
-      }
-
       for (const variante of variantes) {
         const errorVariante = validarVariante(variante);
         if (errorVariante) {
@@ -74,18 +70,29 @@ exports.importarProductos = async (req, res) => {
           continue;
         }
 
-        const idVariante = await repositorioCrearVariante.crearVariante(idProducto, variante);
-        if (!idVariante) {
-          errores.push({ fila, error: 'Error al crear variante.' });
-          continue;
-        }
-        console.log(variante.opciones)
         const errorOpciones = validarOpcionesImportar(variante.opciones);
         if (errorOpciones) {
           errores.push({ fila, error: errorOpciones.error });
           continue;
         }
+      }
+    }
 
+    if (errores.length > 0) {
+      await conexion.rollback();
+      return res.status(200).json({
+        mensaje: 'Se encontraron errores en el archivo.',
+        errores,
+      });
+    }
+
+    // Si no hubo errores, insertar todos los productos
+    for (let im = 0; im < productos.length; im += 1) {
+      const { producto, variantes } = productos[im];
+      const idProducto = await repositorioCrearProducto.crearProducto(idCliente, producto);
+
+      for (const variante of variantes) {
+        const idVariante = await repositorioCrearVariante.crearVariante(idProducto, variante);
         await repositorioCrearOpcion.crearOpcion(idVariante, variante.opciones);
       }
     }
@@ -93,9 +100,10 @@ exports.importarProductos = async (req, res) => {
     await conexion.commit();
 
     return res.status(200).json({
-      mensaje: 'Importación completada.',
-      errores: errores.length ? errores : null,
+      mensaje: 'Importación completada exitosamente.',
+      errores: null,
     });
+
   } catch (err) {
     if (conexion) await conexion.rollback();
     return res.status(500).json({
