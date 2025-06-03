@@ -16,7 +16,7 @@ ruteador.use(RUTAS.PRODUCTOS.BASE, rutaCrearProducto);
 ruteador.use(RUTAS.PRODUCTOS.BASE, rutaEliminar);
 // RF[28] Leer producto - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF28]
 ruteador.use(RUTAS.PRODUCTOS.BASE, rutasLeerProducto);
-
+// RF[56] Leer producto - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF56]
 ruteador.use(RUTAS.PRODUCTOS.BASE, rutaImportarProductos);
 
 module.exports = ruteador;

@@ -57,8 +57,6 @@ module.exports = (producto) => {
     return { error: 'idProveedor debe ser un número entero positivo o NULL.' };
   }
 
-
-
   if (
     !producto.nombreComun 
     || typeof producto.nombreComun !== 'string' 

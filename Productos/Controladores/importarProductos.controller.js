@@ -6,7 +6,6 @@ const repositorioCrearOpcion = require('@altertex/pro/repos/repositorioCrearOpci
 const db = require('@altertex/util/bd/db');
 const validarProductoImportado = require('@altertex/util/vali/validarProductoImportado');
 
-
 /**
  * Importa productos y sus variantes/opciones para un cliente.
  * 
@@ -31,10 +30,12 @@ const validarProductoImportado = require('@altertex/util/vali/validarProductoImp
  * @param {Express.Request} req - Request de Express, requiere req.user.clienteSeleccionado y req.body.
  * @param { Express.Response} res - Response de Express.
  * @returns {Promise<void>} Devuelve un JSON con el resultado de la importación y los errores encontrados.
+ * 
+ * @see RF[56] Leer producto - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF56]
  */
 exports.importarProductos = async (req, res) => {
   const idCliente = parseInt(req.user.clienteSeleccionado);
-  const productos = req.body; // Espera array de { producto, variantes }
+  const productos = req.body; 
 
   if (!Array.isArray(productos) || productos.length === 0) {
     return res.status(400).json({ mensaje: 'No se recibieron productos válidos.' });
@@ -47,7 +48,6 @@ exports.importarProductos = async (req, res) => {
     conexion = await db.getConnection();
     await conexion.beginTransaction();
 
-    // Validación previa de todos los productos
     for (let im = 0; im < productos.length; im += 1) {
       const { producto, variantes } = productos[im];
       const fila = im + 1;
@@ -86,7 +86,6 @@ exports.importarProductos = async (req, res) => {
       });
     }
     
-    // Si no hubo errores, insertar todos los productos
     for (let im = 0; im < productos.length; im += 1) {
       const { producto, variantes } = productos[im];
       const idProducto = await repositorioCrearProducto.crearProducto(idCliente, producto);
