@@ -60,6 +60,14 @@ module.exports = {
     "^@altertex/emp/datos/(.*)$": "<rootDir>/Empleados/Datos/$1",
     "^@altertex/emp/(.*)$": "<rootDir>/Empleados/$1",
 
+    // Eventos module mappings
+    "^@altertex/eve/ctrl/(.*)$": "<rootDir>/Eventos/Controladores/$1",
+    "^@altertex/eve/repos/(.*)$": "<rootDir>/Eventos/Datos/Repositorios/$1",
+    "^@altertex/eve/rutasInd/(.*)$": "<rootDir>/Eventos/Rutas/RutasIndividuales/$1",
+    "^@altertex/eve/rutas/(.*)$": "<rootDir>/Eventos/Rutas/$1",
+    "^@altertex/eve/datos/(.*)$": "<rootDir>/Eventos/Datos/$1",
+    "^@altertex/eve/(.*)$": "<rootDir>/Eventos/$1",
+
     // Generic mapping as fallback
     '^@altertex/(.*)$': '<rootDir>/$1',
   },
