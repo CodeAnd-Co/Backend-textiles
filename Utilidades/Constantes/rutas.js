@@ -73,6 +73,7 @@ module.exports = {
     LEER_GRUPO: '/leer-grupo',
     CREAR_GRUPO: '/crear-grupo',
     ACTUALIZAR: '/actualizar',
+    ACTUALIZAR_GRUPO_EMPLEADO: '/actualizar-grupo',
   },
   CUOTAS: {
     BASE: '/cuotas',

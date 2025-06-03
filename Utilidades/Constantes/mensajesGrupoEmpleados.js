@@ -51,4 +51,24 @@ module.exports = {
     codigo: 500,
     mensaje: 'Ocurrió un error al obtener los datos del grupo de empleados.',
   },
+  GRUPO_ACTUALIZADO: {
+    codigo: 200,
+    mensaje: 'Se actualizo correctamente el grupo de empleados.',
+  },
+  FORMATO_INVALIDO_DATOS: {
+    codigo: 400,
+    mensaje: 'No se obtuvieron los datos correctamente.',
+  },
+  ERROR_ACTUALIZAR_GRUPOS: {
+    codigo: 400,
+    mensaje: 'Error actualizando el grupo de empleados.s',
+  },
+  ERROR_VERIFICACION_CLIENTE_EMPLEADO: {
+    codigo: 400,
+    mensaje: 'Algunos empleados no pertenecen al mismo cliente que el grupo.',
+  },
+  ERROR_VERIFICACION_CLIENTE_SET: {
+    codigo: 400,
+    mensaje: 'Algunos sets de productos no pertenecen al cliente de este grupo.',
+  },
 };
