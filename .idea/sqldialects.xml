@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/Categorias/Datos/Repositorios/repositorioCrearCategoria.js" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Utilidades/Constantes/consultasCategorias.js" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Utilidades/Constantes/consultasGrupoEmpleados.js" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Utilidades/Constantes/consultasProductos.js" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Utilidades/Constantes/consultasRoles.js" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Utilidades/Constantes/consultasSetsProductos.js" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Utilidades/Constantes/consultasUsuarios.js" dialect="GenericSQL" />
+  </component>
+</project>

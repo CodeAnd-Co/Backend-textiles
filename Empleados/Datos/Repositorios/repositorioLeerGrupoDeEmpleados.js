@@ -19,13 +19,37 @@ exports.obtenerGrupoEmpleadosPorId = async (idGrupo) => {
 
     if (resultado.length === 0) return null;
 
+    // ✅ Manejo seguro de setProductosActualizar cuando es null o contiene objetos con valores null
+    const setProductosOriginal = resultado[0].setProductosActualizar || [];
+
+    // Filtrar objetos que tienen id null (cuando no hay datos reales)
+    const setProductosValidos = setProductosOriginal.filter((obj) => obj.id !== null);
+
+    const setProductosFiltrados = Object.values(
+      setProductosValidos.reduce((acc, obj) => {
+        acc[obj.id] = obj; // sobrescribe si ya existe ese id
+        return acc;
+      }, {})
+    );
+
     const grupoEmpleados = {
       idGrupo: resultado[0].idGrupo,
       nombre: resultado[0].nombre,
       descripcion: resultado[0].descripcion,
       setsProductos: resultado[0].setsProductos ? resultado[0].setsProductos.split(', ') : [],
+      idsSetProductos: resultado[0].idsSetProductos
+        ? resultado[0].idsSetProductos.split(', ').map(Number)
+        : [],
       empleados: resultado[0].infoEmpleados ? resultado[0].infoEmpleados.split(' || ') : [],
+      idsEmpleados: resultado[0].idsEmpleados
+        ? resultado[0].idsEmpleados.split(',').map(Number)
+        : [],
+      empleadosActualizar: (resultado[0].empleadosActualizar || []).filter(
+        (obj) => obj.id !== null
+      ),
+      setProductosActualizar: setProductosFiltrados, // Ya no necesita validación adicional
     };
+
     return grupoEmpleados;
   } catch (error) {
     console.error('Error al obtener el grupo de empleados con id:', error);
