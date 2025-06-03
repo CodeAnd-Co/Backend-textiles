@@ -11,11 +11,6 @@ const MENSAJES_CATEGORIAS = require('@altertex/util/const/mensajesCategorias');
  *
  * @returns {Promise<void>} Devuelve una respuesta HTTP con la lista de categorías o un mensaje de error.
  *
- * @description
- * Este endpoint implementa el RF[47]: Consulta lista de categorías.
- * Si no se encuentran categorías para el cliente, devuelve un mensaje correspondiente.
- * Si ocurre un error inesperado, devuelve un mensaje de error genérico.
- *
  * @see [RF47 - Documentación de requisitos](https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF47)
  */
 exports.consultarListaCategorias = async (req, res) => {
