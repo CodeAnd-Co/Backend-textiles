@@ -21,6 +21,8 @@ const rutasObtenerOpcionesRol = require('@altertex/rol/rutasInd/obtenerOpcionesR
 
 const rutasEliminarRol = require('@altertex/rol/rutasInd/eliminarRol.routes');
 
+const rutasConsultarDetalle = require('@altertex/rol/rutasInd/consultarDetalleRol.routes');
+
 // Importación del archivo de constantes donde están definidas las rutas base del sistema.
 const RUTAS = require('@altertex/util/const/rutas');
 
@@ -38,6 +40,8 @@ ruteador.use(RUTAS.ROLES.BASE, rutasCrearRol);
 ruteador.use(RUTAS.ROLES.BASE, rutasObtenerOpcionesRol);
 
 ruteador.use(RUTAS.ROLES.BASE, rutasEliminarRol);
+
+ruteador.use(RUTAS.ROLES.BASE, rutasConsultarDetalle);
 
 // Exporta el enrutador para ser utilizado en el archivo principal de rutas de la aplicación (por ejemplo: app.js).
 module.exports = ruteador;

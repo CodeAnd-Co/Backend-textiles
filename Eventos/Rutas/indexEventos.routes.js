@@ -1,5 +1,6 @@
 const express = require('express');
 const ruteador = express.Router();
+const crearEvento = require('@altertex/eve/rutasInd/crearEvento.routes');
 const rutasConsultarListaEventos = require('@altertex/eve/rutasInd/consultarListaEventos.routes');
 const rutasConsultarEvento = require('@altertex/eve/rutasInd/consultarEvento.routes');
 const rutasEliminarEvento = require('@altertex/eve/rutasInd/eliminarEvento.routes');
@@ -11,6 +12,7 @@ const rutasEliminarEvento = require('@altertex/eve/rutasInd/eliminarEvento.route
 const RUTAS = require('@altertex/util/const/rutas');
 
 // Configuración de las rutas específicas para eventos
+ruteador.use(RUTAS.EVENTOS.BASE, crearEvento);
 ruteador.use(RUTAS.EVENTOS.BASE, rutasConsultarListaEventos);
 ruteador.use(RUTAS.EVENTOS.BASE, rutasEliminarEvento);
 ruteador.use(RUTAS.EVENTOS.BASE, rutasConsultarEvento);
