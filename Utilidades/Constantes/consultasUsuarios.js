@@ -54,7 +54,7 @@ module.exports = {
              u.fechaNacimiento,
              u.genero,
              u.estatus,
-             r.nombre          AS rol,
+             r.idRol          AS rol,
              uc.idCliente,
              c.nombreComercial AS nombreCliente
       FROM usuario u
@@ -66,23 +66,22 @@ module.exports = {
   `,
 
   OBTENER_LISTA: `
-      SELECT u.idUsuario,
-             u.nombreCompleto    AS nombre,
-             r.nombre            AS rol,
-             c.nombreComercial   AS cliente,
-             u.estatus,
-             u.correoElectronico AS correo,
-             u.numeroTelefono    AS telefono
-      FROM usuario u
-               LEFT JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
-               LEFT JOIN rol r ON ur.idRol = r.idRol
-               LEFT JOIN usuario_cliente uc ON u.idUsuario = uc.idUsuario
-               LEFT JOIN cliente c ON uc.idCliente = c.idCliente
-      WHERE u.idUsuario NOT IN (SELECT ur2.idUsuario
-                                FROM usuario_rol ur2
-                                WHERE ur2.idRol = 3);
-
-  `,
+    SELECT u.idUsuario,
+           u.nombreCompleto    AS nombre,
+           r.idRol            AS rol,         
+           c.nombreComercial   AS cliente,
+           u.estatus,
+           u.correoElectronico AS correo,
+           u.numeroTelefono    AS telefono
+    FROM usuario u
+         LEFT JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
+         LEFT JOIN rol r ON ur.idRol = r.idRol
+         LEFT JOIN usuario_cliente uc ON u.idUsuario = uc.idUsuario
+         LEFT JOIN cliente c ON uc.idCliente = c.idCliente
+    WHERE u.idUsuario NOT IN (SELECT ur2.idUsuario
+                              FROM usuario_rol ur2
+                              WHERE ur2.idRol = 3);
+`,
 
   ELIMINAR_USUARIOS: `
       DELETE
@@ -100,6 +99,12 @@ UPDATE usuario SET
   fechaNacimiento = ?,
   genero = ?,
   estatus = ?
+WHERE idUsuario = ?;
+    `,
+
+  ACTUALIZAR_CLIENTE_USUARIO: `
+UPDATE usuario_cliente SET
+  idCliente = ?
 WHERE idUsuario = ?;
     `,
 

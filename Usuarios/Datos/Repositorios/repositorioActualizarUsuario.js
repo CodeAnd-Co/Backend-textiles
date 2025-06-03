@@ -26,13 +26,36 @@ exports.actualizarUsuario = async (datos) => {
   }
   try {
     await Promise.all(
-      datos.map(({ idUsuario, nombreCompleto, correoElectronico, telefono }) => {
-        return correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR, [
+      datos.map(async (usuario) => {
+        const {
+          idUsuario,
           nombreCompleto,
           correoElectronico,
-          telefono,
+          contrasenia,
+          numeroTelefono,
+          direccion,
+          fechaNacimiento,
+          genero,
+          estatus,
+          idCliente,
+        } = usuario;
+
+        // Actualiza datos del usuario
+        await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO, [
+          nombreCompleto,
+          correoElectronico,
+          contrasenia,
+          numeroTelefono,
+          direccion,
+          fechaNacimiento,
+          genero,
+          estatus,
           idUsuario,
         ]);
+
+        if (idCliente !== undefined) {
+          await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_CLIENTE_USUARIO, [idCliente, idUsuario]);
+        }
       })
     );
   } catch {
