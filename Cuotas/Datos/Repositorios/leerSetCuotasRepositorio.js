@@ -12,16 +12,16 @@ const CONSULTAS_CUOTAS = require('@altertex/util/const/consultasCuotas');
  */
 exports.obtenerSetCuotaPorId = async (idSetCuota) => {
   const query = CONSULTAS_CUOTAS.LEER_CUOTA_SET;
-  const query_cuotas = CONSULTAS_CUOTAS.LEER_CUOTA_SET_PRODUCTOS;
+  const queryCuotas = CONSULTAS_CUOTAS.LEER_CUOTA_SET_PRODUCTOS;
 
   const resultado = await correrQuery(query, [idSetCuota]);
   if (resultado.length === 0) return null;
 
-  const productos_cuota = await correrQuery(query_cuotas, [idSetCuota]);
-  const productos = productos_cuota.map((producto) => ({
+  const productosCuota = await correrQuery(queryCuotas, [idSetCuota]);
+  const productos = productosCuota.map((producto) => ({
     nombre: producto.nombreComun,
   }));
-  const cuotas = productos_cuota.map((producto) => ({
+  const cuotas = productosCuota.map((producto) => ({
     valor: producto.cuota_valor,
   }));
 
@@ -29,8 +29,8 @@ exports.obtenerSetCuotaPorId = async (idSetCuota) => {
     idSetCuota: resultado[0].idCuotaSet,
     nombre: resultado[0].nombre,
     descripcion: resultado[0].descripcion,
-    productos: productos,
-    cuotas: cuotas,
+    productos,
+    cuotas,
   };
 
   return setCuota;
