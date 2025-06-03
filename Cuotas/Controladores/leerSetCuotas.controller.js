@@ -11,7 +11,7 @@ const MENSAJES_CUOTAS = require('@altertex/util/const/mensajesCuotas');
  * @param {Express.Response} res - La respuesta HTTP para enviar el resultado al cliente.
  * @returns {Promise<void>} Responde con el set de cuotas encontrado o un mensaje de error.
  *
- * @see [RF33 Leer set cuotas](https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF33)
+ * @see [RF33] Leer set cuotas(https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF33)
  */
 exports.leerSetCuotas = async (req, res) => {
   const idSetCuota = parseInt(req.body.idSetCuota);
