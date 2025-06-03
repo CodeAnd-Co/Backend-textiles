@@ -6,6 +6,7 @@ on:
       - main
       - staging
       - develop
+      - MBI-1
 
 jobs:
   lint:
@@ -18,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22.14"
+          node-version: '22.14'
 
       - name: Install dependencies
         run: npm install
@@ -35,7 +36,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22.14"
+          node-version: '22.14'
 
       - name: Install dependencies
         run: npm install
