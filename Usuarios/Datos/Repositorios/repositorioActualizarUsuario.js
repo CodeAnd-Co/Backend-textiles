@@ -54,7 +54,15 @@ exports.actualizarUsuario = async (datos) => {
         ]);
 
         if (idCliente !== undefined) {
-          await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_CLIENTE_USUARIO, [idCliente, idUsuario]);
+          // Intenta actualizar primero
+          const resultado = await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_CLIENTE_USUARIO, [
+            idCliente,
+            idUsuario,
+          ]);
+          // Si no se actualizó ninguna fila, inserta la relación
+          if (resultado.affectedRows === 0) {
+            await correrQuery(CONSULTAS_USUARIOS.ASOCIAR_USUARIO_A_CLIENTE, [idUsuario, idCliente]);
+          }
         }
       })
     );
