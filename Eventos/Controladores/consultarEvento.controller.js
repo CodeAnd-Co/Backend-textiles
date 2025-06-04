@@ -12,6 +12,7 @@ const MENSAJES_EVENTOS = require('@altertex/util/const/mensajesEventos');
  * @returns {Promise<void>} Responde con el evento encontrado o un mensaje de error.
  *
  * @see [RF38 Leer evento](https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF38)
+ * 
  */
 exports.consultarEvento = async (req, res) => {
   const idEvento = parseInt(req.body.idEvento);
