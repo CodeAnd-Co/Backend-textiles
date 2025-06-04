@@ -29,11 +29,9 @@
  *                   type: string
  *                   example: Cliente eliminado
  *       400:
- *         description: No se puede eliminar el cliente debido a restricciones (ej. registros asociados)
- *       401:
- *         description: No autorizado, token o API key inválida
- *       403:
- *         description: No tiene permisos para eliminar clientes
+ *         description: No se puede eliminar el cliente debido a restricciones (ej. registros asociados, ID inválido).
+ *       404:
+ *         description: No se encontró un cliente con el ID proporcionado.
  *       500:
  *         description: Error interno al eliminar el cliente
  */

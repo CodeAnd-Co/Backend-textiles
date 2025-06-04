@@ -51,16 +51,6 @@
  *                       idCliente:
  *                         type: integer
  *                         example: 123
- *       400:
- *         description: Los parámetros 'limit' o 'offset' son inválidos o faltan.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 mensaje:
- *                   type: string
- *                   example: "Parámetros inválidos."
  *       204:
  *         description: No se encontraron categorías registradas para el cliente.
  *         content:
@@ -71,16 +61,6 @@
  *                 mensaje:
  *                   type: string
  *                   example: "No se encontraron categorías registradas."
- *       401:
- *         description: No autorizado - Token inválido o faltante
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 mensaje:
- *                   type: string
- *                   example: "No autorizado"
  *       500:
  *         description: Error en el servidor al intentar obtener la lista de categorías.
  *         content:
@@ -100,7 +80,6 @@ const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
-
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
 

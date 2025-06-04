@@ -16,11 +16,7 @@ const CONSULTAS_CLIENTES = require('@altertex/util/const/consultasClientes');
  * @param {object} req.body - Cuerpo de la solicitud HTTP.
  * @param {number} req.body.idCliente - ID del cliente a eliminar.
  * @param {object} res - Objeto de respuesta de Express.
- * @returns {Promise<void>} Respuesta HTTP con estado:
- * - 200 si el cliente fue eliminado correctamente.
- * - 400 si el ID del cliente es inválido.
- * - 404 si no se encontró el cliente.
- * - 500 si ocurre un error en el servidor.
+ * @returns {Promise<void>} Respuesta HTTP con estado.
  * @throws {Error} Si ocurre un error durante la eliminación.
  */
 exports.eliminarCliente = async (req, res) => {
@@ -35,13 +31,9 @@ exports.eliminarCliente = async (req, res) => {
 
     // Obtener nombre de la imagen asociada (si existe)
     let nombreImagen = '';
-    try {
-      const resultadoImagen = await correrQuery(CONSULTAS_CLIENTES.OBTENER_NOMBRE_IMAGEN, [idCliente]);
-      if (resultadoImagen.length > 0 && resultadoImagen[0].urlImagen) {
-        nombreImagen = extraerNombreArchivoS3(resultadoImagen[0].urlImagen);
-      }
-    } catch {
-      // console.error('Error al obtener nombre de imagen:', error);
+    const resultadoImagen = await correrQuery(CONSULTAS_CLIENTES.OBTENER_NOMBRE_IMAGEN, [idCliente]);
+    if (resultadoImagen.length > 0 && resultadoImagen[0].urlImagen) {
+      nombreImagen = extraerNombreArchivoS3(resultadoImagen[0].urlImagen);
     }
 
     // Eliminar cliente
