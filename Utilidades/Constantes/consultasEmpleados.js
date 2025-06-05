@@ -33,7 +33,11 @@ module.exports = {
       u.direccion,
       u.fechaNacimiento,
       u.genero,
-      u.estatus,
+      CASE 
+        WHEN u.estatus = 1 THEN 'Activo'
+        WHEN u.estatus = 0 THEN 'Inactivo'
+        ELSE 'Desconocido'
+      END AS estatus,
       e.numeroEmergencia,
       e.areaTrabajo,
       e.posicion,

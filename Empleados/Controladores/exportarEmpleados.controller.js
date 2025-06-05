@@ -57,7 +57,7 @@ exports.exportarEmpleados = async (req, res) => {
 
     const parser = new Parser({ fields: campos });
     const csv = parser.parse(empleados);
-    const csvConBOM = '\uFEFF' + csv;
+    const csvConBOM = `\uFEFF${csv}`;
 
     return res.status(MENSAJES_EMPLEADOS.LISTA_EMPLEADOS_EXPORTADA.codigo).json({
       mensaje: MENSAJES_EMPLEADOS.LISTA_EMPLEADOS_EXPORTADA.mensaje,
