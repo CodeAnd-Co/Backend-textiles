@@ -103,7 +103,6 @@ exports.importarProductos = async (req, res) => {
           )
         }));
 
-        console.log('🚨 OPCIONES CON SKU', opcionesConSKU);
         await repositorioCrearOpcion.crearOpcion(idVariante, opcionesConSKU);
         }
     }
