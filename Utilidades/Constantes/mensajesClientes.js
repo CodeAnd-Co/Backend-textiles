@@ -44,6 +44,14 @@ module.exports = {
     codigo: 400,
     mensaje: 'El ID del cliente debe ser un número entero válido.',
   },
+  ERROR_ELIMINAR_CLIENTE: {
+    codigo: 400,
+    mensaje: 'Ocurrió un error al eliminar el cliente.',
+  },
+  ERROR_CONSULTAR_CLIENTE: {
+    codigo: 400,
+    mensaje: 'Ocurrió un error al obtener la información del cliente.',
+  },
 
   // 403 - Forbidden
   ACCESO_NO_AUTORIZADO: {
@@ -62,10 +70,6 @@ module.exports = {
   },
 
   // 500 - Internal Server Error
-  ERROR_CONSULTAR_CLIENTE: {
-    codigo: 500,
-    mensaje: 'Ocurrió un error al obtener la información del cliente.',
-  },
   ERROR_CONSULTAR_SISTEMA: {
     codigo: 500,
     mensaje: 'Ocurrió un error al obtener la información del sistema del cliente.',
@@ -74,10 +78,7 @@ module.exports = {
     codigo: 500,
     mensaje: 'Ocurrió un error al obtener la lista de clientes.',
   },
-  ERROR_ELIMINAR_CLIENTE: {
-    codigo: 500,
-    mensaje: 'Ocurrió un error al eliminar el cliente.',
-  },
+
 
   // Crear cliente
   CAMPO_OBLIGATORIO: {

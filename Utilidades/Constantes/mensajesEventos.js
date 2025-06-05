@@ -1,23 +1,11 @@
 module.exports = {
   // 201 - Creado
-  CATEGORIA_CREADA: {
-    codigo: 201,
-    mensaje: 'Categoría creada correctamente.',
-  },
   EVENTO_CREADO: {
     codigo: 201,
     mensaje: 'Evento creado correctamente.',
   },
 
   // 200 - OK
-  CATEGORIA_OBTENIDA: {
-    codigo: 200,
-    mensaje: 'Información de la categoría obtenida exitosamente.',
-  },
-  LISTA_CATEGORIAS_OBTENIDA: {
-    codigo: 200,
-    mensaje: 'Lista de categorías obtenida exitosamente.',
-  },
   EVENTO_OBTENIDO: {
     codigo: 200,
     mensaje: 'Información del evento obtenida exitosamente.',
@@ -58,10 +46,6 @@ module.exports = {
     codigo: 400,
     mensaje: 'Los parámetros proporcionados no son válidos.',
   },
-  LIMITE_OFFSET_INVALIDOS: {
-    codigo: 400,
-    mensaje: 'Los valores de límite u offset deben ser números enteros positivos mayores a cero.',
-  },
   NOMBRE_EVENTO_INVALIDO: {
     codigo: 400,
     mensaje: 'El nombre del evento proporcionado no es válido.',
@@ -70,41 +54,19 @@ module.exports = {
     codigo: 400,
     mensaje: 'Ya existe un evento con ese nombre.',
   },
-
-  // 401 - No autorizado
-  CREDENCIALES_INVALIDAS: {
-    codigo: 401,
-    mensaje: 'Credenciales inválidas para consultar categorías.',
+  // 400 - Error de cliente
+  ERROR_CLIENTE_NO_EXISTE: {
+    codigo: 400,
+    mensaje: 'El cliente especificado no existe en el sistema.',
   },
-
-  // 403 - Acceso denegado
-  ACCESO_DENEGADO: {
-    codigo: 403,
-    mensaje: 'No tiene permiso para realizar esta acción sobre categorías.',
-  },
+  
   // 404 - No encontrado
-  CATEGORIA_NO_ENCONTRADA: {
-    codigo: 404,
-    mensaje: 'No se encontró una categoría con el ID proporcionado.',
-  },
   EVENTO_NO_ENCONTRADO: {
     codigo: 404,
     mensaje: 'No se encontró un evento con el ID proporcionado.',
   },
 
   // 500 - Error del servidor
-  ERROR_CREAR_CATEGORIA: {
-    codigo: 500,
-    mensaje: 'Ocurrió un error al intentar crear la categoría.',
-  },
-  ERROR_OBTENER_CATEGORIAS: {
-    codigo: 500,
-    mensaje: 'Ocurrió un error al obtener la lista de categorías.',
-  },
-  ERROR_OBTENER_CATEGORIA: {
-    codigo: 500,
-    mensaje: 'Ocurrió un error al obtener los datos de la categoría.',
-  },
   ERROR_CREAR_EVENTO: {
     codigo: 500,
     mensaje: 'Ocurrió un error al intentar crear el evento.',
@@ -124,5 +86,13 @@ module.exports = {
   ERROR_INTERNO: {
     codigo: 500,
     mensaje: 'Ocurrió un error interno en el servidor.',
+  },
+  ERROR_DB_CONEXION: {
+    codigo: 500,
+    mensaje: 'Error de conexión con la base de datos.',
+  },
+  ERROR_INESPERADO: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error inesperado al crear el evento.',
   },
 };

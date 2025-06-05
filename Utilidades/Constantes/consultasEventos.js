@@ -1,4 +1,11 @@
 module.exports = {
+  CREAR_EVENTO: `
+        INSERT INTO evento (idCliente, nombre, descripcion, puntos, multiplicador, periodoRenovacion, renovacion)
+        VALUES (?, ?, ?, ?, ?, ?, ?);
+    `,
+  VERIFICAR_CLIENTE: `
+        SELECT idCliente FROM cliente WHERE idCliente = ?;
+    `,
   OBTENER_LISTA_EVENTOS: `
         SELECT 
         e.idEvento,

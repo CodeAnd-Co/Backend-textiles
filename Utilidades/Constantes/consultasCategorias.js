@@ -47,6 +47,19 @@ module.exports = {
       WHERE idProducto IN (?);
   `,
 
+    LEER_DETALLE_CATEGORIA: `
+    SELECT 
+      c.idCategoria,
+      c.nombreCategoria,
+      c.descripcion,
+      p.idProducto,
+      p.nombreComun
+    FROM categoria c
+    LEFT JOIN categoria_producto cp ON c.idCategoria = cp.idCategoria
+    LEFT JOIN producto p ON cp.idProducto = p.idProducto
+    WHERE c.idCategoria = ?;
+  `,
+
   LEER_DETALLE_CATEGORIA: `
     SELECT 
       c.idCategoria,
