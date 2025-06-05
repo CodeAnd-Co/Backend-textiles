@@ -70,6 +70,7 @@ module.exports = {
     ELIMINAR_GRUPO: '/eliminar-grupo',
     ELIMINAR_EMPLEADO: '/eliminar',
     IMPORTAR_EMPLEADOS: '/importar-empleados',
+    EXPORTAR_EMPLEADOS: '/exportar-empleados',
     LEER_GRUPO: '/leer-grupo',
     CREAR_GRUPO: '/crear-grupo',
     ACTUALIZAR: '/actualizar',

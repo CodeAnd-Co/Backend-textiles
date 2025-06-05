@@ -66,7 +66,7 @@
  *                 mensaje:
  *                   type: string
  *                   example: "No se encontró un cliente con el ID proporcionado."
- *       500:
+ *       400:
  *         description: Error interno del servidor al consultar el cliente.
  *         content:
  *           application/json:
@@ -86,8 +86,6 @@ const autorizarToken = require("@altertex/util/inter/autorizarToken");
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const verificarPermisos = require("@altertex/util/inter/verificarPermisos");
 const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
-
-
 const PERMISOS = require("@altertex/util/const/permisos");
 const RUTAS = require("@altertex/util/const/rutas");
 
