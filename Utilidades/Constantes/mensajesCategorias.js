@@ -32,7 +32,7 @@ module.exports = {
   },
   NOMBRE_CATEGORIA_INVALIDO: {
     codigo: 400,
-    mensaje: 'El nombre de la categoría proporcionado no es válido.',
+    mensaje: 'El nombre de la categoría es obligatorio.',
   },
   CATEGORIA_YA_EXISTE: {
     codigo: 400,
@@ -82,4 +82,9 @@ module.exports = {
     codigo: 400,
     mensaje: 'El producto no existe en la base de datos',
   },
+  DESCRIPCION_INVALIDA: {
+    codigo: 400,
+    mensaje: 'La descripción proporcionada no es válida.',
+  },
+
 };

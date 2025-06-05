@@ -4,8 +4,8 @@ const MENSAJES = require('@altertex/util/const/mensajesCategorias');
 /**
  * RF49 - Actualizar categoría de productos - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF49
  *
- * @param {import('express').Request} req
- * @param {import('express').Response} res
+ * @param {express.Request} req
+ * @param {express.Response} res
  * @returns {Promise<void>}
  */
 exports.actualizarCategoria = async (req, res) => {
@@ -13,9 +13,24 @@ exports.actualizarCategoria = async (req, res) => {
     const { idCategoria } = req.params;
     const { nombreCategoria, descripcion, productos } = req.body;
 
-    if (!idCategoria || !nombreCategoria || typeof nombreCategoria !== 'string') {
-      return res.status(400).json(MENSAJES.PARAMETROS_INVALIDOS);
+    if (!idCategoria) {
+      return res.status(400).json(MENSAJES.CATEGORIA_NO_ENCONTRADA);
     }
+
+    if (!nombreCategoria || typeof nombreCategoria !== 'string' || nombreCategoria.trim() === '') {
+      return res.status(400).json(MENSAJES.NOMBRE_CATEGORIA_INVALIDO);
+    }
+
+    if (!Array.isArray(productos)) {
+      return res.status(400).json({
+        codigo: 400,
+        mensaje: 'El campo productos debe ser un arreglo.',
+      });
+    }
+
+    if (descripcion && typeof descripcion !== 'string') {
+  return res.status(400).json(MENSAJES.DESCRIPCION_INVALIDA);
+  }
 
     await actualizarCategoria({ idCategoria, nombreCategoria, descripcion, productos });
 
@@ -23,11 +38,7 @@ exports.actualizarCategoria = async (req, res) => {
       codigo: 200,
       mensaje: 'Categoría actualizada correctamente.',
     });
-  } catch (error) {
-    console.error('Error al actualizar categoría:', error);
-    return res.status(500).json({
-      codigo: 500,
-      mensaje: 'Ocurrió un error al actualizar la categoría.',
-    });
+  } catch {
+    return res.status(500).json(MENSAJES.ERROR_CREAR_CATEGORIA);
   }
 };
