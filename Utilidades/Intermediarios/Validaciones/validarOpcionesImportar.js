@@ -56,14 +56,6 @@ module.exports = (opciones) => {
     }
 
     // prettier-ignore
-    if (!opcion.SKUautomatico 
-    || opcion.SKUautomatico == null 
-    || typeof opcion.SKUautomatico !== 'string' 
-    || opcion.SKUautomatico.length > 50
-  ) {
-    return { error: 'SKUautomatico es requerido y debe ser una cadena de texto de máximo 50 caracteres.' };
-  }
-    // prettier-ignore
     if (!opcion.SKUcomercial
     || opcion.SKUcomercial == null 
     || typeof opcion.SKUcomercial !== 'string' 

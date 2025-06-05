@@ -5,6 +5,7 @@ const repositorioCrearVariante = require('@altertex/pro/repos/repositorioCrearVa
 const repositorioCrearOpcion = require('@altertex/pro/repos/repositorioCrearOpcion');
 const db = require('@altertex/util/bd/db');
 const validarProductoImportado = require('@altertex/util/vali/validarProductoImportado');
+const { crearGeneradorSKUConsecutivo } = require('@altertex/util/inter/generarSKUAuto');
 
 /**
  * Importa productos y sus variantes/opciones para un cliente.
@@ -85,15 +86,26 @@ exports.importarProductos = async (req, res) => {
         errores,
       });
     }
-    
+    const generarSKUConsecutivo = crearGeneradorSKUConsecutivo();
     for (let im = 0; im < productos.length; im += 1) {
       const { producto, variantes } = productos[im];
       const idProducto = await repositorioCrearProducto.crearProducto(idCliente, producto);
       
-      for (const variante of variantes) {
+        for (const variante of variantes) {
         const idVariante = await repositorioCrearVariante.crearVariante(idProducto, variante);
-        await repositorioCrearOpcion.crearOpcion(idVariante, variante.opciones);
-      }
+
+        const opcionesConSKU = variante.opciones.map(opcion => ({
+          ...opcion,
+          SKUautomatico: generarSKUConsecutivo(
+            producto.nombreComun,
+            variante.nombreVariante,
+            opcion.valorOpcion || 'SINVALOR'
+          )
+        }));
+
+        console.log('🚨 OPCIONES CON SKU', opcionesConSKU);
+        await repositorioCrearOpcion.crearOpcion(idVariante, opcionesConSKU);
+        }
     }
     
     await conexion.commit();
