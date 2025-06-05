@@ -40,7 +40,7 @@ module.exports = {
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
     ELIMINAR_PRODUCTO: '/eliminar',
-    LEER: '/leer-producto'
+    LEER: '/leer-producto',
   },
   PROVEEDORES: {
     BASE: '/proveedores',
@@ -92,6 +92,7 @@ module.exports = {
     CONFIRMAR_CREACION: '/confirmar-creacion',
     ELIMINAR_ROL: '/eliminar',
     LEER_ROL: '/leer',
+    ACTUALIZAR: '/actualizar-rol',
   },
   PEDIDOS: {
     BASE: '/pedidos',
