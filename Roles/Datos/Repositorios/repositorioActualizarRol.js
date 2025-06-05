@@ -4,18 +4,17 @@ const conexion = require('@altertex/util/bd/db');
 /**
  * Actualiza un rol existente, incluyendo su nombre, descripción y permisos asociados.
  *
- * @param {number} idCliente - ID del cliente que realiza la actualización.
  * @param {object} datosActualizarRol - Datos necesarios para actualizar el rol.
  * @param {object} datosActualizarRol.datosRol - Contiene el nombre, descripción y permisos del rol.
  * @param {number} datosActualizarRol.idRol - ID del rol a actualizar.
  * @throws {Error} Si hay parámetros inválidos o errores en la base de datos.
  */
-exports.actualizarRol = async (idCliente, datosActualizarRol) => {
+exports.actualizarRol = async (datosActualizarRol) => {
   const datosRol = datosActualizarRol.datosRol;
   const idRol = datosActualizarRol.idRol;
   const permisos = datosRol.permisos || [];
 
-  if (!idCliente || !datosActualizarRol || !idRol) {
+  if (!datosActualizarRol || !idRol) {
     throw new Error(MENSAJES.PARAMETROS_INVALIDOS.mensaje);
   }
 
