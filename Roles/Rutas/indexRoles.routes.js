@@ -25,8 +25,6 @@ const rutasConsultarDetalle = require('@altertex/rol/rutasInd/consultarDetalleRo
 
 const rutasActualizarRol = require('@altertex/rol/rutasInd/actualizarRol.routes');
 
-const rutasConsultarDetalle = require('@altertex/rol/rutasInd/consultarDetalleRol.routes');
-
 // Importación del archivo de constantes donde están definidas las rutas base del sistema.
 const RUTAS = require('@altertex/util/const/rutas');
 
@@ -49,7 +47,6 @@ ruteador.use(RUTAS.ROLES.BASE, rutasConsultarDetalle);
 
 ruteador.use(RUTAS.ROLES.BASE, rutasActualizarRol);
 
-ruteador.use(RUTAS.ROLES.BASE, rutasConsultarDetalle);
 
 // Exporta el enrutador para ser utilizado en el archivo principal de rutas de la aplicación (por ejemplo: app.js).
 module.exports = ruteador;
