@@ -28,11 +28,9 @@
  *                 mensaje:
  *                   type: string
  *                   example: Cliente eliminado
- *       400:
- *         description: No se puede eliminar el cliente debido a restricciones (ej. registros asociados, ID inválido).
  *       404:
  *         description: No se encontró un cliente con el ID proporcionado.
- *       500:
+ *       400:
  *         description: Error interno al eliminar el cliente
  */
 

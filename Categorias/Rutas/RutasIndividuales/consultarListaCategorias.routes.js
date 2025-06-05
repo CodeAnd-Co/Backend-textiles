@@ -61,7 +61,7 @@
  *                 mensaje:
  *                   type: string
  *                   example: "No se encontraron categorías registradas."
- *       500:
+ *       400:
  *         description: Error en el servidor al intentar obtener la lista de categorías.
  *         content:
  *           application/json:
