@@ -47,7 +47,7 @@ module.exports = {
       WHERE idProducto IN (?);
   `,
 
-    LEER_DETALLE_CATEGORIA: `
+  LEER_DETALLE_CATEGORIA: `
     SELECT 
       c.idCategoria,
       c.nombreCategoria,
@@ -72,7 +72,6 @@ module.exports = {
     LEFT JOIN producto p ON cp.idProducto = p.idProducto
     WHERE c.idCategoria = ?;
   `,
-
   ACTUALIZAR_CATEGORIA: `
     UPDATE categoria
     SET nombreCategoria = ?, descripcion = ?

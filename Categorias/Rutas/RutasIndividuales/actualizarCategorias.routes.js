@@ -62,6 +62,7 @@ const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 ruteador.put(
   `${RUTAS.CATEGORIAS.ACTUALIZAR}/:idCategoria`,
   validarYSanitizar, 
+
   revisarApiKey(),
   autorizarToken,
   verificarPermisos(PERMISOS.ACTUALIZAR_CATEGORIA_PRODUCTOS),
