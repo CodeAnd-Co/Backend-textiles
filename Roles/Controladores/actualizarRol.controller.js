@@ -16,7 +16,6 @@ const repositorio = require('@altertex/rol/repos/repositorioActualizarRol');
 exports.actualizarRol = async (req, res) => {
   const datosActualizacion = req.body.datosRolActualizacion;
 
-
   if (!datosActualizacion) {
     return res.status(MENSAJES.PARAMETROS_INVALIDOS.codigo).json({ mensaje: MENSAJES.PARAMETROS_INVALIDOS.mensaje });
   }
