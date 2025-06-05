@@ -51,6 +51,10 @@ module.exports = {
     codigo: 400,
     mensaje: 'Los parámetros proporcionados no son válidos.',
   },
+  ERROR_OBTENER_USUARIO: {
+    codigo: 400,
+    mensaje: 'Ocurrió un error al obtener los datos del usuario.',
+  },
 
   // 401 - sin autorizacion
   CREDENCIALES_INVALIDAS: {
@@ -78,10 +82,6 @@ module.exports = {
   ERROR_OBTENER_USUARIOS: {
     codigo: 500,
     mensaje: 'Ocurrió un error al obtener la lista de usuarios.',
-  },
-  ERROR_OBTENER_USUARIO: {
-    codigo: 500,
-    mensaje: 'Ocurrió un error al obtener los datos del usuario.',
   },
   ERROR_ELIMINAR_USUARIO: {
     codigo: 500,
