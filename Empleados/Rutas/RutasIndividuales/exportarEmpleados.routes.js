@@ -41,7 +41,7 @@
  *                 mensaje:
  *                   type: string
  *                   example: No hay empleados para exportar.
- *       500:
+ *       400:
  *         description: Error interno del servidor al exportar empleados.
  *         content:
  *           application/json:

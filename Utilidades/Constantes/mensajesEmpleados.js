@@ -28,6 +28,10 @@ module.exports = {
     codigo: 400,
     mensaje: 'Error al actualizar',
   },
+  ERROR_EXPORTAR_EMPLEADOS: {
+    codigo: 400,
+    mensaje: 'Error al exportar la lista de empleados.'
+  },
 
   // 403 - Forbidden
   PERMISO_DENEGADO: {
@@ -84,9 +88,5 @@ module.exports = {
   GRUPO_NOMBRE_REPETIDO: {
     codigo: 'GRUPO_NOMBRE_REPETIDO',
     mensaje: 'Ya existe un grupo con ese nombre.',
-  },
-  ERROR_EXPORTAR_EMPLEADOS: {
-    codigo: 500,
-    mensaje: 'Error al exportar la lista de empleados.'
   }
 };

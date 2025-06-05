@@ -85,7 +85,7 @@
  *                 mensaje:
  *                   type: string
  *                   example: "No se encontró un usuario con el ID proporcionado."
- *       500:
+ *       400:
  *         description: Error interno del servidor al consultar el usuario.
  *         content:
  *           application/json:

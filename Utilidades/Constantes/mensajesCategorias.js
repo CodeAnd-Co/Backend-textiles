@@ -42,6 +42,10 @@ module.exports = {
     codigo: 400,
     mensaje: 'Los parámetros proporcionados no son válidos.',
   },
+    ERROR_OBTENER_CATEGORIAS: {
+    codigo: 400,
+    mensaje: 'Ocurrió un error al obtener la lista de categorías.',
+  },
 
   // 401 - No autorizado
   CREDENCIALES_INVALIDAS: {
@@ -65,10 +69,6 @@ module.exports = {
   ERROR_CREAR_CATEGORIA: {
     codigo: 400,
     mensaje: 'Ocurrió un error al intentar crear la categoría.',
-  },
-  ERROR_OBTENER_CATEGORIAS: {
-    codigo: 400,
-    mensaje: 'Ocurrió un error al obtener la lista de categorías.',
   },
   ERROR_OBTENER_CATEGORIA: {
     codigo: 400,
