@@ -14,6 +14,10 @@ module.exports = {
     codigo: 204,
     mensaje: 'No se encontraron productos registrados para el cliente.',
   },
+  PRODUCTOS_NO_ENCONTRADOS: {
+    codigo: 204,
+    mensaje: 'No se encontraron productos para exportar.',
+  },
 
   // 400 - Bad Request
   PARAMETROS_INVALIDOS: {
@@ -91,5 +95,9 @@ module.exports = {
   PRODUCTO_NO_ENCONTRADO: {
     codigo: 400,
     mensaje: 'El producto solicitado no existe.',
+  },
+  ERROR_EXPORTACION: {
+    codigo: 400,
+    mensaje: 'Error al exportar la lista de productos.',
   },
 };
