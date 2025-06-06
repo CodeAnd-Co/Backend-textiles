@@ -44,6 +44,12 @@ module.exports = {
       WHERE idCliente = ?
         AND (nombre = ? OR nombreVisible = ?);
   `,
+  CONSULTAR_NOMBRE_DUPLICADO: `
+      SELECT idSetProducto
+      FROM set_producto
+      WHERE idCliente = ?
+        AND (nombre = ?);
+  `,
   CONSULTAR_PRODUCTOS_EXISTENTES: `
       SELECT idProducto
       FROM producto

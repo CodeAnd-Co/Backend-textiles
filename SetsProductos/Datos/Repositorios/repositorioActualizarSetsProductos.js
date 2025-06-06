@@ -15,10 +15,19 @@ const CONSULTAS = require('@altertex/util/const/consultasSetsProductos');
  * @param {boolean} datos.activo - Estado activo/inactivo.
  * @param {number[]} datos.productos - Lista de IDs de productos a asociar. Array vacío elimina todas las asociaciones.
  */
-exports.actualizarSetProductos = async (datos) => {
+exports.actualizarSetProductos = async (idCliente, datos) => {
   const { idSetProducto, nombre, descripcion, activo, productos } = datos;
 
   try {
+
+    const duplicados = await correrQuery(CONSULTAS.CONSULTAR_NOMBRE_DUPLICADO, [
+          idCliente,
+          nombre,
+        ]);
+    
+        if (duplicados.length > 0) {
+          throw new Error(MENSAJES.ERROR_NOMBRE_NORMAL_DUPLICADO.mensaje);
+        }
     // 1. Actualizar info básica del set
     await correrQuery(CONSULTAS.ACTUALIZAR_SET_INFO, [nombre, descripcion, activo, idSetProducto]);
 

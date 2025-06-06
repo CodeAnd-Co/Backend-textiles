@@ -56,6 +56,10 @@ module.exports = {
     codigo: 400,
     mensaje: 'Nombre o nombre visible duplicado.',
   },
+  ERROR_NOMBRE_NORMAL_DUPLICADO: {
+    codigo: 400,
+    mensaje: 'Nombre duplicado.',
+  },
   ERROR_PRODUCTOS_INVALIDOS: {
     codigo: 400,
     mensaje: 'Uno o más productos no existen en este cliente.',

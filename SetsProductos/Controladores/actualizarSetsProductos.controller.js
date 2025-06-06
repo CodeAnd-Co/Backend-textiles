@@ -21,6 +21,7 @@ const repositorio = require('@altertex/setspro/repos/repositorioActualizarSetsPr
  */
 exports.actualizarSetProductos = async (req, res) => {
   const datosActualizacion = req.body;
+  const cliente = req.user.clienteSeleccionado;
 
   // Validación básica de datos requeridos
   if (
@@ -36,7 +37,7 @@ exports.actualizarSetProductos = async (req, res) => {
   }
 
   try {
-    await repositorio.actualizarSetProductos(datosActualizacion);
+    await repositorio.actualizarSetProductos(cliente, datosActualizacion);
 
     return res.status(MENSAJES.SET_ACTUALIZADO.codigo).json({
       mensaje: MENSAJES.SET_ACTUALIZADO.mensaje,
@@ -46,8 +47,7 @@ exports.actualizarSetProductos = async (req, res) => {
     console.error('Error al actualizar set de productos:', error);
 
     return res.status(MENSAJES.ERROR_ACTUALIZAR_SET.codigo).json({
-      mensaje: MENSAJES.ERROR_ACTUALIZAR_SET.mensaje,
-      error: error.message,
+      mensaje: error.message,
     });
   }
 };
