@@ -6,6 +6,8 @@ const repositorioCrearOpcion = require('@altertex/pro/repos/repositorioCrearOpci
 const db = require('@altertex/util/bd/db');
 const validarProductoImportado = require('@altertex/util/vali/validarProductoImportado');
 const { crearGeneradorSKUConsecutivo } = require('@altertex/util/inter/generarSKUAuto');
+const { proveedorExiste } = require('@altertex/pro/repos/repositorioValidarProveedor');
+
 
 /**
  * Importa productos y sus variantes/opciones para un cliente.
@@ -57,6 +59,13 @@ exports.importarProductos = async (req, res) => {
       if (errorProducto) {
         errores.push({ fila, error: errorProducto.error });
         continue;
+      }
+      if (producto.idProveedor !== null) {
+        const existe = await proveedorExiste(conexion, producto.idProveedor);
+        if (!existe) {
+          errores.push({ fila, error: `idProveedor ${producto.idProveedor} no existe en la base de datos.` });
+          continue;
+        }
       }
 
       if (!Array.isArray(variantes) || variantes.length === 0) {
