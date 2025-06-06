@@ -46,7 +46,7 @@ exports.actualizarUsuario = async (req, res) => {
     return res
       .status(MENSAJES.USUARIO_ACTUALIZADO.codigo)
       .json({ mensaje: MENSAJES.USUARIO_ACTUALIZADO.mensaje, datos });
-  } catch {
+  } catch (e) {
     return res
       .status(MENSAJES.ERROR_ACTUALIZAR_USUARIO.codigo)
       .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje });
