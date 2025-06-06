@@ -47,5 +47,6 @@ ruteador.use(RUTAS.ROLES.BASE, rutasConsultarDetalle);
 
 ruteador.use(RUTAS.ROLES.BASE, rutasActualizarRol);
 
+
 // Exporta el enrutador para ser utilizado en el archivo principal de rutas de la aplicación (por ejemplo: app.js).
 module.exports = ruteador;
