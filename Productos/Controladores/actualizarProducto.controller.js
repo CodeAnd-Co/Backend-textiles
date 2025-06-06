@@ -45,14 +45,14 @@ exports.actualizarProducto = [
 
     const errorProducto = validarProducto(producto);
     if (errorProducto) {
-      return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
-        mensaje: errorProducto.error,
+      return res.status(MENSAJES_PRODUCTOS.ERROR_PARAMETROS_ACTUALIZACION.codigo).json({
+        mensaje: MENSAJES_PRODUCTOS.ERROR_PARAMETROS_ACTUALIZACION.mensaje,
       });
     }
 
     if (imagenesVariante.length !== mapaImagenes.length) {
-      return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
-        mensaje: 'La cantidad de imágenes no coincide con el mapa de imágenes',
+      return res.status(MENSAJES_PRODUCTOS.LIMITE_OFFSET_INVALIDOS.codigo).json({
+        mensaje: MENSAJES_PRODUCTOS.LIMITE_OFFSET_INVALIDOS.mensaje,
       });
     }
 
@@ -65,7 +65,7 @@ exports.actualizarProducto = [
         producto
       );
       if (!idProducto) {
-        throw new Error('Error al actualizar producto');
+        throw new Error(MENSAJES_PRODUCTOS.PRODUCTO_NO_ENCONTRADO_ACTUALIZACION.mensaje);
       }
 
       const varianteIdMap = {};
@@ -75,7 +75,7 @@ exports.actualizarProducto = [
           descripcion: variante.descripcion,
         });
         if (errorVariante) {
-          throw new Error(errorVariante.error);
+          throw new Error(MENSAJES_PRODUCTOS.ERROR_PARAMETROS_ACTUALIZACION.mensaje);
         }
 
         const idVariante = await repositorioActualizarVariante.actualizarVariante(
@@ -83,7 +83,7 @@ exports.actualizarProducto = [
           variante
         );
         if (!idVariante) {
-          throw new Error('Error al actualizar variante');
+          throw new Error(MENSAJES_PRODUCTOS.ERROR_ACTUALIZAR_PRODUCTO.mensaje);
         }
 
         varianteIdMap[variante.identificador] = {
@@ -93,7 +93,7 @@ exports.actualizarProducto = [
 
         const errorOpciones = validarOpciones(variante.opciones);
         if (errorOpciones) {
-          throw new Error(errorOpciones.error);
+          throw new Error(MENSAJES_PRODUCTOS.ERROR_PARAMETROS_ACTUALIZACION.mensaje);
         }
 
         await repositorioActualizarOpcion.actualizarOpcion(idVariante, variante.opciones);
@@ -125,7 +125,7 @@ exports.actualizarProducto = [
       ]);
 
       if ((imagenProducto && !urlImagenProducto) || urlImagenVariantes.includes(null)) {
-        throw new Error('Error al subir imágenes al servidor');
+        throw new Error(MENSAJES_PRODUCTOS.ERROR_ENVIAR_IMAGENES_S3.mensaje);
       }
 
       if (imagenProducto) {
@@ -141,7 +141,7 @@ exports.actualizarProducto = [
         const varianteInfo = varianteIdMap[tempIdVariante];
 
         if (!varianteInfo) {
-          throw new Error(`Variante con ID temporal ${tempIdVariante} no encontrada`);
+          throw new Error(MENSAJES_PRODUCTOS.PRODUCTO_NO_ENCONTRADO.mensaje);
         }
 
         await repositorioVarianteImagen.actualizarImagen(
@@ -154,18 +154,20 @@ exports.actualizarProducto = [
       await Promise.all(imagenesVariantePromises);
 
       await conexion.commit();
-      return res.status(200).json({ mensaje: 'Producto actualizado correctamente' });
+      return res.status(MENSAJES_PRODUCTOS.ACTUALIZACION_EXITOSA.codigo).json({
+        mensaje: MENSAJES_PRODUCTOS.ACTUALIZACION_EXITOSA.mensaje,
+      });
     } catch (error) {
       if (conexion) await conexion.rollback();
 
       let errorMensaje = MENSAJES_PRODUCTOS.ERROR_ACTUALIZAR_PRODUCTO;
 
-      if (error.message.includes('Error al subir imágenes al servidor')) {
+      if (error.message.includes(MENSAJES_PRODUCTOS.ERROR_ENVIAR_IMAGENES_S3.mensaje)) {
         errorMensaje = MENSAJES_PRODUCTOS.ERROR_ENVIAR_IMAGENES_S3;
-      } else if (error.message.includes('Error al actualizar variante')) {
+      } else if (error.message.includes(MENSAJES_PRODUCTOS.ERROR_ACTUALIZAR_VARIANTE.mensaje)) {
         errorMensaje = MENSAJES_PRODUCTOS.ERROR_ACTUALIZAR_VARIANTE;
-      } else if (error.message.includes('Error al asociar imagen con variante')) {
-        errorMensaje = MENSAJES_PRODUCTOS.ERROR_ACTUALIZAR_IMAGEN_VARIANTE;
+      } else if (error.message.includes(MENSAJES_PRODUCTOS.ERROR_CREAR_IMAGEN_VARIANTE.mensaje)) {
+        errorMensaje = MENSAJES_PRODUCTOS.ERROR_CREAR_IMAGEN_VARIANTE;
       }
 
       return res.status(errorMensaje.codigo).json({
