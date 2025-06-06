@@ -1,7 +1,7 @@
 //RF27 Consulta Lista de Productos - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27
 const express = require('express');
 const ruteador = express.Router();
-const controlador = require('@altertex/pro/ctrl/actualizarProductos.controller');
+const controlador = require('@altertex/pro/ctrl/actualizarProducto.controller');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
