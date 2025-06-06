@@ -102,8 +102,8 @@ exports.importarProductos = async (req, res) => {
       });
     }
     const generarSKUConsecutivo = crearGeneradorSKUConsecutivo();
-    for (let im = 0; im < productos.length; im += 1) {
-      const { producto, variantes } = productos[im];
+    for (let indice = 0; indice < productos.length; indice += 1) {
+      const { producto, variantes } = productos[indice];
       const idProducto = await repositorioCrearProducto.crearProducto(idCliente, producto);
       
         for (const variante of variantes) {
