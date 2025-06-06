@@ -56,20 +56,20 @@ exports.crearEmpleado = async (req, res) => {
     return res.status(400).json({ mensaje: 'Cliente no seleccionado' });
   }
   if (
-    !nombreCompleto ||
-    !correoElectronico ||
-    !contrasenia ||
-    !numeroTelefono ||
-    !direccion ||
-    !fechaNacimiento ||
-    !genero ||
-    estatus === undefined ||
-    idRol === undefined ||
-    !numeroEmergencia ||
-    !areaTrabajo ||
-    !posicion ||
-    cantidadPuntos === undefined ||
-    !antiguedad
+    !nombreCompleto
+    || !correoElectronico
+    || !contrasenia
+    || !numeroTelefono
+    || !direccion
+    || !fechaNacimiento
+    || !genero
+    || estatus === undefined
+    || idRol === undefined
+    || !numeroEmergencia
+    || !areaTrabajo
+    || !posicion
+    || cantidadPuntos === undefined
+    || !antiguedad
   ) {
     return res.status(400).json({ mensaje: 'Faltan campos requeridos' });
   }
@@ -94,9 +94,9 @@ exports.crearEmpleado = async (req, res) => {
   const tieneCaracterEspecial = /[!@#$%^&*(),.?":{}|<>]/;
   const tieneMayuscula = /[A-Z]/;
   if (
-    contrasenia.length < 8 ||
-    !tieneCaracterEspecial.test(contrasenia) ||
-    !tieneMayuscula.test(contrasenia)
+    contrasenia.length < 8 
+    || !tieneCaracterEspecial.test(contrasenia) 
+    || !tieneMayuscula.test(contrasenia)
   ) {
     return res
       .status(400)

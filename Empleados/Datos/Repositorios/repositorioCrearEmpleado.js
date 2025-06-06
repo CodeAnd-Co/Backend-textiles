@@ -1,7 +1,6 @@
 const db = require('@altertex/util/bd/db');
 const ROL_PREDETERMINADO = 3; // ID del rol por defecto para empleados
-const correrQuery = require('@altertex/util/ser/correrQuery');
-const MENSAJES = require('@altertex/util/const/mensajesEmpleados');
+
 const CONSULTAS_EMPLEADOS = require('@altertex/util/const/consultasEmpleados');
 const CONSULTAS_IMPORTAR_EMPLEADOS = require('@altertex/util/const/consultasImportarEmpleados');
 
@@ -12,7 +11,7 @@ const CONSULTAS_IMPORTAR_EMPLEADOS = require('@altertex/util/const/consultasImpo
  *
  * @async
  * @function crearEmpleado
- * @param {Object} empleado - Objeto con los datos del nuevo empleado.
+ * @param {object} empleado - Objeto con los datos del nuevo empleado.
  * @param {string} empleado.nombreCompleto - Nombre completo del usuario.
  * @param {string} empleado.correoElectronico - Correo electrónico único del usuario.
  * @param {string} empleado.contrasena - Contraseña en texto plano (ya hasheada).
@@ -31,7 +30,7 @@ const CONSULTAS_IMPORTAR_EMPLEADOS = require('@altertex/util/const/consultasImpo
  * @throws {Error} Si el parámetro "empleado" no es un objeto válido o está vacío.
  * @throws {Error} Si ocurre cualquier fallo durante la inserción en la transacción.
  *
- * @returns {Promise<Object>} Resuelve con un objeto que contiene el ID del nuevo empleado y su usuario.
+ * @returns {Promise<object>} Resuelve con un objeto que contiene el ID del nuevo empleado y su usuario.
  */
 exports.crearEmpleado = async (empleado) => {
   if (!empleado || typeof empleado !== 'object') {
@@ -74,7 +73,7 @@ exports.crearEmpleado = async (empleado) => {
     const dia = hoy.getDate() - fechaNacimiento.getDate();
     let edadFinal = edad;
     if (mes < 0 || (mes === 0 && dia < 0)) {
-      edadFinal--;
+      edadFinal -= 1;
     }
     if (edadFinal < 18) {
       throw new Error('El empleado debe tener al menos 18 años.');

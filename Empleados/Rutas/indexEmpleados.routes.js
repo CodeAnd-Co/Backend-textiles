@@ -13,7 +13,6 @@ const rutasActualizarEmpleado = require('@altertex/emp/rutasInd/actualizarEmplea
 const rutasActualizarGrupo = require('@altertex/emp/rutasInd/actualizarGrupoEmpleados.routes');
 
 const RUTAS = require('@altertex/util/const/rutas');
-const rutas = require('@altertex/util/const/rutas');
 
 //RF22 - Consulta Lista de Grupo Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF22
 ruteador.use(RUTAS.EMPLEADOS.BASE, rutasConsultarListaGrupos);
