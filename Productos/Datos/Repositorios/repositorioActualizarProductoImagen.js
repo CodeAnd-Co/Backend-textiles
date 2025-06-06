@@ -15,7 +15,18 @@ const consultasImagenes = require('@altertex/util/const/consultasImagenes');
  * @returns {Promise<object|Array>} El resultado de la actualización de la imagen (incluyendo `affectedRows`) si es exitoso, o un arreglo vacío en caso de error.
  */
 
+/**
+ *
+ * @param idProducto
+ * @param idImagen
+ * @param urlImagenProducto
+ * @param nombreComun
+ */
 exports.actualizarProductoImagen = async (idProducto, idImagen, urlImagenProducto, nombreComun) => {
+  /**
+   * Parámetros para actualizar la imagen en la tabla de imágenes.
+   * @type {Array} Contiene la URL de la imagen, el nombre común, y el ID de la imagen.
+   */
   const parametrosImagen = [urlImagenProducto, nombreComun, idImagen];
   const conexion = await db.getConnection();
 

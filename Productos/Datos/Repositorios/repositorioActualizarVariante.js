@@ -29,6 +29,7 @@ exports.actualizarVariante = async (idProducto, variante) => {
     const idVariante = resultados.insertId;
     return idVariante;
   } catch (error) {
+    console.error('Error al actualizar la variante:', error);
     return [];
   } finally {
     if (conexion) conexion.release();

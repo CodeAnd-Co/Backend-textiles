@@ -36,6 +36,7 @@ exports.actualizarVarianteImagen = async (
     await conexion.commit();
     return resultadoImagen;
   } catch (error) {
+    console.error('Error al actualizar o asociar la imagen de la variante:', error);
     await conexion.rollback();
     return [];
   } finally {
