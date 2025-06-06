@@ -36,7 +36,7 @@ module.exports = (variante) => {
     && (typeof variante.descripcion !== 'string' || variante.descripcion.length > 1000)
   ) {
     return {
-      error: 'descripcion debe ser una cadena de texto o NULL y no exceder 1000 caracteres.',
+      error: 'descripcion debe ser una cadena de texto y no exceder 1000 caracteres.',
     };
   }
 
