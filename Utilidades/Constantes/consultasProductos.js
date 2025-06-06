@@ -22,8 +22,7 @@ module.exports = {
       VALUES (?, ?, ?, ?, ?, ?, ?);
   `,
 
-  ELIMINAR_PRODUCTOS:
-    'DELETE FROM producto WHERE idProducto IN (?)',
+  ELIMINAR_PRODUCTOS: 'DELETE FROM producto WHERE idProducto IN (?)',
 
   LEER_PRODUCTO: `
       SELECT JSON_OBJECT(
@@ -74,5 +73,45 @@ module.exports = {
                LEFT JOIN proveedor pr ON p.idProveedor = pr.idProveedor
       WHERE p.idProducto = ?
         AND p.idCliente = ?;
+  `,
+  OBTENER_DATOS_EXPORTACION: `
+    SELECT 
+        p.idProducto,
+        p.idProveedor,
+        p.nombreComun AS nombreProducto,
+        p.nombreComercial,
+        p.descripcion AS descripcionProducto,
+        p.tipoProducto,
+        p.marca,
+        p.modelo,
+        p.costo,
+        p.precioVenta,
+        p.precioCliente,
+        p.precioPuntos,
+        p.impuesto,
+        p.descuento,
+        p.estado,
+        p.envio,
+        GROUP_CONCAT(
+            CONCAT(
+                v.nombreVariante, '-',
+                v.descripcion, ',',
+                (SELECT GROUP_CONCAT(
+                    CONCAT(o.valorOpcion, ':', o.SKUcomercial, ':', o.SKUautomatico, ':', o.cantidad)
+                    SEPARATOR ', '
+                )
+                FROM opcion o 
+                WHERE o.idVariante = v.idVariante
+                )
+            )
+            SEPARATOR ' | '
+        ) AS variantes_opciones
+    FROM producto p
+    JOIN variante v ON v.idProducto = p.idProducto
+    WHERE p.idCliente = ? AND p.idProducto IN (__IDS__)
+    GROUP BY p.idProducto, p.idProveedor, p.nombreComun, p.nombreComercial, 
+            p.descripcion, p.tipoProducto, p.marca, p.modelo, p.costo, 
+            p.precioVenta, p.precioCliente, p.precioPuntos, p.impuesto, 
+            p.descuento, p.estado, p.envio;
   `,
 };

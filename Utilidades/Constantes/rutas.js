@@ -26,6 +26,7 @@ module.exports = {
     CREAR: '/crear',
     ELIMINAR_USUARIOS: '/eliminar-usuarios',
     LEER: '/leer',
+    ACTUALIZAR: '/actualizar',
   },
   EVENTOS: {
     BASE: '/eventos',
@@ -41,6 +42,7 @@ module.exports = {
     CREAR: '/crear',
     ELIMINAR_PRODUCTO: '/eliminar',
     LEER: '/leer-producto',
+    EXPORTAR_PRODUCTOS: '/exportar-productos',
   },
   PROVEEDORES: {
     BASE: '/proveedores',
