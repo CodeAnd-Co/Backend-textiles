@@ -39,7 +39,6 @@ const generarSKU = (nombreProducto, nombreVariante, valorOpcion) => {
     const codigoOpcion = obtenerCodigo(valorOpcion);
     return `${prefijo}-${codigoVariante}-${codigoOpcion}`;
   } catch {
-    console.error('Error generando SKU:', { nombreProducto, nombreVariante, valorOpcion });
     return 'SKU-ERROR';
   }
 };
