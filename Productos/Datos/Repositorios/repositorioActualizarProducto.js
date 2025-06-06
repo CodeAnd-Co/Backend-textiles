@@ -55,6 +55,7 @@ exports.actualizarProducto = async (clienteSeleccionado, producto) => {
     const idProducto = resultados.insertId;
     return idProducto;
   } catch (error) {
+    console.error('Error al actualizar el producto:', error);
     return [];
   } finally {
     if (conexion) conexion.release();
