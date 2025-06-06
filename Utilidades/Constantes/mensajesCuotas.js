@@ -58,4 +58,15 @@ module.exports = {
     codigo: 500,
     mensaje: 'Error interno al obtener el set de cuotas.',
   },
+
+  ACTUALIZACION_EXITOSA: {
+  codigo: 200,
+  mensaje: 'Set de cuotas actualizado correctamente.'
+  },
+  
+  ERROR_ACTUALIZACION: {
+    codigo: 500,
+    mensaje: 'No se pudo actualizar el set de cuotas.'
+  },
+
 };

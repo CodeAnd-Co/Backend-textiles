@@ -83,6 +83,7 @@ module.exports = {
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_SET_CUOTAS: '/eliminar-set-cuotas',
     LEER_SET_CUOTAS: '/leer-set-cuotas',
+    ACTUALIZAR_SET_CUOTAS: '/actualizar-set-cuotas',
   },
   ROLES: {
     BASE: '/roles',
