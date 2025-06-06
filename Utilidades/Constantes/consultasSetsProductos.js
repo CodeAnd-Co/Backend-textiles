@@ -47,7 +47,7 @@ module.exports = {
   CONSULTAR_NOMBRE_DUPLICADO: `
       SELECT idSetProducto
       FROM set_producto
-      WHERE idCliente = ?
+      WHERE idCliente = ? and idSetProducto!= ?
         AND (nombre = ?);
   `,
   CONSULTAR_PRODUCTOS_EXISTENTES: `

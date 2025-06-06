@@ -35,6 +35,7 @@ exports.actualizarSetProductos = async (idCliente, datos) => {
 
     const duplicados = await correrQuery(CONSULTAS.CONSULTAR_NOMBRE_DUPLICADO, [
           idCliente,
+          idSetProducto,
           nombre,
         ]);
     
