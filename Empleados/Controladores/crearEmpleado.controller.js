@@ -167,7 +167,6 @@ exports.crearEmpleado = async (req, res) => {
       datos: resultado,
     });
   } catch (error) {
-    console.error('Error al crear empleado:', error);
     return res.status(400).json({ mensaje: error.message });
   }
 };
