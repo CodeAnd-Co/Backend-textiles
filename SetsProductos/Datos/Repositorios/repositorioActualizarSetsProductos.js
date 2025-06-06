@@ -16,7 +16,7 @@ const CONSULTAS = require('@altertex/util/const/consultasSetsProductos');
  * @param {number[]} datos.productos - Lista de IDs de productos a asociar. Array vacío elimina todas las asociaciones.
  */
 exports.actualizarSetProductos = async (datos) => {
-  const { idSetProducto, idCliente, nombre, descripcion, activo, productos } = datos;
+  const { idSetProducto, nombre, descripcion, activo, productos } = datos;
 
   try {
     // 1. Actualizar info básica del set

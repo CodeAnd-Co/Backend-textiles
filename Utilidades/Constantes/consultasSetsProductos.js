@@ -5,7 +5,8 @@ module.exports = {
              sp.descripcion,
              sp.activo,
              GROUP_CONCAT(DISTINCT p.nombreComun SEPARATOR ', ') AS productos,
-             GROUP_CONCAT(DISTINCT ge.nombre SEPARATOR ', ')     AS grupos
+             GROUP_CONCAT(DISTINCT ge.nombre SEPARATOR ', ')     AS grupos,
+             GROUP_CONCAT(p.idProducto SEPARATOR ', ') AS idsProductos
       FROM set_producto sp
                LEFT JOIN producto_set_producto psp ON psp.idSetProducto = sp.idSetProducto
                LEFT JOIN producto p ON p.idProducto = psp.idProducto
@@ -50,7 +51,7 @@ module.exports = {
   `,
   ACTUALIZAR_SET_INFO: `
     UPDATE set_producto
-    SET nombre = ?, descripcion = ?, activo = ?
+    SET nombre = ?, activo = ?, descripcion = ? 
     WHERE idSetProducto = ?
   `,
 
