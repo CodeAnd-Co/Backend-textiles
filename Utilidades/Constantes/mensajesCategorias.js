@@ -32,7 +32,7 @@ module.exports = {
   },
   NOMBRE_CATEGORIA_INVALIDO: {
     codigo: 400,
-    mensaje: 'El nombre de la categoría proporcionado no es válido.',
+    mensaje: 'El nombre de la categoría es obligatorio.',
   },
   CATEGORIA_YA_EXISTE: {
     codigo: 400,
@@ -41,6 +41,10 @@ module.exports = {
   PARAMETROS_INVALIDOS: {
     codigo: 400,
     mensaje: 'Los parámetros proporcionados no son válidos.',
+  },
+    ERROR_OBTENER_CATEGORIAS: {
+    codigo: 400,
+    mensaje: 'Ocurrió un error al obtener la lista de categorías.',
   },
 
   // 401 - No autorizado
@@ -66,10 +70,6 @@ module.exports = {
     codigo: 400,
     mensaje: 'Ocurrió un error al intentar crear la categoría.',
   },
-  ERROR_OBTENER_CATEGORIAS: {
-    codigo: 400,
-    mensaje: 'Ocurrió un error al obtener la lista de categorías.',
-  },
   ERROR_OBTENER_CATEGORIA: {
     codigo: 400,
     mensaje: 'Ocurrió un error al obtener los datos de la categoría.',
@@ -82,4 +82,9 @@ module.exports = {
     codigo: 400,
     mensaje: 'El producto no existe en la base de datos',
   },
+  DESCRIPCION_INVALIDA: {
+    codigo: 400,
+    mensaje: 'La descripción proporcionada no es válida.',
+  },
+
 };

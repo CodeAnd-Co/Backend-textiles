@@ -24,6 +24,29 @@ module.exports = {
         numeroEmergencia = ?, areaTrabajo = ?, posicion = ?, 
         cantidadPuntos = ?, antiguedad = ? WHERE idEmpleado = ?;
     `,
+  OBTENER_DATOS_EXPORTACION: `
+    SELECT 
+      e.idEmpleado,
+      u.nombreCompleto,
+      u.correoElectronico,
+      u.numeroTelefono,
+      u.direccion,
+      u.fechaNacimiento,
+      u.genero,
+      CASE 
+        WHEN u.estatus = 1 THEN 'Activo'
+        WHEN u.estatus = 0 THEN 'Inactivo'
+        ELSE 'Desconocido'
+      END AS estatus,
+      e.numeroEmergencia,
+      e.areaTrabajo,
+      e.posicion,
+      e.cantidadPuntos,
+      e.antiguedad
+    FROM empleado e
+    JOIN usuario u ON e.idUsuario = u.idUsuario
+    WHERE e.idCliente = ? AND e.idEmpleado IN (__IDS__);
+  `,
   OBTENER_ULTIMO_ID_EMPLEADO: `
         SELECT idEmpleado FROM empleado ORDER BY idEmpleado DESC LIMIT 1;
     `,

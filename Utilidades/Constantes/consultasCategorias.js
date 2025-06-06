@@ -1,17 +1,16 @@
 module.exports = {
   OBTENER_CATEGORIAS_CON_PRODUCTOS: `
-      SELECT c.idCategoria,
-             c.nombreCategoria,
-             c.descripcion,
-             COUNT(p.idProducto) AS cantidadProductos,
-             p.idCliente
-      FROM categoria c
-               JOIN
-           categoria_producto cp ON c.idCategoria = cp.idCategoria
-               JOIN
-           producto p ON cp.idProducto = p.idProducto
-      WHERE p.idCliente = ?
-      GROUP BY c.idCategoria, c.nombreCategoria, c.descripcion, p.idCliente;
+  SELECT 
+      c.idCategoria,
+      c.nombreCategoria,
+      c.descripcion,
+      COUNT(p.idProducto) AS cantidadProductos
+  FROM 
+      categoria c
+      LEFT JOIN categoria_producto cp ON c.idCategoria = cp.idCategoria
+      LEFT JOIN producto p ON cp.idProducto = p.idProducto AND p.idCliente = ?
+  GROUP BY 
+      c.idCategoria, c.nombreCategoria, c.descripcion;
   `,
 
   CREAR_CATEGORIAS: `
@@ -46,5 +45,33 @@ module.exports = {
       SELECT idProducto
       FROM producto
       WHERE idProducto IN (?);
+  `,
+
+  LEER_DETALLE_CATEGORIA: `
+    SELECT 
+      c.idCategoria,
+      c.nombreCategoria,
+      c.descripcion,
+      p.idProducto,
+      p.nombreComun
+    FROM categoria c
+    LEFT JOIN categoria_producto cp ON c.idCategoria = cp.idCategoria
+    LEFT JOIN producto p ON cp.idProducto = p.idProducto
+    WHERE c.idCategoria = ?;
+  `,
+
+  ACTUALIZAR_CATEGORIA: `
+    UPDATE categoria
+    SET nombreCategoria = ?, descripcion = ?
+    WHERE idCategoria = ?;
+  `,
+
+  ELIMINAR_PRODUCTOS_CATEGORIA: `
+    DELETE FROM categoria_producto WHERE idCategoria = ?;
+  `,
+
+  ASIGNAR_PRODUCTOS_A_CATEGORIA: `
+    INSERT INTO categoria_producto (idCategoria, idProducto)
+    VALUES ?;
   `,
 };
