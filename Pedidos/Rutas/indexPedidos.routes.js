@@ -9,5 +9,4 @@ ruteador.use(RUTAS.PEDIDOS.BASE, rutasObtenerPedidos);
 ruteador.use(RUTAS.PEDIDOS.BASE, rutasEliminarPedido);
 ruteador.use(RUTAS.PEDIDOS.BASE, rutasActualizarPedidos);
 
-
 module.exports = ruteador;
