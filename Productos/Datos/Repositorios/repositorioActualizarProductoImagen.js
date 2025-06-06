@@ -8,19 +8,12 @@ const consultasImagenes = require('@altertex/util/const/consultasImagenes');
  * Esta función realiza dos operaciones en una transacción:
  * - Actualiza la imagen en la tabla de imágenes.
  * - Actualiza la relación entre la imagen y el producto correspondiente.
+ *
  * @param {number} idProducto - ID del producto al que se asociará la imagen.
  * @param {number} idImagen - ID de la imagen que se actualizará.
  * @param {string} urlImagenProducto - Nueva URL o ruta de la imagen del producto almacenada.
  * @param {string} nombreComun - Nuevo nombre común o descriptivo asociado al producto.
  * @returns {Promise<object|Array>} El resultado de la actualización de la imagen (incluyendo `affectedRows`) si es exitoso, o un arreglo vacío en caso de error.
- */
-
-/**
- *
- * @param idProducto
- * @param idImagen
- * @param urlImagenProducto
- * @param nombreComun
  */
 exports.actualizarProductoImagen = async (idProducto, idImagen, urlImagenProducto, nombreComun) => {
   /**
