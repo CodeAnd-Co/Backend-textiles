@@ -13,7 +13,6 @@ exports.actualizarSetCuotas = async (req, res) => {
     return res.status(200).json({ mensaje: 'Set de cuotas actualizado correctamente' });
 
   } catch (error) {
-    console.error('[ERROR] actualizarSetCuotas:', error);
     return res.status(500).json({ mensaje: error.message });
   }
 };
