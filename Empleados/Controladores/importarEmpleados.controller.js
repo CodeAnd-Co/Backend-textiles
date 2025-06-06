@@ -74,32 +74,30 @@ exports.importarEmpleados = async (req, res) => {
       continue;
     }
 
-    if (nombreCompleto.length > 75) {
-      errores.push({ fila, error: 'El nombre es demasiado largo' });
-      continue;
-    } if (!nombreCompleto){
+    if (!nombreCompleto){
       errores.push({ fila, error: 'El nombre es requerido' });
       continue;
-    }
-    if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(nombreCompleto)) {
+    } if (nombreCompleto.length > 75) {
+      errores.push({ fila, error: 'El nombre es demasiado largo' });
+      continue;
+    } if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(nombreCompleto)) {
       errores.push({ fila, error: 'El nombre solo puede contener letras y espacios' });
       continue;
     }
 
-    if (correoElectronico.length > 75) {
-      errores.push({ fila, error: 'El correo es demasiado largo' });
-      continue;
-    } if (!correoElectronico) {
+    if (!correoElectronico) {
       errores.push({ fila, error: 'El correo es requerido' });
+      continue;
+    } if (correoElectronico && correoElectronico.length > 75) {
+      errores.push({ fila, error: 'El correo es demasiado largo' });
       continue;
     }
 
-    if (contrasena.length > 75) {
-      errores.push({ fila, error: 'La contraseña es demasiado larga' });
-      continue;
-    }
     if (!contrasena) {
       errores.push({ fila, error: 'La contraseña es requerida' });
+      continue;
+    } if (contrasena.length > 75) {
+      errores.push({ fila, error: 'La contraseña es demasiado larga' });
       continue;
     }
 
@@ -122,21 +120,25 @@ exports.importarEmpleados = async (req, res) => {
       errores.push({ fila, error: 'La posición es demasiado larga' });
       continue;
     }
+
     if(datos.areaTrabajo.length > 75) {
       errores.push({ fila, error: 'El área de trabajo es demasiado larga' });
       continue;
     }
+
     if (datos.genero.length > 20) {
       errores.push({ fila, error: 'El género es demasiado largo' });
       continue;
     }
+
     if (isNaN(datos.numeroEmergencia)) {
       errores.push({ fila, error: 'El número de emergencia no es valido' });
       continue;
     }
+
     if (
     !/^\d+$/.test(String(datos.cantidadPuntos)) 
-    ||Number(datos.cantidadPuntos) < 0) {
+    || Number(datos.cantidadPuntos) < 0) {
       errores.push({ fila, error: 'Los puntos deben ser un número entero mayor o igual a 0' });
       continue;
     }
