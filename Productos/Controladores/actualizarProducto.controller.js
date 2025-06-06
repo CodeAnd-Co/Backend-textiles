@@ -20,162 +20,118 @@ exports.actualizarProducto = [
   ]),
 
   async (req, res) => {
+    console.log('Iniciando actualización de producto...');
     const idCliente = parseInt(req.user.clienteSeleccionado);
-    const producto = JSON.parse(req.body.producto);
-    const variantes = JSON.parse(req.body.variantes);
-    const mapaImagenes = JSON.parse(req.body.mapaImagenes);
-    const imagenProducto = req.files.imagenProducto ? req.files.imagenProducto[0] : null;
-    const imagenesVariante = req.files.imagenesVariante || [];
+    const idProducto = parseInt(req.body.idProducto);
+
+    // Validar idCliente e idProducto
+    if (isNaN(idCliente)) {
+      console.error('El idCliente es inválido:', req.user.clienteSeleccionado);
+      return res.status(400).json({ mensaje: 'El idCliente es inválido.' });
+    }
+    if (isNaN(idProducto)) {
+      console.error('El idProducto es inválido:', req.body.idProducto);
+      return res.status(400).json({ mensaje: 'El idProducto es inválido.' });
+    }
+
+    console.log('idCliente:', idCliente);
+    console.log('idProducto:', idProducto);
+
+    const producto = req.body.producto || null;
+    const variantes = req.body.variantes || [];
+    const mapaImagenes = req.body.mapaImagenes || [];
+    const imagenProducto = req.files && req.files.imagenProducto ? req.files.imagenProducto[0] : null;
+    const imagenesVariante = req.files && req.files.imagenesVariante ? req.files.imagenesVariante : [];
     let conexion = null;
 
-    // prettier-ignore
-    if (
-      !idCliente
-      || !mapaImagenes
-      || !producto
-      || !Array.isArray(variantes)
-      || variantes.length === 0
-      || !imagenProducto
-      || !imagenesVariante
-    ) {
-      return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
-        mensaje: MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.mensaje,
-      });
-    }
-
-    const errorProducto = validarProducto(producto);
-    if (errorProducto) {
-      return res.status(MENSAJES_PRODUCTOS.ERROR_PARAMETROS_ACTUALIZACION.codigo).json({
-        mensaje: MENSAJES_PRODUCTOS.ERROR_PARAMETROS_ACTUALIZACION.mensaje,
-      });
-    }
-
-    if (imagenesVariante.length !== mapaImagenes.length) {
-      return res.status(MENSAJES_PRODUCTOS.LIMITE_OFFSET_INVALIDOS.codigo).json({
-        mensaje: MENSAJES_PRODUCTOS.LIMITE_OFFSET_INVALIDOS.mensaje,
-      });
-    }
-
     try {
+      console.log('Obteniendo conexión a la base de datos...');
       conexion = await db.getConnection();
       await conexion.beginTransaction();
+      console.log('Conexión establecida y transacción iniciada.');
 
-      const idProducto = await repositorioActualizarProducto.actualizarProducto(
-        idCliente,
-        producto
+      // Obtener los valores actuales del producto
+      console.log('Obteniendo valores actuales del producto...');
+      const [productoActual] = await conexion.query(
+        `SELECT * FROM producto WHERE idProducto = ? AND idCliente = ?`,
+        [idProducto, idCliente]
       );
-      if (!idProducto) {
-        throw new Error(MENSAJES_PRODUCTOS.PRODUCTO_NO_ENCONTRADO_ACTUALIZACION.mensaje);
+      if (productoActual.length === 0) {
+        throw new Error('El producto no existe o no pertenece al cliente.');
       }
+      const valoresActualesProducto = productoActual[0];
+      console.log('Valores actuales del producto:', valoresActualesProducto);
 
-      const varianteIdMap = {};
-      const variantesPromises = variantes.map(async (variante) => {
-        const errorVariante = validarVariante({
-          nombreVariante: variante.nombreVariante,
-          descripcion: variante.descripcion,
-        });
-        if (errorVariante) {
-          throw new Error(MENSAJES_PRODUCTOS.ERROR_PARAMETROS_ACTUALIZACION.mensaje);
-        }
+      // Combinar los valores actuales con los nuevos datos enviados
+      const datosProducto = {
+        idProveedor: producto?.idProveedor || valoresActualesProducto.idProveedor,
+        nombreComun: producto?.nombreComun || valoresActualesProducto.nombreComun,
+        nombreComercial: producto?.nombreComercial || valoresActualesProducto.nombreComercial,
+        descripcion: producto?.descripcion || valoresActualesProducto.descripcion,
+        marca: producto?.marca || valoresActualesProducto.marca,
+        modelo: producto?.modelo || valoresActualesProducto.modelo,
+        tipoProducto: producto?.tipoProducto || valoresActualesProducto.tipoProducto,
+        precioPuntos: producto?.precioPuntos || valoresActualesProducto.precioPuntos,
+        precioCliente: producto?.precioCliente || valoresActualesProducto.precioCliente,
+        precioVenta: producto?.precioVenta || valoresActualesProducto.precioVenta,
+        costo: producto?.costo || valoresActualesProducto.costo,
+        impuesto: producto?.impuesto || valoresActualesProducto.impuesto,
+        descuento: producto?.descuento || valoresActualesProducto.descuento,
+        estado: producto?.estado || valoresActualesProducto.estado,
+        envio: producto?.envio || valoresActualesProducto.envio,
+      };
 
-        const idVariante = await repositorioActualizarVariante.actualizarVariante(
+      console.log('Datos combinados del producto para actualizar:', datosProducto);
+
+      // Actualizar producto
+      console.log('Actualizando producto...');
+      await conexion.query(
+        `UPDATE producto
+         SET 
+            idProveedor = ?, nombreComun = ?, nombreComercial = ?, descripcion = ?, 
+            marca = ?, modelo = ?, tipoProducto = ?, precioPuntos = ?, precioCliente = ?, 
+            precioVenta = ?, costo = ?, impuesto = ?, descuento = ?, estado = ?, envio = ?
+         WHERE idProducto = ? AND idCliente = ?`,
+        [
+          datosProducto.idProveedor,
+          datosProducto.nombreComun,
+          datosProducto.nombreComercial,
+          datosProducto.descripcion,
+          datosProducto.marca,
+          datosProducto.modelo,
+          datosProducto.tipoProducto,
+          datosProducto.precioPuntos,
+          datosProducto.precioCliente,
+          datosProducto.precioVenta,
+          datosProducto.costo,
+          datosProducto.impuesto,
+          datosProducto.descuento,
+          datosProducto.estado,
+          datosProducto.envio,
           idProducto,
-          variante
-        );
-        if (!idVariante) {
-          throw new Error(MENSAJES_PRODUCTOS.ERROR_ACTUALIZAR_PRODUCTO.mensaje);
-        }
-
-        varianteIdMap[variante.identificador] = {
-          id: idVariante,
-          nombre: variante.nombreVariante,
-        };
-
-        const errorOpciones = validarOpciones(variante.opciones);
-        if (errorOpciones) {
-          throw new Error(MENSAJES_PRODUCTOS.ERROR_PARAMETROS_ACTUALIZACION.mensaje);
-        }
-
-        await repositorioActualizarOpcion.actualizarOpcion(idVariante, variante.opciones);
-      });
-
-      await Promise.all(variantesPromises);
-
-      const urlImagenProductoPromise = imagenProducto
-        ? enviarS3({
-            Bucket: process.env.AWS_BUCKET_NAME,
-            Key: `productos/${imagenProducto.originalname}`,
-            Body: imagenProducto.buffer,
-            ContentType: imagenProducto.mimetype,
-          })
-        : Promise.resolve(null);
-
-      // prettier-ignore
-      const urlImagenVariantePromises = imagenesVariante.map((imagenVariante) =>
-        enviarS3({
-          Bucket: process.env.AWS_BUCKET_NAME,
-          Key: `productos/${imagenVariante.originalname}`,
-          Body: imagenVariante.buffer,
-          ContentType: imagenVariante.mimetype,
-        }));
-
-      const [urlImagenProducto, ...urlImagenVariantes] = await Promise.all([
-        urlImagenProductoPromise,
-        ...urlImagenVariantePromises,
-      ]);
-
-      if ((imagenProducto && !urlImagenProducto) || urlImagenVariantes.includes(null)) {
-        throw new Error(MENSAJES_PRODUCTOS.ERROR_ENVIAR_IMAGENES_S3.mensaje);
-      }
-
-      if (imagenProducto) {
-        await repositorioProductoImagen.actualizarImagen(
-          idProducto,
-          imagenProducto.originalname,
-          producto.nombreComun
-        );
-      }
-
-      const imagenesVariantePromises = imagenesVariante.map(async (imagen, index) => {
-        const { idVariante: tempIdVariante } = mapaImagenes[index];
-        const varianteInfo = varianteIdMap[tempIdVariante];
-
-        if (!varianteInfo) {
-          throw new Error(MENSAJES_PRODUCTOS.PRODUCTO_NO_ENCONTRADO.mensaje);
-        }
-
-        await repositorioVarianteImagen.actualizarImagen(
-          varianteInfo.id,
-          imagen.originalname,
-          varianteInfo.nombre
-        );
-      });
-
-      await Promise.all(imagenesVariantePromises);
+          idCliente,
+        ]
+      );
+      console.log('Producto actualizado.');
 
       await conexion.commit();
-      return res.status(MENSAJES_PRODUCTOS.ACTUALIZACION_EXITOSA.codigo).json({
-        mensaje: MENSAJES_PRODUCTOS.ACTUALIZACION_EXITOSA.mensaje,
+      console.log('Transacción confirmada.');
+      return res.status(200).json({
+        mensaje: 'Producto actualizado correctamente.',
       });
     } catch (error) {
+      console.error('Error durante la actualización:', error.message);
       if (conexion) await conexion.rollback();
-
-      let errorMensaje = MENSAJES_PRODUCTOS.ERROR_ACTUALIZAR_PRODUCTO;
-
-      if (error.message.includes(MENSAJES_PRODUCTOS.ERROR_ENVIAR_IMAGENES_S3.mensaje)) {
-        errorMensaje = MENSAJES_PRODUCTOS.ERROR_ENVIAR_IMAGENES_S3;
-      } else if (error.message.includes(MENSAJES_PRODUCTOS.ERROR_ACTUALIZAR_VARIANTE.mensaje)) {
-        errorMensaje = MENSAJES_PRODUCTOS.ERROR_ACTUALIZAR_VARIANTE;
-      } else if (error.message.includes(MENSAJES_PRODUCTOS.ERROR_CREAR_IMAGEN_VARIANTE.mensaje)) {
-        errorMensaje = MENSAJES_PRODUCTOS.ERROR_CREAR_IMAGEN_VARIANTE;
-      }
-
-      return res.status(errorMensaje.codigo).json({
-        mensaje: errorMensaje.mensaje,
+      console.log('Transacción revertida.');
+      return res.status(500).json({
+        mensaje: 'Error al actualizar el producto.',
         error: error.message,
       });
     } finally {
-      if (conexion) conexion.release();
+      if (conexion) {
+        conexion.release();
+        console.log('Conexión liberada.');
+      }
     }
   },
 ];
