@@ -82,4 +82,10 @@ module.exports = {
       WHERE r.idRol = ?;
   `,
 
+  VERIFICAR_NOMBRE_DUPLICADO_ROL: `
+      select *
+      from rol
+      where nombre = ?;
+  `,
+
 };

@@ -93,6 +93,7 @@ module.exports = {
     CONFIRMAR_CREACION: '/confirmar-creacion',
     ELIMINAR_ROL: '/eliminar',
     LEER_ROL: '/leer',
+    ACTUALIZAR: '/actualizar-rol',
   },
   PEDIDOS: {
     BASE: '/pedidos',
