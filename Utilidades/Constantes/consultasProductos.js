@@ -1,3 +1,5 @@
+const { OBTENER_DATOS_EXPORTACION } = require('./consultasEmpleados');
+
 module.exports = {
   OBTENER_LISTA: `
       SELECT p.idProducto, p.nombreComun, p.precioVenta, p.estado, i.urlImagen
@@ -22,8 +24,7 @@ module.exports = {
       VALUES (?, ?, ?, ?, ?, ?, ?);
   `,
 
-  ELIMINAR_PRODUCTOS:
-    'DELETE FROM producto WHERE idProducto IN (?)',
+  ELIMINAR_PRODUCTOS: 'DELETE FROM producto WHERE idProducto IN (?)',
 
   LEER_PRODUCTO: `
       SELECT JSON_OBJECT(
@@ -74,5 +75,24 @@ module.exports = {
                LEFT JOIN proveedor pr ON p.idProveedor = pr.idProveedor
       WHERE p.idProducto = ?
         AND p.idCliente = ?;
+  `,
+  OBTENER_DATOS_EXPORTACION: `
+      SELECT
+        p.idProducto,
+        p.nombreComun,
+        p.nombreComercial,
+        p.descripcion,
+        p.precioVenta,
+        p.costo,
+        p.impuesto,
+        p.descuento,
+        p.estado,
+        pr.nombreCompania AS proveedor,
+        i.urlImagen AS imagen
+      FROM producto p
+               JOIN proveedor pr ON p.idProveedor = pr.idProveedor
+               JOIN imagen_producto ip ON p.idProducto = ip.idProducto
+               JOIN imagen i ON ip.idImagen = i.idImagen
+      WHERE p.idCliente = ? AND p.idProducto IN (__IDS__);
   `,
 };

@@ -40,7 +40,8 @@ module.exports = {
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
     ELIMINAR_PRODUCTO: '/eliminar',
-    LEER: '/leer-producto'
+    LEER: '/leer-producto',
+    EXPORTAR_PRODUCTOS: '/exportar-productos',
   },
   PROVEEDORES: {
     BASE: '/proveedores',
