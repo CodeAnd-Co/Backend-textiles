@@ -1,4 +1,16 @@
 module.exports = {
+  ACTUALIZAR: `
+        UPDATE producto
+        SET idProveedor = ?, nombreComun = ?, nombreComercial = ?, descripcion = ?,
+            marca = ?, modelo = ?, tipoProducto = ?, precioPuntos = ?, precioCliente = ?,
+            precioVenta = ?, costo = ?, impuesto = ?, descuento = ?, estado = ?, envio = ?
+        WHERE idProducto = ?;
+    `,
+  ACTUALIZAR_IMAGEN_PRODUCTO: `
+        UPDATE imagen_producto
+        SET idImagen = ?
+        WHERE idProducto = ?;
+  `,
   OBTENER_LISTA: `
       SELECT p.idProducto, p.nombreComun, p.precioVenta, p.estado, i.urlImagen
       FROM producto p
