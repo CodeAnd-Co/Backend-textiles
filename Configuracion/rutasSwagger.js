@@ -49,6 +49,7 @@ module.exports = [
 
   './SetsProductos/Rutas/RutasIndividuales/consultarSetsProductos.routes.js',
   './SetsProductos/Rutas/RutasIndividuales/eliminarSetsProductos.routes.js',
+  './SetsProductos/Rutas/RutasIndividuales/crearSetsProductos.routes.js',
 
   './Usuarios/Rutas/RutasIndividuales/consultarListaUsuarios.routes.js',
   './Usuarios/Rutas/RutasIndividuales/crearUsuario.routes.js',

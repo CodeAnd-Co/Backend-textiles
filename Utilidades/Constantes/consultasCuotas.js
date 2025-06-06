@@ -40,6 +40,27 @@ module.exports = {
   ELIMINAR_CUOTA_SET: `
   DELETE FROM cuota_set WHERE idCuotaSet = ?;
   `,
+  LEER_CUOTA_SET: `
+  SELECT 
+  cs.idCuotaSet,
+  cs.nombre,
+  cs.descripcion,
+  cs.periodoRenovacion,
+  cs.renovacionHabilitada,
+  cs.ultimaActualizacion
+  FROM cuota_set cs
+  WHERE cs.idCuotaSet = ?;
+  `,
 
-  
+  LEER_CUOTA_SET_PRODUCTOS: `
+  SELECT 
+  p.nombreComun,
+  csp.limite AS cuota_valor 
+  FROM cuota_set cs
+  JOIN cuota_set_producto csp
+      ON cs.idCuotaSet = csp.idCuotaSet
+  JOIN producto p
+      ON p.idProducto = csp.idProducto
+  WHERE cs.idCuotaSet = ?;
+    `,
 };

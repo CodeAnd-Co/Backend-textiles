@@ -26,7 +26,8 @@ module.exports = {
     CONSULTAR_LISTA_USUARIOS: '/consultar-lista-usuarios',
     CREAR: '/crear',
     ELIMINAR_USUARIOS: '/eliminar-usuarios',
-    LEER: '/consultar-usuario',
+    LEER: '/leer',
+    ACTUALIZAR: '/actualizar',
   },
   EVENTOS: {
     BASE: '/eventos',
@@ -41,6 +42,8 @@ module.exports = {
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
     ELIMINAR_PRODUCTO: '/eliminar',
+    LEER: '/leer-producto',
+    EXPORTAR_PRODUCTOS: '/exportar-productos',
   },
   PROVEEDORES: {
     BASE: '/proveedores',
@@ -70,9 +73,11 @@ module.exports = {
     ELIMINAR_GRUPO: '/eliminar-grupo',
     ELIMINAR_EMPLEADO: '/eliminar',
     IMPORTAR_EMPLEADOS: '/importar-empleados',
+    EXPORTAR_EMPLEADOS: '/exportar-empleados',
     LEER_GRUPO: '/leer-grupo',
     CREAR_GRUPO: '/crear-grupo',
     ACTUALIZAR: '/actualizar',
+    ACTUALIZAR_GRUPO_EMPLEADO: '/actualizar-grupo',
   },
   CUOTAS: {
     BASE: '/cuotas',
@@ -80,6 +85,7 @@ module.exports = {
     OPCIONES: '/obtener-opciones',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_SET_CUOTAS: '/eliminar-set-cuotas',
+    LEER_SET_CUOTAS: '/leer-set-cuotas',
   },
   ROLES: {
     BASE: '/roles',
@@ -88,6 +94,8 @@ module.exports = {
     OBTENER_OPCIONES: '/obtener-opciones',
     CONFIRMAR_CREACION: '/confirmar-creacion',
     ELIMINAR_ROL: '/eliminar',
+    LEER_ROL: '/leer',
+    ACTUALIZAR: '/actualizar-rol',
   },
   PEDIDOS: {
     BASE: '/pedidos',
