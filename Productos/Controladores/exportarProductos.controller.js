@@ -35,32 +35,98 @@ exports.exportarProductos = async (req, res) => {
       });
     }
 
-    productos.forEach((prod) => {
-      prod.fechaCreacion = format(new Date(prod.fechaCreacion), 'dd/MM/yyyy');
-      prod.precio = parseFloat(prod.precio).toFixed(2);
-    });
+    const workbook = new ExcelJS.Workbook();
 
-    /**    const campos = [
-      { label: 'ID', value: 'idProducto' },
-      { label: 'Nombre', value: 'nombre' },
-      { label: 'Descripción', value: 'descripcion' },
-      { label: 'Precio', value: 'precio' },
-      { label: 'Categoría', value: 'categoria' },
-      { label: 'Fecha de creación', value: 'fechaCreacion' },
-      { label: 'Estatus', value: 'estatus' }
+    // Primera hoja - Información básica del producto
+    const hoja1 = workbook.addWorksheet('Información Producto');
+    hoja1.columns = [
+      { header: 'ID Producto', key: 'idProducto' },
+      { header: 'ID Proveedor', key: 'idProveedor' },
+      { header: 'Nombre Producto', key: 'nombreProducto' },
+      { header: 'Nombre Comercial', key: 'nombreComercial' },
+      { header: 'Descripción', key: 'descripcionProducto' },
+      { header: 'Tipo Producto', key: 'tipoProducto' },
+      { header: 'Marca', key: 'marca' },
+      { header: 'Modelo', key: 'modelo' },
+      { header: 'Costo', key: 'costo' },
+      { header: 'Precio Venta', key: 'precioVenta' },
+      { header: 'Precio Cliente', key: 'precioCliente' },
+      { header: 'Precio Puntos', key: 'precioPuntos' },
+      { header: 'Impuesto', key: 'impuesto' },
+      { header: 'Descuento', key: 'descuento' },
+      { header: 'Estado', key: 'estado' },
+      { header: 'Envío', key: 'envio' },
     ];
-*/
-    const parser = new Parser({ fields: campos });
-    const csv = parser.parse(productos);
-    const csvConBOM = `\uFEFF${csv}`;
+    hoja1.addRows(productos);
 
-    res.setHeader('Content-Type', 'text/csv');
+    // Segunda hoja - Información desglosada de variantes
+    const hoja2 = workbook.addWorksheet('Variantes');
+    hoja2.columns = [
+      { header: 'ID Producto', key: 'idProducto' },
+      { header: 'Nombre Producto', key: 'nombreProducto' },
+      { header: 'Nombre Variante', key: 'nombreVariante' },
+      { header: 'Descripción Variante', key: 'descripcionVariante' },
+    ];
+
+    // Procesar las variantes para la segunda hoja
+    const variantesDesglosadas = productos.flatMap((producto) => {
+      const variantes = producto.variantes_opciones.split(' | ').map((variante) => {
+        const [datosVariante] = variante.split(',');
+        const [nombreVariante, descripcionVariante] = datosVariante.split('-');
+        return {
+          idProducto: producto.idProducto,
+          nombreProducto: producto.nombreProducto,
+          nombreVariante,
+          descripcionVariante,
+        };
+      });
+      return variantes;
+    });
+    hoja2.addRows(variantesDesglosadas);
+
+    // Tercera hoja - Información desglosada de opciones
+    const hoja3 = workbook.addWorksheet('Opciones');
+    hoja3.columns = [
+      { header: 'ID Producto', key: 'idProducto' },
+      { header: 'Nombre Producto', key: 'nombreProducto' },
+      { header: 'Nombre Variante', key: 'nombreVariante' },
+      { header: 'Valor Opción', key: 'valorOpcion' },
+      { header: 'SKU Comercial', key: 'skuComercial' },
+      { header: 'Cantidad', key: 'cantidad' },
+    ];
+
+    // Procesar las opciones para la tercera hoja
+    const opcionesDesglosadas = productos.flatMap((producto) => {
+      return producto.variantes_opciones.split(' | ').flatMap((variante) => {
+        const [datosVariante, opcionesStr] = variante.split(',');
+        const [nombreVariante] = datosVariante.split('-');
+
+        if (!opcionesStr) return [];
+
+        return opcionesStr.split(', ').map((opcion) => {
+          const [valorOpcion, skuComercial, cantidad] = opcion.split('-');
+          return {
+            idProducto: producto.idProducto,
+            nombreProducto: producto.nombreProducto,
+            nombreVariante,
+            valorOpcion,
+            skuComercial,
+            cantidad,
+          };
+        });
+      });
+    });
+    hoja3.addRows(opcionesDesglosadas);
+
+    const buffer = await workbook.xlsx.writeBuffer();
+
+    res.setHeader('Content-Disposition', 'attachment; filename=productos.xlsx');
     res.setHeader(
-      'Content-Disposition',
-      `attachment; filename=productos_${idCliente}_${Date.now()}.csv`
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     );
 
-    return res.status(200).send(csvConBOM);
+    return res.send(buffer);
   } catch (error) {
     console.error('Error al exportar productos:', error);
     return res.status(MENSAJES_PRODUCTOS.ERROR_EXPORTACION.codigo).json({
