@@ -7,7 +7,7 @@ const repositorio = require('@altertex/pedidos/repos/repositorioActualizarPedido
  */
 exports.actualizarPedido = async (req, res) => {
   let datos;
-
+  console.log('body', req.body);
   if (req.body.idPedido) {
     datos = [req.body];
   } else if (req.body.cambios) {

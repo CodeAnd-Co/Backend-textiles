@@ -8,6 +8,7 @@ const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const limitePeticiones = require('@altertex/util/inter/limitePeticiones');
 const RUTAS = require('@altertex/util/const/rutas');
 const PERMISOS = require('@altertex/util/const/permisos');
+const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 
 // RF[62] - Actualizar Pedido
 ruteador.put(
@@ -16,6 +17,7 @@ ruteador.put(
   autorizarToken,
   limitePeticiones,
   verificarPermisos(PERMISOS.ACTUALIZAR_PEDIDO),
+  validarYSanitizar,
   controlador.actualizarPedido
 );
 

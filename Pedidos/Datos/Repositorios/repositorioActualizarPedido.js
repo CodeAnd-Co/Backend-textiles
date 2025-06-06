@@ -17,8 +17,8 @@ exports.actualizarPedido = async (datos) => {
         return correrQuery(CONSULTAS.ACTUALIZAR_PEDIDO, [
           estado,
           precioTotal,
-          idEnvio,
           idPago,
+          idEnvio,
           idPedido,
         ]);
       })

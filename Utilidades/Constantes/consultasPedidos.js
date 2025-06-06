@@ -36,12 +36,14 @@ module.exports = {
     WHERE idPedido = ?;`,
 
   ACTUALIZAR_PEDIDO: `
-  UPDATE pedido SET 
-    estado = ?, 
-    precioTotal = ?, 
-    idEnvio = ?, 
-    idPago = ?
-  WHERE idPedido = ?;
+    UPDATE pedido
+    JOIN pago ON pedido.idPago = pago.idPago
+    JOIN envio ON pedido.idEnvio = envio.idEnvio
+    SET 
+      pedido.estado = ?, 
+      pedido.precioTotal = ?, 
+      pago.estatus = ?, 
+      envio.estado = ?
+    WHERE pedido.idPedido = ?;
   `,
-
 };
