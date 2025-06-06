@@ -1,5 +1,3 @@
-const { ACTUALIZAR } = require('./consultasProductos');
-
 module.exports = {
   CREAR: `
       INSERT INTO variante (idProducto, nombreVariante, descripcion)
