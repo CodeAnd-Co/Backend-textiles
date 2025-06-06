@@ -41,6 +41,7 @@ module.exports = {
     CREAR: '/crear',
     ELIMINAR_PRODUCTO: '/eliminar',
     LEER: '/leer-producto',
+    EXPORTAR_PRODUCTOS: '/exportar-productos',
   },
   PROVEEDORES: {
     BASE: '/proveedores',

@@ -4,6 +4,7 @@ const rutaConsultarLista = require('@altertex/pro/rutasInd/consultarProductos.ro
 const rutaEliminar = require('@altertex/pro/rutasInd/eliminarProducto.routes');
 const rutaCrearProducto = require('@altertex/pro/rutasInd/crearProducto.routes');
 const rutasLeerProducto = require('@altertex/pro/rutasInd/leerProductos.routes');
+const rutasExportarProductos = require('@altertex/pro/rutasInd/exportarProductos.routes');
 
 const RUTAS = require('@altertex/util/const/rutas');
 
@@ -15,5 +16,7 @@ ruteador.use(RUTAS.PRODUCTOS.BASE, rutaCrearProducto);
 ruteador.use(RUTAS.PRODUCTOS.BASE, rutaEliminar);
 // RF[28] Leer producto - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF28]
 ruteador.use(RUTAS.PRODUCTOS.BASE, rutasLeerProducto);
+// RF[58] Exportar Productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF58]
+ruteador.use(RUTAS.PRODUCTOS.BASE, rutasExportarProductos);
 
 module.exports = ruteador;
