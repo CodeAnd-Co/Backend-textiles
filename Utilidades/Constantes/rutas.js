@@ -26,6 +26,7 @@ module.exports = {
     CREAR: '/crear',
     ELIMINAR_USUARIOS: '/eliminar-usuarios',
     LEER: '/leer',
+    ACTUALIZAR: '/actualizar',
   },
   EVENTOS: {
     BASE: '/eventos',
