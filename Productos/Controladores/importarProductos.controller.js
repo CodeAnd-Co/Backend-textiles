@@ -1,4 +1,4 @@
-const validarVariante = require('@altertex/util/vali/validarVariante');
+const validarVariante = require('@altertex/util/vali/validarVarianteImportar');
 const validarOpcionesImportar = require('@altertex/util/vali/validarOpcionesImportar');
 const repositorioCrearProducto = require('@altertex/pro/repos/repositorioCrearProducto');
 const repositorioCrearVariante = require('@altertex/pro/repos/repositorioCrearVariante');
