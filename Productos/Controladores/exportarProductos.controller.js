@@ -34,7 +34,6 @@ exports.exportarProductos = async (req, res) => {
         mensaje: MENSAJES_PRODUCTOS.PRODUCTOS_NO_ENCONTRADOS.mensaje,
       });
     }
-
     const workbook = new ExcelJS.Workbook();
 
     // Primera hoja - Información básica del producto
@@ -92,30 +91,44 @@ exports.exportarProductos = async (req, res) => {
       { header: 'Nombre Variante', key: 'nombreVariante' },
       { header: 'Valor Opción', key: 'valorOpcion' },
       { header: 'SKU Comercial', key: 'skuComercial' },
+      { header: 'SKU Automático', key: 'skuAutomatico' },
       { header: 'Cantidad', key: 'cantidad' },
     ];
-
     // Procesar las opciones para la tercera hoja
     const opcionesDesglosadas = productos.flatMap((producto) => {
       return producto.variantes_opciones.split(' | ').flatMap((variante) => {
-        const [datosVariante, opcionesStr] = variante.split(',');
+        // Separar el encabezado de la variante y sus opciones
+        const [datosVariante, ...opcionesParts] = variante.split(',');
         const [nombreVariante] = datosVariante.split('-');
 
-        if (!opcionesStr) return [];
+        // Combinar todas las partes de opciones y dividirlas correctamente
+        const opcionesCompletas = opcionesParts.join(',').trim();
 
-        return opcionesStr.split(', ').map((opcion) => {
-          const [valorOpcion, skuComercial, cantidad] = opcion.split('-');
-          return {
-            idProducto: producto.idProducto,
-            nombreProducto: producto.nombreProducto,
-            nombreVariante,
-            valorOpcion,
-            skuComercial,
-            cantidad,
-          };
-        });
+        // Si no hay opciones, retornar array vacío
+        if (!opcionesCompletas) return [];
+
+        // Dividir las opciones y filtrar elementos vacíos
+        return opcionesCompletas
+          .split(', ')
+          .filter((opcion) => opcion.trim())
+          .map((opcion) => {
+            const [valorOpcion, skuComercial, skuAutomatico, cantidad] = opcion
+              .split(':')
+              .map((s) => s.trim());
+
+            return {
+              idProducto: producto.idProducto,
+              nombreProducto: producto.nombreProducto,
+              nombreVariante,
+              valorOpcion,
+              skuComercial,
+              skuAutomatico,
+              cantidad,
+            };
+          });
       });
     });
+
     hoja3.addRows(opcionesDesglosadas);
 
     const buffer = await workbook.xlsx.writeBuffer();

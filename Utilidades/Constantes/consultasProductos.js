@@ -99,7 +99,7 @@ module.exports = {
                 v.nombreVariante, '-',
                 v.descripcion, ',',
                 (SELECT GROUP_CONCAT(
-                    CONCAT(o.valorOpcion, '-', o.SKUcomercial, '-', o.cantidad)
+                    CONCAT(o.valorOpcion, ':', o.SKUcomercial, ':', o.SKUautomatico, ':', o.cantidad)
                     SEPARATOR ', '
                 )
                 FROM opcion o 
