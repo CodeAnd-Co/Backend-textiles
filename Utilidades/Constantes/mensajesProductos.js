@@ -8,6 +8,10 @@ module.exports = {
     codigo: 200,
     mensaje: 'Producto creado correctamente.',
   },
+  ACTUALIZACION_EXITOSA: {
+    codigo: 200,
+    mensaje: 'Producto actualizado exitosamente.',
+  },
 
   // 204 - No Content
   SIN_RESULTADOS: {
@@ -28,11 +32,22 @@ module.exports = {
     codigo: 400,
     mensaje: 'Los valores de límite u offset deben ser números positivos.',
   },
+  ERROR_PARAMETROS_ACTUALIZACION: {
+    codigo: 400,
+    mensaje:
+      'Los parámetros proporcionados para la actualización no son válidos o están incompletos.',
+  },
 
   // 403 - Forbidden
   PERMISO_DENEGADO: {
     codigo: 403,
     mensaje: 'No tiene permiso para consultar productos de este cliente.',
+  },
+
+  // 404 - Not Found
+  PRODUCTO_NO_ENCONTRADO_ACTUALIZACION: {
+    codigo: 404,
+    mensaje: 'El producto que intenta actualizar no existe.',
   },
 
   // 500 - Internal Server Error
@@ -62,6 +77,10 @@ module.exports = {
     codigo: 500,
     mensaje:
       'Ocurrió un error al asociar la imagen con la variante. Verifique los datos de las imágenes de variantes.',
+  },
+  ERROR_ACTUALIZAR_PRODUCTO: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error al actualizar el producto. Por favor, intente nuevamente más tarde.',
   },
 
   // 200 - OK
