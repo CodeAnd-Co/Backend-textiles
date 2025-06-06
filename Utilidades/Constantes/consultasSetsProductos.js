@@ -48,7 +48,24 @@ module.exports = {
       FROM producto
       WHERE idProducto IN (__IDS__);
   `,
-  ACTUALIZAR: `
-    UPDATE set_producto SET idCliente = ?, nombre = ?, nombreVisible = ?, descripcion = ?, activo = ? WHERE idSetProducto = ?;
-    `,
+  ACTUALIZAR_SET_INFO: `
+    UPDATE set_producto
+    SET nombre = ?, descripcion = ?, activo = ?
+    WHERE idSetProducto = ?
+  `,
+
+  ELIMINAR_PRODUCTOS_DEL_SET: `
+    DELETE FROM producto_set_producto
+    WHERE idSetProducto = __ID__ AND idProducto NOT IN (__PRODUCTOS__)
+  `,
+
+  AGREGAR_PRODUCTOS_AL_SET: `
+    INSERT IGNORE INTO producto_set_producto (idSetProducto, idProducto)
+    VALUES __VALORES__
+  `,
+
+  ELIMINAR_TODOS_PRODUCTOS_DEL_SET: `
+    DELETE FROM producto_set_producto
+    WHERE idSetProducto = ?
+  `,
 };

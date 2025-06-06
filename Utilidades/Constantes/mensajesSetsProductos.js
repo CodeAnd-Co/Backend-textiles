@@ -64,4 +64,24 @@ module.exports = {
     codigo: 500,
     mensaje: 'Ocurrió un error al actualizar el set de productos',
   },
+  FORMATO_INVALIDO_DATOS: {
+    codigo: 400,
+    mensaje: 'Formato de datos inválido para actualizar el set de productos',
+  },
+  SET_ACTUALIZADO: {
+    codigo: 200,
+    mensaje: 'Set de productos actualizado correctamente',
+  },
+  ERROR_ACTUALIZAR_SET: {
+    codigo: 500,
+    mensaje: 'Error interno al actualizar el set de productos',
+  },
+  SET_NO_ENCONTRADO: {
+    codigo: 404,
+    mensaje: 'El set de productos no fue encontrado',
+  },
+  PRODUCTOS_INVALIDOS: {
+    codigo: 400,
+    mensaje: 'La lista de productos contiene elementos inválidos',
+  },
 };

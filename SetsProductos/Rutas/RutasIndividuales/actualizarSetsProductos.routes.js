@@ -23,7 +23,7 @@ ruteador.put(
   autorizarToken,
   limitePeticionesDiarias,
   revisarPermisos(PERMISOS.ACTUALIZAR_SET_PRODUCTOS),
-  controlador.actualizarSetProducto
+  controlador.actualizarSetProductos
 );
 
 module.exports = ruteador;

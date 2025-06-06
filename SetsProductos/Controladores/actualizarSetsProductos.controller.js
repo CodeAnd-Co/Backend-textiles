@@ -3,37 +3,51 @@ const repositorio = require('@altertex/setspro/repos/repositorioActualizarSetsPr
 //RF[44] Actualizar set de productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF44]
 
 /**
- * Controlador para actualizar la información de un ...
+ * Controlador HTTP para actualizar un set de productos.
+ *
+ * Valida que el cuerpo de la solicitud contenga los datos necesarios,
+ * y delega la lógica de actualización al repositorio correspondiente.
+ *
+ * Respuestas posibles:
+ * - 400 si faltan datos en el cuerpo de la solicitud.
+ * - 200 si el set se actualiza correctamente.
+ * - 500 si ocurre un error en el proceso de actualización.
+ *
+ * @async
+ * @function actualizarSetProductos
+ * @param {Express.Request} req - Objeto de solicitud HTTP de Express.
+ * @param {Express.Response} res - Objeto de respuesta HTTP de Express.
+ * @returns {Promise<void>} La respuesta HTTP con el estado y mensaje correspondiente.
  */
-exports.actualizarSetProducto = async (req, res) => {
-  let datos;
+exports.actualizarSetProductos = async (req, res) => {
+  const datosActualizacion = req.body;
 
-  // Si no hay cambios
-  if (req.body.id || req.body.idSetProducto) {
-    datos = [req.body];
-  } else if (req.body.cambios) {
-    // Si la información viene en el formato esperado (hay cambios)
-    datos = Array.isArray(req.body.cambios) ? req.body.cambios : [req.body.cambios];
-  } else {
-    return res
-      .status(MENSAJES.ERROR_ACTUALIZAR_SET_PRODUCTOS.codigo)
-      .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_SET_PRODUCTOS.mensaje });
-  }
-
-  if (!datos || datos.length === 0) {
-    return res
-      .status(MENSAJES.ERROR_ACTUALIZAR_SET_PRODUCTOS.codigo)
-      .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_SET_PRODUCTOS.mensaje });
+  // Validación básica de datos requeridos
+  if (
+    !datosActualizacion ||
+    !datosActualizacion.nombre ||
+    !datosActualizacion.productos ||
+    !Array.isArray(datosActualizacion.productos)
+  ) {
+    return res.status(MENSAJES.FORMATO_INVALIDO_DATOS.codigo).json({
+      mensaje: MENSAJES.FORMATO_INVALIDO_DATOS.mensaje,
+      detalles: 'Se requieren nombre y lista de productos',
+    });
   }
 
   try {
-    await repositorio.actualizarSetProducto(datos);
-    return res
-      .status(MENSAJES.SET_PRODUCTOS_ACTUALIZADO.codigo)
-      .json({ mensaje: MENSAJES.SET_PRODUCTOS_ACTUALIZADO.mensaje, datos });
-  } catch {
-    return res
-      .status(MENSAJES.ERROR_ACTUALIZAR_SET_PRODUCTOS.codigo)
-      .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_SET_PRODUCTOS.mensaje });
+    await repositorio.actualizarSetProductos(datosActualizacion);
+
+    return res.status(MENSAJES.SET_ACTUALIZADO.codigo).json({
+      mensaje: MENSAJES.SET_ACTUALIZADO.mensaje,
+      datos: datosActualizacion,
+    });
+  } catch (error) {
+    console.error('Error al actualizar set de productos:', error);
+
+    return res.status(MENSAJES.ERROR_ACTUALIZAR_SET.codigo).json({
+      mensaje: MENSAJES.ERROR_ACTUALIZAR_SET.mensaje,
+      error: error.message,
+    });
   }
 };
