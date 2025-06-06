@@ -43,17 +43,17 @@ exports.crearUsuario = async (req, res) => {
   } = req.body;
 
   if (
-    !nombreCompleto
-    || !correoElectronico
-    || !contrasenia
-    || !numeroTelefono
-    || !direccion
-    || !fechaNacimiento
-    || !genero
-    || estatus === undefined
-    || !idRol
-    || idCliente === undefined
-    || (Array.isArray(idCliente) && idCliente.length === 0)
+    !nombreCompleto ||
+    !correoElectronico ||
+    !contrasenia ||
+    !numeroTelefono ||
+    !direccion ||
+    !fechaNacimiento ||
+    !genero ||
+    estatus === undefined ||
+    !idRol ||
+    idCliente === undefined ||
+    (Array.isArray(idCliente) && idCliente.length === 0)
   ) {
     return res.status(400).json({ mensaje: 'Faltan campos requeridos' });
   }

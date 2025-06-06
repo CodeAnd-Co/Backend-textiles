@@ -37,4 +37,29 @@ module.exports = {
             ELSE 'OK'
           END AS resultado; 
     `,
+
+  INSERTAR_USUARIO: `
+    INSERT INTO usuario
+         (nombreCompleto, correoElectronico, contrasenia, numeroTelefono, direccion, fechaNacimiento, genero, estatus)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+
+        `,
+
+  INSERTAR_ROL: `
+    INSERT INTO usuario_rol (idUsuario, idRol)
+        VALUES (?, ?)
+    `,
+
+  INSERTAR_USUARIO_CLIENTE: `
+    INSERT INTO usuario_cliente (idUsuario, idCliente)
+        VALUES (?, ?)
+    `,
+
+  INSERTAR_EMPLEADO: `
+    INSERT INTO empleado (
+      idUsuario, idCliente, numeroEmergencia,
+      areaTrabajo, posicion, cantidadPuntos, antiguedad
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `,
 };

@@ -1,7 +1,9 @@
 const db = require('@altertex/util/bd/db');
+const ROL_PREDETERMINADO = 3; // ID del rol por defecto para empleados
 const correrQuery = require('@altertex/util/ser/correrQuery');
 const MENSAJES = require('@altertex/util/const/mensajesEmpleados');
 const CONSULTAS_EMPLEADOS = require('@altertex/util/const/consultasEmpleados');
+const CONSULTAS_IMPORTAR_EMPLEADOS = require('@altertex/util/const/consultasImportarEmpleados');
 
 //RF[16] Crear empleado - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF16]
 
@@ -50,6 +52,34 @@ exports.crearEmpleado = async (empleado) => {
       throw new Error(`Correo ya registrado: ${empleado.correoElectronico}`);
     }
 
+    // Validar fecha de nacimiento
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(empleado.fechaNacimiento)) {
+      throw new Error('Fecha de nacimiento inválida. Debe ser en formato YYYY-MM-DD.');
+    }
+    const fechaNacimiento = new Date(empleado.fechaNacimiento);
+    if (isNaN(fechaNacimiento.getTime())) {
+      throw new Error('Fecha de nacimiento inválida.');
+    }
+    const hoy = new Date();
+    if (fechaNacimiento > hoy) {
+      throw new Error('La fecha de nacimiento no puede ser futura.');
+    }
+    if (fechaNacimiento.getFullYear() < 1900) {
+      throw new Error('La fecha de nacimiento no puede ser anterior a 1900.');
+    }
+
+    // Validar que sea mayor o igual a 18 años
+    const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+    const dia = hoy.getDate() - fechaNacimiento.getDate();
+    let edadFinal = edad;
+    if (mes < 0 || (mes === 0 && dia < 0)) {
+      edadFinal--;
+    }
+    if (edadFinal < 18) {
+      throw new Error('El empleado debe tener al menos 18 años.');
+    }
+
     // Validar teléfono duplicado
     const [telefonoExistente] = await conn.query(
       CONSULTAS_IMPORTAR_EMPLEADOS.VALIDAR_TELEFONO_DUPLICADO,
@@ -59,11 +89,34 @@ exports.crearEmpleado = async (empleado) => {
       throw new Error(`Teléfono ya registrado: ${empleado.numeroTelefono}`);
     }
 
+    //Validar antigüedad
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(empleado.antiguedad)) {
+      throw new Error('Antigüedad inválida. Debe ser en formato YYYY-MM-DD.');
+    }
+    const fechaAntiguedad = new Date(empleado.antiguedad);
+    if (isNaN(fechaAntiguedad.getTime())) {
+      throw new Error('Antigüedad inválida.');
+    }
+    if (fechaAntiguedad > hoy) {
+      throw new Error('La antigüedad no puede ser futura.');
+    }
+    if (fechaAntiguedad.getFullYear() < 1900) {
+      throw new Error('La antigüedad no puede ser anterior a 1900.');
+    }
+    // Validar que la antigüedad sea menor o igual a la fecha de nacimiento
+    if (fechaAntiguedad < fechaNacimiento) {
+      throw new Error('La antigüedad no puede ser anterior a la fecha de nacimiento.');
+    }
+    // Validar que la antigüedad sea menor o igual a la fecha actual
+    if (fechaAntiguedad > hoy) {
+      throw new Error('La antigüedad no puede ser posterior a la fecha actual.');
+    }
+
     // Insertar usuario
-    const [resultadoUsuario] = await conn.query(CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_USUARIO, [
+    const [resultadoUsuario] = await conn.query(CONSULTAS_EMPLEADOS.INSERTAR_USUARIO, [
       empleado.nombreCompleto,
       empleado.correoElectronico,
-      empleado.contrasena,
+      empleado.contrasenia,
       empleado.numeroTelefono,
       empleado.direccion,
       empleado.fechaNacimiento,
@@ -73,18 +126,18 @@ exports.crearEmpleado = async (empleado) => {
     const idUsuario = resultadoUsuario.insertId;
 
     // Insertar rol
-    await conn.query(CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_ROL, [idUsuario, DEFAULT_ROLE_ID]);
+    await conn.query(CONSULTAS_EMPLEADOS.INSERTAR_ROL, [idUsuario, ROL_PREDETERMINADO]);
 
     // Insertar asociación usuario-cliente
     const listaClientes = Array.isArray(empleado.idCliente)
       ? empleado.idCliente
       : [empleado.idCliente];
     for (const idCli of listaClientes) {
-      await conn.query(CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_USUARIO_CLIENTE, [idUsuario, idCli]);
+      await conn.query(CONSULTAS_EMPLEADOS.INSERTAR_USUARIO_CLIENTE, [idUsuario, idCli]);
     }
 
     // Insertar empleado
-    await conn.query(CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_EMPLEADO, [
+    await conn.query(CONSULTAS_EMPLEADOS.INSERTAR_EMPLEADO, [
       idUsuario,
       empleado.idCliente,
       empleado.numeroEmergencia,
@@ -97,7 +150,7 @@ exports.crearEmpleado = async (empleado) => {
     await conn.commit();
   } catch (err) {
     await conn.rollback();
-    throw new Error(`Error en importación: ${err.message}`);
+    throw new Error(`${err.message}`);
   } finally {
     if (conn) conn.release();
   }

@@ -1,7 +1,5 @@
 const bcrypt = require('bcryptjs');
-const MENSAJES = require('@altertex/util/const/mensajesEmpleados');
 const repositorio = require('@altertex/emp/repos/repositorioCrearEmpleado');
-//RF[16] Crear empleado - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF16]
 
 /**
  * Controlador para crear un nuevo empleado.
@@ -14,7 +12,7 @@ const repositorio = require('@altertex/emp/repos/repositorioCrearEmpleado');
  * @param {Array<object>} req.body - Cuerpo de la solicitud con los datos del nuevo empleado.
  * @param {string} req.body[].nombreCompleto - Nombre completo del usuario.
  * @param {string} req.body[].correoElectronico - Correo electrónico único del usuario.
- * @param {string} req.body[].contrasena - Contraseña en texto plano.
+ * @param {string} req.body[].contrasenia - Contraseña en texto plano.
  * @param {string} req.body[].numeroTelefono - Número de teléfono (10 dígitos).
  * @param {string} req.body[].direccion - Dirección del usuario.
  * @param {string} req.body[].fechaNacimiento - Fecha de nacimiento en formato YYYY-MM-DD.
@@ -35,11 +33,11 @@ const repositorio = require('@altertex/emp/repos/repositorioCrearEmpleado');
  * - 500 si ocurre un error al crear el empleado.
  */
 exports.crearEmpleado = async (req, res) => {
-  const [
+  const {
     nombreCompleto,
     correoElectronico,
     contrasenia,
-    numberoTelefono,
+    numeroTelefono,
     direccion,
     fechaNacimiento,
     genero,
@@ -51,22 +49,22 @@ exports.crearEmpleado = async (req, res) => {
     posicion,
     cantidadPuntos,
     antiguedad,
-  ] = req.body;
+  } = req.body;
 
+  // Validaciones críticas
+  if (!idCliente) {
+    return res.status(400).json({ mensaje: 'Cliente no seleccionado' });
+  }
   if (
-    !Array.isArray(req.body) ||
-    req.body.length === 0 ||
     !nombreCompleto ||
     !correoElectronico ||
     !contrasenia ||
-    !numberoTelefono ||
+    !numeroTelefono ||
     !direccion ||
     !fechaNacimiento ||
     !genero ||
     estatus === undefined ||
-    !idRol ||
-    idCliente === undefined ||
-    (Array.isArray(idCliente) && idCliente.length === 0) ||
+    idRol === undefined ||
     !numeroEmergencia ||
     !areaTrabajo ||
     !posicion ||
@@ -75,44 +73,83 @@ exports.crearEmpleado = async (req, res) => {
   ) {
     return res.status(400).json({ mensaje: 'Faltan campos requeridos' });
   }
+
+  // Validaciones de formato y longitud
+  if (nombreCompleto.length > 75) {
+    return res.status(400).json({ mensaje: 'El nombre es demasiado largo' });
+  }
+  if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(nombreCompleto)) {
+    return res.status(400).json({ mensaje: 'El nombre solo puede contener letras y espacios' });
+  }
+  if (correoElectronico.length > 75) {
+    return res.status(400).json({ mensaje: 'El correo es demasiado largo' });
+  }
   const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!correoValido.test(correoElectronico)) {
-    return res
-      .status(MENSAJES.CORREO_INVALIDO.codigo)
-      .json({ mensaje: MENSAJES.CORREO_INVALIDO.mensaje });
+    return res.status(400).json({ mensaje: 'El correo electrónico no es válido' });
+  }
+  if (contrasenia.length > 75) {
+    return res.status(400).json({ mensaje: 'La contraseña es demasiado larga' });
   }
   const tieneCaracterEspecial = /[!@#$%^&*(),.?":{}|<>]/;
   const tieneMayuscula = /[A-Z]/;
-  if (contrasenia.length < 8) {
+  if (
+    contrasenia.length < 8 ||
+    !tieneCaracterEspecial.test(contrasenia) ||
+    !tieneMayuscula.test(contrasenia)
+  ) {
     return res
-      .status(MENSAJES.CONTRASENA_DEBIL.codigo)
-      .json({ mensaje: MENSAJES.CONTRASENA_DEBIL.mensaje });
+      .status(400)
+      .json({
+        mensaje:
+          'La contraseña es débil. Debe tener al menos 8 caracteres, una mayúscula y un caracter especial.',
+      });
   }
-  if (!tieneCaracterEspecial.test(contrasenia)) {
+  if (direccion.length > 150) {
+    return res.status(400).json({ mensaje: 'La dirección es demasiado larga' });
+  }
+  if (posicion.length > 75) {
+    return res.status(400).json({ mensaje: 'La posición es demasiado larga' });
+  }
+  if (areaTrabajo.length > 75) {
+    return res.status(400).json({ mensaje: 'El área de trabajo es demasiado larga' });
+  }
+  if (genero.length > 20) {
+    return res.status(400).json({ mensaje: 'El género es demasiado largo' });
+  }
+  if (isNaN(numeroEmergencia)) {
+    return res.status(400).json({ mensaje: 'El número de emergencia no es válido' });
+  }
+  if (!/^\d+$/.test(String(cantidadPuntos)) || Number(cantidadPuntos) < 0) {
     return res
-      .status(MENSAJES.CONTRASENA_DEBIL.codigo)
-      .json({ mensaje: MENSAJES.CONTRASENA_DEBIL.mensaje });
+      .status(400)
+      .json({ mensaje: 'Los puntos deben ser un número entero mayor o igual a 0' });
   }
-  if (!tieneMayuscula.test(contrasenia)) {
-    return res
-      .status(MENSAJES.CONTRASENA_DEBIL.codigo)
-      .json({ mensaje: MENSAJES.CONTRASENA_DEBIL.mensaje });
-  }
-
   const telefonoValido = /^\d{10}$/;
-  if (!telefonoValido.test(numberoTelefono)) {
+  if (!telefonoValido.test(numeroTelefono)) {
     return res
-      .status(MENSAJES.TELEFONO_INVALIDO.codigo)
-      .json({ mensaje: MENSAJES.TELEFONO_INVALIDO.mensaje });
+      .status(400)
+      .json({ mensaje: 'El número de teléfono debe tener 10 dígitos numéricos' });
+  }
+  const fechaRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!fechaRegex.test(fechaNacimiento) || isNaN(Date.parse(fechaNacimiento))) {
+    return res
+      .status(400)
+      .json({ mensaje: 'La fecha de nacimiento no tiene un formato válido (YYYY-MM-DD)' });
+  }
+  if (!fechaRegex.test(antiguedad) || isNaN(Date.parse(antiguedad))) {
+    return res
+      .status(400)
+      .json({ mensaje: 'La antigüedad no tiene un formato válido (YYYY-MM-DD)' });
   }
 
   try {
     const contraseniaEncriptada = await bcrypt.hash(contrasenia, 10);
-    const resultado = await repositorio.crearEmpleado(
+    const resultado = await repositorio.crearEmpleado({
       nombreCompleto,
       correoElectronico,
-      contraseniaEncriptada,
-      numberoTelefono,
+      contrasenia: contraseniaEncriptada,
+      numeroTelefono,
       direccion,
       fechaNacimiento,
       genero,
@@ -123,17 +160,14 @@ exports.crearEmpleado = async (req, res) => {
       areaTrabajo,
       posicion,
       cantidadPuntos,
-      antiguedad
-    );
-    return res.status(MENSAJES_EMPLEADOS.CREACION_EXITOSA.codigo).json({
-      mensaje: MENSAJES.CREACION_EXITOSA.mensaje,
+      antiguedad,
+    });
+    return res.status(201).json({
+      mensaje: 'Empleado creado exitosamente',
       datos: resultado,
     });
   } catch (error) {
     console.error('Error al crear empleado:', error);
-    return res.status(MENSAJES.ERROR_CREACION.codigo).json({
-      mensaje: MENSAJES.ERROR_CREACION.mensaje,
-      error: error.message,
-    });
+    return res.status(400).json({ mensaje: error.message });
   }
 };

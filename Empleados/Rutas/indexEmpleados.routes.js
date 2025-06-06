@@ -1,6 +1,7 @@
 const express = require('express');
 const ruteador = express.Router();
 const rutasConsultarListaGrupos = require('@altertex/emp/rutasInd/consultarListaGrupos.routes');
+const rutasCrearEmpleado = require('@altertex/emp/rutasInd/crearEmpleado.routes');
 const rutasConsultarLista = require('@altertex/emp/rutasInd/consultarLista.routes');
 const rutasEliminarGrupo = require('@altertex/emp/rutasInd/eliminarGrupoEmpleados.routes');
 const rutasEliminarEmpleado = require('@altertex/emp/rutasInd/eliminarEmpleado.routes');
@@ -11,6 +12,7 @@ const rutasCrearGrupo = require('@altertex/emp/rutasInd/crearGrupoEmpleados.rout
 const rutasActualizarEmpleado = require('@altertex/emp/rutasInd/actualizarEmpleado.routes');
 
 const RUTAS = require('@altertex/util/const/rutas');
+const rutas = require('@altertex/util/const/rutas');
 
 //RF22 - Consulta Lista de Grupo Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF22
 ruteador.use(RUTAS.EMPLEADOS.BASE, rutasConsultarListaGrupos);
@@ -29,4 +31,7 @@ ruteador.use(RUTAS.EMPLEADOS.BASE, rutasCrearGrupo);
 
 //RF19 - Actualizar Empleado - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF19
 ruteador.use(RUTAS.EMPLEADOS.BASE, rutasActualizarEmpleado);
+
+//RF16 - Crear Empleado - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF16
+ruteador.use(RUTAS.EMPLEADOS.BASE, rutasCrearEmpleado);
 module.exports = ruteador;

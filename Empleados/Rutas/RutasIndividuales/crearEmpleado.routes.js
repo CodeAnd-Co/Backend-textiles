@@ -1,16 +1,16 @@
+//RF16 - Crear Empleado - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF16]
+
 const express = require('express');
 const ruteador = express.Router();
 
-const PERMISOS = require('@altertex/util/const/permisos');
-const RUTAS = require('@altertex/util/const/rutas');
-const controlador = require('@altertex/emp/ctrl/actualizarEmpleado.controller');
+const controlador = require('@altertex/emp/ctrl/crearEmpleado.controller');
 const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
-const revisarPermisos = require('@altertex/util/inter/verificarPermisos');
+const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+const PERMISOS = require('@altertex/util/const/permisos');
+const RUTAS = require('@altertex/util/const/rutas');
 const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
-
-//RF[16] Crear Empleado - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF16]
 
 /**
  * @swagger
@@ -193,11 +193,11 @@ const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones')
 
 ruteador.post(
   RUTAS.EMPLEADOS.CREAR,
-  revisarApiKey,
+  revisarApiKey(),
   autorizarToken,
-  revisarPermisos([PERMISOS.EMPLEADOS.CREAR]),
-  validarYSanitizar.validarCrearEmpleado,
-  limitePeticionesDiarias.limitarPeticionesDiarias,
+  limitePeticionesDiarias,
+  validarYSanitizar,
+  verificarPermisos(PERMISOS.CREAR_EMPLEADO),
   controlador.crearEmpleado
 );
 

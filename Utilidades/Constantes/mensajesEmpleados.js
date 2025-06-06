@@ -36,6 +36,10 @@ module.exports = {
     codigo: 400,
     mensaje: 'Error al crear',
   },
+  CAMPOS_REQUERIDOS: {
+    codigo: 400,
+    mensaje: 'Faltan campos requeridos',
+  },
 
   // 403 - Forbidden
   PERMISO_DENEGADO: {
@@ -84,5 +88,9 @@ module.exports = {
   GRUPO_NOMBRE_REPETIDO: {
     codigo: 'GRUPO_NOMBRE_REPETIDO',
     mensaje: 'Ya existe un grupo con ese nombre.',
+  },
+  ERROR_CREACION: {
+    codigo: 500,
+    mensaje: 'Error al crear el empleado',
   },
 };
