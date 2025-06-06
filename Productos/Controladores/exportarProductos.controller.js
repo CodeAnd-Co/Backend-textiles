@@ -1,6 +1,4 @@
 const repositorio = require('@altertex/pro/repos/repositorioExportarProducto');
-const { Parser } = require('json2csv');
-const { format } = require('date-fns');
 const MENSAJES_PRODUCTOS = require('@altertex/util/const/mensajesProductos');
 
 const ExcelJS = require('exceljs');
@@ -114,7 +112,7 @@ exports.exportarProductos = async (req, res) => {
           .map((opcion) => {
             const [valorOpcion, skuComercial, skuAutomatico, cantidad] = opcion
               .split(':')
-              .map((s) => s.trim());
+              .map((valores) => valores.trim());
 
             return {
               idProducto: producto.idProducto,

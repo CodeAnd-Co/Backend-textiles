@@ -1,5 +1,3 @@
-const { PRODUCTOS } = require('./rutas');
-
 module.exports = {
   // 200 - OK
   CONSULTA_EXITOSA: {

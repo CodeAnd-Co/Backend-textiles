@@ -1,5 +1,3 @@
-const { OBTENER_DATOS_EXPORTACION } = require('./consultasEmpleados');
-
 module.exports = {
   OBTENER_LISTA: `
       SELECT p.idProducto, p.nombreComun, p.precioVenta, p.estado, i.urlImagen
