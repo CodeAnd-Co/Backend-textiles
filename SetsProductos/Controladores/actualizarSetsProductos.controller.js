@@ -24,10 +24,10 @@ exports.actualizarSetProductos = async (req, res) => {
 
   // Validación básica de datos requeridos
   if (
-    !datosActualizacion ||
-    !datosActualizacion.nombre ||
-    !datosActualizacion.productos ||
-    !Array.isArray(datosActualizacion.productos)
+    !datosActualizacion
+    || !datosActualizacion.nombre
+    || !datosActualizacion.productos
+    || !Array.isArray(datosActualizacion.productos)
   ) {
     return res.status(MENSAJES.FORMATO_INVALIDO_DATOS.codigo).json({
       mensaje: MENSAJES.FORMATO_INVALIDO_DATOS.mensaje,
