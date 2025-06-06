@@ -4,16 +4,29 @@ const CONSULTAS = require('@altertex/util/const/consultasSetsProductos');
 
 // RF[44] Actualizar set de productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF44]
 
+// RF[44] Actualizar set de productos - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF44]
+
 /**
  * Actualiza un set de productos con su información general y productos asociados.
+ * 
+ * - Verifica que el nuevo nombre no esté duplicado para el cliente.
+ * - Actualiza los campos básicos del set: nombre, descripción y estado activo.
+ * - Si se especifica un arreglo de productos:
+ *    - Elimina las asociaciones que ya no existen.
+ *    - Agrega las nuevas asociaciones.
+ *    - Si el arreglo está vacío, elimina todas las asociaciones.
  *
- * @param {object} datos - Datos para actualizar el set.
- * @param {number} datos.idSetProducto - ID del set de productos.
- * @param {number} datos.idCliente - ID del cliente.
- * @param {string} datos.nombre - Nombre interno.
- * @param {string} datos.descripcion - Descripción.
- * @param {boolean} datos.activo - Estado activo/inactivo.
- * @param {number[]} datos.productos - Lista de IDs de productos a asociar. Array vacío elimina todas las asociaciones.
+ * @async
+ * @function actualizarSetProductos
+ * @param {number} idCliente - ID del cliente propietario del set.
+ * @param {object} datos - Objeto con los datos para actualizar el set.
+ * @param {number} datos.idSetProducto - ID del set de productos a actualizar.
+ * @param {string} datos.nombre - Nombre interno del set.
+ * @param {string} datos.descripcion - Descripción del set.
+ * @param {boolean} datos.activo - Estado activo o inactivo del set.
+ * @param {number[]} datos.productos - Lista de IDs de productos asociados al set. 
+ *                                      Si es un arreglo vacío, se eliminarán todas las asociaciones.
+ * @throws {Error} Si ocurre un error durante la actualización o si el nombre está duplicado.
  */
 exports.actualizarSetProductos = async (idCliente, datos) => {
   const { idSetProducto, nombre, descripcion, activo, productos } = datos;
