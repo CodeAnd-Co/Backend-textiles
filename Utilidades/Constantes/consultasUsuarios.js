@@ -40,6 +40,11 @@ module.exports = {
       VALUES (?, ?);
   `,
 
+  BORRAR_ASOCIACIONES_CLIENTE_USUARIO: `
+      DELETE FROM usuario_cliente
+        WHERE idUsuario = ?; 
+    `,
+
   ASOCIAR_USUARIO_A_CLIENTE: `
       INSERT INTO usuario_cliente (idUsuario, idCliente)
       VALUES (?, ?);
@@ -90,28 +95,34 @@ module.exports = {
   `,
 
   ACTUALIZAR_DATOS_USUARIO: `
-UPDATE usuario SET
-  nombreCompleto = ?,
-  correoElectronico = ?,
-  contrasenia = ?,
-  numeroTelefono = ?,
-  direccion = ?,
-  fechaNacimiento = ?,
-  genero = ?,
-  estatus = ?
-WHERE idUsuario = ?;
+    UPDATE usuario SET
+      nombreCompleto = ?,
+      correoElectronico = ?,
+      contrasenia = ?,
+      numeroTelefono = ?,
+      direccion = ?,
+      fechaNacimiento = ?,
+      genero = ?,
+      estatus = ?
+    WHERE idUsuario = ?;
     `,
 
-  ACTUALIZAR_CLIENTE_USUARIO: `
-UPDATE usuario_cliente SET
-  idCliente = ?
-WHERE idUsuario = ?;
+  ACTUALIZAR_DATOS_USUARIO_SIN_CONTRASENA: `
+    UPDATE usuario SET
+      nombreCompleto = ?,
+      correoElectronico = ?,
+      numeroTelefono = ?,
+      direccion = ?,
+      fechaNacimiento = ?,
+      genero = ?,
+      estatus = ?
+    WHERE idUsuario = ?;
     `,
 
   ACTUALIZAR_ROL_USUARIO: `
-UPDATE usuario_rol SET 
-idRol = ?
-WHERE idUsuario = ?;
+    UPDATE usuario_rol SET 
+    idRol = ?
+    WHERE idUsuario = ?;
     `,
 
   VALIDAR_CORREO: `

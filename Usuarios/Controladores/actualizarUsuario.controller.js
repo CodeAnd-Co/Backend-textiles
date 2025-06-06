@@ -1,5 +1,7 @@
 const MENSAJES = require('@altertex/util/const/mensajesUsuarios');
 const repositorio = require('@altertex/usu/repos/repositorioActualizarUsuario');
+const bcrypt = require('bcryptjs');
+
 //RF[4] Actualizar Usuario - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF4]
 
 /**

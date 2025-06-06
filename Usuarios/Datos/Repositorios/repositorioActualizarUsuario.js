@@ -40,29 +40,57 @@ exports.actualizarUsuario = async (datos) => {
           idCliente,
         } = usuario;
 
-        // Actualiza datos del usuario
-        await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO, [
-          nombreCompleto,
-          correoElectronico,
-          contrasenia,
-          numeroTelefono,
-          direccion,
-          fechaNacimiento,
-          genero,
-          estatus,
-          idUsuario,
-        ]);
+        const conContrasena = () => (usuario.contrasenia == '' ? false : true);
 
-        if (idCliente !== undefined) {
-          // Intenta actualizar primero
-          const resultado = await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_CLIENTE_USUARIO, [
-            idCliente,
+        // Actualiza datos del usuario
+        if (conContrasena()) {
+          await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO, [
+            nombreCompleto,
+            correoElectronico,
+            contrasenia,
+            numeroTelefono,
+            direccion,
+            fechaNacimiento,
+            genero,
+            estatus,
             idUsuario,
           ]);
-          // Si no se actualizó ninguna fila, inserta la relación
-          if (resultado.affectedRows === 0) {
-            await correrQuery(CONSULTAS_USUARIOS.ASOCIAR_USUARIO_A_CLIENTE, [idUsuario, idCliente]);
-          }
+        } else {
+          await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO_SIN_CONTRASENA, [
+            nombreCompleto,
+            correoElectronico,
+            numeroTelefono,
+            direccion,
+            fechaNacimiento,
+            genero,
+            estatus,
+            idUsuario,
+          ]);
+        }
+
+        if (usuario.cliente) {
+          // Pasar el cliente/clientes a un array
+          const clientes = Array.isArray(usuario.cliente) ? usuario.cliente : [usuario.cliente];
+
+          await correrQuery(CONSULTAS_USUARIOS.ELIMINAR_USUARIO_CLIENTE, [idUsuario]).then(
+            // Eliminar todos los cliente asociados al usuario
+            async () => {
+              try {
+                for (const cliente of clientes) {
+                  // Asociar cada cliente seleccionado al usuario
+                  if (cliente) {
+                    // Evitar errores si el cliente es undefined o null
+                    await correrQuery(CONSULTAS_USUARIOS.ASOCIAR_USUARIO_A_CLIENTE, [
+                      idUsuario,
+                      cliente,
+                    ]);
+                  }
+                }
+              } catch (error) {
+                return error;
+              }
+            }
+          );
         }
       })
     );
