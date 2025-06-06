@@ -1,4 +1,4 @@
-const MENSAJES_CUOTAS = require('@altertex/util/const/mensajesCuotas');
+// actualizarSetCuotas.controller.js
 const repositorio = require('@altertex/cuota/repos/actualizarSetCuotasRepositorio');
 
 exports.actualizarSetCuotas = async (req, res) => {
@@ -6,14 +6,14 @@ exports.actualizarSetCuotas = async (req, res) => {
     const { idCuotaSet, cambios } = req.body;
 
     if (!idCuotaSet || !cambios) {
-      return res.status(400).json({ mensaje: MENSAJES_CUOTAS.PARAMETROS_INVALIDOS.mensaje });
+      return res.status(400).json({ mensaje: 'Datos incompletos' });
     }
 
     await repositorio.actualizarSetCuotas(idCuotaSet, cambios);
+    return res.status(200).json({ mensaje: 'Set de cuotas actualizado correctamente' });
 
-    return res.status(200).json({ mensaje: MENSAJES_CUOTAS.ACTUALIZACION_EXITOSA.mensaje });
   } catch (error) {
     console.error('[ERROR] actualizarSetCuotas:', error);
-    return res.status(500).json({ mensaje: error.message || MENSAJES_CUOTAS.ERROR_ACTUALIZACION.mensaje });
+    return res.status(500).json({ mensaje: error.message });
   }
 };

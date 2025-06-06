@@ -1,49 +1,32 @@
-const db = require('@altertex/util/bd/db');
+// actualizarSetCuotasRepositorio.js
 const CONSULTAS_CUOTAS = require('@altertex/util/const/consultasCuotas');
 const correrQuery = require('@altertex/util/ser/correrQuery');
-const MENSAJES = require('@altertex/util/const/mensajesCuotas');
-
 
 exports.actualizarSetCuotas = async (idCuotaSet, cambios) => {
-  const {
+  const { nombre, descripcion, periodoRenovacion, renovacionHabilitada, productos = [] } = cambios;
+
+  // 1. Actualizar datos básicos de la cuota
+  await correrQuery(CONSULTAS_CUOTAS.ACTUALIZAR_CUOTA_SET, [
     nombre,
     descripcion,
     periodoRenovacion,
     renovacionHabilitada,
-    productos = []
-  } = cambios;
-
-  console.log('[DEBUG] Iniciando actualización del set de cuotas', { idCuotaSet, cambios });
-
-  // Actualizar cuota_set
-  const resultado = await correrQuery(CONSULTAS_CUOTAS.ACTUALIZAR_CUOTA_SET, [
-    nombre,
-    descripcion,
-    periodoRenovacion,
-    renovacionHabilitada,
-    new Date(), // ultimaActualizacion
+    new Date(),
     idCuotaSet
   ]);
 
-  console.log('[DEBUG] Resultado UPDATE cuota_set:', resultado);
-
-  if (!resultado || resultado.affectedRows === 0) {
-    throw new Error(MENSAJES.ERROR_ACTUALIZACION.mensaje);
-  }
-
-  // Eliminar productos anteriores
+  // 2. Eliminar productos anteriores
   await correrQuery(CONSULTAS_CUOTAS.ELIMINAR_PRODUCTOS_CUOTA_SET, [idCuotaSet]);
 
-  // Insertar nuevos productos
+  // 3. Insertar nuevos productos (solo los que tienen ID válido)
   for (const producto of productos) {
-    const { idProducto, limite, limiteActual } = producto;
-    await correrQuery(CONSULTAS_CUOTAS.INSERTAR_CUOTA_PRODUCTO_ACTUALIZAR, [
-      idCuotaSet,
-      idProducto,
-      limite,
-      limiteActual
-    ]);
+    if (producto.idProducto && producto.idProducto > 0) {
+      await correrQuery(CONSULTAS_CUOTAS.INSERTAR_CUOTA_PRODUCTO_ACTUALIZAR, [
+        idCuotaSet,
+        producto.idProducto,
+        producto.limite || 0,
+        producto.limiteActual || 0
+      ]);
+    }
   }
-
-  console.log('[DEBUG] Set de cuotas actualizado exitosamente.');
 };
