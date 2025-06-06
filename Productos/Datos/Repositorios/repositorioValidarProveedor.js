@@ -1,3 +1,6 @@
+const consultas = require('@altertex/util/const/consultasProveedores');
+
+
 /**
  * Verifica si un proveedor existe en la base de datos.
  * @param {object} conexion - La conexión a la base de datos.
@@ -7,7 +10,7 @@
 async function proveedorExiste(conexion, idProveedor) {
   if (idProveedor === null) return true; // Permitido por diseño
   const [result] = await conexion.query(
-    'SELECT idProveedor FROM proveedor WHERE idProveedor = ? LIMIT 1',
+    consultas.VERIFICAR_EXISTE,
     [idProveedor]
   );
   return result.length > 0;
