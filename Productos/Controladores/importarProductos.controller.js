@@ -38,10 +38,16 @@ const { proveedorExiste } = require('@altertex/pro/repos/repositorioValidarProve
  */
 exports.importarProductos = async (req, res) => {
   const idCliente = parseInt(req.user.clienteSeleccionado);
-  const productos = req.body; 
+  const productos = req.body;
+
+  const MENSAJE_PRODUCTOS_INVALIDOS = 'No se recibieron productos válidos.'
+  const MENSAJE_VARIANTES_INVALIDAS = 'No se recibieron productos válidos.'
+  const MENSAJE_ERRORES_ARCHIVO = 'Se encontraron errores en el archivo.'
+  const IMPORTACION_EXITOSA = 'Importación completada exitosamente.';
+  const ERROR_AL_IMPORTAR = 'Error al importar productos.';
 
   if (!Array.isArray(productos) || productos.length === 0) {
-    return res.status(400).json({ mensaje: 'No se recibieron productos válidos.' });
+    return res.status(400).json({ mensaje:  MENSAJE_PRODUCTOS_INVALIDOS});
   }
 
   const errores = [];
@@ -69,7 +75,7 @@ exports.importarProductos = async (req, res) => {
       }
 
       if (!Array.isArray(variantes) || variantes.length === 0) {
-        errores.push({ fila, error: 'Producto sin variantes válidas.' });
+        errores.push({ fila, error: MENSAJE_VARIANTES_INVALIDAS });
         continue;
       }
 
@@ -91,7 +97,7 @@ exports.importarProductos = async (req, res) => {
     if (errores.length > 0) {
       await conexion.rollback();
       return res.status(200).json({
-        mensaje: 'Se encontraron errores en el archivo.',
+        mensaje: MENSAJE_ERRORES_ARCHIVO,
         errores,
       });
     }
@@ -119,14 +125,14 @@ exports.importarProductos = async (req, res) => {
     await conexion.commit();
 
     return res.status(200).json({
-      mensaje: 'Importación completada exitosamente.',
+      mensaje: IMPORTACION_EXITOSA,
       errores: null,
     });
 
   } catch (err) {
     if (conexion) await conexion.rollback();
     return res.status(500).json({
-      mensaje: 'Error al importar productos.',
+      mensaje: ERROR_AL_IMPORTAR,
       error: err.message,
     });
   } finally {
