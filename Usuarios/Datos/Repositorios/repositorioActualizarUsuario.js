@@ -41,11 +41,14 @@ exports.actualizarUsuario = async (datos) => {
             numeroTelefono,
             direccion,
             fechaNacimiento,
+            idRol,
             genero,
             estatus,
           } = usuario;
 
           const conContrasena = usuario.contrasenia == '' ? false : true;
+
+          console.log('roles', idRol);
 
           // Actualiza datos del usuario
           if (conContrasena) {
@@ -100,6 +103,12 @@ exports.actualizarUsuario = async (datos) => {
               }
             );
           }
+
+          const result = await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_ROL_USUARIO, [
+            idRol,
+            idUsuario,
+          ]);
+          console.log('Resultado de actualizar rol:', result);
         }
       )
     );
