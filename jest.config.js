@@ -30,6 +30,22 @@ module.exports = {
     '^@altertex/aut/datos/(.*)$': '<rootDir>/Autenticacion/Datos/$1',
     '^@altertex/aut/(.*)$': '<rootDir>/Autenticacion/$1',
 
+    // Categorias module mappings
+    "^@altertex/cat/ctrl/(.*)$": "<rootDir>/Categorias/Controladores/$1",
+    "^@altertex/cat/repos/(.*)$": "<rootDir>/Categorias/Datos/Repositorios/$1",
+    "^@altertex/cat/rutasInd/(.*)$": "<rootDir>/Categorias/Rutas/RutasIndividuales/$1",
+    "^@altertex/cat/rutas/(.*)$": "<rootDir>/Categorias/Rutas/$1",
+    "^@altertex/cat/datos/(.*)$": "<rootDir>/Categorias/Datos/$1",
+    "^@altertex/cat/(.*)$": "<rootDir>/Categorias/$1",
+
+    // Clientes module mappings
+    "^@altertex/cli/ctrl/(.*)$": "<rootDir>/Clientes/Controladores/$1",
+    "^@altertex/cli/repos/(.*)$": "<rootDir>/Clientes/Datos/Repositorios/$1",
+    "^@altertex/cli/rutasInd/(.*)$": "<rootDir>/Clientes/Rutas/RutasIndividuales/$1",
+    "^@altertex/cli/rutas/(.*)$": "<rootDir>/Clientes/Rutas/$1",
+    "^@altertex/cli/datos/(.*)$": "<rootDir>/Clientes/Datos/$1",
+    "^@altertex/cli/(.*)$": "<rootDir>/Clientes/$1",
+
     // Cuotas module mappings (added)
     '^@altertex/cuota/ctrl/(.*)$': '<rootDir>/Cuotas/Controladores/$1',
     '^@altertex/cuota/repos/(.*)$': '<rootDir>/Cuotas/Datos/Repositorios/$1',
