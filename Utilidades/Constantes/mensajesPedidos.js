@@ -32,4 +32,13 @@ module.exports = {
     codigo: 500,
     mensaje: 'Ocurrió un error al eliminar el pedido.',
   },
+  PEDIDO_ACTUALIZADO: {
+  codigo: 200,
+  mensaje: 'Pedido actualizado correctamente.',
+  },
+  ERROR_ACTUALIZAR_PEDIDO: {
+    codigo: 400,
+    mensaje: 'Error al actualizar el pedido.',
+  },
+
 };

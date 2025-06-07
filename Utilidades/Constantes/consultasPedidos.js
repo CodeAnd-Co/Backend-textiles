@@ -34,4 +34,16 @@ module.exports = {
   ELIMINAR_PEDIDO: `
     DELETE FROM pedido
     WHERE idPedido = ?;`,
+
+  ACTUALIZAR_PEDIDO: `
+    UPDATE pedido
+    JOIN pago ON pedido.idPago = pago.idPago
+    JOIN envio ON pedido.idEnvio = envio.idEnvio
+    SET 
+      pedido.estado = ?, 
+      pedido.precioTotal = ?, 
+      pago.estatus = ?, 
+      envio.estado = ?
+    WHERE pedido.idPedido = ?;
+  `,
 };

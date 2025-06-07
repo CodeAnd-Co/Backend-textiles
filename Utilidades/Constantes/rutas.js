@@ -104,6 +104,7 @@ module.exports = {
     BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_PEDIDO: '/eliminar',
+    ACTUALIZAR_PEDIDO: '/actualizar-pedido',
   },
   PAGOS: {
     BASE: '/pagos',
