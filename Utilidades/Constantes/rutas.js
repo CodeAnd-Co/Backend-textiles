@@ -41,6 +41,7 @@ module.exports = {
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
     ELIMINAR_PRODUCTO: '/eliminar',
+    IMPORTAR: '/importar',
     LEER: '/leer-producto',
     EXPORTAR_PRODUCTOS: '/exportar-productos',
   },
