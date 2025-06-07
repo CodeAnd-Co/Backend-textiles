@@ -28,8 +28,8 @@ exports.actualizarUsuario = async (req, res) => {
   } else if (req.body.cambios) {
     // Si la información viene en el formato esperado (hay cambios)
     datos = Array.isArray(req.body.cambios) ? req.body.cambios : [req.body.cambios];
-    const contraseniaEncriptada = await bcrypt.hash(datos[0]['contrasenia'], 10);
-    datos[0]['contrasenia'] = contraseniaEncriptada;
+    const contraseniaEncriptada = await bcrypt.hash(datos[0].contrasenia, 10);
+    datos[0].contrasenia = contraseniaEncriptada;
   } else {
     return res
       .status(MENSAJES.ERROR_ACTUALIZAR_USUARIO.codigo)
@@ -46,7 +46,7 @@ exports.actualizarUsuario = async (req, res) => {
     return res
       .status(MENSAJES.USUARIO_ACTUALIZADO.codigo)
       .json({ mensaje: MENSAJES.USUARIO_ACTUALIZADO.mensaje, datos });
-  } catch (e) {
+  } catch {
     return res
       .status(MENSAJES.ERROR_ACTUALIZAR_USUARIO.codigo)
       .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje });

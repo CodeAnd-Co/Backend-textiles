@@ -26,25 +26,15 @@ exports.actualizarUsuario = async (datos) => {
   }
   try {
     await Promise.all(
-      datos.map(async (usuario) => {
-        const {
-          idUsuario,
-          nombreCompleto,
-          correoElectronico,
-          contrasenia,
-          numeroTelefono,
-          direccion,
-          fechaNacimiento,
-          genero,
-          estatus,
-          idCliente,
-        } = usuario;
-
-        const conContrasena = () => (usuario.contrasenia == '' ? false : true);
-
-        // Actualiza datos del usuario
-        if (conContrasena()) {
-          await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO, [
+      datos.map(
+        /**
+         * Actualiza la información de un usuario individualmente.
+         * @param {object} usuario - Objeto con los datos del usuario a actualizar.
+         * @returns {Promise<void>}
+         */
+        async (usuario) => {
+          const {
+            idUsuario,
             nombreCompleto,
             correoElectronico,
             contrasenia,
@@ -53,46 +43,65 @@ exports.actualizarUsuario = async (datos) => {
             fechaNacimiento,
             genero,
             estatus,
-            idUsuario,
-          ]);
-        } else {
-          await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO_SIN_CONTRASENA, [
-            nombreCompleto,
-            correoElectronico,
-            numeroTelefono,
-            direccion,
-            fechaNacimiento,
-            genero,
-            estatus,
-            idUsuario,
-          ]);
-        }
+          } = usuario;
 
-        if (usuario.cliente) {
-          // Pasar el cliente/clientes a un array
-          const clientes = Array.isArray(usuario.cliente) ? usuario.cliente : [usuario.cliente];
+          const conContrasena = () => (usuario.contrasenia == '' ? false : true);
 
-          await correrQuery(CONSULTAS_USUARIOS.ELIMINAR_USUARIO_CLIENTE, [idUsuario]).then(
-            // Eliminar todos los cliente asociados al usuario
-            async () => {
-              try {
-                for (const cliente of clientes) {
-                  // Asociar cada cliente seleccionado al usuario
-                  if (cliente) {
-                    // Evitar errores si el cliente es undefined o null
-                    await correrQuery(CONSULTAS_USUARIOS.ASOCIAR_USUARIO_A_CLIENTE, [
-                      idUsuario,
-                      cliente,
-                    ]);
+          // Actualiza datos del usuario
+          if (conContrasena()) {
+            await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO, [
+              nombreCompleto,
+              correoElectronico,
+              contrasenia,
+              numeroTelefono,
+              direccion,
+              fechaNacimiento,
+              genero,
+              estatus,
+              idUsuario,
+            ]);
+          } else {
+            await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO_SIN_CONTRASENA, [
+              nombreCompleto,
+              correoElectronico,
+              numeroTelefono,
+              direccion,
+              fechaNacimiento,
+              genero,
+              estatus,
+              idUsuario,
+            ]);
+          }
+
+          if (usuario.cliente) {
+            // Pasar el cliente/clientes a un array
+            const clientes = Array.isArray(usuario.cliente) ? usuario.cliente : [usuario.cliente];
+
+            await correrQuery(CONSULTAS_USUARIOS.ELIMINAR_USUARIO_CLIENTE, [idUsuario]).then(
+              /**
+               * Función que reasocia los clientes al usuario después de eliminarlos.
+               * @returns {Promise<void>}
+               */
+              async () => {
+                try {
+                  for (const cliente of clientes) {
+                    // Asociar cada cliente seleccionado al usuario
+                    if (cliente) {
+                      // Evitar errores si el cliente es undefined o null
+                      await correrQuery(CONSULTAS_USUARIOS.ASOCIAR_USUARIO_A_CLIENTE, [
+                        idUsuario,
+                        cliente,
+                      ]);
+                    }
                   }
+                } catch (error) {
+                  return error;
                 }
-              } catch (error) {
-                return error;
               }
-            }
-          );
+            );
+          }
         }
-      })
+      )
     );
   } catch {
     throw new Error(MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje);
