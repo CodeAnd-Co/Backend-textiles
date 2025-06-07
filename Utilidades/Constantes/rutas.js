@@ -69,6 +69,7 @@ module.exports = {
   },
   EMPLEADOS: {
     BASE: '/empleados',
+    CREAR: '/crear',
     CONSULTAR_LISTA: '/consultar-lista',
     CONSULTAR_GRUPO: '/consultar-grupo',
     ELIMINAR_GRUPO: '/eliminar-grupo',
