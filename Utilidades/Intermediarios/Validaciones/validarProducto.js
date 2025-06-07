@@ -46,13 +46,15 @@
  */
 // prettier-ignore
 module.exports = (producto) => {
-  if (
-    producto.idProveedor !== null 
-    && (typeof producto.idProveedor !== 'number' 
-      || producto.idProveedor <= 0 
-      || !Number.isInteger(producto.idProveedor))
-  ) {
-    return { error: 'idProveedor debe ser un número entero positivo o NULL.' };
+  if ('idProveedor' in producto) {
+    if (
+      producto.idProveedor !== null 
+      && (typeof producto.idProveedor !== 'number' 
+        || producto.idProveedor <= 0 
+        || !Number.isInteger(producto.idProveedor))
+    ) {
+      return { error: 'idProveedor debe ser un número entero positivo o NULL.' };
+    }
   }
 
   if (

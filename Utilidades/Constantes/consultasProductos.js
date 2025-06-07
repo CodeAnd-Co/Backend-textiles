@@ -1,15 +1,32 @@
 module.exports = {
-  ACTUALIZAR: `
-        UPDATE producto
-        SET idProveedor = ?, nombreComun = ?, nombreComercial = ?, descripcion = ?,
-            marca = ?, modelo = ?, tipoProducto = ?, precioPuntos = ?, precioCliente = ?,
-            precioVenta = ?, costo = ?, impuesto = ?, descuento = ?, estado = ?, envio = ?
-        WHERE idProducto = ?;
+  ACTUALIZAR:`
+    UPDATE producto
+    SET nombreComun = ?, nombreComercial = ?, descripcion = ?,
+        marca = ?, modelo = ?, tipoProducto = ?, precioPuntos = ?, precioCliente = ?,
+        precioVenta = ?, costo = ?, impuesto = ?, descuento = ?, estado = ?, envio = ?
+    WHERE idProducto = ?;
     `,
-  ACTUALIZAR_IMAGEN_PRODUCTO: `
-        UPDATE imagen_producto
-        SET idImagen = ?
-        WHERE idProducto = ?;
+
+  ELIMINAR_OPCIONES: `
+    DELETE opcion
+    FROM opcion
+    INNER JOIN variante ON opcion.idVariante = variante.idVariante
+    WHERE variante.idProducto = ?;
+    `,
+
+  ELIMINAR_VARIANTES: `
+    DELETE FROM variante
+    WHERE idProducto = ?;
+    `,
+  ELIMINAR_IMAGEN_PRODUCTO: `
+    DELETE FROM imagen_producto
+    WHERE idProducto = ?;
+  `,
+  ELIMINAR_IMAGEN_VARIANTES: `
+    DELETE imagen_variante
+    FROM imagen_variante
+    INNER JOIN variante ON imagen_variante.idVariante = variante.idVariante
+    WHERE variante.idProducto = ?;
   `,
   OBTENER_LISTA: `
       SELECT p.idProducto, p.nombreComun, p.precioVenta, p.estado, i.urlImagen
@@ -61,6 +78,7 @@ module.exports = {
                                                           'descripcion', v.descripcion,
                                                           'opciones', (SELECT JSON_ARRAYAGG(
                                                                                       JSON_OBJECT(
+                                                                                              'idOpcion', o.idOpcion,
                                                                                               'cantidad', o.cantidad,
                                                                                               'valorOpcion',
                                                                                               o.valorOpcion,

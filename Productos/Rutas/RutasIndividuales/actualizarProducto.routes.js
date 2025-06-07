@@ -1,4 +1,3 @@
-//RF27 Consulta Lista de Productos - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27
 const express = require('express');
 const ruteador = express.Router();
 const controlador = require('@altertex/pro/ctrl/actualizarProducto.controller');
@@ -6,54 +5,64 @@ const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
 const autorizarToken = require('@altertex/util/inter/autorizarToken');
 const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
 const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const PERMISOS = require('@altertex/util/const/permisos');
 const RUTAS = require('@altertex/util/const/rutas');
 
 /**
  * @swagger
- * /api/productos/actualizar:
+ * /productos/actualizar:
  *   post:
+ *     tags:
+ *       - Productos
  *     summary: Actualizar un producto existente
- *     tags: [Productos]
+ *     description: |
+ *       Permite actualizar un producto existente con sus variantes, opciones e imágenes.
+ *       Requiere autenticación, permisos específicos y está sujeto a límites de peticiones diarias.
  *     security:
  *       - ApiKeyAuth: []
  *       - BearerAuth: []
- *     consumes:
- *       - application/json
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             required:
  *               - idProducto
  *               - producto
+ *               - variantes
+ *               - mapaImagenes
  *             properties:
  *               idProducto:
- *                 type: integer
- *                 description: ID del producto a actualizar
- *                 example: 123
+ *                 type: string
+ *                 description: ID único del producto a actualizar
+ *                 example: "123"
  *               producto:
- *                 type: object
- *                 description: Información actualizada del producto
- *                 properties:
- *                   nombreComun:
- *                     type: string
- *                     example: Camisa casual actualizada
- *                   descripcion:
- *                     type: string
- *                     example: Camisa de algodón actualizada
- *                   precioCliente:
- *                     type: number
- *                     format: float
- *                     example: 55.99
- *                   estado:
- *                     type: integer
- *                     example: 1
+ *                 type: string
+ *                 description: Objeto JSON stringificado con los datos del producto
+ *                 example: '{"nombreComun":"Camiseta Básica","descripcion":"Camiseta 100% algodón","precio":25.99,"categoria":"Ropa","marca":"AlterTex"}'
+ *               variantes:
+ *                 type: string
+ *                 description: Array JSON stringificado con las variantes del producto
+ *                 example: '[{"identificador":"var1","nombreVariante":"Talla M","descripcion":"Talla mediana","opciones":{"color":"azul","talla":"M"}}]'
+ *               mapaImagenes:
+ *                 type: string
+ *                 description: Array JSON stringificado que mapea imágenes con variantes
+ *                 example: '[{"idVariante":"var1","indiceImagen":0}]'
+ *               imagenProducto:
+ *                 type: string
+ *                 format: binary
+ *                 description: Imagen principal del producto (opcional)
+ *               imagenesVariante:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *                 description: Imágenes de las variantes del producto (máximo 100)
  *     responses:
  *       200:
- *         description: Producto actualizado correctamente
+ *         description: Producto actualizado exitosamente
  *         content:
  *           application/json:
  *             schema:
@@ -61,9 +70,9 @@ const RUTAS = require('@altertex/util/const/rutas');
  *               properties:
  *                 mensaje:
  *                   type: string
- *                   example: Producto actualizado correctamente
+ *                   example: "Producto actualizado exitosamente"
  *       400:
- *         description: Error en los parámetros proporcionados
+ *         description: Parámetros inválidos o error de validación
  *         content:
  *           application/json:
  *             schema:
@@ -71,9 +80,9 @@ const RUTAS = require('@altertex/util/const/rutas');
  *               properties:
  *                 mensaje:
  *                   type: string
- *                   example: Los parámetros proporcionados no son válidos
+ *                   example: "Los parámetros proporcionados son inválidos"
  *       401:
- *         description: No autorizado, token inválido o falta de permisos
+ *         description: No autorizado - Token inválido o faltante
  *         content:
  *           application/json:
  *             schema:
@@ -81,7 +90,37 @@ const RUTAS = require('@altertex/util/const/rutas');
  *               properties:
  *                 mensaje:
  *                   type: string
- *                   example: No tiene permisos para realizar esta acción
+ *                   example: "Token de acceso inválido"
+ *       403:
+ *         description: Permisos insuficientes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: "No tienes permisos para actualizar productos"
+ *       404:
+ *         description: Producto no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: "Producto no encontrado para actualización"
+ *       429:
+ *         description: Límite de peticiones diarias excedido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: "Límite de peticiones diarias excedido"
  *       500:
  *         description: Error interno del servidor
  *         content:
@@ -91,17 +130,87 @@ const RUTAS = require('@altertex/util/const/rutas');
  *               properties:
  *                 mensaje:
  *                   type: string
- *                   example: Error al actualizar producto
+ *                   example: "Error interno al actualizar el producto"
  *                 error:
  *                   type: string
- *                   example: Detalles del error
+ *                   example: "Descripción detallada del error"
+ * 
+ * components:
+ *   securitySchemes:
+ *     ApiKeyAuth:
+ *       type: apiKey
+ *       in: header
+ *       name: X-API-Key
+ *       description: API Key requerida para acceder al endpoint
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *       description: Token JWT para autenticación de usuario
+ *   schemas:
+ *     ProductoBase:
+ *       type: object
+ *       properties:
+ *         nombreComun:
+ *           type: string
+ *           description: Nombre común del producto
+ *           example: "Camiseta Básica"
+ *         descripcion:
+ *           type: string
+ *           description: Descripción detallada del producto
+ *           example: "Camiseta 100% algodón, cómoda y duradera"
+ *         precio:
+ *           type: number
+ *           format: float
+ *           description: Precio del producto
+ *           example: 25.99
+ *         categoria:
+ *           type: string
+ *           description: Categoría del producto
+ *           example: "Ropa"
+ *         marca:
+ *           type: string
+ *           description: Marca del producto
+ *           example: "AlterTex"
+ *     VarianteProducto:
+ *       type: object
+ *       properties:
+ *         identificador:
+ *           type: string
+ *           description: Identificador único temporal de la variante
+ *           example: "var1"
+ *         nombreVariante:
+ *           type: string
+ *           description: Nombre de la variante
+ *           example: "Talla M - Color Azul"
+ *         descripcion:
+ *           type: string
+ *           description: Descripción de la variante
+ *           example: "Talla mediana en color azul"
+ *         opciones:
+ *           type: object
+ *           description: Opciones específicas de la variante
+ *           example: {"color": "azul", "talla": "M"}
+ *     MapaImagen:
+ *       type: object
+ *       properties:
+ *         idVariante:
+ *           type: string
+ *           description: ID temporal de la variante asociada a la imagen
+ *           example: "var1"
+ *         indiceImagen:
+ *           type: integer
+ *           description: Índice de la imagen en el array de imágenes
+ *           example: 0
  */
+
 
 ruteador.post(
   RUTAS.PRODUCTOS.ACTUALIZAR,
   revisarApiKey(),
   autorizarToken,
   limitePeticionesDiarias,
+  validarYSanitizar,
   verificarPermisos(PERMISOS.ACTUALIZAR_PRODUCTO),
   controlador.actualizarProducto
 );
