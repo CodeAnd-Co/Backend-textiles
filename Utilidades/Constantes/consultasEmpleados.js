@@ -47,4 +47,35 @@ module.exports = {
     JOIN usuario u ON e.idUsuario = u.idUsuario
     WHERE e.idCliente = ? AND e.idEmpleado IN (__IDS__);
   `,
+  OBTENER_ULTIMO_ID_EMPLEADO: `
+        SELECT idEmpleado FROM empleado ORDER BY idEmpleado DESC LIMIT 1;
+    `,
+  CONSULTAR_ID_VALIDO: `
+        SELECT 
+          CASE 
+            WHEN NOT EXISTS (SELECT 1 FROM usuarios WHERE idUsuario = ?) 
+            THEN 'No hay ningún usuario registrado bajo este ID'
+            WHEN EXISTS (SELECT 1 FROM empleado WHERE idUsuario = ?) 
+            THEN 'Este usuario ya está registrado como empleado, revisa de nuevo el ID a usar'
+            ELSE 'OK'
+          END AS resultado; 
+    `,
+
+  INSERTAR_USUARIO: `
+    INSERT INTO usuario
+         (nombreCompleto, correoElectronico, contrasenia, numeroTelefono, direccion, fechaNacimiento, genero, estatus)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+
+        `,
+
+  INSERTAR_ROL: `
+    INSERT INTO usuario_rol (idUsuario, idRol)
+        VALUES (?, ?)
+    `,
+
+  INSERTAR_USUARIO_CLIENTE: `
+    INSERT INTO usuario_cliente (idUsuario, idCliente)
+        VALUES (?, ?)
+    `,
+
 };

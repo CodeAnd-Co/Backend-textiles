@@ -5,7 +5,8 @@ module.exports = {
              sp.descripcion,
              sp.activo,
              GROUP_CONCAT(DISTINCT p.nombreComun SEPARATOR ', ') AS productos,
-             GROUP_CONCAT(DISTINCT ge.nombre SEPARATOR ', ')     AS grupos
+             GROUP_CONCAT(DISTINCT ge.nombre SEPARATOR ', ')     AS grupos,
+             GROUP_CONCAT(p.idProducto SEPARATOR ', ') AS idsProductos
       FROM set_producto sp
                LEFT JOIN producto_set_producto psp ON psp.idSetProducto = sp.idSetProducto
                LEFT JOIN producto p ON p.idProducto = psp.idProducto
@@ -43,9 +44,35 @@ module.exports = {
       WHERE idCliente = ?
         AND (nombre = ? OR nombreVisible = ?);
   `,
+  CONSULTAR_NOMBRE_DUPLICADO: `
+      SELECT idSetProducto
+      FROM set_producto
+      WHERE idCliente = ? and idSetProducto!= ?
+        AND (nombre = ?);
+  `,
   CONSULTAR_PRODUCTOS_EXISTENTES: `
       SELECT idProducto
       FROM producto
       WHERE idProducto IN (__IDS__);
+  `,
+  ACTUALIZAR_SET_INFO: `
+    UPDATE set_producto
+    SET nombre = ?, activo = ?, descripcion = ? 
+    WHERE idSetProducto = ?
+  `,
+
+  ELIMINAR_PRODUCTOS_DEL_SET: `
+    DELETE FROM producto_set_producto
+    WHERE idSetProducto = __ID__ AND idProducto NOT IN (__PRODUCTOS__)
+  `,
+
+  AGREGAR_PRODUCTOS_AL_SET: `
+    INSERT IGNORE INTO producto_set_producto (idSetProducto, idProducto)
+    VALUES __VALORES__
+  `,
+
+  ELIMINAR_TODOS_PRODUCTOS_DEL_SET: `
+    DELETE FROM producto_set_producto
+    WHERE idSetProducto = ?
   `,
 };
