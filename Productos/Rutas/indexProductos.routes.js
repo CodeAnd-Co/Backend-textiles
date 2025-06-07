@@ -6,7 +6,6 @@ const rutaCrearProducto = require('@altertex/pro/rutasInd/crearProducto.routes')
 const rutasLeerProducto = require('@altertex/pro/rutasInd/leerProductos.routes');
 const rutasExportarProductos = require('@altertex/pro/rutasInd/exportarProductos.routes');
 const rutasActualizarProducto = require('@altertex/pro/rutasInd/actualizarProducto.routes');
-
 const RUTAS = require('@altertex/util/const/rutas');
 
 //RF27 Consulta Lista de Productos - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF27
