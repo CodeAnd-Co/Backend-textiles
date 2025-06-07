@@ -42,6 +42,7 @@ module.exports = {
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
     ELIMINAR_PRODUCTO: '/eliminar',
+    IMPORTAR: '/importar',
     LEER: '/leer-producto',
     EXPORTAR_PRODUCTOS: '/exportar-productos',
   },
@@ -56,6 +57,7 @@ module.exports = {
     CREAR: '/crear',
     SUBIR_IMAGEN: '/subir-imagen',
     ELIMINAR_SET_PRODUCTOS: '/eliminar',
+    ACTUALIZAR: '/actualizar',
   },
   CLIENTES: {
     BASE: '/clientes',
@@ -68,6 +70,7 @@ module.exports = {
   },
   EMPLEADOS: {
     BASE: '/empleados',
+    CREAR: '/crear',
     CONSULTAR_LISTA: '/consultar-lista',
     CONSULTAR_GRUPO: '/consultar-grupo',
     ELIMINAR_GRUPO: '/eliminar-grupo',
@@ -86,6 +89,7 @@ module.exports = {
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_SET_CUOTAS: '/eliminar-set-cuotas',
     LEER_SET_CUOTAS: '/leer-set-cuotas',
+    ACTUALIZAR_SET_CUOTAS: '/actualizar-set-cuotas',
   },
   ROLES: {
     BASE: '/roles',
@@ -101,6 +105,7 @@ module.exports = {
     BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_PEDIDO: '/eliminar',
+    ACTUALIZAR_PEDIDO: '/actualizar-pedido',
   },
   PAGOS: {
     BASE: '/pagos',

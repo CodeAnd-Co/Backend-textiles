@@ -33,10 +33,10 @@ module.exports = (variante) => {
 
   if (
     variante.descripcion !== null 
-    && (typeof variante.descripcion !== 'string' || variante.descripcion.length > 1000)
+    && (typeof variante.descripcion !== 'string' || variante.descripcion.length > 1000 || variante.descripcion.trim() === '')
   ) {
     return {
-      error: 'descripcion debe ser una cadena de texto y no exceder 1000 caracteres.',
+      error: 'descripcionVariante debe ser una cadena de texto y no exceder 1000 caracteres.',
     };
   }
 
