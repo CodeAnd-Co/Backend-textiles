@@ -1,0 +1,120 @@
+const repositorio = require('@altertex/usu/repos/repositorioCrearUsuario');
+const bcrypt = require('bcryptjs');
+const MENSAJES_USUARIOS = require('@altertex/util/const/mensajesUsuarios');
+
+/**
+ * Controlador para crear un nuevo usuario.
+ * RF1 - Crear Usuario - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF1
+ * @async
+ * @function crearUsuario
+ * @param {object} req - Objeto de solicitud de Express.
+ * @param {object} req.body - Cuerpo de la solicitud HTTP.
+ * @param {string} req.body.nombreCompleto - Nombre completo del usuario.
+ * @param {string} req.body.correoElectronico - Correo electrónico del usuario.
+ * @param {string} req.body.contrasenia - Contraseña proporcionada por el usuario (sin hashear).
+ * @param {string} req.body.numeroTelefono - Número de teléfono del usuario.
+ * @param {string} req.body.direccion - Dirección del usuario.
+ * @param {string} req.body.fechaNacimiento - Fecha de nacimiento en formato YYYY-MM-DD.
+ * @param {string} req.body.genero - Género del usuario.
+ * @param {boolean} req.body.estatus - Estatus activo/inactivo del usuario.
+ * @param {object} res - Objeto de respuesta de Express.
+ *
+ * @returns {Response} Respuesta HTTP con estado:
+ * - 201 si el usuario se creó correctamente.
+ * - 400 si faltan campos requeridos.
+ * - 401 si no se pudo crear el usuario.
+ * - 500 si ocurre un error en el servidor.
+ *
+ * @throws {Error}
+ *
+ */
+exports.crearUsuario = async (req, res) => {
+  const {
+    nombreCompleto,
+    correoElectronico,
+    contrasenia,
+    numeroTelefono,
+    direccion,
+    fechaNacimiento,
+    genero,
+    estatus,
+    idRol,
+    idCliente,
+  } = req.body;
+
+  if (
+    !nombreCompleto
+    || !correoElectronico
+    || !contrasenia
+    || !numeroTelefono
+    || !direccion
+    || !fechaNacimiento
+    || !genero
+    || estatus === undefined
+    || !idRol
+    || idCliente === undefined
+    || (Array.isArray(idCliente) && idCliente.length === 0)
+  ) {
+    return res.status(400).json({ mensaje: 'Faltan campos requeridos' });
+  }
+
+  const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!correoValido.test(correoElectronico)) {
+    return res
+      .status(MENSAJES_USUARIOS.CORREO_INVALIDO.codigo)
+      .json({ mensaje: MENSAJES_USUARIOS.CORREO_INVALIDO.mensaje });
+  }
+
+  const tieneCaracterEspecial = /[!@#$%^&*(),.?":{}|<>]/;
+  const tieneMayuscula = /[A-Z]/;
+  if (contrasenia.length < 8) {
+    return res
+      .status(MENSAJES_USUARIOS.CONTRASENA_DEBIL.codigo)
+      .json({ mensaje: MENSAJES_USUARIOS.CONTRASENA_DEBIL.mensaje });
+  }
+
+  if (!tieneCaracterEspecial.test(contrasenia)) {
+    return res
+      .status(MENSAJES_USUARIOS.CONTRASENA_DEBIL.codigo)
+      .json({ mensaje: MENSAJES_USUARIOS.CONTRASENA_DEBIL.mensaje });
+  }
+
+  if (!tieneMayuscula.test(contrasenia)) {
+    return res.status(MENSAJES_USUARIOS.CONTRASENA_DEBIL.codigo).json({
+      mensaje: 'La contraseña debe contener al menos una letra mayúscula.',
+    });
+  }
+
+  const telefonoValido = /^\d{10}$/;
+  if (!telefonoValido.test(numeroTelefono)) {
+    return res
+      .status(MENSAJES_USUARIOS.TELEFONO_INVALIDO.codigo)
+      .json({ mensaje: MENSAJES_USUARIOS.TELEFONO_INVALIDO.mensaje });
+  }
+
+  try {
+    const contraseniaEncriptada = await bcrypt.hash(contrasenia, 10);
+
+    const resultado = await repositorio.crearUsuarioConAsociaciones(
+      nombreCompleto,
+      correoElectronico,
+      contraseniaEncriptada,
+      numeroTelefono,
+      direccion,
+      fechaNacimiento,
+      genero,
+      estatus,
+      idRol,
+      idCliente
+    );
+
+    return res.status(MENSAJES_USUARIOS.USUARIO_CREADO.codigo).json({
+      mensaje: MENSAJES_USUARIOS.USUARIO_CREADO.mensaje,
+      idUsuario: resultado.idUsuario,
+    });
+  } catch {
+    return res
+      .status(MENSAJES_USUARIOS.ERROR_CREAR_USUARIO.codigo)
+      .json({ mensaje: MENSAJES_USUARIOS.ERROR_CREAR_USUARIO.mensaje });
+  }
+};

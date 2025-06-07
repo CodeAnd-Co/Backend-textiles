@@ -1,0 +1,59 @@
+/**
+ * RF15 - Elimina Cliente - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF15
+ */
+
+/**
+ * @swagger
+ * /api/clientes/eliminar:
+ *   post:
+ *     summary: Eliminar un cliente registrado
+ *     tags: [Clientes]
+ *     security:
+ *       - ApiKeyAuth: []
+ *       - BearerAuth: []
+ *     parameters:
+ *       - idCliente: int
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del cliente que se desea eliminar
+ *     responses:
+ *       200:
+ *         description: Cliente eliminado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: Cliente eliminado
+ *       404:
+ *         description: No se encontró un cliente con el ID proporcionado.
+ *       400:
+ *         description: Error interno al eliminar el cliente
+ */
+
+const express = require('express');
+const ruteador = express.Router();
+const controlador = require('@altertex/cli/ctrl/eliminarCliente.controller');
+const revisarApiKey = require('@altertex/util/inter/revisarApiKey');
+const autorizarToken = require('@altertex/util/inter/autorizarToken');
+const verificarPermisos = require('@altertex/util/inter/verificarPermisos');
+const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
+const limitePeticionesDiarias = require('@altertex/util/inter/limitePeticiones');
+
+const PERMISOS = require('@altertex/util/const/permisos');
+const RUTAS = require('@altertex/util/const/rutas');
+
+ruteador.post(
+  RUTAS.CLIENTES.ELIMINAR_CLIENTE,
+  validarYSanitizar,
+  revisarApiKey(),
+  autorizarToken,
+  limitePeticionesDiarias,
+  verificarPermisos(PERMISOS.ELIMINAR_CLIENTE),
+  controlador.eliminarCliente
+);
+
+module.exports = ruteador;

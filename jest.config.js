@@ -1,0 +1,103 @@
+module.exports = {
+  // La raíz del directorio que Jest usará para buscar los archivos
+  rootDir: '.',
+
+  // Rutas a directorios que Jest debe ignorar durante las pruebas
+  testPathIgnorePatterns: ['/node_modules/'],
+
+  // Patrón para encontrar archivos de prueba
+  testMatch: ['**/__tests__/**/*.js', '**/?(*.)+(spec|test).js'],
+
+  // Entorno de prueba
+  testEnvironment: 'node',
+
+  // Cobertura de código
+  collectCoverage: true,
+  coverageDirectory: 'coverage',
+
+  // Módulos que deben ser transformados
+  // (Si usas babel o typescript necesitarías configurar esto)
+  transform: {},
+  moduleFileExtensions: ['js', 'json'],
+  moduleNameMapper: {
+    '^@altertex/root(.*)$': '<rootDir>$1',
+
+    // Autenticacion module mappings
+    '^@altertex/aut/ctrl/(.*)$': '<rootDir>/Autenticacion/Controladores/$1',
+    '^@altertex/aut/repos/(.*)$': '<rootDir>/Autenticacion/Datos/Repositorios/$1',
+    '^@altertex/aut/rutasInd/(.*)$': '<rootDir>/Autenticacion/Rutas/RutasIndividuales/$1',
+    '^@altertex/aut/rutas/(.*)$': '<rootDir>/Autenticacion/Rutas/$1',
+    '^@altertex/aut/datos/(.*)$': '<rootDir>/Autenticacion/Datos/$1',
+    '^@altertex/aut/(.*)$': '<rootDir>/Autenticacion/$1',
+
+    // Categorias module mappings
+    "^@altertex/cat/ctrl/(.*)$": "<rootDir>/Categorias/Controladores/$1",
+    "^@altertex/cat/repos/(.*)$": "<rootDir>/Categorias/Datos/Repositorios/$1",
+    "^@altertex/cat/rutasInd/(.*)$": "<rootDir>/Categorias/Rutas/RutasIndividuales/$1",
+    "^@altertex/cat/rutas/(.*)$": "<rootDir>/Categorias/Rutas/$1",
+    "^@altertex/cat/datos/(.*)$": "<rootDir>/Categorias/Datos/$1",
+    "^@altertex/cat/(.*)$": "<rootDir>/Categorias/$1",
+
+    // Clientes module mappings
+    "^@altertex/cli/ctrl/(.*)$": "<rootDir>/Clientes/Controladores/$1",
+    "^@altertex/cli/repos/(.*)$": "<rootDir>/Clientes/Datos/Repositorios/$1",
+    "^@altertex/cli/rutasInd/(.*)$": "<rootDir>/Clientes/Rutas/RutasIndividuales/$1",
+    "^@altertex/cli/rutas/(.*)$": "<rootDir>/Clientes/Rutas/$1",
+    "^@altertex/cli/datos/(.*)$": "<rootDir>/Clientes/Datos/$1",
+    "^@altertex/cli/(.*)$": "<rootDir>/Clientes/$1",
+
+    // Cuotas module mappings (added)
+    '^@altertex/cuota/ctrl/(.*)$': '<rootDir>/Cuotas/Controladores/$1',
+    '^@altertex/cuota/repos/(.*)$': '<rootDir>/Cuotas/Datos/Repositorios/$1',
+    '^@altertex/cuota/rutasInd/(.*)$': '<rootDir>/Cuotas/Rutas/RutasIndividuales/$1',
+    '^@altertex/cuota/rutas/(.*)$': '<rootDir>/Cuotas/Rutas/$1',
+    '^@altertex/cuota/datos/(.*)$': '<rootDir>/Cuotas/Datos/$1',
+    '^@altertex/cuota/(.*)$': '<rootDir>/Cuotas/$1',
+
+    // CRON jobs module mappings (added)
+    '^@altertex/CRON/ctrl/(.*)$': '<rootDir>/CRON_JOBS/Controladores/$1',
+    '^@altertex/CRON/datos/(.*)$': '<rootDir>/CRON_JOBS/Datos/$1',
+    '^@altertex/CRON/repos/(.*)$': '<rootDir>/CRON_JOBS/Datos/Repositorios/$1',
+    '^@altertex/CRON/(.*)$': '<rootDir>/CRON_JOBS/$1',
+
+    // Configuration and utilities mappings
+    '^@altertex/config/(.*)$': '<rootDir>/Configuracion/$1',
+    '^@altertex/util/ser/(.*)$': '<rootDir>/Utilidades/Servicios/$1',
+    '^@altertex/util/inter/(.*)$': '<rootDir>/Utilidades/Intermediarios/$1',
+    '^@altertex/util/const/(.*)$': '<rootDir>/Utilidades/Constantes/$1',
+    '^@altertex/util/bd/(.*)$': '<rootDir>/Utilidades/BaseDeDatos/$1',
+    '^@altertex/util/(.*)$': '<rootDir>/Utilidades/$1',
+
+    // GrupoEmpleados module mappings
+    "^@altertex/emp/ctrl/(.*)$": "<rootDir>/Empleados/Controladores/$1",
+    "^@altertex/emp/repos/(.*)$": "<rootDir>/Empleados/Datos/Repositorios/$1",
+    "^@altertex/emp/rutasInd/(.*)$": "<rootDir>/Empleados/Rutas/RutasIndividuales/$1",
+    "^@altertex/emp/rutas/(.*)$": "<rootDir>/Empleados/Rutas/$1",
+    "^@altertex/emp/datos/(.*)$": "<rootDir>/Empleados/Datos/$1",
+    "^@altertex/emp/(.*)$": "<rootDir>/Empleados/$1",
+
+    // Eventos module mappings
+    "^@altertex/eve/ctrl/(.*)$": "<rootDir>/Eventos/Controladores/$1",
+    "^@altertex/eve/repos/(.*)$": "<rootDir>/Eventos/Datos/Repositorios/$1",
+    "^@altertex/eve/rutasInd/(.*)$": "<rootDir>/Eventos/Rutas/RutasIndividuales/$1",
+    "^@altertex/eve/rutas/(.*)$": "<rootDir>/Eventos/Rutas/$1",
+    "^@altertex/eve/datos/(.*)$": "<rootDir>/Eventos/Datos/$1",
+    "^@altertex/eve/(.*)$": "<rootDir>/Eventos/$1",
+
+     // Usuarios module mappings
+    '^@altertex/usu/ctrl/(.*)$': '<rootDir>/Usuarios/Controladores/$1',
+    '^@altertex/usu/repos/(.*)$': '<rootDir>/Usuarios/Datos/Repositorios/$1',
+    '^@altertex/usu/rutasInd/(.*)$': '<rootDir>/Usuarios/Rutas/RutasIndividuales/$1',
+    '^@altertex/usu/rutas/(.*)$': '<rootDir>/Usuarios/Rutas/$1',
+    '^@altertex/usu/datos/(.*)$': '<rootDir>/Usuarios/Datos/$1',
+    '^@altertex/usu/(.*)$': '<rootDir>/Usuarios/$1',
+
+    // Sets de productos
+    "^@altertex/setspro/ctrl/(.*)$": "<rootDir>/SetsProductos/Controladores/$1",
+    "^@altertex/setspro/repos/(.*)$": "<rootDir>/SetsProductos/Datos/Repositorios/$1",
+
+    // Generic mapping as fallback
+    '^@altertex/(.*)$': '<rootDir>/$1',
+
+  },
+};
