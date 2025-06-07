@@ -1,5 +1,5 @@
 const db = require('@altertex/util/bd/db');
-const DEFAULT_ROLE_ID = 3;
+const DEFAULT_ROLE_ID = 3; // ID del rol por defecto para empleados
 const CONSULTAS_IMPORTAR_EMPLEADOS = require('@altertex/util/const/consultasImportarEmpleados');
 /**
  * Importa en bloque múltiples empleados, creando sus usuarios, asignando rol y vinculación con clientes.
@@ -40,29 +40,29 @@ exports.importarEmpleadosMasivo = async (empleados) => {
     await conn.beginTransaction();
 
     // 1) Validar correos duplicados en bloque
-    const correos = empleados.map(elemento => elemento.correoElectronico);
+    const correos = empleados.map((elemento) => elemento.correoElectronico);
     const [correosExistentes] = await conn.query(
       CONSULTAS_IMPORTAR_EMPLEADOS.VALIDAR_CORREOS_DUPLICADOS,
       [correos]
     );
     if (correosExistentes.length > 0) {
-      const lista = correosExistentes.map(fila => fila.correoElectronico).join(', ');
+      const lista = correosExistentes.map((fila) => fila.correoElectronico).join(', ');
       throw new Error(`Correos ya registrados: ${lista}`);
     }
 
     // 2) Validar teléfonos duplicados en bloque
-    const telefonos = empleados.map(elemento => elemento.numeroTelefono);
+    const telefonos = empleados.map((elemento) => elemento.numeroTelefono);
     const [telefonosExistentes] = await conn.query(
       CONSULTAS_IMPORTAR_EMPLEADOS.VALIDAR_TELEFONO_DUPLICADO,
       [telefonos]
     );
     if (telefonosExistentes.length > 0) {
-      const lista = telefonosExistentes.map(fila => fila.numeroTelefono).join(', ');
+      const lista = telefonosExistentes.map((fila) => fila.numeroTelefono).join(', ');
       throw new Error(`Teléfonos ya registrados: ${lista}`);
     }
 
     // 3) Bulk‐insert de usuarios
-    const usuariosValues = empleados.map(elemento => [
+    const usuariosValues = empleados.map((elemento) => [
       elemento.nombreCompleto,
       elemento.correoElectronico,
       elemento.contrasena,
@@ -70,80 +70,71 @@ exports.importarEmpleadosMasivo = async (empleados) => {
       elemento.direccion,
       elemento.fechaNacimiento,
       elemento.genero,
-      elemento.estatus
+      elemento.estatus,
     ]);
-    await conn.query(
-      CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_USUARIO_EN_VOLUMEN,
-      [usuariosValues]
-    );
+    await conn.query(CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_USUARIO_EN_VOLUMEN, [usuariosValues]);
 
     // 4) Recuperar los IDs generados
-    const [rowsUsuarios] = await conn.query(
-      CONSULTAS_IMPORTAR_EMPLEADOS.OBTENER_ID_GENERADOS,
-      [correos]
-    );
+    const [rowsUsuarios] = await conn.query(CONSULTAS_IMPORTAR_EMPLEADOS.OBTENER_ID_GENERADOS, [
+      correos,
+    ]);
     const idMap = rowsUsuarios.reduce((map, row) => {
       map[row.correoElectronico] = row.idUsuario;
       return map;
     }, {});
 
     // 5) Bulk‐insert de roles
-    const rolValues = empleados.map(elemento => [
+    const rolValues = empleados.map((elemento) => [
       idMap[elemento.correoElectronico],
-      DEFAULT_ROLE_ID
+      DEFAULT_ROLE_ID,
     ]);
-    await conn.query(
-      CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_ROLES_EN_VOLUMEN,
-      [rolValues]
-    );
+    await conn.query(CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_ROLES_EN_VOLUMEN, [rolValues]);
 
     // 6) Bulk‐insert de asociaciones usuario‐cliente
     const clienteValues = [];
-    empleados.forEach(elemento => {
+    empleados.forEach((elemento) => {
       const idU = idMap[elemento.correoElectronico];
-      const listaClientes = Array.isArray(elemento.idCliente) ? elemento.idCliente : [elemento.idCliente];
-      listaClientes.forEach(idCli => clienteValues.push([idU, idCli]));
+      const listaClientes = Array.isArray(elemento.idCliente)
+        ? elemento.idCliente
+        : [elemento.idCliente];
+      listaClientes.forEach((idCli) => clienteValues.push([idU, idCli]));
     });
-    await conn.query(
-      CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_USUARIO_CLIENTE_EN_VOLUMEN,
-      [clienteValues]
-    );
+    await conn.query(CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_USUARIO_CLIENTE_EN_VOLUMEN, [
+      clienteValues,
+    ]);
 
     // 7) Bulk‐insert de empleados
-    const empValues = empleados.map(elemento => [
+    const empValues = empleados.map((elemento) => [
       idMap[elemento.correoElectronico],
       elemento.idCliente,
       elemento.numeroEmergencia,
       elemento.areaTrabajo,
       elemento.posicion,
       parseFloat(elemento.cantidadPuntos),
-      elemento.antiguedad
+      elemento.antiguedad,
     ]);
-    await conn.query(
-      CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_EMPLEADOS_EN_VOLUMEN,
-      [empValues]
-    );
+    await conn.query(CONSULTAS_IMPORTAR_EMPLEADOS.INSERTAR_EMPLEADOS_EN_VOLUMEN, [empValues]);
 
     await conn.commit();
   } catch (err) {
     await conn.rollback();
     const mensajeOriginal = err.message || '';
 
-  // Detectar error por entrada duplicada
-  const entradaDuplicada = mensajeOriginal.match(/Duplicate entry '(.+)' for key '(.+)'/);
+    // Detectar error por entrada duplicada
+    const entradaDuplicada = mensajeOriginal.match(/Duplicate entry '(.+)' for key '(.+)'/);
 
-  if (entradaDuplicada) {
-    const valorDuplicado = entradaDuplicada[1];
-    const campo = entradaDuplicada[2];
+    if (entradaDuplicada) {
+      const valorDuplicado = entradaDuplicada[1];
+      const campo = entradaDuplicada[2];
 
-    let campoTraducido = campo;
-    if (campo.includes('correoElectronico')) campoTraducido = 'correo electrónico';
-    else if (campo.includes('telefono')) campoTraducido = 'número de teléfono';
+      let campoTraducido = campo;
+      if (campo.includes('correoElectronico')) campoTraducido = 'correo electrónico';
+      else if (campo.includes('telefono')) campoTraducido = 'número de teléfono';
 
-    throw new Error(`La entrada ${campoTraducido} "${valorDuplicado}" esta duplicada`);
-  }
+      throw new Error(`La entrada ${campoTraducido} "${valorDuplicado}" esta duplicada`);
+    }
 
-  throw new Error(`Error en importación masiva: ${mensajeOriginal}`);
+    throw new Error(`Error en importación masiva: ${mensajeOriginal}`);
   } finally {
     if (conn) conn.release();
   }

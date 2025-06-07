@@ -52,15 +52,32 @@ module.exports = {
   WHERE cs.idCuotaSet = ?;
   `,
 
-  LEER_CUOTA_SET_PRODUCTOS: `
-  SELECT 
-  p.nombreComun,
-  csp.limite AS cuota_valor 
-  FROM cuota_set cs
-  JOIN cuota_set_producto csp
-      ON cs.idCuotaSet = csp.idCuotaSet
-  JOIN producto p
-      ON p.idProducto = csp.idProducto
-  WHERE cs.idCuotaSet = ?;
-    `,
+  LEER_CUOTA_SET_PRODUCTOS: 
+    `SELECT 
+    p.idProducto,
+    p.nombreComun,
+    csp.limite AS cuota_valor,
+    csp.limite_actual
+    FROM cuota_set cs
+    JOIN cuota_set_producto csp
+        ON cs.idCuotaSet = csp.idCuotaSet
+    JOIN producto p
+        ON p.idProducto = csp.idProducto
+    WHERE cs.idCuotaSet = ?`,
+
+  ACTUALIZAR_CUOTA_SET: `
+  UPDATE cuota_set
+  SET nombre = ?, descripcion = ?, periodoRenovacion = ?, renovacionHabilitada = ?, ultimaActualizacion = ?
+  WHERE idCuotaSet = ?;
+  `,
+
+  INSERTAR_CUOTA_PRODUCTO_ACTUALIZAR: `
+  INSERT INTO cuota_set_producto (idCuotaSet, idProducto, limite, limite_actual)
+  VALUES (?, ?, ?, ?)
+  `,
+
+  ELIMINAR_PRODUCTOS_CUOTA_SET: `
+  DELETE FROM cuota_set_producto WHERE idCuotaSet = ?;
+  `,
+
 };
