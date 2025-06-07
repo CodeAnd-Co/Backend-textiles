@@ -53,6 +53,7 @@ module.exports = {
                      'descuento', p.descuento,
                      'estado', p.estado,
                      'envio', p.envio,
+                     'descripcion', p.descripcion,
                      'nombreProveedor', pr.nombreCompania,
                      'variantes', (SELECT JSON_ARRAYAGG(
                                                   JSON_OBJECT(
