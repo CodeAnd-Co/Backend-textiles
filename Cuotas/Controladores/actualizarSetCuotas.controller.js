@@ -1,6 +1,12 @@
-// actualizarSetCuotas.controller.js
 const repositorio = require('@altertex/cuota/repos/actualizarSetCuotasRepositorio');
 
+/**
+ * Controlador que gestiona la actualización de un set de cuotas.
+ *
+ * @param {object} req - Objeto de solicitud HTTP de Express.
+ * @param {object} res - Objeto de respuesta HTTP de Express.
+ * @returns {object} Respuesta JSON con el resultado de la operación.
+ */
 exports.actualizarSetCuotas = async (req, res) => {
   try {
     const { idCuotaSet, cambios } = req.body;
