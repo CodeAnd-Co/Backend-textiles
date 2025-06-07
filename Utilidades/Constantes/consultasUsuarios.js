@@ -60,6 +60,7 @@ module.exports = {
              u.genero,
              u.estatus,
              r.idRol          AS rol,
+             r.nombre      AS nombreRol,
              uc.idCliente AS idCliente,
              c.nombreComercial AS nombreCliente
       FROM usuario u
