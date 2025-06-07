@@ -56,6 +56,7 @@ module.exports = {
     CREAR: '/crear',
     SUBIR_IMAGEN: '/subir-imagen',
     ELIMINAR_SET_PRODUCTOS: '/eliminar',
+    ACTUALIZAR: '/actualizar',
   },
   CLIENTES: {
     BASE: '/clientes',
