@@ -45,10 +45,10 @@ exports.actualizarUsuario = async (datos) => {
             estatus,
           } = usuario;
 
-          const conContrasena = () => (usuario.contrasenia == '' ? false : true);
+          const conContrasena = usuario.contrasenia == '' ? false : true;
 
           // Actualiza datos del usuario
-          if (conContrasena()) {
+          if (conContrasena) {
             await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO, [
               nombreCompleto,
               correoElectronico,
