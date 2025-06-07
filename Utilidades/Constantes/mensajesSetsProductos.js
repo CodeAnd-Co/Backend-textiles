@@ -88,4 +88,8 @@ module.exports = {
     codigo: 400,
     mensaje: 'La lista de productos contiene elementos inválidos',
   },
+  PARAMETROS_INVALIDOS: {
+    codigo: 400,
+    mensaje: 'Parámetros inválidos',
+  },
 };

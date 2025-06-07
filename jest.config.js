@@ -92,6 +92,10 @@ module.exports = {
     '^@altertex/usu/datos/(.*)$': '<rootDir>/Usuarios/Datos/$1',
     '^@altertex/usu/(.*)$': '<rootDir>/Usuarios/$1',
 
+    // Sets de productos
+    "^@altertex/setspro/ctrl/(.*)$": "<rootDir>/SetsProductos/Controladores/$1",
+    "^@altertex/setspro/repos/(.*)$": "<rootDir>/SetsProductos/Datos/Repositorios/$1",
+
     // Generic mapping as fallback
     '^@altertex/(.*)$': '<rootDir>/$1',
 
