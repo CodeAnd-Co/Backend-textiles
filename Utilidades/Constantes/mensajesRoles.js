@@ -76,8 +76,12 @@ module.exports = {
     codigo: 400,
     mensaje: 'Ocurrió un error al eliminar rol',
     mensaje_no_existe: 'Ocurrió un error, rol no existe',
-    mensaje_rol_asignado: 'No se puede eliminar el rol porque está asignado a uno o más usuarios.'
+    mensaje_rol_asignado: 'No se puede eliminar el rol porque está asignado a uno o más usuarios.',
 
+  },
+  ACTUALIZAR_ROL: {
+    codigo: 200,
+    mensaje: 'Se actualizo correctamente el rol.',
   },
 
   NOMBRE_OBLIGATORIO: 'El nombre del rol es obligatorio.',

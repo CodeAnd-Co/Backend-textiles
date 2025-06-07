@@ -66,7 +66,7 @@
  *                 mensaje:
  *                   type: string
  *                   example: "No se encontró un cliente con el ID proporcionado."
- *       500:
+ *       400:
  *         description: Error interno del servidor al consultar el cliente.
  *         content:
  *           application/json:

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebResourcesPaths">
+    <contentEntries>
+      <entry url="file://$PROJECT_DIR$">
+        <entryData>
+          <resourceRoots>
+            <path value="file://$PROJECT_DIR$/Autenticacion" />
+            <path value="file://$PROJECT_DIR$/Categorias" />
+            <path value="file://$PROJECT_DIR$/Clientes" />
+            <path value="file://$PROJECT_DIR$/Configuracion" />
+            <path value="file://$PROJECT_DIR$/Cuotas" />
+            <path value="file://$PROJECT_DIR$/Empleados" />
+            <path value="file://$PROJECT_DIR$/Eventos" />
+            <path value="file://$PROJECT_DIR$/Pagos" />
+            <path value="file://$PROJECT_DIR$/Pedidos" />
+            <path value="file://$PROJECT_DIR$/Productos" />
+            <path value="file://$PROJECT_DIR$/Proveedores" />
+            <path value="file://$PROJECT_DIR$/Roles" />
+            <path value="file://$PROJECT_DIR$/SetsProductos" />
+            <path value="file://$PROJECT_DIR$/Usuarios" />
+            <path value="file://$PROJECT_DIR$/Utilidades" />
+            <path value="file://$PROJECT_DIR$/CRON_JOBS" />
+            <path value="file://$PROJECT_DIR$" />
+          </resourceRoots>
+        </entryData>
+      </entry>
+    </contentEntries>
+  </component>
+</project>

@@ -8,7 +8,7 @@ module.exports = {
     CERRAR_SESION: '/cerrar-sesion',
     USUARIO_AUTENTICADO: '/autenticar',
     ACTIVAR_2FA: '/activar-2fa',
-    VERIFICAR_2FA: '/verificar-2fa'
+    VERIFICAR_2FA: '/verificar-2fa',
   },
   USUARIOS: {
     BASE: '/usuarios',
@@ -25,7 +25,8 @@ module.exports = {
     CONSULTAR_LISTA_USUARIOS: '/consultar-lista-usuarios',
     CREAR: '/crear',
     ELIMINAR_USUARIOS: '/eliminar-usuarios',
-    LEER: '/consultar-usuario',
+    LEER: '/leer',
+    ACTUALIZAR: '/actualizar',
   },
   EVENTOS: {
     BASE: '/eventos',
@@ -40,6 +41,9 @@ module.exports = {
     CONSULTAR_LISTA: '/consultar-lista',
     CREAR: '/crear',
     ELIMINAR_PRODUCTO: '/eliminar',
+    IMPORTAR: '/importar',
+    LEER: '/leer-producto',
+    EXPORTAR_PRODUCTOS: '/exportar-productos',
   },
   PROVEEDORES: {
     BASE: '/proveedores',
@@ -52,6 +56,7 @@ module.exports = {
     CREAR: '/crear',
     SUBIR_IMAGEN: '/subir-imagen',
     ELIMINAR_SET_PRODUCTOS: '/eliminar',
+    ACTUALIZAR: '/actualizar',
   },
   CLIENTES: {
     BASE: '/clientes',
@@ -64,14 +69,17 @@ module.exports = {
   },
   EMPLEADOS: {
     BASE: '/empleados',
+    CREAR: '/crear',
     CONSULTAR_LISTA: '/consultar-lista',
     CONSULTAR_GRUPO: '/consultar-grupo',
     ELIMINAR_GRUPO: '/eliminar-grupo',
     ELIMINAR_EMPLEADO: '/eliminar',
     IMPORTAR_EMPLEADOS: '/importar-empleados',
+    EXPORTAR_EMPLEADOS: '/exportar-empleados',
     LEER_GRUPO: '/leer-grupo',
     CREAR_GRUPO: '/crear-grupo',
     ACTUALIZAR: '/actualizar',
+    ACTUALIZAR_GRUPO_EMPLEADO: '/actualizar-grupo',
   },
   CUOTAS: {
     BASE: '/cuotas',
@@ -79,6 +87,8 @@ module.exports = {
     OPCIONES: '/obtener-opciones',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_SET_CUOTAS: '/eliminar-set-cuotas',
+    LEER_SET_CUOTAS: '/leer-set-cuotas',
+    ACTUALIZAR_SET_CUOTAS: '/actualizar-set-cuotas',
   },
   ROLES: {
     BASE: '/roles',
@@ -87,11 +97,14 @@ module.exports = {
     OBTENER_OPCIONES: '/obtener-opciones',
     CONFIRMAR_CREACION: '/confirmar-creacion',
     ELIMINAR_ROL: '/eliminar',
+    LEER_ROL: '/leer',
+    ACTUALIZAR: '/actualizar-rol',
   },
   PEDIDOS: {
     BASE: '/pedidos',
     CONSULTAR_LISTA: '/consultar-lista',
     ELIMINAR_PEDIDO: '/eliminar',
+    ACTUALIZAR_PEDIDO: '/actualizar-pedido',
   },
   PAGOS: {
     BASE: '/pagos',
