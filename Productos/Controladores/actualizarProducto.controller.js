@@ -23,19 +23,22 @@ const db = require('@altertex/util/bd/db');
 exports.actualizarProducto = [
   upload.fields([
     { name: 'imagenProducto', maxCount: 1 },
-    { name: 'imagenesVariante', maxCount: 100 }
+    { name: 'imagenesVariante', maxCount: 100 },
   ]),
 
   async (req, res) => {
     let conexion;
-    
+
     try {
+      console.log(req.body);
+      console.log(req.files);
       // Extracción y parsing de datos
       const { idProducto } = req.body;
       const producto = JSON.parse(req.body.producto);
       const variantes = JSON.parse(req.body.variantes);
       const mapaImagenes = JSON.parse(req.body.mapaImagenes);
       const imagenProducto = req.files.imagenProducto ? req.files.imagenProducto[0] : null;
+      console.log('imagen producto: ', imagenProducto);
       const imagenesVariante = req.files.imagenesVariante || [];
 
       // Validaciones iniciales
@@ -60,7 +63,10 @@ exports.actualizarProducto = [
       await conexion.beginTransaction();
 
       // Actualizar producto
-      const actualizado = await repositorioActualizarProducto.actualizarProducto(idProducto, producto);
+      const actualizado = await repositorioActualizarProducto.actualizarProducto(
+        idProducto,
+        producto
+      );
       if (!actualizado) {
         await conexion.rollback();
         return res.status(MENSAJES_PRODUCTOS.PRODUCTO_NO_ENCONTRADO_ACTUALIZACION.codigo).json({
@@ -165,19 +171,18 @@ exports.actualizarProducto = [
       return res.status(MENSAJES_PRODUCTOS.ACTUALIZACION_EXITOSA.codigo).json({
         mensaje: MENSAJES_PRODUCTOS.ACTUALIZACION_EXITOSA.mensaje,
       });
-
     } catch (error) {
       // Manejo de errores
       if (conexion) {
         await conexion.rollback();
         conexion.release();
       }
-      
+
       console.error('Error al actualizar producto extendido:', error);
       return res.status(MENSAJES_PRODUCTOS.ERROR_ACTUALIZAR_PRODUCTO.codigo).json({
         mensaje: MENSAJES_PRODUCTOS.ERROR_ACTUALIZAR_PRODUCTO.mensaje,
         error: error.message,
       });
     }
-  }
+  },
 ];
