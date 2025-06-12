@@ -9,6 +9,13 @@ const validarYSanitizar = require('@altertex/util/inter/validarYSanitizar');
 const controlador = require('@altertex/pro/ctrl/leerProducto.controller');
 // RF[28] Leer producto - [https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF28]
 
-ruteador.get(RUTAS.PRODUCTOS.LEER, revisarApiKey(), autorizarToken, verificarPermisos(PERMISOS.LEER_PRODUCTO), validarYSanitizar, controlador.leerProducto);
+ruteador.get(
+  RUTAS.PRODUCTOS.LEER,
+  revisarApiKey(),
+  autorizarToken,
+  verificarPermisos(PERMISOS.LEER_PRODUCTO),
+  validarYSanitizar,
+  controlador.leerProducto
+);
 
 module.exports = ruteador;
