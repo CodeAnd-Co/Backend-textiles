@@ -22,6 +22,7 @@ const db = require('@altertex/util/bd/db');
  * @param {Express.Response} res - Objeto de respuesta HTTP.
  * @returns {Promise<void>} Respuesta HTTP con el estado de la operación.
  */
+// prettier-ignore
 exports.actualizarProducto = [
   upload.fields([
     { name: 'imagenProducto', maxCount: 1 },
@@ -56,20 +57,18 @@ exports.actualizarProducto = [
         return res.status(MENSAJES_PRODUCTOS.PARAMETROS_INVALIDOS.codigo).json({
           mensaje: errorValidacion.error,
         });
-      } // Comprobar si hay nuevas imágenes
-      const tieneNuevasImagenes =
-        !!imagenProducto || (imagenesVariante && imagenesVariante.length > 0);
+      }      // Comprobar si hay nuevas imágenes
+      const tieneNuevasImagenes = !!imagenProducto 
+        || (imagenesVariante && imagenesVariante.length > 0);
 
       // Iniciar transacción de base de datos
       conexion = await db.getConnection();
-      await conexion.beginTransaction(); // Actualizar producto - elegir el repositorio adecuado según si hay o no nuevas imágenes
-      // Si no hay imágenes nuevas, usamos el repositorio que no elimina imágenes existentes
+      await conexion.beginTransaction(); 
+      // Actualizar producto - elegir el repositorio adecuado según si hay o no nuevas imágenes
+      // Si no hay imágenes nuevas, usamos el repositorio que no elimina imágenes existentes      
       const actualizado = tieneNuevasImagenes
         ? await repositorioActualizarProducto.actualizarProducto(idProducto, producto)
-        : await repositorioActualizarProductoSinImagenes.actualizarProductoSinImagenes(
-            idProducto,
-            producto
-          );
+        : await repositorioActualizarProductoSinImagenes.actualizarProductoSinImagenes(idProducto, producto);
       if (!actualizado) {
         await conexion.rollback();
         return res.status(MENSAJES_PRODUCTOS.PRODUCTO_NO_ENCONTRADO_ACTUALIZACION.codigo).json({
@@ -135,10 +134,11 @@ exports.actualizarProducto = [
         const [urlImagenProducto, ...urlImagenVariantes] = await Promise.all([
           urlImagenProductoPromise,
           ...urlImagenVariantePromises,
-        ]); // Verificar que las imágenes se subieron correctamente (solo si hay imágenes nuevas)
+        ]);
+        // Verificar que las imágenes se subieron correctamente (solo si hay imágenes nuevas)
         if (
-          (imagenProducto && !urlImagenProducto) ||
-          (imagenesVariante.length > 0 && urlImagenVariantes.includes(null))
+          (imagenProducto && !urlImagenProducto)
+          || (imagenesVariante.length > 0 && urlImagenVariantes.includes(null))
         ) {
           throw new Error('Error al subir imágenes al servidor');
         }
