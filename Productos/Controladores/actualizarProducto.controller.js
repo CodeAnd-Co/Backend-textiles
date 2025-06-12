@@ -128,8 +128,7 @@ exports.actualizarProducto = [
             Key: `productos/${imagenVariante.originalname}`,
             Body: imagenVariante.buffer,
             ContentType: imagenVariante.mimetype,
-          })
-        );
+          }));
 
         const [urlImagenProducto, ...urlImagenVariantes] = await Promise.all([
           urlImagenProductoPromise,
