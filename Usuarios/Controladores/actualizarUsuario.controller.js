@@ -1,4 +1,3 @@
-const MENSAJES = require('@altertex/util/const/mensajesUsuarios');
 const repositorio = require('@altertex/usu/repos/repositorioActualizarUsuario');
 const bcrypt = require('bcryptjs');
 
@@ -20,35 +19,27 @@ const bcrypt = require('bcryptjs');
  * @returns {Promise<void>} Retorna una respuesta JSON indicando éxito o un error.
  */
 exports.actualizarUsuario = async (req, res) => {
-  let datos;
+  const cambios = req.body.cambios || req.body;
 
-  // Si no hay cambios
-  if (req.body.id || req.body.idUsuario) {
-    datos = [req.body];
-  } else if (req.body.cambios) {
-    // Si la información viene en el formato esperado (hay cambios)
-    datos = Array.isArray(req.body.cambios) ? req.body.cambios : [req.body.cambios];
-    const contraseniaEncriptada = await bcrypt.hash(datos[0].contrasenia, 10);
+  if (!cambios) {
+    return res.status(400).json({ mensaje: 'No se enviaron los datos del usuario' });
+  }
+
+  const datos = Array.isArray(cambios) ? cambios : [cambios];
+
+  if (!datos[0].idUsuario) {
+    return res.status(400).json({ mensaje: 'ID del usuario no proporcionado' });
+  }
+
+  if (datos[0].contrasenia) {
+     const contraseniaEncriptada = await bcrypt.hash(datos[0].contrasenia, 10);
     datos[0].contrasenia = contraseniaEncriptada;
-  } else {
-    return res
-      .status(MENSAJES.ERROR_ACTUALIZAR_USUARIO.codigo)
-      .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje });
   }
 
-  if (!datos || datos.length === 0) {
-    return res
-      .status(MENSAJES.ERROR_ACTUALIZAR_USUARIO.codigo)
-      .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje });
-  }
   try {
     await repositorio.actualizarUsuario(datos);
-    return res
-      .status(MENSAJES.USUARIO_ACTUALIZADO.codigo)
-      .json({ mensaje: MENSAJES.USUARIO_ACTUALIZADO.mensaje, datos });
-  } catch {
-    return res
-      .status(MENSAJES.ERROR_ACTUALIZAR_USUARIO.codigo)
-      .json({ mensaje: MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje });
+    return res.status(200).json({ mensaje: 'Usuario actualizado correctamente' });
+  } catch (error) {
+    return res.status(400).json({ mensaje: error.message });
   }
 };

@@ -22,97 +22,83 @@ const CONSULTAS_USUARIOS = require('@altertex/util/const/consultasUsuarios');
  */
 exports.actualizarUsuario = async (datos) => {
   if (!Array.isArray(datos) || datos.length === 0) {
-    throw new Error('Sin datos para actualizar.');
+    throw new Error(MENSAJES.ERROR_OBTENER_USUARIO.mensaje);
   }
+
   try {
-    await Promise.all(
-      datos.map(
-        /**
-         * Actualiza la información de un usuario individualmente.
-         * @param {object} usuario - Objeto con los datos del usuario a actualizar.
-         * @returns {Promise<void>}
-         */
-        async (usuario) => {
-          const {
-            idUsuario,
-            nombreCompleto,
-            correoElectronico,
-            contrasenia,
-            numeroTelefono,
-            direccion,
-            fechaNacimiento,
-            idRol,
-            genero,
-            estatus,
-          } = usuario;
+    for (const usuario of datos) {
+      const {
+        idUsuario,
+        correoElectronico,
+        nombreCompleto,
+        contrasenia,
+        numeroTelefono,
+        direccion,
+        fechaNacimiento,
+        idRol,
+        genero,
+        estatus,
+        cliente,
+      } = usuario;
 
-          const conContrasena = usuario.contrasenia == '' ? false : true;
+      const resultadoCorreo = await correrQuery(
+        CONSULTAS_USUARIOS.VALIDAR_CORREO_DUPLICADO_ACTUALIZACION,
+        [correoElectronico, idUsuario]
+      );
 
-          console.log('roles', idRol);
+      if (resultadoCorreo.length > 0) {
+        throw new Error(MENSAJES.USUARIO_YA_EXISTE.mensaje);
+      }
 
-          // Actualiza datos del usuario
-          if (conContrasena) {
-            await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO, [
-              nombreCompleto,
-              correoElectronico,
-              contrasenia,
-              numeroTelefono,
-              direccion,
-              fechaNacimiento,
-              genero,
-              estatus,
+      const conContrasena = contrasenia && contrasenia.trim() !== '';
+
+      if (conContrasena) {
+        await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO, [
+          nombreCompleto,
+          correoElectronico,
+          contrasenia,
+          numeroTelefono,
+          direccion,
+          fechaNacimiento,
+          genero,
+          estatus,
+          idUsuario,
+        ]);
+      } else {
+        await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO_SIN_CONTRASENA, [
+          nombreCompleto,
+          correoElectronico,
+          numeroTelefono,
+          direccion,
+          fechaNacimiento,
+          genero,
+          estatus,
+          idUsuario,
+        ]);
+      }
+
+      // Asociar cliente(s)
+      if (cliente) {
+        const clientes = Array.isArray(cliente) ? cliente : [cliente];
+
+        // Eliminar asociaciones anteriores
+        await correrQuery(CONSULTAS_USUARIOS.ELIMINAR_USUARIO_CLIENTE, [idUsuario]);
+
+        for (const idCliente of clientes) {
+          if (idCliente) {
+            await correrQuery(CONSULTAS_USUARIOS.ASOCIAR_USUARIO_A_CLIENTE, [
               idUsuario,
-            ]);
-          } else {
-            await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_DATOS_USUARIO_SIN_CONTRASENA, [
-              nombreCompleto,
-              correoElectronico,
-              numeroTelefono,
-              direccion,
-              fechaNacimiento,
-              genero,
-              estatus,
-              idUsuario,
+              idCliente,
             ]);
           }
-
-          if (usuario.cliente) {
-            // Pasar el cliente/clientes a un array
-            const clientes = Array.isArray(usuario.cliente) ? usuario.cliente : [usuario.cliente];
-
-            await correrQuery(CONSULTAS_USUARIOS.ELIMINAR_USUARIO_CLIENTE, [idUsuario]).then(
-              /**
-               * Función que reasocia los clientes al usuario después de eliminarlos.
-               * @returns {Promise<void>}
-               */
-              async () => {
-                try {
-                  for (const cliente of clientes) {
-                    // Asociar cada cliente seleccionado al usuario
-                    if (cliente) {
-                      // Evitar errores si el cliente es undefined o null
-                      await correrQuery(CONSULTAS_USUARIOS.ASOCIAR_USUARIO_A_CLIENTE, [
-                        idUsuario,
-                        cliente,
-                      ]);
-                    }
-                  }
-                } catch (error) {
-                  return error;
-                }
-              }
-            );
-          }
-
-          const result = await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_ROL_USUARIO, [
-            idRol,
-            idUsuario,
-          ]);
-          console.log('Resultado de actualizar rol:', result);
         }
-      )
-    );
-  } catch {
-    throw new Error(MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje);
+      }
+      await correrQuery(CONSULTAS_USUARIOS.ACTUALIZAR_ROL_USUARIO, [idRol, idUsuario]);
+    }
+  } catch (error) {
+    if (error.code === 'ER_TRUNCATED_WRONG_VALUE') {
+      throw new Error(MENSAJES.ERROR_FECHA_NO_VALIDA.mensaje);
+    }
+    throw new Error(error.message || MENSAJES.ERROR_ACTUALIZAR_USUARIO.mensaje);
   }
 };

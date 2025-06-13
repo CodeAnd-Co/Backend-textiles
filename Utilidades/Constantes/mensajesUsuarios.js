@@ -95,4 +95,8 @@ module.exports = {
     codigo: 500,
     mensaje: 'Ocurrió un error al intentar actualizar el usuario.',
   },
+  ERROR_FECHA_NO_VALIDA: {
+    codigo: 500,
+    mensaje: 'La fecha de nacimiento proporcionada no es válida.',
+  },
 };

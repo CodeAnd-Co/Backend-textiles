@@ -220,4 +220,9 @@ module.exports = {
       WHERE idUsuario IN (?)
         AND puedeActivar2FA = true;
   `,
+  VALIDAR_CORREO_DUPLICADO_ACTUALIZACION: `
+    SELECT idUsuario
+    FROM usuario
+    WHERE correoElectronico = ? AND idUsuario <> ?;
+    `,
 };
