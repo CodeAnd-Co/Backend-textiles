@@ -42,6 +42,12 @@ exports.eliminarUsuario = async (req, res) => {
     }
 
     const idsNumericos = idsUsuarios.map(Number);
+    
+    if (idsNumericos.includes(idSolicitante)) {
+      return res.status(403).json({
+        mensaje: 'No puedes eliminar tu propio usuario.',
+      });
+    }
 
     const [usuariosObjetivo] = await db.query(`
       SELECT u.idUsuario, r.nombre AS rol
