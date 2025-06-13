@@ -103,11 +103,11 @@ exports.crearProducto = [
       // Upload image processing remains unchanged
       const urlImagenProductoPromise = imagenProducto
         ? enviarS3({
-          Bucket: process.env.AWS_BUCKET_NAME,
-          Key: `productos/${imagenProducto.originalname}`,
-          Body: imagenProducto.buffer,
-          ContentType: imagenProducto.mimetype,
-        })
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: `productos/${imagenProducto.originalname}`,
+            Body: imagenProducto.buffer,
+            ContentType: imagenProducto.mimetype,
+          })
         : Promise.resolve(null);
 
       // prettier-ignore

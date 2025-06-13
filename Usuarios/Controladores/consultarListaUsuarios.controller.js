@@ -26,9 +26,20 @@ exports.consultarListaUsuarios = async (req, res) => {
         .json({ mensaje: MENSAJES_USUARIOS.USUARIOS_NO_ENCONTRADOS.mensaje });
     }
 
+    const generoMap = {
+      masculino: 'Hombre',
+      femenino: 'Mujer',
+      otro: 'Otro',
+    };
+
+    const resultadosMapeados = resultados.map((usuario) => ({
+      ...usuario,
+      genero: generoMap[usuario.genero] || usuario.genero,
+    }));
+
     return res.status(MENSAJES_USUARIOS.LISTA_USUARIOS_OBTENIDA.codigo).json({
       mensaje: MENSAJES_USUARIOS.LISTA_USUARIOS_OBTENIDA.mensaje,
-      listaUsuarios: resultados,
+      listaUsuarios: resultadosMapeados,
     });
   } catch {
     return res

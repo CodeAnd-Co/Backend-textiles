@@ -7,4 +7,4 @@ const redis = createClient({
 redis.on('error', (err) => console.error('Error Redis', err));
 redis.connect();
 
-module.exports = redis;
+module.exports = redis; 

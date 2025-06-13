@@ -3,7 +3,7 @@
  * @description
  * Contiene funciones para consultar y validar grupos de empleados asociados a un cliente.
  * Incluye lógica para obtener todos los grupos de un cliente y verificar duplicados por nombre.
- * 
+ *
  * RF22 - Consulta Lista de Grupo Empleados - https://codeandco-wiki.netlify.app/docs/proyectos/textiles/documentacion/requisitos/RF22
  */
 
@@ -29,6 +29,7 @@ exports.obtenerGrupoDeEmpleados = async (idCliente) => {
 
   try {
     const gruposDeEmpleados = await correrQuery(query, [idCliente]);
+
     return gruposDeEmpleados;
   } catch {
     return [];
@@ -55,7 +56,7 @@ exports.existeGrupoConNombre = (nombreGrupo, idCliente) => {
       (err, resultados) => {
         if (err) return reject(err);
         resolve(resultados.length > 0);
-      },
+      }
     );
   });
 };

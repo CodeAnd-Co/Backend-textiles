@@ -40,6 +40,11 @@ module.exports = {
       VALUES (?, ?);
   `,
 
+  BORRAR_ASOCIACIONES_CLIENTE_USUARIO: `
+      DELETE FROM usuario_cliente
+        WHERE idUsuario = ?; 
+    `,
+
   ASOCIAR_USUARIO_A_CLIENTE: `
       INSERT INTO usuario_cliente (idUsuario, idCliente)
       VALUES (?, ?);
@@ -54,8 +59,9 @@ module.exports = {
              u.fechaNacimiento,
              u.genero,
              u.estatus,
-             r.nombre          AS rol,
-             uc.idCliente,
+             r.idRol          AS rol,
+             r.nombre      AS nombreRol,
+             uc.idCliente AS idCliente,
              c.nombreComercial AS nombreCliente
       FROM usuario u
                LEFT JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
@@ -66,29 +72,60 @@ module.exports = {
   `,
 
   OBTENER_LISTA: `
-      SELECT u.idUsuario,
-             u.nombreCompleto    AS nombre,
-             r.nombre            AS rol,
-             c.nombreComercial   AS cliente,
-             u.estatus,
-             u.correoElectronico AS correo,
-             u.numeroTelefono    AS telefono
-      FROM usuario u
-               LEFT JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
-               LEFT JOIN rol r ON ur.idRol = r.idRol
-               LEFT JOIN usuario_cliente uc ON u.idUsuario = uc.idUsuario
-               LEFT JOIN cliente c ON uc.idCliente = c.idCliente
-      WHERE u.idUsuario NOT IN (SELECT ur2.idUsuario
-                                FROM usuario_rol ur2
-                                WHERE ur2.idRol = 3);
-
-  `,
+    SELECT u.idUsuario,
+           u.nombreCompleto    AS nombre,
+           r.idRol            AS rol,         
+           c.nombreComercial   AS cliente,
+           u.estatus,
+           u.correoElectronico AS correo,
+           u.numeroTelefono    AS telefono
+    FROM usuario u
+         LEFT JOIN usuario_rol ur ON u.idUsuario = ur.idUsuario
+         LEFT JOIN rol r ON ur.idRol = r.idRol
+         LEFT JOIN usuario_cliente uc ON u.idUsuario = uc.idUsuario
+         LEFT JOIN cliente c ON uc.idCliente = c.idCliente
+    WHERE u.idUsuario NOT IN (SELECT ur2.idUsuario
+                              FROM usuario_rol ur2
+                              WHERE ur2.idRol = 3);
+`,
 
   ELIMINAR_USUARIOS: `
       DELETE
       FROM usuario
       WHERE idUsuario = (?);
   `,
+
+  ACTUALIZAR_DATOS_USUARIO: `
+    UPDATE usuario SET
+      nombreCompleto = ?,
+      correoElectronico = ?,
+      contrasenia = ?,
+      numeroTelefono = ?,
+      direccion = ?,
+      fechaNacimiento = ?,
+      genero = ?,
+      estatus = ?
+    WHERE idUsuario = ?;
+    `,
+
+  ACTUALIZAR_DATOS_USUARIO_SIN_CONTRASENA: `
+    UPDATE usuario SET
+      nombreCompleto = ?,
+      correoElectronico = ?,
+      numeroTelefono = ?,
+      direccion = ?,
+      fechaNacimiento = ?,
+      genero = ?,
+      estatus = ?
+    WHERE idUsuario = ?;
+    `,
+
+  ACTUALIZAR_ROL_USUARIO: `
+    UPDATE usuario_rol SET 
+    idRol = ?
+    WHERE idUsuario = ?;
+    `,
+
   VALIDAR_CORREO: `
       SELECT idUsuario
       FROM usuario
@@ -183,6 +220,9 @@ module.exports = {
       WHERE idUsuario IN (?)
         AND puedeActivar2FA = true;
   `,
-
-
+  VALIDAR_CORREO_DUPLICADO_ACTUALIZACION: `
+    SELECT idUsuario
+    FROM usuario
+    WHERE correoElectronico = ? AND idUsuario <> ?;
+    `,
 };

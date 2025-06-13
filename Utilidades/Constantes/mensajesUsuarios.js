@@ -14,6 +14,10 @@ module.exports = {
     codigo: 200,
     mensaje: 'Lista de usuarios obtenida exitosamente.',
   },
+  USUARIO_ACTUALIZADO: {
+    codigo: 200,
+    mensaje: 'Usuario actualizado correctamente.',
+  },
 
   // 204 - Sin contenido
   USUARIOS_NO_ENCONTRADOS: {
@@ -86,5 +90,13 @@ module.exports = {
   ERROR_ELIMINAR_USUARIO: {
     codigo: 500,
     mensaje: 'Ocurrió un error al intentar eliminar el usuario.',
+  },
+  ERROR_ACTUALIZAR_USUARIO: {
+    codigo: 500,
+    mensaje: 'Ocurrió un error al intentar actualizar el usuario.',
+  },
+  ERROR_FECHA_NO_VALIDA: {
+    codigo: 500,
+    mensaje: 'La fecha de nacimiento proporcionada no es válida.',
   },
 };
