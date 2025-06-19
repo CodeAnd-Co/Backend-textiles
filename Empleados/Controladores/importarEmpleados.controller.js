@@ -44,7 +44,7 @@ exports.importarEmpleados = async (req, res) => {
   const idCliente = parseInt(req.user.clienteSeleccionado);
   const empleados = req.body;
   
-  if (!Array.isArray(empleados) || empleados.length === 0) {
+  if (!Array.isArray(empleados) || empleados.length === 0 || !req.body) {
     return res.status(400).json({ mensaje: 'No se recibieron empleados.' });
   }
 
